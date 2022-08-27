@@ -1,0 +1,156 @@
+{
+  "task": {
+    "id": "52ff1df4-91bd-4fa9-92a2-485ca0e813c2",
+    "name": "exampleTask",
+    "salesmen": [
+      {
+        "id": "c004c04d-28e6-4b94-aa8f-6c85ccc57661",
+        "name": "exampleSalesman",
+        "orderInOwner": 0,
+        "workTime_SecondPerDay": 0,
+        "volumeCapacity_Stere": 0,
+        "weightCapacity_Gramm": 0,
+        "vechicleSpeed_MeterPerSecond": 0,
+        "payment_EuroPerSecond": 0,
+        "fuelConsuption_LiterPerMeter": 0,
+        "fuelPrice_EuroPerLiter": 0,
+        "basePrice_Euro": 0
+      }
+    ],
+    "costGraph": {
+      "id": "cf3d3194-12b0-4ecd-b0e0-4c20c71ae1aa",
+      "name": "",
+      "center": {
+        "id": "04ef6bb6-5d21-42b9-9f66-542b23fe22df",
+        "orderInOwner": 0,
+        "lattitude": 0,
+        "longitude": 0
+      },
+      "objectives": [
+        {
+          "id": "3b386879-70b8-4ffa-995d-247ff3151dac",
+          "name": "exampleObjective",
+          "orderInOwner": 0,
+          "location": {
+            "id": "e54a1ec0-2e7f-4592-b648-8e35699e028c",
+            "orderInOwner": 0,
+            "lattitude": 0,
+            "longitude": 0
+          },
+          "time_Second": 0,
+          "volume_Stere": 0,
+          "weight_Gramm": 0
+        }
+      ],
+      "edgesBetween": [
+        {
+          "id": "2f6ed6a3-c007-48ab-aae6-fc4cf0bf9d23",
+          "orderInOwner": 0,
+          "values": [
+            {
+              "id": "0ba851e6-797a-44b2-8b38-f2cfd26206e3",
+              "name": "exampleEdgesBetween0to1",
+              "orderInOwner": 0,
+              "length_Meter": 0,
+              "rout": [
+                {
+                  "id": "06954212-d26d-460e-8034-af24835fcf41",
+                  "orderInOwner": 0,
+                  "lattitude": 0,
+                  "longitude": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "a4251317-4f29-448f-8b27-0674208c5616",
+          "orderInOwner": 1,
+          "values": [
+            {
+              "id": "9b103ce8-b249-40ec-b17f-aa79c759b853",
+              "name": "exampleEdgesBetween1to0",
+              "orderInOwner": 0,
+              "length_Meter": 0,
+              "rout": [
+                {
+                  "id": "f62b276a-3743-45f7-a1a1-54d7113b0576",
+                  "orderInOwner": 0,
+                  "lattitude": 0,
+                  "longitude": 0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "edgesFromCenter": [
+        {
+          "id": "c82588aa-95ba-4c13-9480-f27b070cebe2",
+          "name": "exampleEdges0FromCenter",
+          "orderInOwner": 0,
+          "length_Meter": 0,
+          "rout": [
+            {
+              "id": "1862e875-7e38-4f23-a18d-2b340579dd5b",
+              "orderInOwner": 0,
+              "lattitude": 0,
+              "longitude": 0
+            }
+          ]
+        },
+        {
+          "id": "5d1b5fb3-5da7-4aa8-8252-a9eeff20ae17",
+          "name": "exampleEdges1FromCenter",
+          "orderInOwner": 1,
+          "length_Meter": 0,
+          "rout": [
+            {
+              "id": "ac2c4134-3715-443d-ac6c-3c386866146b",
+              "orderInOwner": 0,
+              "lattitude": 0,
+              "longitude": 0
+            }
+          ]
+        }
+      ],
+      "edgesToCenter": [
+        {
+          "id": "6eb5858f-5503-4444-9f87-58a25a9749ce",
+          "name": "exampleEdges0ToCenter",
+          "orderInOwner": 0,
+          "length_Meter": 0,
+          "rout": [
+            {
+              "id": "89d2cba3-1b92-440a-8b11-c6300867054e",
+              "orderInOwner": 0,
+              "lattitude": 0,
+              "longitude": 0
+            }
+          ]
+        },
+        {
+          "id": "54300a86-dfb6-4d02-a240-2600f105c44b",
+          "name": "exampleEdges1ToCenter",
+          "orderInOwner": 1,
+          "length_Meter": 0,
+          "rout": [
+            {
+              "id": "92fe0af4-7d49-4c47-9895-8567cd5fe3bd",
+              "orderInOwner": 0,
+              "lattitude": 0,
+              "longitude": 0
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "setting": {
+    "id": "b266baf8-e791-4675-9c8c-d72416e0f77e",
+    "name": "exampleSetting",
+    "iterLimit": 9223372036854775807,
+    "timeLimit_Second": 9223372036854775807,
+    "algorithm": "exampleAlgorithm"
+  }
+}

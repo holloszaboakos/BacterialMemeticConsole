@@ -1,0 +1,105 @@
+initializePopulation
+orderByCost
+orderedByCost
+STEP: 1
+BOOST
+LOAD DATA
+SHUFFLE DATA
+boost time: 220.635700ms
+geneTransfer
+geneTransfer time: 39.191300ms
+mutate
+mutate time: 1.165543400s
+orderByCost
+orderPopulationByCost time: 172.1us
+time elapsed: 1.441319s
+best identifier: 78 cost: 2281394.0
+second identifier: 94 cost: 2294569.0
+third identifier: 91 cost: 2302778.0
+worst identifier: 82 cost: 2.38412624151830976E17
+fitness cost call count: 1451
+mutation operator call count: 1200
+mutation improvement count on best: 1
+mutation improvement count on all: 12
+STEP: 2
+BOOST
+boost time: 280.7us
+geneTransfer
+geneTransfer time: 12.939500ms
+mutate
+mutate time: 151.753800ms
+orderByCost
+orderPopulationByCost time: 137.3us
+time elapsed: 177.866ms
+best identifier: 78 cost: 2241980.0
+second identifier: 56 cost: 2287771.0
+third identifier: 94 cost: 2294569.0
+worst identifier: 82 cost: 2.38412624151830976E17
+fitness cost call count: 2361
+mutation operator call count: 2000
+mutation improvement count on best: 2
+mutation improvement count on all: 20
+STEP: 3
+BOOST
+boost time: 2.043800ms
+geneTransfer
+geneTransfer time: 14.401500ms
+mutate
+mutate time: 164.018900ms
+orderByCost
+orderPopulationByCost time: 123.5us
+time elapsed: 194.641300ms
+best identifier: 78 cost: 2227478.0
+second identifier: 32 cost: 2285117.0
+third identifier: 56 cost: 2287771.0
+worst identifier: 82 cost: 2.38412624151830976E17
+fitness cost call count: 3281
+mutation operator call count: 2800
+mutation improvement count on best: 3
+mutation improvement count on all: 28
+STEP: 4
+BOOST
+boost time: 1.215700ms
+geneTransfer
+geneTransfer time: 10.553300ms
+mutate
+mutate time: 154.392600ms
+orderByCost
+orderPopulationByCost time: 70.5us
+time elapsed: 180.724900ms
+best identifier: 78 cost: 2188163.0
+second identifier: 49 cost: 2273658.0
+third identifier: 52 cost: 2275977.0
+worst identifier: 82 cost: 2.38412624151830976E17
+fitness cost call count: 4199
+mutation operator call count: 3600
+mutation improvement count on best: 4
+mutation improvement count on all: 36
+STEP: 5
+BOOST
+boost time: 396.6us
+geneTransfer
+geneTransfer time: 8.564200ms
+mutate
+mutate time: 163.558600ms
+orderByCost
+orderPopulationByCost time: 70.6us
+time elapsed: 187.464300ms
+best identifier: 78 cost: 2166279.0
+second identifier: 3 cost: 2262164.0
+third identifier: 59 cost: 2266453.0
+worst identifier: 82 cost: 2.38412624151830976E17
+fitness cost call count: 5219
+mutation operator call count: 4500
+mutation improvement count on best: 5
+mutation improvement count on all: 45
+STEP: 6
+BOOST
+boost time: 790.3us
+geneTransfer
+geneTransfer time: 8.478ms
+mutate
+mutate time: 241.523900ms
+orderByCost
+orderPopulationByCost time: 80.7us
+time elapsed: 266.337700ms

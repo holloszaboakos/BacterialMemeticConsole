@@ -1,0 +1,2488 @@
+BACTERIAL
+HEURISTIC
+MUTATION UNTIL FAIL
+
+cloneCount = 20
+cloneSegmentLength = 50
+cloneCycleCount = 36
+
+step:0 timeElapsed: 40510.6773, bestCost 2152240.0, worstCost 2.32578837885615744E17
+fitness cost call count: 378602
+mutation improvement count on best: 1
+mutation improvement count on all: 500
+step:1 timeElapsed: 39751.4506, bestCost 2073653.0, worstCost 2.325788378855328E17
+fitness cost call count: 756916
+mutation improvement count on best: 2
+mutation improvement count on all: 1000
+step:2 timeElapsed: 39849.333, bestCost 2012113.0, worstCost 1.4292658309798832E17
+fitness cost call count: 1135143
+mutation improvement count on best: 3
+mutation improvement count on all: 1500
+step:3 timeElapsed: 39564.6994, bestCost 1973489.0, worstCost 1.42926583097957024E17
+fitness cost call count: 1513367
+mutation improvement count on best: 4
+mutation improvement count on all: 2000
+step:4 timeElapsed: 39482.6086, bestCost 1948427.0, worstCost 1.42926583097927888E17
+fitness cost call count: 1891577
+mutation improvement count on best: 5
+mutation improvement count on all: 2500
+step:5 timeElapsed: 39426.0545, bestCost 1925332.0, worstCost 1.42926583097907488E17
+fitness cost call count: 2269773
+mutation improvement count on best: 6
+mutation improvement count on all: 3000
+step:6 timeElapsed: 39422.6729, bestCost 1903253.0, worstCost 1.42926583097894544E17
+fitness cost call count: 2648022
+mutation improvement count on best: 7
+mutation improvement count on all: 3500
+step:7 timeElapsed: 5720.8776, bestCost 1881229.0, worstCost 1.42926583097894544E17
+fitness cost call count: 2702757
+mutation improvement count on best: 8
+mutation improvement count on all: 3571
+step:8 timeElapsed: 670.9186, bestCost 1860359.0, worstCost 1.42926583097894544E17
+fitness cost call count: 2709113
+mutation improvement count on best: 9
+mutation improvement count on all: 3578
+step:9 timeElapsed: 39485.4423, bestCost 1851060.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3087354
+mutation improvement count on best: 10
+mutation improvement count on all: 4078
+step:10 timeElapsed: 746.694, bestCost 1843707.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3094502
+mutation improvement count on best: 11
+mutation improvement count on all: 4086
+step:11 timeElapsed: 10056.3632, bestCost 1838677.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3190829
+mutation improvement count on best: 12
+mutation improvement count on all: 4212
+step:12 timeElapsed: 133.9165, bestCost 1837106.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3192035
+mutation improvement count on best: 12
+mutation improvement count on all: 4212
+step:13 timeElapsed: 117.7655, bestCost 1836771.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3193078
+mutation improvement count on best: 12
+mutation improvement count on all: 4212
+step:14 timeElapsed: 127.3615, bestCost 1834615.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3194235
+mutation improvement count on best: 12
+mutation improvement count on all: 4212
+step:15 timeElapsed: 4146.8611, bestCost 1824374.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3233911
+mutation improvement count on best: 13
+mutation improvement count on all: 4263
+step:16 timeElapsed: 1014.6065, bestCost 1823501.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3242549
+mutation improvement count on best: 14
+mutation improvement count on all: 4273
+step:17 timeElapsed: 529.4512, bestCost 1797058.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3247422
+mutation improvement count on best: 15
+mutation improvement count on all: 4278
+step:18 timeElapsed: 117.5319, bestCost 1796803.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3248468
+mutation improvement count on best: 15
+mutation improvement count on all: 4278
+step:19 timeElapsed: 125.7819, bestCost 1793588.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3249544
+mutation improvement count on best: 15
+mutation improvement count on all: 4278
+step:20 timeElapsed: 708.1458, bestCost 1786261.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3255972
+mutation improvement count on best: 16
+mutation improvement count on all: 4285
+step:21 timeElapsed: 376.5275, bestCost 1771402.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3259392
+mutation improvement count on best: 17
+mutation improvement count on all: 4288
+step:22 timeElapsed: 638.75, bestCost 1770067.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3265073
+mutation improvement count on best: 18
+mutation improvement count on all: 4294
+step:23 timeElapsed: 202.1802, bestCost 1764053.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3266927
+mutation improvement count on best: 19
+mutation improvement count on all: 4295
+step:24 timeElapsed: 830.8462, bestCost 1761736.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3274794
+mutation improvement count on best: 20
+mutation improvement count on all: 4304
+step:25 timeElapsed: 132.9845, bestCost 1759984.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3275995
+mutation improvement count on best: 20
+mutation improvement count on all: 4304
+step:26 timeElapsed: 3129.5162, bestCost 1754754.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3305992
+mutation improvement count on best: 21
+mutation improvement count on all: 4342
+step:27 timeElapsed: 154.9879, bestCost 1750979.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3307413
+mutation improvement count on best: 21
+mutation improvement count on all: 4342
+step:28 timeElapsed: 153.9079, bestCost 1750893.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3308767
+mutation improvement count on best: 21
+mutation improvement count on all: 4342
+step:29 timeElapsed: 387.3432, bestCost 1741725.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3312393
+mutation improvement count on best: 22
+mutation improvement count on all: 4345
+step:30 timeElapsed: 492.2645, bestCost 1741095.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3316932
+mutation improvement count on best: 23
+mutation improvement count on all: 4349
+step:31 timeElapsed: 758.6266, bestCost 1734464.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3324184
+mutation improvement count on best: 24
+mutation improvement count on all: 4357
+step:32 timeElapsed: 226.9629, bestCost 1733798.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3326292
+mutation improvement count on best: 25
+mutation improvement count on all: 4358
+step:33 timeElapsed: 620.924, bestCost 1730968.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3332154
+mutation improvement count on best: 26
+mutation improvement count on all: 4364
+step:34 timeElapsed: 679.7625, bestCost 1729701.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3338587
+mutation improvement count on best: 27
+mutation improvement count on all: 4371
+step:35 timeElapsed: 141.2701, bestCost 1727734.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3339878
+mutation improvement count on best: 27
+mutation improvement count on all: 4371
+step:36 timeElapsed: 290.8787, bestCost 1725078.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3342608
+mutation improvement count on best: 28
+mutation improvement count on all: 4373
+step:37 timeElapsed: 547.3498, bestCost 1710644.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3347789
+mutation improvement count on best: 29
+mutation improvement count on all: 4378
+step:38 timeElapsed: 149.1632, bestCost 1710341.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3349159
+mutation improvement count on best: 29
+mutation improvement count on all: 4378
+step:39 timeElapsed: 165.826, bestCost 1709259.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3350651
+mutation improvement count on best: 29
+mutation improvement count on all: 4378
+step:40 timeElapsed: 768.3335, bestCost 1703501.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3358022
+mutation improvement count on best: 30
+mutation improvement count on all: 4386
+step:41 timeElapsed: 138.463, bestCost 1702543.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3359291
+mutation improvement count on best: 30
+mutation improvement count on all: 4386
+step:42 timeElapsed: 166.4947, bestCost 1702147.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3360774
+mutation improvement count on best: 30
+mutation improvement count on all: 4386
+step:43 timeElapsed: 324.1763, bestCost 1696754.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3363798
+mutation improvement count on best: 31
+mutation improvement count on all: 4388
+step:44 timeElapsed: 187.8995, bestCost 1693506.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3365516
+mutation improvement count on best: 31
+mutation improvement count on all: 4388
+step:45 timeElapsed: 178.7048, bestCost 1693042.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3367123
+mutation improvement count on best: 31
+mutation improvement count on all: 4388
+step:46 timeElapsed: 202.906, bestCost 1692917.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3368775
+mutation improvement count on best: 31
+mutation improvement count on all: 4388
+step:47 timeElapsed: 246.5052, bestCost 1691061.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3371082
+mutation improvement count on best: 32
+mutation improvement count on all: 4389
+step:48 timeElapsed: 146.1783, bestCost 1688975.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3372400
+mutation improvement count on best: 32
+mutation improvement count on all: 4389
+step:49 timeElapsed: 165.72, bestCost 1688902.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3373876
+mutation improvement count on best: 32
+mutation improvement count on all: 4389
+step:50 timeElapsed: 166.3443, bestCost 1687636.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3375371
+mutation improvement count on best: 32
+mutation improvement count on all: 4389
+step:51 timeElapsed: 202.471, bestCost 1685644.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3377201
+mutation improvement count on best: 32
+mutation improvement count on all: 4389
+step:52 timeElapsed: 190.934, bestCost 1685037.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3378930
+mutation improvement count on best: 32
+mutation improvement count on all: 4389
+step:53 timeElapsed: 193.3409, bestCost 1684071.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3380695
+mutation improvement count on best: 32
+mutation improvement count on all: 4389
+step:54 timeElapsed: 190.0791, bestCost 1682236.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3382395
+mutation improvement count on best: 32
+mutation improvement count on all: 4389
+step:55 timeElapsed: 444.2577, bestCost 1680976.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3386515
+mutation improvement count on best: 33
+mutation improvement count on all: 4392
+step:56 timeElapsed: 189.658, bestCost 1680837.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3388277
+mutation improvement count on best: 33
+mutation improvement count on all: 4392
+step:57 timeElapsed: 184.7359, bestCost 1677678.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3389962
+mutation improvement count on best: 33
+mutation improvement count on all: 4392
+step:58 timeElapsed: 296.0371, bestCost 1675239.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3392721
+mutation improvement count on best: 34
+mutation improvement count on all: 4393
+step:59 timeElapsed: 209.0726, bestCost 1674097.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3394556
+mutation improvement count on best: 34
+mutation improvement count on all: 4393
+step:60 timeElapsed: 229.5069, bestCost 1673425.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3396647
+mutation improvement count on best: 34
+mutation improvement count on all: 4393
+step:61 timeElapsed: 218.0659, bestCost 1672693.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3398631
+mutation improvement count on best: 34
+mutation improvement count on all: 4393
+step:62 timeElapsed: 253.8038, bestCost 1671862.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3400895
+mutation improvement count on best: 34
+mutation improvement count on all: 4393
+step:63 timeElapsed: 238.8117, bestCost 1670822.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3403089
+mutation improvement count on best: 34
+mutation improvement count on all: 4393
+step:64 timeElapsed: 375.95, bestCost 1667825.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3406623
+mutation improvement count on best: 35
+mutation improvement count on all: 4395
+step:65 timeElapsed: 128.1989, bestCost 1666651.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3407765
+mutation improvement count on best: 35
+mutation improvement count on all: 4395
+step:66 timeElapsed: 6914.4378, bestCost 1664799.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3472615
+mutation improvement count on best: 36
+mutation improvement count on all: 4478
+step:67 timeElapsed: 235.1472, bestCost 1662971.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3474766
+mutation improvement count on best: 36
+mutation improvement count on all: 4478
+step:68 timeElapsed: 185.5718, bestCost 1662340.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3476446
+mutation improvement count on best: 36
+mutation improvement count on all: 4478
+step:69 timeElapsed: 461.0921, bestCost 1650988.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3480780
+mutation improvement count on best: 37
+mutation improvement count on all: 4481
+step:70 timeElapsed: 218.421, bestCost 1650546.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3482741
+mutation improvement count on best: 37
+mutation improvement count on all: 4481
+step:71 timeElapsed: 189.032, bestCost 1650495.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3484433
+mutation improvement count on best: 37
+mutation improvement count on all: 4481
+step:72 timeElapsed: 195.0825, bestCost 1649891.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3486210
+mutation improvement count on best: 37
+mutation improvement count on all: 4481
+step:73 timeElapsed: 195.8601, bestCost 1649887.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3487981
+mutation improvement count on best: 37
+mutation improvement count on all: 4481
+step:74 timeElapsed: 436.7184, bestCost 1648715.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3492046
+mutation improvement count on best: 38
+mutation improvement count on all: 4484
+step:75 timeElapsed: 142.2545, bestCost 1647660.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3493311
+mutation improvement count on best: 38
+mutation improvement count on all: 4484
+step:76 timeElapsed: 207.165, bestCost 1645267.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3495198
+mutation improvement count on best: 38
+mutation improvement count on all: 4484
+step:77 timeElapsed: 267.4902, bestCost 1642564.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3497676
+mutation improvement count on best: 38
+mutation improvement count on all: 4484
+step:78 timeElapsed: 478.8535, bestCost 1637053.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3502214
+mutation improvement count on best: 39
+mutation improvement count on all: 4487
+step:79 timeElapsed: 154.1781, bestCost 1635677.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3503627
+mutation improvement count on best: 39
+mutation improvement count on all: 4487
+step:80 timeElapsed: 175.2942, bestCost 1634438.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3505209
+mutation improvement count on best: 39
+mutation improvement count on all: 4487
+step:81 timeElapsed: 266.124, bestCost 1634123.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3507639
+mutation improvement count on best: 39
+mutation improvement count on all: 4487
+step:82 timeElapsed: 245.7525, bestCost 1633335.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3509918
+mutation improvement count on best: 39
+mutation improvement count on all: 4487
+step:83 timeElapsed: 276.3479, bestCost 1633001.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3512450
+mutation improvement count on best: 39
+mutation improvement count on all: 4487
+step:84 timeElapsed: 276.9052, bestCost 1631200.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3514957
+mutation improvement count on best: 39
+mutation improvement count on all: 4487
+step:85 timeElapsed: 232.3866, bestCost 1630766.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3517098
+mutation improvement count on best: 39
+mutation improvement count on all: 4487
+step:86 timeElapsed: 210.9379, bestCost 1628507.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3519037
+mutation improvement count on best: 39
+mutation improvement count on all: 4487
+step:87 timeElapsed: 262.5823, bestCost 1625611.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3521452
+mutation improvement count on best: 39
+mutation improvement count on all: 4487
+step:88 timeElapsed: 235.0154, bestCost 1625292.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3523615
+mutation improvement count on best: 39
+mutation improvement count on all: 4487
+step:89 timeElapsed: 248.624, bestCost 1622711.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3525920
+mutation improvement count on best: 40
+mutation improvement count on all: 4488
+step:90 timeElapsed: 198.9818, bestCost 1622533.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3527718
+mutation improvement count on best: 40
+mutation improvement count on all: 4488
+step:91 timeElapsed: 257.8968, bestCost 1621857.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3530117
+mutation improvement count on best: 40
+mutation improvement count on all: 4488
+step:92 timeElapsed: 344.5668, bestCost 1621099.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3533301
+mutation improvement count on best: 41
+mutation improvement count on all: 4489
+step:93 timeElapsed: 173.357, bestCost 1620521.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3534908
+mutation improvement count on best: 41
+mutation improvement count on all: 4489
+step:94 timeElapsed: 233.8555, bestCost 1618059.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3537057
+mutation improvement count on best: 41
+mutation improvement count on all: 4489
+step:95 timeElapsed: 329.3703, bestCost 1617559.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3540145
+mutation improvement count on best: 41
+mutation improvement count on all: 4489
+step:96 timeElapsed: 299.8986, bestCost 1616597.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3542910
+mutation improvement count on best: 41
+mutation improvement count on all: 4489
+step:97 timeElapsed: 772.6252, bestCost 1612900.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3550299
+mutation improvement count on best: 42
+mutation improvement count on all: 4496
+step:98 timeElapsed: 157.9721, bestCost 1612502.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3551757
+mutation improvement count on best: 42
+mutation improvement count on all: 4496
+step:99 timeElapsed: 333.7817, bestCost 1608272.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3554837
+mutation improvement count on best: 43
+mutation improvement count on all: 4497
+step:100 timeElapsed: 368.0993, bestCost 1605846.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3558305
+mutation improvement count on best: 44
+mutation improvement count on all: 4499
+step:101 timeElapsed: 317.7106, bestCost 1600197.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3561271
+mutation improvement count on best: 45
+mutation improvement count on all: 4500
+step:102 timeElapsed: 463.4132, bestCost 1600157.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3565628
+mutation improvement count on best: 46
+mutation improvement count on all: 4503
+step:103 timeElapsed: 690.3681, bestCost 1599215.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3572125
+mutation improvement count on best: 47
+mutation improvement count on all: 4509
+step:104 timeElapsed: 205.4692, bestCost 1598547.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3574033
+mutation improvement count on best: 47
+mutation improvement count on all: 4509
+step:105 timeElapsed: 440.0829, bestCost 1595977.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3578067
+mutation improvement count on best: 48
+mutation improvement count on all: 4511
+step:106 timeElapsed: 361.2887, bestCost 1594077.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3581369
+mutation improvement count on best: 49
+mutation improvement count on all: 4512
+step:107 timeElapsed: 166.5969, bestCost 1592060.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3582876
+mutation improvement count on best: 49
+mutation improvement count on all: 4512
+step:108 timeElapsed: 208.6057, bestCost 1591686.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3584761
+mutation improvement count on best: 49
+mutation improvement count on all: 4512
+step:109 timeElapsed: 236.7661, bestCost 1591333.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3586967
+mutation improvement count on best: 49
+mutation improvement count on all: 4512
+step:110 timeElapsed: 167.2414, bestCost 1590994.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3588472
+mutation improvement count on best: 49
+mutation improvement count on all: 4512
+step:111 timeElapsed: 345.4651, bestCost 1586147.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3591670
+mutation improvement count on best: 50
+mutation improvement count on all: 4513
+step:112 timeElapsed: 278.5226, bestCost 1584794.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3594235
+mutation improvement count on best: 50
+mutation improvement count on all: 4513
+step:113 timeElapsed: 338.8855, bestCost 1581804.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3597379
+mutation improvement count on best: 51
+mutation improvement count on all: 4514
+step:114 timeElapsed: 319.1025, bestCost 1580544.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3600356
+mutation improvement count on best: 51
+mutation improvement count on all: 4514
+step:115 timeElapsed: 267.4081, bestCost 1580317.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3602772
+mutation improvement count on best: 51
+mutation improvement count on all: 4514
+step:116 timeElapsed: 402.8244, bestCost 1578363.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3606571
+mutation improvement count on best: 52
+mutation improvement count on all: 4515
+step:117 timeElapsed: 246.0221, bestCost 1577914.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3608886
+mutation improvement count on best: 52
+mutation improvement count on all: 4515
+step:118 timeElapsed: 240.0938, bestCost 1576675.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3611072
+mutation improvement count on best: 52
+mutation improvement count on all: 4515
+step:119 timeElapsed: 318.7685, bestCost 1572464.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3614054
+mutation improvement count on best: 53
+mutation improvement count on all: 4516
+step:120 timeElapsed: 240.2006, bestCost 1572300.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3616263
+mutation improvement count on best: 53
+mutation improvement count on all: 4516
+step:121 timeElapsed: 241.6673, bestCost 1572163.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3618518
+mutation improvement count on best: 53
+mutation improvement count on all: 4516
+step:122 timeElapsed: 327.6791, bestCost 1570969.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3621568
+mutation improvement count on best: 53
+mutation improvement count on all: 4516
+step:123 timeElapsed: 225.2898, bestCost 1570123.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3623670
+mutation improvement count on best: 53
+mutation improvement count on all: 4516
+step:124 timeElapsed: 278.6423, bestCost 1569630.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3626252
+mutation improvement count on best: 53
+mutation improvement count on all: 4516
+step:125 timeElapsed: 289.7037, bestCost 1568239.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3628891
+mutation improvement count on best: 53
+mutation improvement count on all: 4516
+step:126 timeElapsed: 339.1563, bestCost 1566436.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3632131
+mutation improvement count on best: 53
+mutation improvement count on all: 4516
+step:127 timeElapsed: 304.6838, bestCost 1566055.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3634962
+mutation improvement count on best: 53
+mutation improvement count on all: 4516
+step:128 timeElapsed: 362.3102, bestCost 1565781.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3638339
+mutation improvement count on best: 53
+mutation improvement count on all: 4516
+step:129 timeElapsed: 317.3988, bestCost 1564191.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3641291
+mutation improvement count on best: 53
+mutation improvement count on all: 4516
+step:130 timeElapsed: 341.5221, bestCost 1560737.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3644414
+mutation improvement count on best: 53
+mutation improvement count on all: 4516
+step:131 timeElapsed: 288.7901, bestCost 1560725.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3647094
+mutation improvement count on best: 53
+mutation improvement count on all: 4516
+step:132 timeElapsed: 279.9157, bestCost 1560504.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3649719
+mutation improvement count on best: 53
+mutation improvement count on all: 4516
+step:133 timeElapsed: 315.3758, bestCost 1560189.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3652535
+mutation improvement count on best: 53
+mutation improvement count on all: 4516
+step:134 timeElapsed: 504.2284, bestCost 1559638.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3657070
+mutation improvement count on best: 54
+mutation improvement count on all: 4518
+step:135 timeElapsed: 475.8248, bestCost 1557214.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3661401
+mutation improvement count on best: 55
+mutation improvement count on all: 4520
+step:136 timeElapsed: 482.5171, bestCost 1554859.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3665692
+mutation improvement count on best: 56
+mutation improvement count on all: 4521
+step:137 timeElapsed: 176.3655, bestCost 1554823.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3667251
+mutation improvement count on best: 56
+mutation improvement count on all: 4521
+step:138 timeElapsed: 270.3251, bestCost 1554581.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3669714
+mutation improvement count on best: 56
+mutation improvement count on all: 4521
+step:139 timeElapsed: 235.2128, bestCost 1553067.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3671883
+mutation improvement count on best: 56
+mutation improvement count on all: 4521
+step:140 timeElapsed: 342.0973, bestCost 1552946.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3675017
+mutation improvement count on best: 56
+mutation improvement count on all: 4521
+step:141 timeElapsed: 246.3058, bestCost 1552037.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3677276
+mutation improvement count on best: 56
+mutation improvement count on all: 4521
+step:142 timeElapsed: 234.1613, bestCost 1551897.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3679425
+mutation improvement count on best: 56
+mutation improvement count on all: 4521
+step:143 timeElapsed: 317.9578, bestCost 1550133.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3682381
+mutation improvement count on best: 56
+mutation improvement count on all: 4521
+step:144 timeElapsed: 265.6799, bestCost 1548794.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3684828
+mutation improvement count on best: 56
+mutation improvement count on all: 4521
+step:145 timeElapsed: 266.0664, bestCost 1548277.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3687293
+mutation improvement count on best: 56
+mutation improvement count on all: 4521
+step:146 timeElapsed: 356.9624, bestCost 1546483.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3690600
+mutation improvement count on best: 56
+mutation improvement count on all: 4521
+step:147 timeElapsed: 286.0578, bestCost 1544774.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3693281
+mutation improvement count on best: 56
+mutation improvement count on all: 4521
+step:148 timeElapsed: 300.0251, bestCost 1544760.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3696049
+mutation improvement count on best: 56
+mutation improvement count on all: 4521
+step:149 timeElapsed: 719.231, bestCost 1543586.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3702900
+mutation improvement count on best: 57
+mutation improvement count on all: 4525
+step:150 timeElapsed: 342.114, bestCost 1543499.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3706068
+mutation improvement count on best: 57
+mutation improvement count on all: 4525
+step:151 timeElapsed: 294.6368, bestCost 1541972.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3708774
+mutation improvement count on best: 57
+mutation improvement count on all: 4525
+step:152 timeElapsed: 374.6267, bestCost 1540485.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3712266
+mutation improvement count on best: 57
+mutation improvement count on all: 4525
+step:153 timeElapsed: 377.7209, bestCost 1537981.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3715844
+mutation improvement count on best: 58
+mutation improvement count on all: 4526
+step:154 timeElapsed: 337.1828, bestCost 1536992.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3718943
+mutation improvement count on best: 58
+mutation improvement count on all: 4526
+step:155 timeElapsed: 290.5207, bestCost 1536089.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3721622
+mutation improvement count on best: 58
+mutation improvement count on all: 4526
+step:156 timeElapsed: 336.0876, bestCost 1535744.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3724725
+mutation improvement count on best: 58
+mutation improvement count on all: 4526
+step:157 timeElapsed: 256.7391, bestCost 1534507.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3727068
+mutation improvement count on best: 58
+mutation improvement count on all: 4526
+step:158 timeElapsed: 308.3741, bestCost 1533857.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3729940
+mutation improvement count on best: 58
+mutation improvement count on all: 4526
+step:159 timeElapsed: 435.7423, bestCost 1533410.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3733966
+mutation improvement count on best: 58
+mutation improvement count on all: 4526
+step:160 timeElapsed: 427.0979, bestCost 1533190.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3737933
+mutation improvement count on best: 58
+mutation improvement count on all: 4526
+step:161 timeElapsed: 382.0848, bestCost 1531950.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3741527
+mutation improvement count on best: 58
+mutation improvement count on all: 4526
+step:162 timeElapsed: 331.4718, bestCost 1531142.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3744637
+mutation improvement count on best: 58
+mutation improvement count on all: 4526
+step:163 timeElapsed: 303.5522, bestCost 1530410.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3747440
+mutation improvement count on best: 58
+mutation improvement count on all: 4526
+step:164 timeElapsed: 346.5106, bestCost 1530386.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3750678
+mutation improvement count on best: 58
+mutation improvement count on all: 4526
+step:165 timeElapsed: 318.8208, bestCost 1530055.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3753627
+mutation improvement count on best: 58
+mutation improvement count on all: 4526
+step:166 timeElapsed: 347.2957, bestCost 1529250.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3756820
+mutation improvement count on best: 58
+mutation improvement count on all: 4526
+step:167 timeElapsed: 397.6491, bestCost 1528992.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3760547
+mutation improvement count on best: 58
+mutation improvement count on all: 4526
+step:168 timeElapsed: 400.2329, bestCost 1527631.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3764278
+mutation improvement count on best: 58
+mutation improvement count on all: 4526
+step:169 timeElapsed: 417.5206, bestCost 1526351.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3768162
+mutation improvement count on best: 58
+mutation improvement count on all: 4526
+step:170 timeElapsed: 362.9596, bestCost 1525544.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3771516
+mutation improvement count on best: 58
+mutation improvement count on all: 4526
+step:171 timeElapsed: 295.8013, bestCost 1524645.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3774275
+mutation improvement count on best: 58
+mutation improvement count on all: 4526
+step:172 timeElapsed: 330.5686, bestCost 1523394.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3777362
+mutation improvement count on best: 58
+mutation improvement count on all: 4526
+step:173 timeElapsed: 315.6963, bestCost 1522566.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3780293
+mutation improvement count on best: 58
+mutation improvement count on all: 4526
+step:174 timeElapsed: 302.2002, bestCost 1522229.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3783121
+mutation improvement count on best: 58
+mutation improvement count on all: 4526
+step:175 timeElapsed: 525.5634, bestCost 1520225.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3788087
+mutation improvement count on best: 59
+mutation improvement count on all: 4527
+step:176 timeElapsed: 261.811, bestCost 1519468.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3790532
+mutation improvement count on best: 59
+mutation improvement count on all: 4527
+step:177 timeElapsed: 342.9135, bestCost 1518511.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3793698
+mutation improvement count on best: 59
+mutation improvement count on all: 4527
+step:178 timeElapsed: 415.8912, bestCost 1518241.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3797568
+mutation improvement count on best: 59
+mutation improvement count on all: 4527
+step:179 timeElapsed: 261.7484, bestCost 1517847.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3800009
+mutation improvement count on best: 59
+mutation improvement count on all: 4527
+step:180 timeElapsed: 435.7664, bestCost 1517177.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3804105
+mutation improvement count on best: 59
+mutation improvement count on all: 4527
+step:181 timeElapsed: 311.014, bestCost 1514926.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3807027
+mutation improvement count on best: 59
+mutation improvement count on all: 4527
+step:182 timeElapsed: 511.3774, bestCost 1513789.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3811811
+mutation improvement count on best: 60
+mutation improvement count on all: 4528
+step:183 timeElapsed: 353.4003, bestCost 1513127.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3815115
+mutation improvement count on best: 60
+mutation improvement count on all: 4528
+step:184 timeElapsed: 418.8274, bestCost 1513081.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3818993
+mutation improvement count on best: 60
+mutation improvement count on all: 4528
+step:185 timeElapsed: 389.7602, bestCost 1513013.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3822656
+mutation improvement count on best: 60
+mutation improvement count on all: 4528
+step:186 timeElapsed: 397.8724, bestCost 1512908.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3826401
+mutation improvement count on best: 60
+mutation improvement count on all: 4528
+step:187 timeElapsed: 442.6436, bestCost 1512232.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3830574
+mutation improvement count on best: 60
+mutation improvement count on all: 4528
+step:188 timeElapsed: 414.9736, bestCost 1511625.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3834440
+mutation improvement count on best: 60
+mutation improvement count on all: 4528
+step:189 timeElapsed: 464.2469, bestCost 1508006.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3838778
+mutation improvement count on best: 60
+mutation improvement count on all: 4528
+step:190 timeElapsed: 444.8054, bestCost 1507645.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3842939
+mutation improvement count on best: 60
+mutation improvement count on all: 4528
+step:191 timeElapsed: 478.265, bestCost 1506935.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3847412
+mutation improvement count on best: 60
+mutation improvement count on all: 4528
+step:192 timeElapsed: 482.6424, bestCost 1506402.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3851927
+mutation improvement count on best: 60
+mutation improvement count on all: 4528
+step:193 timeElapsed: 252.7182, bestCost 1506321.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3854252
+mutation improvement count on best: 60
+mutation improvement count on all: 4528
+step:194 timeElapsed: 414.1777, bestCost 1505044.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3858138
+mutation improvement count on best: 60
+mutation improvement count on all: 4528
+step:195 timeElapsed: 436.1646, bestCost 1504196.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3862229
+mutation improvement count on best: 60
+mutation improvement count on all: 4528
+step:196 timeElapsed: 432.5756, bestCost 1503749.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3866248
+mutation improvement count on best: 61
+mutation improvement count on all: 4529
+step:197 timeElapsed: 472.8513, bestCost 1503698.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3870661
+mutation improvement count on best: 61
+mutation improvement count on all: 4529
+step:198 timeElapsed: 315.7473, bestCost 1503645.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3873580
+mutation improvement count on best: 61
+mutation improvement count on all: 4529
+step:199 timeElapsed: 426.7971, bestCost 1503638.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3877547
+mutation improvement count on best: 61
+mutation improvement count on all: 4529
+step:200 timeElapsed: 410.6688, bestCost 1501496.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3881438
+mutation improvement count on best: 61
+mutation improvement count on all: 4529
+step:201 timeElapsed: 382.0911, bestCost 1498558.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3885016
+mutation improvement count on best: 61
+mutation improvement count on all: 4529
+step:202 timeElapsed: 410.7162, bestCost 1495838.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3888861
+mutation improvement count on best: 61
+mutation improvement count on all: 4529
+step:203 timeElapsed: 471.0546, bestCost 1494274.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3893279
+mutation improvement count on best: 61
+mutation improvement count on all: 4529
+step:204 timeElapsed: 461.6401, bestCost 1492474.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3897549
+mutation improvement count on best: 61
+mutation improvement count on all: 4529
+step:205 timeElapsed: 387.7836, bestCost 1490450.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3901147
+mutation improvement count on best: 61
+mutation improvement count on all: 4529
+step:206 timeElapsed: 494.9901, bestCost 1490205.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3905800
+mutation improvement count on best: 61
+mutation improvement count on all: 4529
+step:207 timeElapsed: 457.4555, bestCost 1486998.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3910028
+mutation improvement count on best: 61
+mutation improvement count on all: 4529
+step:208 timeElapsed: 492.8101, bestCost 1485997.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3914614
+mutation improvement count on best: 61
+mutation improvement count on all: 4529
+step:209 timeElapsed: 492.2754, bestCost 1485244.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3919237
+mutation improvement count on best: 61
+mutation improvement count on all: 4529
+step:210 timeElapsed: 409.1261, bestCost 1480769.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3923047
+mutation improvement count on best: 61
+mutation improvement count on all: 4529
+step:211 timeElapsed: 527.5016, bestCost 1480089.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3927987
+mutation improvement count on best: 61
+mutation improvement count on all: 4529
+step:212 timeElapsed: 282.4505, bestCost 1479478.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3930615
+mutation improvement count on best: 61
+mutation improvement count on all: 4529
+step:213 timeElapsed: 425.4619, bestCost 1478914.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3934589
+mutation improvement count on best: 61
+mutation improvement count on all: 4529
+step:214 timeElapsed: 541.8654, bestCost 1478549.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3939678
+mutation improvement count on best: 61
+mutation improvement count on all: 4529
+step:215 timeElapsed: 359.3543, bestCost 1478262.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3943010
+mutation improvement count on best: 61
+mutation improvement count on all: 4529
+step:216 timeElapsed: 439.3405, bestCost 1477419.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3947112
+mutation improvement count on best: 61
+mutation improvement count on all: 4529
+step:217 timeElapsed: 386.8056, bestCost 1476681.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3950675
+mutation improvement count on best: 61
+mutation improvement count on all: 4529
+step:218 timeElapsed: 433.046, bestCost 1476650.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3954706
+mutation improvement count on best: 61
+mutation improvement count on all: 4529
+step:219 timeElapsed: 455.8568, bestCost 1474616.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3958943
+mutation improvement count on best: 61
+mutation improvement count on all: 4529
+step:220 timeElapsed: 489.634, bestCost 1473254.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3963540
+mutation improvement count on best: 61
+mutation improvement count on all: 4529
+step:221 timeElapsed: 474.895, bestCost 1472979.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3967922
+mutation improvement count on best: 61
+mutation improvement count on all: 4529
+step:222 timeElapsed: 620.3129, bestCost 1471637.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3973717
+mutation improvement count on best: 62
+mutation improvement count on all: 4531
+step:223 timeElapsed: 397.3096, bestCost 1471572.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3977431
+mutation improvement count on best: 62
+mutation improvement count on all: 4531
+step:224 timeElapsed: 401.4973, bestCost 1470982.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3981170
+mutation improvement count on best: 62
+mutation improvement count on all: 4531
+step:225 timeElapsed: 401.5709, bestCost 1469764.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3984934
+mutation improvement count on best: 62
+mutation improvement count on all: 4531
+step:226 timeElapsed: 451.5467, bestCost 1469192.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3989097
+mutation improvement count on best: 62
+mutation improvement count on all: 4531
+step:227 timeElapsed: 452.3802, bestCost 1467736.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3993299
+mutation improvement count on best: 62
+mutation improvement count on all: 4531
+step:228 timeElapsed: 395.9402, bestCost 1467168.0, worstCost 1.42926583097871552E17
+fitness cost call count: 3997003
+mutation improvement count on best: 62
+mutation improvement count on all: 4531
+step:229 timeElapsed: 531.5406, bestCost 1466762.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4001961
+mutation improvement count on best: 62
+mutation improvement count on all: 4531
+step:230 timeElapsed: 429.183, bestCost 1466124.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4005914
+mutation improvement count on best: 62
+mutation improvement count on all: 4531
+step:231 timeElapsed: 380.5563, bestCost 1464982.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4009485
+mutation improvement count on best: 62
+mutation improvement count on all: 4531
+step:232 timeElapsed: 445.9083, bestCost 1464792.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4013679
+mutation improvement count on best: 62
+mutation improvement count on all: 4531
+step:233 timeElapsed: 397.1142, bestCost 1464192.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4017375
+mutation improvement count on best: 62
+mutation improvement count on all: 4531
+step:234 timeElapsed: 396.6637, bestCost 1463588.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4021054
+mutation improvement count on best: 62
+mutation improvement count on all: 4531
+step:235 timeElapsed: 510.8253, bestCost 1462389.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4025923
+mutation improvement count on best: 62
+mutation improvement count on all: 4531
+step:236 timeElapsed: 473.8285, bestCost 1460124.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4030338
+mutation improvement count on best: 62
+mutation improvement count on all: 4531
+step:237 timeElapsed: 527.1349, bestCost 1457749.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4035290
+mutation improvement count on best: 62
+mutation improvement count on all: 4531
+step:238 timeElapsed: 482.9419, bestCost 1457386.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4039796
+mutation improvement count on best: 62
+mutation improvement count on all: 4531
+step:239 timeElapsed: 525.6127, bestCost 1456957.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4044787
+mutation improvement count on best: 62
+mutation improvement count on all: 4531
+step:240 timeElapsed: 443.5768, bestCost 1456750.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4048927
+mutation improvement count on best: 62
+mutation improvement count on all: 4531
+step:241 timeElapsed: 479.4969, bestCost 1456651.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4053433
+mutation improvement count on best: 62
+mutation improvement count on all: 4531
+step:242 timeElapsed: 498.3247, bestCost 1456332.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4058110
+mutation improvement count on best: 62
+mutation improvement count on all: 4531
+step:243 timeElapsed: 511.5725, bestCost 1456029.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4062885
+mutation improvement count on best: 62
+mutation improvement count on all: 4531
+step:244 timeElapsed: 468.1784, bestCost 1456001.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4067316
+mutation improvement count on best: 62
+mutation improvement count on all: 4531
+step:245 timeElapsed: 508.1382, bestCost 1455725.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4072062
+mutation improvement count on best: 62
+mutation improvement count on all: 4531
+step:246 timeElapsed: 508.225, bestCost 1455699.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4076829
+mutation improvement count on best: 62
+mutation improvement count on all: 4531
+step:247 timeElapsed: 428.3165, bestCost 1454409.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4080870
+mutation improvement count on best: 62
+mutation improvement count on all: 4531
+step:248 timeElapsed: 590.5132, bestCost 1453154.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4086315
+mutation improvement count on best: 62
+mutation improvement count on all: 4531
+step:249 timeElapsed: 486.4974, bestCost 1453044.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4090830
+mutation improvement count on best: 62
+mutation improvement count on all: 4531
+step:250 timeElapsed: 596.6607, bestCost 1452778.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4096414
+mutation improvement count on best: 62
+mutation improvement count on all: 4531
+step:251 timeElapsed: 482.8158, bestCost 1452638.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4100891
+mutation improvement count on best: 62
+mutation improvement count on all: 4531
+step:252 timeElapsed: 436.0293, bestCost 1452620.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4104931
+mutation improvement count on best: 62
+mutation improvement count on all: 4531
+step:253 timeElapsed: 589.7049, bestCost 1451102.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4110424
+mutation improvement count on best: 62
+mutation improvement count on all: 4531
+step:254 timeElapsed: 517.367, bestCost 1450872.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4115243
+mutation improvement count on best: 62
+mutation improvement count on all: 4531
+step:255 timeElapsed: 264.1172, bestCost 1450403.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4117692
+mutation improvement count on best: 62
+mutation improvement count on all: 4531
+step:256 timeElapsed: 311.9345, bestCost 1450150.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4120600
+mutation improvement count on best: 62
+mutation improvement count on all: 4531
+step:257 timeElapsed: 393.7563, bestCost 1450098.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4124245
+mutation improvement count on best: 62
+mutation improvement count on all: 4531
+step:258 timeElapsed: 510.6453, bestCost 1449743.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4129054
+mutation improvement count on best: 62
+mutation improvement count on all: 4531
+step:259 timeElapsed: 482.0144, bestCost 1448438.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4133544
+mutation improvement count on best: 63
+mutation improvement count on all: 4532
+step:260 timeElapsed: 301.1263, bestCost 1447609.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4136370
+mutation improvement count on best: 63
+mutation improvement count on all: 4532
+step:261 timeElapsed: 392.5351, bestCost 1447601.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4139938
+mutation improvement count on best: 63
+mutation improvement count on all: 4532
+step:262 timeElapsed: 513.318, bestCost 1447077.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4144706
+mutation improvement count on best: 63
+mutation improvement count on all: 4532
+step:263 timeElapsed: 568.3974, bestCost 1446319.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4150072
+mutation improvement count on best: 63
+mutation improvement count on all: 4532
+step:264 timeElapsed: 506.4997, bestCost 1446133.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4154835
+mutation improvement count on best: 63
+mutation improvement count on all: 4532
+step:265 timeElapsed: 525.1353, bestCost 1446035.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4159730
+mutation improvement count on best: 63
+mutation improvement count on all: 4532
+step:266 timeElapsed: 316.9246, bestCost 1446035.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4162673
+mutation improvement count on best: 63
+mutation improvement count on all: 4532
+step:267 timeElapsed: 113.525, bestCost 1445797.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4163690
+mutation improvement count on best: 63
+mutation improvement count on all: 4532
+step:268 timeElapsed: 115.841, bestCost 1445539.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4164698
+mutation improvement count on best: 63
+mutation improvement count on all: 4532
+step:269 timeElapsed: 118.4239, bestCost 1444739.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4165749
+mutation improvement count on best: 63
+mutation improvement count on all: 4532
+step:270 timeElapsed: 125.4116, bestCost 1443644.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4166874
+mutation improvement count on best: 63
+mutation improvement count on all: 4532
+step:271 timeElapsed: 136.4185, bestCost 1442514.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4168079
+mutation improvement count on best: 63
+mutation improvement count on all: 4532
+step:272 timeElapsed: 143.2098, bestCost 1441709.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4169346
+mutation improvement count on best: 63
+mutation improvement count on all: 4532
+step:273 timeElapsed: 123.7235, bestCost 1438846.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4170439
+mutation improvement count on best: 63
+mutation improvement count on all: 4532
+step:274 timeElapsed: 153.4648, bestCost 1438646.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4171830
+mutation improvement count on best: 63
+mutation improvement count on all: 4532
+step:275 timeElapsed: 139.2551, bestCost 1437358.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4173076
+mutation improvement count on best: 63
+mutation improvement count on all: 4532
+step:276 timeElapsed: 148.7662, bestCost 1437093.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4174413
+mutation improvement count on best: 63
+mutation improvement count on all: 4532
+step:277 timeElapsed: 147.6383, bestCost 1436443.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4175732
+mutation improvement count on best: 63
+mutation improvement count on all: 4532
+step:278 timeElapsed: 170.768, bestCost 1436334.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4177255
+mutation improvement count on best: 63
+mutation improvement count on all: 4532
+step:279 timeElapsed: 148.6739, bestCost 1435915.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4178596
+mutation improvement count on best: 63
+mutation improvement count on all: 4532
+step:280 timeElapsed: 230.3548, bestCost 1435088.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4180716
+mutation improvement count on best: 64
+mutation improvement count on all: 4533
+step:281 timeElapsed: 185.507, bestCost 1429242.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4182406
+mutation improvement count on best: 64
+mutation improvement count on all: 4533
+step:282 timeElapsed: 171.7286, bestCost 1428493.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4183957
+mutation improvement count on best: 64
+mutation improvement count on all: 4533
+step:283 timeElapsed: 143.2697, bestCost 1428430.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4185246
+mutation improvement count on best: 64
+mutation improvement count on all: 4533
+step:284 timeElapsed: 152.0501, bestCost 1427907.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4186586
+mutation improvement count on best: 64
+mutation improvement count on all: 4533
+step:285 timeElapsed: 171.9237, bestCost 1425954.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4188134
+mutation improvement count on best: 64
+mutation improvement count on all: 4533
+step:286 timeElapsed: 182.4052, bestCost 1425266.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4189780
+mutation improvement count on best: 64
+mutation improvement count on all: 4533
+step:287 timeElapsed: 194.2266, bestCost 1425018.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4191505
+mutation improvement count on best: 64
+mutation improvement count on all: 4533
+step:288 timeElapsed: 194.4775, bestCost 1424675.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4193271
+mutation improvement count on best: 64
+mutation improvement count on all: 4533
+step:289 timeElapsed: 145.9504, bestCost 1423893.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4194556
+mutation improvement count on best: 64
+mutation improvement count on all: 4533
+step:290 timeElapsed: 269.5091, bestCost 1417493.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4197047
+mutation improvement count on best: 65
+mutation improvement count on all: 4534
+step:291 timeElapsed: 171.2094, bestCost 1415236.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4198632
+mutation improvement count on best: 65
+mutation improvement count on all: 4534
+step:292 timeElapsed: 179.8674, bestCost 1415105.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4200240
+mutation improvement count on best: 65
+mutation improvement count on all: 4534
+step:293 timeElapsed: 192.0654, bestCost 1412166.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4202008
+mutation improvement count on best: 65
+mutation improvement count on all: 4534
+step:294 timeElapsed: 177.1344, bestCost 1411346.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4203607
+mutation improvement count on best: 65
+mutation improvement count on all: 4534
+step:295 timeElapsed: 177.3063, bestCost 1411262.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4205244
+mutation improvement count on best: 65
+mutation improvement count on all: 4534
+step:296 timeElapsed: 215.506, bestCost 1411168.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4207227
+mutation improvement count on best: 65
+mutation improvement count on all: 4534
+step:297 timeElapsed: 182.8837, bestCost 1409691.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4208895
+mutation improvement count on best: 65
+mutation improvement count on all: 4534
+step:298 timeElapsed: 248.1086, bestCost 1403240.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4211178
+mutation improvement count on best: 66
+mutation improvement count on all: 4535
+step:299 timeElapsed: 227.6763, bestCost 1402701.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4213257
+mutation improvement count on best: 66
+mutation improvement count on all: 4535
+step:300 timeElapsed: 232.7781, bestCost 1402131.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4215434
+mutation improvement count on best: 66
+mutation improvement count on all: 4535
+step:301 timeElapsed: 211.0138, bestCost 1401882.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4217363
+mutation improvement count on best: 66
+mutation improvement count on all: 4535
+step:302 timeElapsed: 198.6994, bestCost 1401706.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4219196
+mutation improvement count on best: 66
+mutation improvement count on all: 4535
+step:303 timeElapsed: 222.8307, bestCost 1401660.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4221227
+mutation improvement count on best: 66
+mutation improvement count on all: 4535
+step:304 timeElapsed: 215.5259, bestCost 1400921.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4223227
+mutation improvement count on best: 66
+mutation improvement count on all: 4535
+step:305 timeElapsed: 212.7641, bestCost 1400564.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4225188
+mutation improvement count on best: 66
+mutation improvement count on all: 4535
+step:306 timeElapsed: 278.2128, bestCost 1399275.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4227802
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:307 timeElapsed: 133.2905, bestCost 1398835.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4229025
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:308 timeElapsed: 170.1058, bestCost 1397651.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4230547
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:309 timeElapsed: 207.2209, bestCost 1397450.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4232469
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:310 timeElapsed: 221.3152, bestCost 1397436.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4234497
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:311 timeElapsed: 256.2598, bestCost 1396512.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4236867
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:312 timeElapsed: 217.4094, bestCost 1396416.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4238854
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:313 timeElapsed: 239.4063, bestCost 1395980.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4241079
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:314 timeElapsed: 254.9249, bestCost 1395739.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4243414
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:315 timeElapsed: 223.7121, bestCost 1395475.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4245462
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:316 timeElapsed: 240.8762, bestCost 1395441.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4247633
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:317 timeElapsed: 271.4673, bestCost 1393505.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4250175
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:318 timeElapsed: 287.2961, bestCost 1393469.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4252809
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:319 timeElapsed: 224.9247, bestCost 1393333.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4254873
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:320 timeElapsed: 305.2578, bestCost 1393302.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4257680
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:321 timeElapsed: 256.3764, bestCost 1393098.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4260068
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:322 timeElapsed: 279.9873, bestCost 1391803.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4262635
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:323 timeElapsed: 171.4266, bestCost 1390700.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4264198
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:324 timeElapsed: 255.7628, bestCost 1390441.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4266539
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:325 timeElapsed: 325.966, bestCost 1390156.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4269524
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:326 timeElapsed: 288.1369, bestCost 1389512.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4272187
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:327 timeElapsed: 257.1599, bestCost 1388084.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4274591
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:328 timeElapsed: 273.9835, bestCost 1387477.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4277122
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:329 timeElapsed: 266.6135, bestCost 1386467.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4279583
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:330 timeElapsed: 255.342, bestCost 1386223.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4281974
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:331 timeElapsed: 295.846, bestCost 1385767.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4284704
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:332 timeElapsed: 281.8929, bestCost 1385696.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4287292
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:333 timeElapsed: 304.9341, bestCost 1385406.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4290184
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:334 timeElapsed: 316.3926, bestCost 1384603.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4293092
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:335 timeElapsed: 316.0303, bestCost 1384036.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4296039
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:336 timeElapsed: 186.5391, bestCost 1382333.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4297721
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:337 timeElapsed: 190.2583, bestCost 1382229.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4299437
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:338 timeElapsed: 302.1536, bestCost 1381908.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4302225
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:339 timeElapsed: 308.1696, bestCost 1379862.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4305079
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:340 timeElapsed: 309.375, bestCost 1379788.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4307981
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:341 timeElapsed: 332.2649, bestCost 1379775.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4311033
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:342 timeElapsed: 275.0318, bestCost 1379596.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4313543
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:343 timeElapsed: 335.8623, bestCost 1378719.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4316726
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:344 timeElapsed: 324.3621, bestCost 1378533.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4319710
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:345 timeElapsed: 323.8455, bestCost 1377929.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4322715
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:346 timeElapsed: 321.0689, bestCost 1377479.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4325705
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:347 timeElapsed: 300.9776, bestCost 1377129.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4328516
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:348 timeElapsed: 155.6479, bestCost 1377086.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4329951
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:349 timeElapsed: 366.4392, bestCost 1376455.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4333367
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:350 timeElapsed: 324.1246, bestCost 1375861.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4336403
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:351 timeElapsed: 322.0962, bestCost 1373826.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4339432
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:352 timeElapsed: 391.394, bestCost 1373138.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4343100
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:353 timeElapsed: 353.2417, bestCost 1372978.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4346379
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:354 timeElapsed: 404.8167, bestCost 1371938.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4350127
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:355 timeElapsed: 416.562, bestCost 1371160.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4354055
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:356 timeElapsed: 338.4988, bestCost 1370314.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4357273
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:357 timeElapsed: 320.0256, bestCost 1369906.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4360262
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:358 timeElapsed: 367.0873, bestCost 1367186.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4363674
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:359 timeElapsed: 210.8696, bestCost 1367157.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4365631
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:360 timeElapsed: 345.476, bestCost 1366641.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4368832
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:361 timeElapsed: 232.2558, bestCost 1366613.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4370945
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:362 timeElapsed: 216.6348, bestCost 1364279.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4372934
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:363 timeElapsed: 388.7334, bestCost 1363927.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4376596
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:364 timeElapsed: 222.5957, bestCost 1363248.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4378640
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:365 timeElapsed: 346.6477, bestCost 1362282.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4381849
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:366 timeElapsed: 322.0853, bestCost 1361535.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4384866
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:367 timeElapsed: 332.2482, bestCost 1361521.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4388020
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:368 timeElapsed: 378.6412, bestCost 1358606.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4391583
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:369 timeElapsed: 382.3425, bestCost 1357939.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4395182
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:370 timeElapsed: 356.7473, bestCost 1357926.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4398516
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:371 timeElapsed: 409.4062, bestCost 1357216.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4402364
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:372 timeElapsed: 318.5845, bestCost 1357068.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4405296
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:373 timeElapsed: 417.19, bestCost 1357015.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4409149
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:374 timeElapsed: 260.1573, bestCost 1356460.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4411551
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:375 timeElapsed: 368.0416, bestCost 1356297.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4414996
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:376 timeElapsed: 248.2147, bestCost 1356282.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4417258
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:377 timeElapsed: 380.6079, bestCost 1355812.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4420841
+mutation improvement count on best: 67
+mutation improvement count on all: 4536
+step:378 timeElapsed: 499.1563, bestCost 1353001.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4425537
+mutation improvement count on best: 68
+mutation improvement count on all: 4537
+step:379 timeElapsed: 230.7044, bestCost 1352510.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4427665
+mutation improvement count on best: 68
+mutation improvement count on all: 4537
+step:380 timeElapsed: 315.3526, bestCost 1350050.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4430599
+mutation improvement count on best: 69
+mutation improvement count on all: 4538
+step:381 timeElapsed: 266.081, bestCost 1349830.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4433054
+mutation improvement count on best: 69
+mutation improvement count on all: 4538
+step:382 timeElapsed: 303.1374, bestCost 1349824.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4435886
+mutation improvement count on best: 69
+mutation improvement count on all: 4538
+step:383 timeElapsed: 379.5009, bestCost 1349263.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4439435
+mutation improvement count on best: 69
+mutation improvement count on all: 4538
+step:384 timeElapsed: 192.6208, bestCost 1349042.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4441170
+mutation improvement count on best: 69
+mutation improvement count on all: 4538
+step:385 timeElapsed: 244.1866, bestCost 1348044.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4443390
+mutation improvement count on best: 69
+mutation improvement count on all: 4538
+step:386 timeElapsed: 405.825, bestCost 1347085.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4447197
+mutation improvement count on best: 69
+mutation improvement count on all: 4538
+step:387 timeElapsed: 351.8208, bestCost 1347040.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4450514
+mutation improvement count on best: 69
+mutation improvement count on all: 4538
+step:388 timeElapsed: 412.6396, bestCost 1346855.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4454428
+mutation improvement count on best: 69
+mutation improvement count on all: 4538
+step:389 timeElapsed: 452.0321, bestCost 1342912.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4458673
+mutation improvement count on best: 69
+mutation improvement count on all: 4538
+step:390 timeElapsed: 424.7782, bestCost 1341968.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4462690
+mutation improvement count on best: 69
+mutation improvement count on all: 4538
+step:391 timeElapsed: 420.8939, bestCost 1339137.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4466651
+mutation improvement count on best: 69
+mutation improvement count on all: 4538
+step:392 timeElapsed: 379.6288, bestCost 1339098.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4470221
+mutation improvement count on best: 69
+mutation improvement count on all: 4538
+step:393 timeElapsed: 314.1901, bestCost 1339098.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4473193
+mutation improvement count on best: 69
+mutation improvement count on all: 4538
+step:394 timeElapsed: 122.2948, bestCost 1338320.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4474260
+mutation improvement count on best: 69
+mutation improvement count on all: 4538
+step:395 timeElapsed: 115.7026, bestCost 1337508.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4475299
+mutation improvement count on best: 69
+mutation improvement count on all: 4538
+step:396 timeElapsed: 133.8926, bestCost 1336266.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4476498
+mutation improvement count on best: 69
+mutation improvement count on all: 4538
+step:397 timeElapsed: 136.9453, bestCost 1336137.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4477681
+mutation improvement count on best: 69
+mutation improvement count on all: 4538
+step:398 timeElapsed: 137.2868, bestCost 1336134.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4478908
+mutation improvement count on best: 69
+mutation improvement count on all: 4538
+step:399 timeElapsed: 130.8076, bestCost 1336067.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4480094
+mutation improvement count on best: 69
+mutation improvement count on all: 4538
+step:400 timeElapsed: 142.4069, bestCost 1336044.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4481381
+mutation improvement count on best: 69
+mutation improvement count on all: 4538
+step:401 timeElapsed: 134.7989, bestCost 1335962.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4482595
+mutation improvement count on best: 69
+mutation improvement count on all: 4538
+step:402 timeElapsed: 152.6085, bestCost 1335955.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4483966
+mutation improvement count on best: 69
+mutation improvement count on all: 4538
+step:403 timeElapsed: 176.0713, bestCost 1335888.0, worstCost 1.42926583097871552E17
+fitness cost call count: 4485548
+mutation improvement count on best: 69
+mutation improvement count on all: 4538
+step:404 timeElapsed: 154.1556, bestCost 1335653.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4486903
+mutation improvement count on best: 69
+mutation improvement count on all: 4538
+step:405 timeElapsed: 175.7208, bestCost 1335365.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4488466
+mutation improvement count on best: 69
+mutation improvement count on all: 4538
+step:406 timeElapsed: 164.2845, bestCost 1334643.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4489950
+mutation improvement count on best: 69
+mutation improvement count on all: 4538
+step:407 timeElapsed: 248.2308, bestCost 1330499.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4492241
+mutation improvement count on best: 70
+mutation improvement count on all: 4539
+step:408 timeElapsed: 140.4206, bestCost 1330457.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4493510
+mutation improvement count on best: 70
+mutation improvement count on all: 4539
+step:409 timeElapsed: 158.805, bestCost 1329036.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4494964
+mutation improvement count on best: 70
+mutation improvement count on all: 4539
+step:410 timeElapsed: 186.9392, bestCost 1328903.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4496591
+mutation improvement count on best: 70
+mutation improvement count on all: 4539
+step:411 timeElapsed: 196.2792, bestCost 1328032.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4498393
+mutation improvement count on best: 70
+mutation improvement count on all: 4539
+step:412 timeElapsed: 167.9125, bestCost 1327539.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4499937
+mutation improvement count on best: 70
+mutation improvement count on all: 4539
+step:413 timeElapsed: 218.7437, bestCost 1325710.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4501951
+mutation improvement count on best: 70
+mutation improvement count on all: 4539
+step:414 timeElapsed: 136.9973, bestCost 1325121.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4503168
+mutation improvement count on best: 70
+mutation improvement count on all: 4539
+step:415 timeElapsed: 200.218, bestCost 1322861.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4504967
+mutation improvement count on best: 70
+mutation improvement count on all: 4539
+step:416 timeElapsed: 214.1444, bestCost 1322055.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4506950
+mutation improvement count on best: 70
+mutation improvement count on all: 4539
+step:417 timeElapsed: 189.4229, bestCost 1321442.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4508695
+mutation improvement count on best: 70
+mutation improvement count on all: 4539
+step:418 timeElapsed: 247.3024, bestCost 1321097.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4510975
+mutation improvement count on best: 70
+mutation improvement count on all: 4539
+step:419 timeElapsed: 190.8902, bestCost 1321025.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4512753
+mutation improvement count on best: 70
+mutation improvement count on all: 4539
+step:420 timeElapsed: 222.3395, bestCost 1320583.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4514787
+mutation improvement count on best: 70
+mutation improvement count on all: 4539
+step:421 timeElapsed: 206.0336, bestCost 1320413.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4516666
+mutation improvement count on best: 70
+mutation improvement count on all: 4539
+step:422 timeElapsed: 250.6072, bestCost 1320055.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4518977
+mutation improvement count on best: 70
+mutation improvement count on all: 4539
+step:423 timeElapsed: 195.1102, bestCost 1319803.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4520783
+mutation improvement count on best: 70
+mutation improvement count on all: 4539
+step:424 timeElapsed: 241.2712, bestCost 1319277.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4523023
+mutation improvement count on best: 70
+mutation improvement count on all: 4539
+step:425 timeElapsed: 186.7613, bestCost 1318748.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4524769
+mutation improvement count on best: 70
+mutation improvement count on all: 4539
+step:426 timeElapsed: 212.9888, bestCost 1318737.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4526744
+mutation improvement count on best: 70
+mutation improvement count on all: 4539
+step:427 timeElapsed: 249.4588, bestCost 1317980.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4529048
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:428 timeElapsed: 161.6696, bestCost 1317979.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4530526
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:429 timeElapsed: 209.925, bestCost 1317970.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4532425
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:430 timeElapsed: 228.0973, bestCost 1317832.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4534553
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:431 timeElapsed: 229.8454, bestCost 1317468.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4536692
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:432 timeElapsed: 207.7682, bestCost 1316723.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4538602
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:433 timeElapsed: 256.0443, bestCost 1316503.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4540987
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:434 timeElapsed: 224.7918, bestCost 1314831.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4543050
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:435 timeElapsed: 267.9086, bestCost 1314504.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4545513
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:436 timeElapsed: 265.9427, bestCost 1314306.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4548020
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:437 timeElapsed: 187.5313, bestCost 1314175.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4549712
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:438 timeElapsed: 233.5386, bestCost 1311630.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4551860
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:439 timeElapsed: 292.622, bestCost 1311318.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4554591
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:440 timeElapsed: 276.5239, bestCost 1310441.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4557175
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:441 timeElapsed: 258.7744, bestCost 1309885.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4559581
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:442 timeElapsed: 269.5985, bestCost 1309641.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4562054
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:443 timeElapsed: 291.2853, bestCost 1309168.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4564778
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:444 timeElapsed: 258.3474, bestCost 1308700.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4567161
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:445 timeElapsed: 266.5177, bestCost 1307955.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4569661
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:446 timeElapsed: 262.8107, bestCost 1305588.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4572082
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:447 timeElapsed: 274.3419, bestCost 1305159.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4574681
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:448 timeElapsed: 312.0209, bestCost 1304450.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4577559
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:449 timeElapsed: 305.6413, bestCost 1304387.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4580405
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:450 timeElapsed: 255.0328, bestCost 1301747.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4582809
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:451 timeElapsed: 179.2427, bestCost 1301577.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4584425
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:452 timeElapsed: 275.8253, bestCost 1301548.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4586977
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:453 timeElapsed: 338.4831, bestCost 1301520.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4590086
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:454 timeElapsed: 315.339, bestCost 1301090.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4592939
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:455 timeElapsed: 307.5542, bestCost 1300359.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4595815
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:456 timeElapsed: 314.0356, bestCost 1299666.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4598768
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:457 timeElapsed: 292.4936, bestCost 1299400.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4601493
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:458 timeElapsed: 379.6537, bestCost 1298903.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4605043
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:459 timeElapsed: 357.8976, bestCost 1298679.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4608370
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:460 timeElapsed: 354.065, bestCost 1298353.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4611680
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:461 timeElapsed: 275.6246, bestCost 1298251.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4614165
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:462 timeElapsed: 290.002, bestCost 1298219.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4616873
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:463 timeElapsed: 279.6056, bestCost 1297992.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4619491
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:464 timeElapsed: 352.9306, bestCost 1297402.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4622813
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:465 timeElapsed: 344.7934, bestCost 1297370.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4626012
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:466 timeElapsed: 324.0207, bestCost 1297350.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4629023
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:467 timeElapsed: 402.9904, bestCost 1297057.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4632820
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:468 timeElapsed: 319.0972, bestCost 1296773.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4635794
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:469 timeElapsed: 341.8844, bestCost 1294961.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4638835
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:470 timeElapsed: 363.555, bestCost 1294933.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4642219
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:471 timeElapsed: 311.4885, bestCost 1293548.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4645119
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:472 timeElapsed: 404.5766, bestCost 1293454.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4648917
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:473 timeElapsed: 382.2732, bestCost 1293444.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4652510
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:474 timeElapsed: 354.704, bestCost 1293342.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4655788
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:475 timeElapsed: 418.4674, bestCost 1292948.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4659702
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:476 timeElapsed: 377.2108, bestCost 1292854.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4663211
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:477 timeElapsed: 201.4577, bestCost 1291182.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4665024
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:478 timeElapsed: 347.127, bestCost 1290354.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4668260
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:479 timeElapsed: 426.3992, bestCost 1290339.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4672185
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:480 timeElapsed: 392.9701, bestCost 1290314.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4675842
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:481 timeElapsed: 382.1612, bestCost 1290286.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4679402
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:482 timeElapsed: 308.3831, bestCost 1290286.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4682321
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:483 timeElapsed: 114.2652, bestCost 1289890.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4683364
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:484 timeElapsed: 118.3138, bestCost 1287392.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4684428
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:485 timeElapsed: 118.0531, bestCost 1285478.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4685500
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:486 timeElapsed: 118.8389, bestCost 1285450.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4686565
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:487 timeElapsed: 140.0584, bestCost 1285372.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4687832
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:488 timeElapsed: 156.9011, bestCost 1285335.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4689237
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:489 timeElapsed: 152.5909, bestCost 1284938.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4690622
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:490 timeElapsed: 143.1302, bestCost 1282920.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4691879
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:491 timeElapsed: 161.9492, bestCost 1282579.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4693345
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:492 timeElapsed: 149.381, bestCost 1282570.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4694703
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:493 timeElapsed: 141.3356, bestCost 1282014.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4695938
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:494 timeElapsed: 142.2131, bestCost 1277900.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4697235
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:495 timeElapsed: 138.1892, bestCost 1277564.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4698494
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:496 timeElapsed: 153.6831, bestCost 1275527.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4699844
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:497 timeElapsed: 160.772, bestCost 1275458.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4701304
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:498 timeElapsed: 154.0554, bestCost 1275446.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4702684
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:499 timeElapsed: 164.8706, bestCost 1275080.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4704162
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:500 timeElapsed: 163.2473, bestCost 1274869.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4705634
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:501 timeElapsed: 217.2141, bestCost 1274342.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4707620
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:502 timeElapsed: 191.304, bestCost 1274098.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4709333
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:503 timeElapsed: 173.0358, bestCost 1274097.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4710923
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:504 timeElapsed: 214.9482, bestCost 1273820.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4712842
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:505 timeElapsed: 161.5811, bestCost 1273202.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4714321
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:506 timeElapsed: 200.5911, bestCost 1272536.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4716106
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:507 timeElapsed: 178.8173, bestCost 1271084.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4717699
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:508 timeElapsed: 213.6225, bestCost 1270088.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4719658
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:509 timeElapsed: 217.7995, bestCost 1270070.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4721644
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:510 timeElapsed: 215.8252, bestCost 1269891.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4723668
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:511 timeElapsed: 213.931, bestCost 1269802.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4725632
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:512 timeElapsed: 233.4045, bestCost 1269675.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4727791
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:513 timeElapsed: 213.9856, bestCost 1269603.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4729765
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:514 timeElapsed: 262.82, bestCost 1268434.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4732197
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:515 timeElapsed: 218.6955, bestCost 1266570.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4734193
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:516 timeElapsed: 235.2106, bestCost 1265887.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4736346
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:517 timeElapsed: 234.3844, bestCost 1265785.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4738507
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:518 timeElapsed: 215.8637, bestCost 1263450.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4740496
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:519 timeElapsed: 232.6908, bestCost 1263307.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4742653
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:520 timeElapsed: 268.2651, bestCost 1263191.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4745155
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:521 timeElapsed: 256.6187, bestCost 1262010.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4747546
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:522 timeElapsed: 275.2914, bestCost 1262005.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4750067
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:523 timeElapsed: 263.1875, bestCost 1261917.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4752516
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:524 timeElapsed: 182.1191, bestCost 1260767.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4754165
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:525 timeElapsed: 280.952, bestCost 1260673.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4756736
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:526 timeElapsed: 297.9472, bestCost 1259827.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4759501
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:527 timeElapsed: 269.3746, bestCost 1259569.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4762007
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:528 timeElapsed: 275.3083, bestCost 1259188.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4764584
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:529 timeElapsed: 291.1888, bestCost 1258867.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4767275
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:530 timeElapsed: 279.4471, bestCost 1257915.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4769850
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:531 timeElapsed: 328.7421, bestCost 1257628.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4772924
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:532 timeElapsed: 273.0101, bestCost 1257589.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4775448
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:533 timeElapsed: 258.9182, bestCost 1257344.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4777876
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:534 timeElapsed: 332.5396, bestCost 1255707.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4780950
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:535 timeElapsed: 378.6645, bestCost 1255603.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4784505
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:536 timeElapsed: 327.3156, bestCost 1255329.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4787567
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:537 timeElapsed: 285.5822, bestCost 1255317.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4790213
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:538 timeElapsed: 259.3038, bestCost 1255301.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4792607
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:539 timeElapsed: 310.1023, bestCost 1255140.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4795488
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:540 timeElapsed: 262.19, bestCost 1254838.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4797889
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:541 timeElapsed: 318.0493, bestCost 1253719.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4800870
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:542 timeElapsed: 286.2886, bestCost 1253656.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4803539
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:543 timeElapsed: 324.3602, bestCost 1253421.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4806576
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:544 timeElapsed: 322.6479, bestCost 1252957.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4809605
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:545 timeElapsed: 339.3898, bestCost 1252166.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4812785
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:546 timeElapsed: 351.4722, bestCost 1251963.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4816041
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:547 timeElapsed: 363.7265, bestCost 1249428.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4819404
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:548 timeElapsed: 335.0442, bestCost 1248892.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4822478
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:549 timeElapsed: 354.3502, bestCost 1248788.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4825775
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:550 timeElapsed: 397.4367, bestCost 1248321.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4829546
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:551 timeElapsed: 384.9386, bestCost 1247955.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4833091
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:552 timeElapsed: 367.4652, bestCost 1247951.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4836534
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:553 timeElapsed: 364.1737, bestCost 1247803.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4839947
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:554 timeElapsed: 376.3352, bestCost 1247623.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4843498
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:555 timeElapsed: 394.367, bestCost 1247506.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4847189
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:556 timeElapsed: 358.3546, bestCost 1247370.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4850518
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:557 timeElapsed: 388.7458, bestCost 1246877.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4854136
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:558 timeElapsed: 320.9895, bestCost 1245457.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4857100
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:559 timeElapsed: 446.7478, bestCost 1245446.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4861322
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:560 timeElapsed: 357.9549, bestCost 1245393.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4864636
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:561 timeElapsed: 406.7349, bestCost 1245150.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4868432
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:562 timeElapsed: 437.4736, bestCost 1244619.0, worstCost 1.36092710833392256E17
+fitness cost call count: 4872512
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:563 timeElapsed: 383.5714, bestCost 1241251.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4876114
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:564 timeElapsed: 364.3241, bestCost 1240882.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4879520
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:565 timeElapsed: 315.7839, bestCost 1240882.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4882472
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:566 timeElapsed: 131.9116, bestCost 1240564.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4883656
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:567 timeElapsed: 128.4731, bestCost 1240372.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4884813
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:568 timeElapsed: 131.2545, bestCost 1240348.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4886001
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:569 timeElapsed: 136.3784, bestCost 1239934.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4887222
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:570 timeElapsed: 146.7103, bestCost 1239900.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4888527
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:571 timeElapsed: 172.7077, bestCost 1238472.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4890099
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:572 timeElapsed: 164.3042, bestCost 1237283.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4891561
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:573 timeElapsed: 162.0274, bestCost 1237160.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4893027
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:574 timeElapsed: 156.3024, bestCost 1236720.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4894471
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:575 timeElapsed: 173.8663, bestCost 1236681.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4896025
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:576 timeElapsed: 167.2922, bestCost 1235291.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4897551
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:577 timeElapsed: 184.5241, bestCost 1235122.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4899245
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:578 timeElapsed: 206.8799, bestCost 1234698.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4901143
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:579 timeElapsed: 187.835, bestCost 1234669.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4902895
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:580 timeElapsed: 241.0295, bestCost 1234186.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4905122
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:581 timeElapsed: 202.3905, bestCost 1231719.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4907006
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:582 timeElapsed: 226.594, bestCost 1231363.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4909094
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:583 timeElapsed: 206.7082, bestCost 1231216.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4911015
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:584 timeElapsed: 223.8165, bestCost 1230177.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4913070
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:585 timeElapsed: 240.4825, bestCost 1230048.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4915338
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:586 timeElapsed: 244.2367, bestCost 1228850.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4917582
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:587 timeElapsed: 212.6927, bestCost 1228801.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4919557
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:588 timeElapsed: 222.5569, bestCost 1228761.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4921615
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:589 timeElapsed: 220.0361, bestCost 1228720.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4923689
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:590 timeElapsed: 252.5951, bestCost 1228634.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4926042
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:591 timeElapsed: 245.9482, bestCost 1228483.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4928329
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:592 timeElapsed: 246.7012, bestCost 1227220.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4930583
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:593 timeElapsed: 276.6286, bestCost 1226948.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4933161
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:594 timeElapsed: 268.7574, bestCost 1226580.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4935612
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:595 timeElapsed: 283.694, bestCost 1226559.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4938293
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:596 timeElapsed: 241.5194, bestCost 1226170.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4940526
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:597 timeElapsed: 289.5415, bestCost 1225953.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4943232
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:598 timeElapsed: 171.2504, bestCost 1225739.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4944785
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:599 timeElapsed: 266.839, bestCost 1225368.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4947287
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:600 timeElapsed: 279.3977, bestCost 1224680.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4949889
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:601 timeElapsed: 282.3805, bestCost 1224436.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4952491
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:602 timeElapsed: 294.2613, bestCost 1224250.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4955260
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:603 timeElapsed: 287.4468, bestCost 1223963.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4957919
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:604 timeElapsed: 253.3315, bestCost 1223928.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4960265
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:605 timeElapsed: 247.354, bestCost 1223887.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4962615
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:606 timeElapsed: 300.0177, bestCost 1223119.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4965421
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:607 timeElapsed: 313.9841, bestCost 1222354.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4968332
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:608 timeElapsed: 235.3111, bestCost 1222319.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4970510
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:609 timeElapsed: 255.404, bestCost 1222171.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4972905
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:610 timeElapsed: 293.7049, bestCost 1221342.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4975613
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:611 timeElapsed: 297.6835, bestCost 1221064.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4978394
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:612 timeElapsed: 206.8335, bestCost 1220416.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4980267
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:613 timeElapsed: 345.9495, bestCost 1220396.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4983504
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:614 timeElapsed: 363.4058, bestCost 1220375.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4986889
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:615 timeElapsed: 320.6186, bestCost 1219556.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4989846
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:616 timeElapsed: 346.8621, bestCost 1218029.0, worstCost 1.36092710833392048E17
+fitness cost call count: 4993129
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:617 timeElapsed: 295.1102, bestCost 1218004.0, worstCost 1.36092710833391232E17
+fitness cost call count: 4995874
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:618 timeElapsed: 335.7173, bestCost 1217902.0, worstCost 1.36092710833391232E17
+fitness cost call count: 4998993
+mutation improvement count on best: 71
+mutation improvement count on all: 4540
+step:619 timeElapsed: 312.687, bestCost 1217787.0, worstCost 1.36092710833391232E17
+fitness cost call count: 5001907
+mutation improvement count on best: 71
+mutation improvement count on all: 4540

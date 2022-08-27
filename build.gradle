@@ -1,0 +1,31 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.6.21'
+}
+
+group 'hu.raven.puppet'
+version '1.0-SNAPSHOT'
+
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    koin_version = '3.2.0'
+}
+
+dependencies {
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    implementation "org.jetbrains.kotlin:kotlin-reflect"
+
+// Koin Core features
+    implementation "io.insert-koin:koin-core:$koin_version"
+// Koin Test features
+    testImplementation "io.insert-koin:koin-test:$koin_version"
+
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.6.4'
+
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.9.1'
+    testImplementation group: "junit", name: "junit", version: "4.12"
+}
