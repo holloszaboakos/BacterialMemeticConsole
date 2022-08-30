@@ -3,7 +3,7 @@ package hu.raven.puppet.logic.evolutionary.genetic.crossoveroperator
 import hu.raven.puppet.logic.evolutionary.GeneticAlgorithm
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 
-class DistancePreservingCrossOver <S : ISpecimenRepresentation>(
+class DistancePreservingCrossOver<S : ISpecimenRepresentation>(
     override val algorithm: GeneticAlgorithm<S>
 ) : CrossOverOperator<S> {
 

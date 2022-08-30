@@ -6,7 +6,7 @@ import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 sealed interface CrossOverOperator<S : ISpecimenRepresentation> {
     val algorithm: GeneticAlgorithm<S>
 
-    operator fun  invoke(
+    operator fun invoke(
         parents: Pair<S, S>,
         child: S
     )

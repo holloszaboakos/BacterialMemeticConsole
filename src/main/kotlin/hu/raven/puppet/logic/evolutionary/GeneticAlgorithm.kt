@@ -8,5 +8,4 @@ class GeneticAlgorithm<S : ISpecimenRepresentation>(
 ) : SEvolutionaryAlgorithm<S>(
     iterationLimit,
     sizeOfPopulation //4 * (costGraph.objectives.size + salesmen.size)
-) {
-}
+)

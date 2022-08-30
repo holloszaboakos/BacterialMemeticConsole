@@ -9,7 +9,7 @@ class MutateChildrenBySwap<S : ISpecimenRepresentation>(
     override val algorithm: GeneticAlgorithm<S>
 ) : MutateChildren<S> {
 
-    override fun  invoke() {
+    override fun invoke() {
         if (algorithm.task.costGraph.objectives.size > 1)
             algorithm.population.asSequence()
                 .filter { it.iteration == algorithm.iteration }

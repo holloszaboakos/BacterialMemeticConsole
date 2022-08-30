@@ -52,7 +52,8 @@ class StatisticalRacingCrossOver<S : ISpecimenRepresentation>(
                 }
             }
             if (iteration < 10 * statistics.operatorsWithStatistics.size) {
-                operator = statistics.operatorsWithStatistics.keys.toList()[iteration % statistics.operatorsWithStatistics.size]
+                operator =
+                    statistics.operatorsWithStatistics.keys.toList()[iteration % statistics.operatorsWithStatistics.size]
                 logger(operator!!::class.java.simpleName)
                 actualStatistics = statistics.operatorsWithStatistics[operator]
             } else {

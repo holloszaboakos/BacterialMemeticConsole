@@ -7,7 +7,7 @@ import hu.raven.puppet.utility.extention.slice
 class SelectSurvivors<S : ISpecimenRepresentation>(
     val algorithm: GeneticAlgorithm<S>
 ) {
-    operator fun  invoke() {
+    operator fun invoke() {
         algorithm.run {
             population.asSequence()
                 .slice(0 until population.size / 4)

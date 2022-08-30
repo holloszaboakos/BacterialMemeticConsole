@@ -8,7 +8,7 @@ class MutateChildrenByReset<S : ISpecimenRepresentation>(
     override val algorithm: GeneticAlgorithm<S>
 ) : MutateChildren<S> {
 
-    override fun  invoke() {
+    override fun invoke() {
         val basePermutation =
             List(algorithm.copyOfBest?.permutationIndices?.count() ?: 0) { it }.shuffled().toIntArray()
         if (algorithm.task.costGraph.objectives.size > 1)
