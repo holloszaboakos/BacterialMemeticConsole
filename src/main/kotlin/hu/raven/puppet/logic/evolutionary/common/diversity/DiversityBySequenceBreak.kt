@@ -2,7 +2,7 @@ package hu.raven.puppet.logic.evolutionary.common.diversity
 
 import hu.raven.puppet.logic.evolutionary.SEvolutionaryAlgorithm
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
-import hu.raven.puppet.logic.statistics.Statistics
+import hu.raven.puppet.logic.statistics.BacterialAlgorithmStatistics
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -13,7 +13,7 @@ class DiversityBySequenceBreak<S : ISpecimenRepresentation>(
     override val algorithm: SEvolutionaryAlgorithm<S>
 ) : Diversity<S> {
 
-    val statistics: Statistics<S> by inject(Statistics::class.java)
+    val statistics: BacterialAlgorithmStatistics by inject(BacterialAlgorithmStatistics::class.java)
     override fun invoke(): Unit = runBlocking {
         val best = algorithm.copyOfBest!!
         val sequentialOfBest = best.sequentialOfPermutation()

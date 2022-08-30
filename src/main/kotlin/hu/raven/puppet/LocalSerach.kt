@@ -5,7 +5,7 @@ import hu.raven.puppet.logic.common.logging.DoubleLogger
 import hu.raven.puppet.logic.evolutionary.common.iteration.EvolutionaryIteration
 import hu.raven.puppet.logic.localsearch.SLocalSearch
 import hu.raven.puppet.logic.modules.commonModule
-import hu.raven.puppet.logic.statistics.Statistics
+import hu.raven.puppet.logic.statistics.BacterialAlgorithmStatistics
 import org.koin.core.context.startKoin
 import org.koin.java.KoinJavaComponent.inject
 import java.io.File
@@ -18,7 +18,7 @@ fun main(arguments: Array<String>) {
     startKoin {
         modules(commonModule)
     }
-    val statistics: Statistics<*> by inject(Statistics::class.java)
+    val statistics: BacterialAlgorithmStatistics by inject(BacterialAlgorithmStatistics::class.java)
     val logger: DoubleLogger by inject(DoubleLogger::class.java)
     val initialize: InitializeAlgorithm<*> by inject(InitializeAlgorithm::class.java)
     val iterate: EvolutionaryIteration<*> by inject(EvolutionaryIteration::class.java)

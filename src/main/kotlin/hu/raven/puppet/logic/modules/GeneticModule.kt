@@ -13,6 +13,7 @@ import hu.raven.puppet.logic.evolutionary.genetic.crossoveroperator.HeuristicCro
 import hu.raven.puppet.logic.evolutionary.genetic.mutatechildren.MutateChildren
 import hu.raven.puppet.logic.evolutionary.genetic.mutatechildren.MutateChildrenBySwap
 import hu.raven.puppet.logic.specimen.DOnePartRepresentation
+import hu.raven.puppet.logic.statistics.GeneticAlgorithmStatistics
 import org.koin.dsl.module
 
 val geneticModule = module {
@@ -52,6 +53,12 @@ val geneticModule = module {
         GeneticAlgorithm(
             iterationLimit = 26000,
             sizeOfPopulation = 8000
+        )
+    }
+
+    single {
+        GeneticAlgorithmStatistics<DOnePartRepresentation>(
+            algorithm = get()
         )
     }
 }

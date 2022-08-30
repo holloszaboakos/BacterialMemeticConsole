@@ -7,7 +7,7 @@ import hu.raven.puppet.logic.modules.bacterialModule
 import hu.raven.puppet.logic.modules.commonModule
 import hu.raven.puppet.logic.modules.commonPostModule
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
-import hu.raven.puppet.logic.statistics.Statistics
+import hu.raven.puppet.logic.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.model.*
 import org.koin.core.context.startKoin
 import org.koin.java.KoinJavaComponent.inject
@@ -24,7 +24,7 @@ fun main(arguments: Array<String>) {
         modules(bacterialModule)
         modules(commonPostModule)
     }
-    val statistics: Statistics<*> by inject(Statistics::class.java)
+    val statistics: BacterialAlgorithmStatistics by inject(BacterialAlgorithmStatistics::class.java)
     val logger: DoubleLogger by inject(DoubleLogger::class.java)
     //val diversity: Diversity by inject(Diversity::class.java)
 

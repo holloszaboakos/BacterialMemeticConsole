@@ -17,7 +17,6 @@ import hu.raven.puppet.logic.evolutionary.common.initializePopulation.Initialize
 import hu.raven.puppet.logic.specimen.DOnePartRepresentation
 import hu.raven.puppet.logic.specimen.factory.OnePartRepresentationFactory
 import hu.raven.puppet.logic.specimen.factory.SSpecimenRepresentationFactory
-import hu.raven.puppet.logic.statistics.Statistics
 import org.koin.dsl.module
 import java.io.File
 
@@ -64,12 +63,6 @@ val commonModule = module {
         Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit<DOnePartRepresentation>(
             algorithm = get(),
             stepLimit = 2000
-        )
-    }
-
-    single {
-        Statistics<DOnePartRepresentation>(
-            algorithm = get()
         )
     }
 

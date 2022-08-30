@@ -18,6 +18,7 @@ import hu.raven.puppet.logic.evolutionary.bacterial.selectsegment.SelectSegment
 import hu.raven.puppet.logic.evolutionary.common.iteration.BacterialIteration
 import hu.raven.puppet.logic.evolutionary.common.iteration.EvolutionaryIteration
 import hu.raven.puppet.logic.specimen.DOnePartRepresentation
+import hu.raven.puppet.logic.statistics.BacterialAlgorithmStatistics
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.withOptions
 import org.koin.dsl.module
@@ -74,5 +75,9 @@ val bacterialModule = module {
         SelectContinuesSegment<DOnePartRepresentation>(
             algorithm = get()
         )
+    }
+
+    single {
+        BacterialAlgorithmStatistics()
     }
 }

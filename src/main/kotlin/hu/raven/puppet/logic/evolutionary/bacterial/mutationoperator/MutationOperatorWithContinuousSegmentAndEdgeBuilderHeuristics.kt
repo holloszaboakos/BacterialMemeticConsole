@@ -2,7 +2,7 @@ package hu.raven.puppet.logic.evolutionary.bacterial.mutationoperator
 
 import hu.raven.puppet.logic.evolutionary.BacterialAlgorithm
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
-import hu.raven.puppet.logic.statistics.Statistics
+import hu.raven.puppet.logic.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.model.DEdge
 import hu.raven.puppet.model.DGraph
 import org.koin.java.KoinJavaComponent.inject
@@ -12,7 +12,7 @@ class MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics<S : ISpecime
     override val algorithm: BacterialAlgorithm<S>,
 
     ) : BacterialMutationOperator<S> {
-    val statistics: Statistics<S> by inject(Statistics::class.java)
+    val statistics: BacterialAlgorithmStatistics by inject(BacterialAlgorithmStatistics::class.java)
     override fun invoke(
         clone: S,
         selectedPositions: IntArray,

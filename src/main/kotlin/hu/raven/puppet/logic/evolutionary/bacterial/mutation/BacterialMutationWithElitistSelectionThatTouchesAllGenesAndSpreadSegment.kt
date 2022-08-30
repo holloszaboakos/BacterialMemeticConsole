@@ -4,7 +4,7 @@ import hu.raven.puppet.logic.common.steps.calculatecost.CalculateCost
 import hu.raven.puppet.logic.evolutionary.BacterialAlgorithm
 import hu.raven.puppet.logic.evolutionary.bacterial.mutationoperator.BacterialMutationOperator
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
-import hu.raven.puppet.logic.statistics.Statistics
+import hu.raven.puppet.logic.statistics.BacterialAlgorithmStatistics
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -15,7 +15,7 @@ class BacterialMutationWithElitistSelectionThatTouchesAllGenesAndSpreadSegment<S
     override val algorithm: BacterialAlgorithm<S>
 ) : BacterialMutation<S> {
 
-    private val statistics: Statistics<S> by inject(Statistics::class.java)
+    private val statistics: BacterialAlgorithmStatistics by inject(BacterialAlgorithmStatistics::class.java)
     val calculateCostOf: CalculateCost<S> by inject(CalculateCost::class.java)
     val mutationOperator: BacterialMutationOperator<S> by inject(BacterialMutationOperator::class.java)
 

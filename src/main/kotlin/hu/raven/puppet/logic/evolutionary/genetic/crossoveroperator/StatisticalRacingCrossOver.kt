@@ -5,8 +5,8 @@ import hu.raven.puppet.logic.common.steps.calculatecost.CalculateCost
 import hu.raven.puppet.logic.evolutionary.GeneticAlgorithm
 import hu.raven.puppet.logic.specimen.DOnePartRepresentation
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
+import hu.raven.puppet.logic.statistics.GeneticAlgorithmStatistics
 import hu.raven.puppet.logic.statistics.OperatorStatistics
-import hu.raven.puppet.logic.statistics.Statistics
 import org.koin.java.KoinJavaComponent.inject
 import kotlin.math.pow
 import kotlin.random.Random.Default.nextDouble
@@ -23,7 +23,7 @@ class StatisticalRacingCrossOver<S : ISpecimenRepresentation>(
     val logger: DoubleLogger by inject(DoubleLogger::class.java)
     val calculateCostOf: CalculateCost<DOnePartRepresentation> by inject(DoubleLogger::class.java)
 
-    private val statistics: Statistics<S> by inject(Statistics::class.java)
+    private val statistics: GeneticAlgorithmStatistics<S> by inject(GeneticAlgorithmStatistics::class.java)
 
     var iteration = -1
     var iterationLock = Object()

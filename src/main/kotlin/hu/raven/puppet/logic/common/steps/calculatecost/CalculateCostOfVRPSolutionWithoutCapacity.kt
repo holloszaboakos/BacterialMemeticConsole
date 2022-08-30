@@ -2,14 +2,14 @@ package hu.raven.puppet.logic.common.steps.calculatecost
 
 import hu.raven.puppet.logic.AAlgorithm4VRP
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
-import hu.raven.puppet.logic.statistics.Statistics
+import hu.raven.puppet.logic.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.model.DEdge
 import org.koin.java.KoinJavaComponent.inject
 
 class CalculateCostOfVRPSolutionWithoutCapacity<S : ISpecimenRepresentation>(
     override val algorithm: AAlgorithm4VRP<S>
 ) : CalculateCost<S> {
-    val statistics: Statistics<S> by inject(Statistics::class.java)
+    val statistics: BacterialAlgorithmStatistics by inject(BacterialAlgorithmStatistics::class.java)
 
     override operator fun invoke(
         specimen: ISpecimenRepresentation
