@@ -47,7 +47,7 @@ class SortedMatchCrossOver : CrossOverOperator {
         if (foundSlices.isNotEmpty()) {
             val cheaperIndex = LongArray(2) { sliceIndex ->
                 (1 until foundSlices[sliceIndex].size).sumOf { geneIndex ->
-                    algorithm.costGraph
+                    algorithm.task.costGraph
                         .edgesBetween[foundSlices[sliceIndex][geneIndex - 1]]
                         .values[
                             if (foundSlices[sliceIndex][geneIndex] > foundSlices[sliceIndex][geneIndex - 1])

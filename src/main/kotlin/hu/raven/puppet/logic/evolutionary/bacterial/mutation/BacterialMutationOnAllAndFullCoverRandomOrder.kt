@@ -1,22 +1,27 @@
 package hu.raven.puppet.logic.evolutionary.bacterial.mutation
 
+import hu.raven.puppet.logic.common.steps.calculatecost.CalculateCost
 import hu.raven.puppet.logic.evolutionary.BacterialAlgorithm
+import hu.raven.puppet.logic.evolutionary.bacterial.mutationoperator.BacterialMutationOperator
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.logic.statistics.Statistics
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.koin.java.KoinJavaComponent
+import org.koin.java.KoinJavaComponent.inject
 
-class BacterialMutationOnAllAndFullCoverRandomOrder(
-    val mutationPercentage: Float
-) : BacterialMutation {
+class BacterialMutationOnAllAndFullCoverRandomOrder<S : ISpecimenRepresentation>(
+    val mutationPercentage: Float,
+    override val algorithm: BacterialAlgorithm<S>
+) : BacterialMutation<S> {
 
-    val statistics: Statistics by KoinJavaComponent.inject(Statistics::class.java)
+    val statistics: Statistics by inject(Statistics::class.java)
+    val calculateCostOf: CalculateCost<S> by inject(CalculateCost::class.java)
+    val mutationOperator: BacterialMutationOperator<S> by inject(BacterialMutationOperator::class.java)
+
     var order = intArrayOf()
 
-    override suspend fun <S : ISpecimenRepresentation> invoke(
-        algorithm: BacterialAlgorithm<S>
+    override suspend fun invoke(
     ) = withContext(Dispatchers.Default) {
         if (order.isEmpty()) {
             order = (0 until algorithm.population.first().permutationSize - algorithm.cloneSegmentLength)
@@ -60,7 +65,7 @@ class BacterialMutationOnAllAndFullCoverRandomOrder(
         }
     }
 
-    private suspend fun <S : ISpecimenRepresentation> BacterialAlgorithm<S>.mutateSpecimen(
+    private suspend fun BacterialAlgorithm<S>.mutateSpecimen(
         specimen: S
     ) {
         repeat(cloneCycleCount) { cycleIndex ->

@@ -7,15 +7,18 @@ import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import kotlin.random.Random
 import kotlin.random.nextInt
 
-class InitializePopulationByRandom : InitializePopulation {
-    override fun <S : ISpecimenRepresentation> invoke(algorithm: SEvolutionaryAlgorithm<S>) {
-        algorithm.population = if (algorithm.costGraph.objectives.size != 1)
+class InitializePopulationByRandom<S : ISpecimenRepresentation>(
+    override val algorithm: SEvolutionaryAlgorithm<S>
+) : InitializePopulation<S> {
+
+    override fun invoke() {
+        algorithm.population = if (algorithm.task.costGraph.objectives.size != 1)
             ArrayList(List(algorithm.sizeOfPopulation) { specimenIndex ->
                 algorithm.subSolutionFactory.produce(
                     specimenIndex,
-                    Array(algorithm.salesmen.size) { index ->
+                    Array(algorithm.task.salesmen.size) { index ->
                         if (index == 0)
-                            IntArray(algorithm.costGraph.objectives.size) { it }
+                            IntArray(algorithm.task.costGraph.objectives.size) { it }
                         else
                             intArrayOf()
                     }
@@ -24,7 +27,7 @@ class InitializePopulationByRandom : InitializePopulation {
         else arrayListOf(
             algorithm.subSolutionFactory.produce(
                 0,
-                arrayOf(IntArray(algorithm.costGraph.objectives.size) { it })
+                arrayOf(IntArray(algorithm.task.costGraph.objectives.size) { it })
             )
         )
 
@@ -35,11 +38,11 @@ class InitializePopulationByRandom : InitializePopulation {
                 is DTwoPartRepresentation ->
                     permutation.forEachSliceIndexed { index, _ ->
                         if (index == permutation.sliceLengths.size - 1) {
-                            permutation.sliceLengths[index] = algorithm.costGraph.objectives.size - length
+                            permutation.sliceLengths[index] = algorithm.task.costGraph.objectives.size - length
 
                         } else {
                             permutation.sliceLengths[index] =
-                                Random.nextInt(0..(algorithm.costGraph.objectives.size - length))
+                                Random.nextInt(0..(algorithm.task.costGraph.objectives.size - length))
                             length += permutation.sliceLengths[index]
                         }
                     }

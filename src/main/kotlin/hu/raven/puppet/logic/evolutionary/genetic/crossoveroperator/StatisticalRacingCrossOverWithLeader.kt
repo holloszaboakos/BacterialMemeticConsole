@@ -1,7 +1,9 @@
 package hu.raven.puppet.logic.evolutionary.genetic.crossoveroperator
 
 import hu.raven.puppet.logic.common.logging.DoubleLogger
+import hu.raven.puppet.logic.common.steps.calculatecost.CalculateCost
 import hu.raven.puppet.logic.evolutionary.GeneticAlgorithm
+import hu.raven.puppet.logic.specimen.DOnePartRepresentation
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.logic.statistics.OperatorStatistics
 import hu.raven.puppet.logic.statistics.Statistics
@@ -11,6 +13,7 @@ import kotlin.math.pow
 class StatisticalRacingCrossOverWithLeader : CrossOverOperator {
     val logger: DoubleLogger by inject(DoubleLogger::class.java)
     private val statistics: Statistics by inject(Statistics::class.java)
+    val calculateCostOf: CalculateCost<DOnePartRepresentation> by inject(DoubleLogger::class.java)
 
     var iteration = -1
     private var operator: CrossOverOperator? = null
@@ -53,7 +56,7 @@ class StatisticalRacingCrossOverWithLeader : CrossOverOperator {
         operator?.let { operator ->
             actualStatistics?.let { statistics ->
                 operator.invoke(parents, child, algorithm)
-                algorithm.calculateCostOf(child)
+                calculateCostOf(child)
                 synchronized(statistics) {
                     if (parents.first.cost > child.cost)
                         statistics.success += (algorithm.iteration - parents.first.iteration) *

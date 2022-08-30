@@ -1,4 +1,4 @@
-package hu.raven.puppet.logic
+package hu.raven.puppet.logic.modules
 
 import hu.raven.puppet.logic.common.logging.DoubleLogger
 import hu.raven.puppet.logic.common.steps.calculatecost.CalculateCost
@@ -14,6 +14,7 @@ import hu.raven.puppet.logic.evolutionary.common.diversity.Diversity
 import hu.raven.puppet.logic.evolutionary.common.diversity.DiversityByInnerDistanceAndSequence
 import hu.raven.puppet.logic.evolutionary.common.initializePopulation.InitializePopulation
 import hu.raven.puppet.logic.evolutionary.common.initializePopulation.InitializePopulationByModuloStepper
+import hu.raven.puppet.logic.specimen.DOnePartRepresentation
 import hu.raven.puppet.logic.specimen.factory.OnePartRepresentationFactory
 import hu.raven.puppet.logic.specimen.factory.SSpecimenRepresentationFactory
 import hu.raven.puppet.logic.statistics.Statistics
@@ -25,28 +26,45 @@ val commonModule = module {
         DoubleLogger(File(""))
     }
 
-    factory<Diversity> {
-        DiversityByInnerDistanceAndSequence()
+    factory<Diversity<*>> {
+        DiversityByInnerDistanceAndSequence<DOnePartRepresentation>(
+            algorithm = get()
+        )
     }
 
     factory<SSpecimenRepresentationFactory<*>> {
         OnePartRepresentationFactory()
     }
 
-    factory<InitializePopulation> {
-        InitializePopulationByModuloStepper()
+    factory<InitializePopulation<*>> {
+        InitializePopulationByModuloStepper<DOnePartRepresentation>(
+            algorithm = get()
+        )
     }
 
-    factory { OrderPopulationByCost() }
-    factory<CalculateCost> { CalculateCostOfVRPSolutionWithoutCapacity() }
+    factory {
+        OrderPopulationByCost<DOnePartRepresentation>(
+            algorithm = get()
+        )
+    }
+    factory<CalculateCost<*>> {
+        CalculateCostOfVRPSolutionWithoutCapacity<DOnePartRepresentation>(
+            algorithm = get()
+        )
+    }
     factory { CalculateCostOfEdge() }
     factory { CalculateCostOfObjective() }
 
-    factory<Boost> {
-        BoostOnBestLazy()
+    factory<Boost<*>> {
+        BoostOnBestLazy<DOnePartRepresentation>(
+            algorithm = get()
+        )
     }
-    factory<BoostOperator> {
-        Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit(2000)
+    factory<BoostOperator<*>> {
+        Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit<DOnePartRepresentation>(
+            algorithm = get(),
+            stepLimit = 2000
+        )
     }
 
     single { Statistics() }

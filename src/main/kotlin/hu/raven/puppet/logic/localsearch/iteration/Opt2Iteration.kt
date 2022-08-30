@@ -1,12 +1,20 @@
 package hu.raven.puppet.logic.localsearch.iteration
 
+import hu.raven.puppet.logic.common.steps.calculatecost.CalculateCost
 import hu.raven.puppet.logic.localsearch.SLocalSearch
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
+import org.koin.java.KoinJavaComponent.inject
 
-class Opt2Iteration : LocalSearchIteration {
+class Opt2Iteration<S : ISpecimenRepresentation>(
+    override val algorithm: SLocalSearch<S>
+) : LocalSearchIteration<S> {
+
+    val calculateCostOf: CalculateCost<S> by inject(CalculateCost::class.java)
+
     var sourceIndex = 0
     var permutation = listOf<Int>()
-    override fun <S : ISpecimenRepresentation> invoke(algorithm: SLocalSearch<S>) = algorithm.run {
+
+    override fun invoke() = algorithm.run {
         val best = actualInstance
         var bestCost = best.cost
         var tempGene: Int
@@ -20,7 +28,7 @@ class Opt2Iteration : LocalSearchIteration {
             tempGene = best[firstIndex]
             best[firstIndex] = best[secondIndex]
             best[secondIndex] = tempGene
-            algorithm.calculateCostOf(best)
+            calculateCostOf(best)
             if (best.cost < bestCost) {
                 println(best.cost)
                 bestCost = best.cost

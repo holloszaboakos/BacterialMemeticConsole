@@ -1,12 +1,19 @@
 package hu.raven.puppet.logic.evolutionary.common.boostoperator
 
+import hu.raven.puppet.logic.common.steps.calculatecost.CalculateCost
 import hu.raven.puppet.logic.evolutionary.SEvolutionaryAlgorithm
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
+import org.koin.java.KoinJavaComponent
 
-class Opt2StepWithPerSpecimenProgressMemory : BoostOperator {
+class Opt2StepWithPerSpecimenProgressMemory<S : ISpecimenRepresentation>(
+    override val algorithm: SEvolutionaryAlgorithm<S>
+) : BoostOperator<S> {
+
+    val calculateCostOf: CalculateCost<S> by KoinJavaComponent.inject(CalculateCost::class.java)
+
     var lastPositionPerSpecimen = arrayOf<Pair<Int, Int>>()
 
-    override fun <S : ISpecimenRepresentation> invoke(algorithm: SEvolutionaryAlgorithm<S>, specimen: S) {
+    override fun invoke(specimen: S) {
         if (lastPositionPerSpecimen.isEmpty()) {
             lastPositionPerSpecimen = Array(algorithm.sizeOfPopulation) { Pair(0, 1) }
         }
@@ -22,7 +29,7 @@ class Opt2StepWithPerSpecimenProgressMemory : BoostOperator {
                 else firstIndex + 1
             for (secondIndex in secondIndexStart until algorithm.population.first().permutationSize) {
                 specimen.swapGenes(firstIndex, secondIndex)
-                algorithm.calculateCostOf(specimen)
+                calculateCostOf(specimen)
 
                 if (specimen.cost >= bestCost) {
                     specimen.swapGenes(firstIndex, secondIndex)

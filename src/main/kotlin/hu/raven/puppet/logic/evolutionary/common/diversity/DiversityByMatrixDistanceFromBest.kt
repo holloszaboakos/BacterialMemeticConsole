@@ -10,9 +10,12 @@ import kotlinx.coroutines.runBlocking
 import org.koin.java.KoinJavaComponent.inject
 import kotlin.math.abs
 
-class DiversityByMatrixDistanceFromBest : Diversity {
+class DiversityByMatrixDistanceFromBest<S : ISpecimenRepresentation>(
+    override val algorithm: SEvolutionaryAlgorithm<S>
+) : Diversity<S> {
+
     val statistics: Statistics by inject(Statistics::class.java)
-    override fun <S : ISpecimenRepresentation> invoke(algorithm: SEvolutionaryAlgorithm<S>): Unit = runBlocking {
+    override fun invoke(): Unit = runBlocking {
         val best = algorithm.copyOfBest!!
         val matrixOfBest = preceditionMatrixWithDistance(best)
         statistics.diversity = 0.0

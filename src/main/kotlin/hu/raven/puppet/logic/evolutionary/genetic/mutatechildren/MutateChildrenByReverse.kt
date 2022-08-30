@@ -7,17 +7,17 @@ import kotlin.random.Random
 
 class MutateChildrenByReverse : MutateChildren {
     override fun <S : ISpecimenRepresentation> invoke(algorithm: GeneticAlgorithm<S>) {
-        if (algorithm.costGraph.objectives.size > 1)
+        if (algorithm.task.costGraph.objectives.size > 1)
             algorithm.population.asSequence()
                 .filter { it.iteration == algorithm.iteration }
                 .shuffled()
                 .slice(0 until (algorithm.population.size / 4))
                 .forEach { child ->
-                    val firstCutIndex = Random.nextInt(algorithm.costGraph.objectives.size)
-                    val secondCutIndex = Random.nextInt(algorithm.costGraph.objectives.size)
+                    val firstCutIndex = Random.nextInt(algorithm.task.costGraph.objectives.size)
+                    val secondCutIndex = Random.nextInt(algorithm.task.costGraph.objectives.size)
                         .let {
                             if (it == firstCutIndex)
-                                (it + 1) % algorithm.costGraph.objectives.size
+                                (it + 1) % algorithm.task.costGraph.objectives.size
                             else
                                 it
                         }

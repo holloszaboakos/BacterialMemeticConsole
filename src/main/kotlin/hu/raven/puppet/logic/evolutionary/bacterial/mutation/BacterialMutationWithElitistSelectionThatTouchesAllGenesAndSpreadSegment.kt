@@ -1,21 +1,26 @@
 package hu.raven.puppet.logic.evolutionary.bacterial.mutation
 
+import hu.raven.puppet.logic.common.steps.calculatecost.CalculateCost
 import hu.raven.puppet.logic.evolutionary.BacterialAlgorithm
+import hu.raven.puppet.logic.evolutionary.bacterial.mutationoperator.BacterialMutationOperator
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.logic.statistics.Statistics
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.koin.java.KoinJavaComponent
+import org.koin.java.KoinJavaComponent.inject
 
-class BacterialMutationWithElitistSelectionThatTouchesAllGenesAndSpreadSegment : BacterialMutation {
+class BacterialMutationWithElitistSelectionThatTouchesAllGenesAndSpreadSegment<S : ISpecimenRepresentation>(
+    val mutationPercentage: Float,
+    override val algorithm: BacterialAlgorithm<S>
+) : BacterialMutation<S> {
 
-    private val statistics: Statistics by KoinJavaComponent.inject(Statistics::class.java)
+    private val statistics: Statistics by inject(Statistics::class.java)
+    val calculateCostOf: CalculateCost<S> by inject(CalculateCost::class.java)
+    val mutationOperator: BacterialMutationOperator<S> by inject(BacterialMutationOperator::class.java)
 
 
-    override suspend fun <S : ISpecimenRepresentation> invoke(
-        algorithm: BacterialAlgorithm<S>
-    ) = withContext(Dispatchers.Default) {
+    override suspend fun invoke() = withContext(Dispatchers.Default) {
         algorithm.run {
             val randomPermutation = IntArray(geneCount) { it }.apply { shuffle() }
 
@@ -39,7 +44,7 @@ class BacterialMutationWithElitistSelectionThatTouchesAllGenesAndSpreadSegment :
         }
     }
 
-    private fun <S : ISpecimenRepresentation> BacterialAlgorithm<S>.mutateSpecimen(
+    private fun BacterialAlgorithm<S>.mutateSpecimen(
         specimen: S,
         randomPermutation: IntArray
     ) {

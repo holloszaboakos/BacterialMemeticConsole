@@ -1,24 +1,28 @@
 package hu.raven.puppet.logic.evolutionary.bacterial.genetransferoperator
 
 import hu.raven.puppet.logic.common.logging.DoubleLogger
+import hu.raven.puppet.logic.common.steps.calculatecost.CalculateCost
 import hu.raven.puppet.logic.evolutionary.BacterialAlgorithm
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
-import hu.raven.puppet.model.mtsp.DEdge
-import hu.raven.puppet.model.mtsp.DGraph
-import org.koin.java.KoinJavaComponent
+import hu.raven.puppet.model.DEdge
+import hu.raven.puppet.model.DGraph
+import org.koin.java.KoinJavaComponent.inject
 import kotlin.random.Random
 
-class HeuristicGeneTransfer : GeneTransferOperator {
-    val logger: DoubleLogger by KoinJavaComponent.inject(DoubleLogger::class.java)
+class HeuristicGeneTransfer<S : ISpecimenRepresentation>(
+    override val algorithm: BacterialAlgorithm<S>
+) : GeneTransferOperator<S> {
+    val logger: DoubleLogger by inject(DoubleLogger::class.java)
+    val calculateCostOf: CalculateCost<S> by inject(CalculateCost::class.java)
 
-    override fun <S : ISpecimenRepresentation> invoke(algorithm: BacterialAlgorithm<S>, source: S, target: S) {
+    override fun invoke(source: S, target: S) {
         val child = algorithm.subSolutionFactory.copy(target)
         heuristicCrossOver(
             Pair(source, target),
             child,
             algorithm
         )
-        algorithm.calculateCostOf(child)
+        calculateCostOf(child)
         if (child.cost < target.cost) {
             target.setData(child.getData())
             target.cost = child.cost
@@ -140,7 +144,7 @@ class HeuristicGeneTransfer : GeneTransferOperator {
         neighbours: List<Int>,
         previousValue: Int,
         algorithm: BacterialAlgorithm<S>
-    ): DoubleArray = algorithm.costGraph.run {
+    ): DoubleArray = algorithm.task.costGraph.run {
         DoubleArray(neighbours.size) { neighbourIndex ->
             when {
                 previousValue < objectives.size && neighbours[neighbourIndex] < objectives.size -> {

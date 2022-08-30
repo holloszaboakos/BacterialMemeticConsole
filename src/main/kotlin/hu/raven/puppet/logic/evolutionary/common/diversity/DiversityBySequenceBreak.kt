@@ -9,9 +9,12 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.koin.java.KoinJavaComponent.inject
 
-class DiversityBySequenceBreak : Diversity {
+class DiversityBySequenceBreak<S : ISpecimenRepresentation>(
+    override val algorithm: SEvolutionaryAlgorithm<S>
+) : Diversity<S> {
+
     val statistics: Statistics by inject(Statistics::class.java)
-    override fun <S : ISpecimenRepresentation> invoke(algorithm: SEvolutionaryAlgorithm<S>): Unit = runBlocking {
+    override fun invoke(): Unit = runBlocking {
         val best = algorithm.copyOfBest!!
         val sequentialOfBest = best.sequentialOfPermutation()
         statistics.diversity = 0.0

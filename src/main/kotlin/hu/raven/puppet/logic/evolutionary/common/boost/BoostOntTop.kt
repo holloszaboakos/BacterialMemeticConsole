@@ -6,21 +6,20 @@ import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.koin.java.KoinJavaComponent
+import org.koin.java.KoinJavaComponent.inject
 
-class BoostOntTop(
-    val boostedCount: Int
-) : Boost {
-    val boostOperator: BoostOperator by KoinJavaComponent.inject(BoostOperator::class.java)
+class BoostOntTop<S : ISpecimenRepresentation>(
+    val boostedCount: Int,
+    override val algorithm: SEvolutionaryAlgorithm<S>
+) : Boost<S> {
+    val boostOperator: BoostOperator<S> by inject(BoostOperator::class.java)
 
-    override suspend operator fun <S : ISpecimenRepresentation> invoke(
-        algorithm: SEvolutionaryAlgorithm<S>
-    ): Unit = withContext(Dispatchers.Default) {
+    override suspend operator fun invoke(): Unit = withContext(Dispatchers.Default) {
         algorithm.population
             .slice(0 until boostedCount)
             .forEach {
                 launch {
-                    boostOperator(algorithm, it)
+                    boostOperator(it)
                 }
             }
     }

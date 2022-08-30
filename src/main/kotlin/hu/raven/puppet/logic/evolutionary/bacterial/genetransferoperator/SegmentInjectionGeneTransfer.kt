@@ -1,17 +1,20 @@
 package hu.raven.puppet.logic.evolutionary.bacterial.genetransferoperator
 
 import hu.raven.puppet.logic.common.logging.DoubleLogger
+import hu.raven.puppet.logic.common.steps.calculatecost.CalculateCost
 import hu.raven.puppet.logic.evolutionary.BacterialAlgorithm
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.utility.extention.nextSegmentStartPosition
-import org.koin.java.KoinJavaComponent
+import org.koin.java.KoinJavaComponent.inject
 import kotlin.random.Random
 
-class SegmentInjectionGeneTransfer : GeneTransferOperator {
-    val logger: DoubleLogger by KoinJavaComponent.inject(DoubleLogger::class.java)
+class SegmentInjectionGeneTransfer<S : ISpecimenRepresentation>(
+    override val algorithm: BacterialAlgorithm<S>
+) : GeneTransferOperator<S> {
+    val logger: DoubleLogger by inject(DoubleLogger::class.java)
+    val calculateCostOf: CalculateCost<S> by inject(CalculateCost::class.java)
 
-    override fun <S : ISpecimenRepresentation> invoke(
-        algorithm: BacterialAlgorithm<S>,
+    override fun invoke(
         source: S,
         target: S
     ) {

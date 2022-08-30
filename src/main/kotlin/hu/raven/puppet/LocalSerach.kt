@@ -1,8 +1,10 @@
 package hu.raven.puppet
 
+import hu.raven.puppet.logic.common.initialize.InitializeAlgorithm
 import hu.raven.puppet.logic.common.logging.DoubleLogger
+import hu.raven.puppet.logic.evolutionary.common.iteration.EvolutionaryIteration
 import hu.raven.puppet.logic.localsearch.SLocalSearch
-import hu.raven.puppet.logic.commonModule
+import hu.raven.puppet.logic.modules.commonModule
 import hu.raven.puppet.logic.statistics.Statistics
 import org.koin.core.context.startKoin
 import org.koin.java.KoinJavaComponent.inject
@@ -18,6 +20,8 @@ fun main(arguments: Array<String>) {
     }
     val statistics: Statistics by inject(Statistics::class.java)
     val logger: DoubleLogger by inject(DoubleLogger::class.java)
+    val initialize: InitializeAlgorithm<*> by inject(InitializeAlgorithm::class.java)
+    val iterate: EvolutionaryIteration<*> by inject(EvolutionaryIteration::class.java)
 
     val argumentMap = loadArgumentsToMap(arguments)
 
@@ -27,16 +31,14 @@ fun main(arguments: Array<String>) {
     logger.targetFile = outputFile
 
     val localSearch: SLocalSearch<*> by inject(SLocalSearch::class.java)
-    val task = loadTask(argumentMap)
-    localSearch.salesmen = task.salesmen
-    localSearch.costGraph = task.costGraph
-    localSearch.initialize()
+    localSearch.task = loadTask(argumentMap)
+    initialize()
 
     var index = 0
     while (true) {
         logger("STEP: ${index + 1}")
         val duration = measureTime {
-            localSearch.iterate()
+            iterate(false)
         }
         logger("time elapsed: $duration")
 

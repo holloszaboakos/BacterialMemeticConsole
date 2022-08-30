@@ -3,16 +3,18 @@ package hu.raven.puppet.logic.evolutionary.bacterial.mutationoperator
 import hu.raven.puppet.logic.evolutionary.BacterialAlgorithm
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.logic.statistics.Statistics
-import hu.raven.puppet.model.mtsp.DEdge
-import hu.raven.puppet.model.mtsp.DGraph
+import hu.raven.puppet.model.DEdge
+import hu.raven.puppet.model.DGraph
 import org.koin.java.KoinJavaComponent.inject
 import kotlin.random.Random
 
-class MutationOperatorWithContinuousSegmentAndHeuristicApproach : BacterialMutationOperator {
+class MutationOperatorWithContinuousSegmentAndHeuristicApproach<S : ISpecimenRepresentation>(
+    override val algorithm: BacterialAlgorithm<S>,
+) : BacterialMutationOperator<S> {
+
     val statistics: Statistics by inject(Statistics::class.java)
 
-    override fun <S : ISpecimenRepresentation> invoke(
-        algorithm: BacterialAlgorithm<S>,
+    override fun invoke(
         clone: S,
         selectedPositions: IntArray,
         selectedElements: IntArray
@@ -22,7 +24,7 @@ class MutationOperatorWithContinuousSegmentAndHeuristicApproach : BacterialMutat
         }
 
         val remainingElements = selectedElements.toMutableList()
-        val objectiveCount = algorithm.costGraph.objectives.size
+        val objectiveCount = algorithm.task.costGraph.objectives.size
         var previousElement = if (selectedPositions.first() == 0) {
             objectiveCount
         } else {
@@ -93,20 +95,20 @@ class MutationOperatorWithContinuousSegmentAndHeuristicApproach : BacterialMutat
         currentElement: Int,
         remainingElements: MutableList<Int>
     ): Double = algorithm.run {
-        val objectiveCount = algorithm.costGraph.objectives.size
+        val objectiveCount = algorithm.task.costGraph.objectives.size
         remainingElements.map { element ->
             if (currentElement == element)
                 return@map 0.0
             when {
-                element < objectiveCount && currentElement < objectiveCount -> algorithm.costGraph
+                element < objectiveCount && currentElement < objectiveCount -> algorithm.task.costGraph
                     .getEdgeBetween(element, currentElement)
                     .length_Meter
                     .multiplicativeInverse()
-                currentElement < objectiveCount -> algorithm.costGraph
+                currentElement < objectiveCount -> algorithm.task.costGraph
                     .edgesFromCenter[currentElement]
                     .length_Meter
                     .multiplicativeInverse()
-                element < objectiveCount -> algorithm.costGraph
+                element < objectiveCount -> algorithm.task.costGraph
                     .edgesToCenter[element]
                     .length_Meter
                     .multiplicativeInverse()
@@ -120,18 +122,18 @@ class MutationOperatorWithContinuousSegmentAndHeuristicApproach : BacterialMutat
         previousElement: Int,
         remainingElements: MutableList<Int>
     ): DoubleArray = algorithm.run {
-        val objectiveCount = algorithm.costGraph.objectives.size
+        val objectiveCount = algorithm.task.costGraph.objectives.size
         remainingElements.map { element ->
             when {
-                previousElement < objectiveCount && element < objectiveCount -> algorithm.costGraph
+                previousElement < objectiveCount && element < objectiveCount -> algorithm.task.costGraph
                     .getEdgeBetween(previousElement, element)
                     .length_Meter
                     .multiplicativeInverse()
-                element < objectiveCount -> algorithm.costGraph
+                element < objectiveCount -> algorithm.task.costGraph
                     .edgesFromCenter[element]
                     .length_Meter
                     .multiplicativeInverse()
-                previousElement < objectiveCount -> algorithm.costGraph
+                previousElement < objectiveCount -> algorithm.task.costGraph
                     .edgesToCenter[previousElement]
                     .length_Meter
                     .multiplicativeInverse()

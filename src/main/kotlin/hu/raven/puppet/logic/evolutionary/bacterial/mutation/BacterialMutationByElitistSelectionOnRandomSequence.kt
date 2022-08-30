@@ -1,6 +1,9 @@
 package hu.raven.puppet.logic.evolutionary.bacterial.mutation
 
+import hu.raven.puppet.logic.common.steps.calculatecost.CalculateCost
 import hu.raven.puppet.logic.evolutionary.BacterialAlgorithm
+import hu.raven.puppet.logic.evolutionary.bacterial.mutationoperator.BacterialMutationOperator
+import hu.raven.puppet.logic.evolutionary.bacterial.selectsegment.SelectSegment
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.logic.statistics.Statistics
 import kotlinx.coroutines.Dispatchers
@@ -9,15 +12,17 @@ import kotlinx.coroutines.withContext
 import org.koin.java.KoinJavaComponent.inject
 import kotlin.random.Random
 
-class BacterialMutationByElitistSelectionOnRandomSequence(
-    val mutationPercentage: Float
-) : BacterialMutation {
+class BacterialMutationByElitistSelectionOnRandomSequence<S : ISpecimenRepresentation>(
+    val mutationPercentage: Float,
+    override val algorithm: BacterialAlgorithm<S>
+) : BacterialMutation<S> {
 
     val statistics: Statistics by inject(Statistics::class.java)
+    val calculateCostOf: CalculateCost<S> by inject(CalculateCost::class.java)
+    val mutationOperator: BacterialMutationOperator<S> by inject(BacterialMutationOperator::class.java)
+    val selectSegment: SelectSegment<S> by inject(BacterialMutationOperator::class.java)
 
-    override suspend fun <S : ISpecimenRepresentation> invoke(
-        algorithm: BacterialAlgorithm<S>
-    ): Unit = withContext(Dispatchers.Default) {
+    override suspend fun invoke(): Unit = withContext(Dispatchers.Default) {
         algorithm.run {
             statistics.mutationStepCall++
 
@@ -49,7 +54,7 @@ class BacterialMutationByElitistSelectionOnRandomSequence(
         }
     }
 
-    private fun <S : ISpecimenRepresentation> BacterialAlgorithm<S>.mutateSpecimen(
+    private fun BacterialAlgorithm<S>.mutateSpecimen(
         specimen: S
     ) {
         repeat(cloneCycleCount) {

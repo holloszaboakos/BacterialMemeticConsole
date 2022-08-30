@@ -1,12 +1,16 @@
 package hu.raven.puppet.logic
 
+import hu.raven.puppet.logic.common.initialize.InitializeAlgorithm
 import hu.raven.puppet.logic.evolutionary.SEvolutionaryAlgorithm
-import hu.raven.puppet.model.mtsp.DTask
+import hu.raven.puppet.logic.evolutionary.common.iteration.EvolutionaryIteration
+import hu.raven.puppet.model.DTask
 import org.koin.java.KoinJavaComponent.inject
 
 class AlgorithmManagerService {
 
     val algorithm: SEvolutionaryAlgorithm<*> by inject(SEvolutionaryAlgorithm::class.java)
+    val initialize: InitializeAlgorithm<*> by inject(InitializeAlgorithm::class.java)
+    val iterate: EvolutionaryIteration<*> by inject(EvolutionaryIteration::class.java)
     var task: DTask? = null
 
     fun checkIfTaskIsWellFormatted(): Boolean {
@@ -21,11 +25,10 @@ class AlgorithmManagerService {
 
     fun initializeAlgorithm() {
         task?.let { task ->
-            algorithm.costGraph = task.costGraph
-            algorithm.salesmen = task.salesmen
+            algorithm.task = task
         }
-        algorithm.initialize()
+        initialize()
     }
 
-    fun runIteration() = algorithm.iterate(true)
+    fun runIteration() = iterate(true)
 }

@@ -1,18 +1,22 @@
 package hu.raven.puppet.logic.evolutionary.common.boostoperator
 
 import hu.raven.puppet.logic.common.logging.DoubleLogger
+import hu.raven.puppet.logic.common.steps.calculatecost.CalculateCost
 import hu.raven.puppet.logic.evolutionary.SEvolutionaryAlgorithm
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
-import org.koin.java.KoinJavaComponent
+import org.koin.java.KoinJavaComponent.inject
 
-class Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit(
+class Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit<S : ISpecimenRepresentation>(
+    override val algorithm: SEvolutionaryAlgorithm<S>,
     var stepLimit: Int
-) : BoostOperator {
+) : BoostOperator<S> {
+    val calculateCostOf: CalculateCost<*> by inject(CalculateCost::class.java)
+    val logger: DoubleLogger by inject(DoubleLogger::class.java)
+
     var lastPositionPerSpecimen = arrayOf<Pair<Int, Int>>()
     var shuffler = intArrayOf()
-    val logger: DoubleLogger by KoinJavaComponent.inject(DoubleLogger::class.java)
 
-    override fun <S : ISpecimenRepresentation> invoke(algorithm: SEvolutionaryAlgorithm<S>, specimen: S) {
+    override fun invoke(specimen: S) {
         logger("BOOST")
         if (lastPositionPerSpecimen.isEmpty()) {
             lastPositionPerSpecimen = Array(algorithm.sizeOfPopulation) { Pair(0, 1) }
@@ -30,7 +34,7 @@ class Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit(
         var lastPosition = lastPositionPerSpecimen[specimen.id]
         var stepCount = 0
 
-        outer@ for (firstIndexIndex in lastPosition.first until algorithm.costGraph.objectives.size - 1) {
+        outer@ for (firstIndexIndex in lastPosition.first until algorithm.task.costGraph.objectives.size - 1) {
             val firstIndex = shuffler[firstIndexIndex]
             val secondIndexStart =
                 if (firstIndexIndex == lastPosition.first) lastPosition.second
@@ -44,7 +48,7 @@ class Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit(
                 stepCount++
                 val secondIndex = shuffler[secondIndexIndex]
                 specimen.swapGenes(firstIndex, secondIndex)
-                algorithm.calculateCostOf(specimen)
+                calculateCostOf(specimen)
 
                 if (specimen.cost >= bestCost) {
                     specimen.swapGenes(firstIndex, secondIndex)

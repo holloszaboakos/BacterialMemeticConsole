@@ -2,13 +2,13 @@ package hu.raven.puppet
 
 import com.google.gson.Gson
 import hu.raven.puppet.logic.AlgorithmManagerService
-import hu.raven.puppet.logic.bacterialModule
 import hu.raven.puppet.logic.common.logging.DoubleLogger
-import hu.raven.puppet.logic.commonModule
+import hu.raven.puppet.logic.modules.bacterialModule
+import hu.raven.puppet.logic.modules.commonModule
 import hu.raven.puppet.logic.modules.commonPostModule
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.logic.statistics.Statistics
-import hu.raven.puppet.model.mtsp.*
+import hu.raven.puppet.model.*
 import org.koin.core.context.startKoin
 import org.koin.java.KoinJavaComponent.inject
 import java.io.File

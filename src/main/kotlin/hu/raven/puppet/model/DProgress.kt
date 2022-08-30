@@ -9,16 +9,21 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-package hu.raven.puppet.model.mtsp
+package hu.raven.puppet.model
 
-import java.math.BigDecimal
 import java.util.*
 
-data class DSetting(
+/**
+ *
+ * @param id
+ * @param name
+ * @param iteration
+ * @param runtime_Second
+ */
+data class DProgress(
     var id: String = UUID.randomUUID().toString(),
     val name: String = "",
-    val iterLimit: BigDecimal = BigDecimal(0),
-    val timeLimit_Second: BigDecimal = BigDecimal(0),
-    val algorithm: String = ""
+    val iteration: Long = 0L,
+    val runtime_Second: Long = 0L
 )
 

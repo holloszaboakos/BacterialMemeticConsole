@@ -8,7 +8,7 @@ class MutateChildrenByReset : MutateChildren {
     override fun <S : ISpecimenRepresentation> invoke(algorithm: GeneticAlgorithm<S>) {
         val basePermutation =
             List(algorithm.copyOfBest?.permutationIndices?.count() ?: 0) { it }.shuffled().toIntArray()
-        if (algorithm.costGraph.objectives.size > 1)
+        if (algorithm.task.costGraph.objectives.size > 1)
             algorithm.population.asSequence()
                 .filter { it.iteration == algorithm.iteration }
                 .shuffled()

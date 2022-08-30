@@ -1,17 +1,21 @@
 package hu.raven.puppet.logic.evolutionary.bacterial.mutation
 
+import hu.raven.puppet.logic.common.steps.calculatecost.CalculateCost
 import hu.raven.puppet.logic.evolutionary.BacterialAlgorithm
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
+import org.koin.java.KoinJavaComponent
 
-sealed interface BacterialMutation {
+sealed interface BacterialMutation<S : ISpecimenRepresentation> {
 
-    fun <S : ISpecimenRepresentation> BacterialAlgorithm<S>.calcCostOfEachAndSort(clones: MutableList<S>) {
+    val algorithm: BacterialAlgorithm<S>
+
+    fun calcCostOfEachAndSort(clones: MutableList<S>) {
+        val calculateCostOf: CalculateCost<S> by KoinJavaComponent.inject(CalculateCost::class.java)
+
         clones
             .onEach { calculateCostOf(it) }
             .sortBy { it.cost }
     }
 
-    suspend operator fun <S : ISpecimenRepresentation> invoke(
-        algorithm: BacterialAlgorithm<S>
-    )
+    suspend operator fun invoke()
 }

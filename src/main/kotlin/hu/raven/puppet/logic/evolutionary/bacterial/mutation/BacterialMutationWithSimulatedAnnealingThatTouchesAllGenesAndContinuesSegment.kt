@@ -1,7 +1,9 @@
 package hu.raven.puppet.logic.evolutionary.bacterial.mutation
 
 import hu.raven.puppet.logic.common.logging.DoubleLogger
+import hu.raven.puppet.logic.common.steps.calculatecost.CalculateCost
 import hu.raven.puppet.logic.evolutionary.BacterialAlgorithm
+import hu.raven.puppet.logic.evolutionary.bacterial.mutationoperator.BacterialMutationOperator
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.logic.statistics.Statistics
 import kotlinx.coroutines.Dispatchers
@@ -12,14 +14,17 @@ import kotlin.math.exp
 import kotlin.random.Random.Default.nextFloat
 import kotlin.random.Random.Default.nextInt
 
-class BacterialMutationWithSimulatedAnnealingThatTouchesAllGenesAndContinuesSegment : BacterialMutation {
+class BacterialMutationWithSimulatedAnnealingThatTouchesAllGenesAndContinuesSegment<S : ISpecimenRepresentation>(
+    val mutationPercentage: Float,
+    override val algorithm: BacterialAlgorithm<S>
+) : BacterialMutation<S> {
 
     private val statistics: Statistics by inject(Statistics::class.java)
     val logger: DoubleLogger by inject(DoubleLogger::class.java)
+    val calculateCostOf: CalculateCost<S> by inject(CalculateCost::class.java)
+    val mutationOperator: BacterialMutationOperator<S> by inject(BacterialMutationOperator::class.java)
 
-    override suspend fun <S : ISpecimenRepresentation> invoke(
-        algorithm: BacterialAlgorithm<S>
-    ) = withContext(Dispatchers.Default) {
+    override suspend fun invoke() = withContext(Dispatchers.Default) {
         algorithm.run {
             logger(simulatedAnnealingHeat(iteration, iterationLimit).toString())
 
@@ -50,7 +55,7 @@ class BacterialMutationWithSimulatedAnnealingThatTouchesAllGenesAndContinuesSegm
         }
     }
 
-    private fun <S : ISpecimenRepresentation> BacterialAlgorithm<S>.mutateSpecimen(
+    private fun BacterialAlgorithm<S>.mutateSpecimen(
         specimen: S,
         randomStartPosition: Int,
         doSimulatedAnnealing: Boolean
@@ -79,7 +84,7 @@ class BacterialMutationWithSimulatedAnnealingThatTouchesAllGenesAndContinuesSegm
         }
     }
 
-    private fun <S : ISpecimenRepresentation> BacterialAlgorithm<S>.generateClones(
+    private fun BacterialAlgorithm<S>.generateClones(
         specimen: S,
         selectedPositions: IntArray,
         selectedElements: IntArray

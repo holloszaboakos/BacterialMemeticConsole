@@ -3,14 +3,14 @@ package hu.raven.puppet.logic.evolutionary.genetic.crossoveroperator
 import hu.raven.puppet.logic.common.logging.DoubleLogger
 import hu.raven.puppet.logic.evolutionary.GeneticAlgorithm
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
-import hu.raven.puppet.model.mtsp.DEdge
-import hu.raven.puppet.model.mtsp.DGraph
-import org.koin.java.KoinJavaComponent
+import hu.raven.puppet.model.DEdge
+import hu.raven.puppet.model.DGraph
+import org.koin.java.KoinJavaComponent.inject
 import kotlin.random.Random
 import kotlin.random.Random.Default.nextInt
 
 class HeuristicCrossOver : CrossOverOperator {
-    val logger: DoubleLogger by KoinJavaComponent.inject(DoubleLogger::class.java)
+    val logger: DoubleLogger by inject(DoubleLogger::class.java)
 
     override fun <S : ISpecimenRepresentation> invoke(
         parents: Pair<S, S>,
@@ -127,7 +127,7 @@ class HeuristicCrossOver : CrossOverOperator {
         neighbours: List<Int>,
         previousValue: Int,
         algorithm: GeneticAlgorithm<S>
-    ): DoubleArray = algorithm.costGraph.run {
+    ): DoubleArray = algorithm.task.costGraph.run {
         DoubleArray(neighbours.size) { neighbourIndex ->
             when {
                 previousValue < objectives.size && neighbours[neighbourIndex] < objectives.size -> {

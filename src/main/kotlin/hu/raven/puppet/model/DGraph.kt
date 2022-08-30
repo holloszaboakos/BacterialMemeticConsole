@@ -9,7 +9,7 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-package hu.raven.puppet.model.mtsp
+package hu.raven.puppet.model
 
 import java.util.*
 

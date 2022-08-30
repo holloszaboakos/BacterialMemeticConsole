@@ -1,4 +1,4 @@
-package hu.raven.puppet.model.mtsp
+package hu.raven.puppet.model
 
 data class DSetup(
     val task: DTask,

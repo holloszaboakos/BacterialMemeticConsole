@@ -6,21 +6,22 @@ import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.koin.java.KoinJavaComponent
+import org.koin.java.KoinJavaComponent.inject
 
-class BoostOnBestAndWorst : Boost {
-    val boostOperator: BoostOperator by KoinJavaComponent.inject(BoostOperator::class.java)
+class BoostOnBestAndWorst<S : ISpecimenRepresentation>(
+    override val algorithm: SEvolutionaryAlgorithm<S>
+) : Boost<S> {
+    val boostOperator: BoostOperator<S> by inject(BoostOperator::class.java)
 
-    override suspend operator fun <S : ISpecimenRepresentation> invoke(
-        algorithm: SEvolutionaryAlgorithm<S>
+    override suspend operator fun invoke(
     ): Unit = withContext(Dispatchers.Default) {
         launch {
             val best = algorithm.population.first()
-            boostOperator(algorithm, best)
+            boostOperator(best)
         }
         launch {
             val worst = algorithm.population.last()
-            boostOperator(algorithm, worst)
+            boostOperator(worst)
         }
     }
 

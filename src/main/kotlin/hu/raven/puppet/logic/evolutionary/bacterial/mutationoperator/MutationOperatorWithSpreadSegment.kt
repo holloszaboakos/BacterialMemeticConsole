@@ -3,9 +3,11 @@ package hu.raven.puppet.logic.evolutionary.bacterial.mutationoperator
 import hu.raven.puppet.logic.evolutionary.BacterialAlgorithm
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 
-class MutationOperatorWithSpreadSegment : BacterialMutationOperator {
-    override fun <S : ISpecimenRepresentation> invoke(
-        algorithm: BacterialAlgorithm<S>,
+class MutationOperatorWithSpreadSegment<S : ISpecimenRepresentation>(
+    override val algorithm: BacterialAlgorithm<S>,
+) : BacterialMutationOperator<S> {
+
+    override fun invoke(
         clone: S,
         selectedPositions: IntArray,
         selectedElements: IntArray

@@ -1,15 +1,18 @@
 package hu.raven.puppet.logic.evolutionary.bacterial.genetransfer
 
 import hu.raven.puppet.logic.evolutionary.BacterialAlgorithm
+import hu.raven.puppet.logic.evolutionary.bacterial.genetransferoperator.GeneTransferOperator
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.koin.java.KoinJavaComponent.inject
 
-class GeneTransferByElitist : GeneTransfer {
-    override suspend fun <S : ISpecimenRepresentation> invoke(
-        algorithm: BacterialAlgorithm<S>
-    ) = withContext(Dispatchers.Default) {
+class GeneTransferByElitist<S : ISpecimenRepresentation>(
+    override val algorithm: BacterialAlgorithm<S>
+) : GeneTransfer<S> {
+    val geneTransferOperator: GeneTransferOperator<S> by inject(GeneTransferOperator::class.java)
+    override suspend fun invoke() = withContext(Dispatchers.Default) {
         algorithm.run {
             val donorIndexRandomizer = (0 until population.size / 4)
                 .shuffled()
@@ -31,7 +34,7 @@ class GeneTransferByElitist : GeneTransfer {
                     val acceptor = population[acceptorIndex]
 
                     synchronized(acceptor) {
-                        donor transferGeneTo acceptor
+                        geneTransferOperator(donor, acceptor)
                     }
                 }
             }

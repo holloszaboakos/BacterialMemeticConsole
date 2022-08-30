@@ -5,17 +5,17 @@ import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.utility.extention.nextSegmentStartPosition
 import kotlin.random.Random
 
-class SelectContinuesSegment : SelectSegment {
-    override fun <S : ISpecimenRepresentation> invoke(
-        algorithm: BacterialAlgorithm<S>,
-        specimen: S,
-        cloneSegmentLength: Int
+class SelectContinuesSegment<S : ISpecimenRepresentation>(
+    override val algorithm: BacterialAlgorithm<S>
+) : SelectSegment<S> {
+    override fun invoke(
+        specimen: S
     ): IntArray {
         val randomPosition =
             Random.nextSegmentStartPosition(
                 specimen.permutationIndices.count(),
-                cloneSegmentLength
+                algorithm.cloneSegmentLength
             )
-        return IntArray(cloneSegmentLength) { randomPosition + it }
+        return IntArray(algorithm.cloneSegmentLength) { randomPosition + it }
     }
 }

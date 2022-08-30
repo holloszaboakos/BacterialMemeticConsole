@@ -1,11 +1,11 @@
-package hu.raven.puppet.model.mtsp
+package hu.raven.puppet.model
 
 import java.util.*
 
-data class DEdgeArray(
+data class DGpsArray(
     var id: String = UUID.randomUUID().toString(),
     var orderInOwner: Int = 0,
-    var values: Array<DEdge> = arrayOf()
+    var values: Array<DGps> = arrayOf()
 ) {
     init {
         values.forEachIndexed { index, gps -> gps.orderInOwner = index }
@@ -15,7 +15,7 @@ data class DEdgeArray(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as DEdgeArray
+        other as DGpsArray
 
         if (id != other.id) return false
         if (orderInOwner != other.orderInOwner) return false

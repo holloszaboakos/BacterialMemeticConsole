@@ -1,12 +1,19 @@
 package hu.raven.puppet.logic.evolutionary.common.boostoperator
 
+import hu.raven.puppet.logic.common.steps.calculatecost.CalculateCost
 import hu.raven.puppet.logic.evolutionary.SEvolutionaryAlgorithm
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
+import org.koin.java.KoinJavaComponent
 
-class Opt2CycleWithRandomOrder : BoostOperator {
+class Opt2CycleWithRandomOrder<S : ISpecimenRepresentation>(
+    override val algorithm: SEvolutionaryAlgorithm<S>
+) : BoostOperator<S> {
+
+    val calculateCostOf: CalculateCost<S> by KoinJavaComponent.inject(CalculateCost::class.java)
+
     var shuffler = intArrayOf()
 
-    override fun <S : ISpecimenRepresentation> invoke(algorithm: SEvolutionaryAlgorithm<S>, specimen: S) {
+    override fun invoke(specimen: S) {
         if (shuffler.isEmpty()) {
             shuffler = (0 until algorithm.population.first().permutationSize)
                 .shuffled()
@@ -22,7 +29,7 @@ class Opt2CycleWithRandomOrder : BoostOperator {
                 val secondIndex = shuffler[secondIndexIndex]
 
                 specimen.swapGenes(firstIndex, secondIndex)
-                algorithm.calculateCostOf(specimen)
+                calculateCostOf(specimen)
 
                 if (specimen.cost >= bestCost) {
                     specimen.swapGenes(firstIndex, secondIndex)

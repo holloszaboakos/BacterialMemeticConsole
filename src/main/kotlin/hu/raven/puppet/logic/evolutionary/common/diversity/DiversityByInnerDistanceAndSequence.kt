@@ -4,11 +4,14 @@ import hu.raven.puppet.logic.evolutionary.SEvolutionaryAlgorithm
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.logic.statistics.Statistics
 import kotlinx.coroutines.runBlocking
-import org.koin.java.KoinJavaComponent
+import org.koin.java.KoinJavaComponent.inject
 
-class DiversityByInnerDistanceAndSequence : Diversity {
-    val statistics: Statistics by KoinJavaComponent.inject(Statistics::class.java)
-    override fun <S : ISpecimenRepresentation> invoke(algorithm: SEvolutionaryAlgorithm<S>): Unit = runBlocking {
+class DiversityByInnerDistanceAndSequence<S : ISpecimenRepresentation>(
+    override val algorithm: SEvolutionaryAlgorithm<S>
+) : Diversity<S> {
+
+    val statistics: Statistics by inject(Statistics::class.java)
+    override fun invoke(): Unit = runBlocking {
         statistics.diversity = 0.0
 
         val sequentials = algorithm.population.map { it.sequentialOfPermutation() }

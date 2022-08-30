@@ -1,4 +1,4 @@
-package hu.raven.puppet.logic
+package hu.raven.puppet.logic.modules
 
 import hu.raven.puppet.logic.common.initialize.InitializeAlgorithm
 import hu.raven.puppet.logic.common.initialize.InitializeGeneticAlgorithm
@@ -12,39 +12,29 @@ import hu.raven.puppet.logic.evolutionary.genetic.crossoveroperator.CrossOverOpe
 import hu.raven.puppet.logic.evolutionary.genetic.crossoveroperator.HeuristicCrossOver
 import hu.raven.puppet.logic.evolutionary.genetic.mutatechildren.MutateChildren
 import hu.raven.puppet.logic.evolutionary.genetic.mutatechildren.MutateChildrenBySwap
-import hu.raven.puppet.logic.evolutionary.setup.GeneticAlgorithmSetup
 import hu.raven.puppet.logic.specimen.DOnePartRepresentation
 import org.koin.dsl.module
 
 val geneticModule = module {
-    factory<InitializeAlgorithm>() {
-        InitializeGeneticAlgorithm()
-    }
-
-    factory<EvolutionaryIteration> {
-        GeneticIteration()
-    }
-    factory { SelectSurvivors() }
-    factory { CrossOvers() }
-    factory<CrossOverOperator> { HeuristicCrossOver() }
-    factory<MutateChildren> { MutateChildrenBySwap() }
-
-    factory {
-        GeneticAlgorithmSetup(
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get()
+    factory<InitializeAlgorithm<*>> {
+        InitializeGeneticAlgorithm<DOnePartRepresentation>(
+            algorithm = get()
         )
     }
+
+    factory<EvolutionaryIteration<*>> {
+        GeneticIteration<DOnePartRepresentation>(
+            algorithm = get()
+        )
+    }
+    factory { SelectSurvivors() }
+    factory {
+        CrossOvers<DOnePartRepresentation>(
+            algorithm = get()
+        )
+    }
+    factory<CrossOverOperator> { HeuristicCrossOver() }
+    factory<MutateChildren> { MutateChildrenBySwap() }
 
     single<SEvolutionaryAlgorithm<DOnePartRepresentation>> {
         GeneticAlgorithm(

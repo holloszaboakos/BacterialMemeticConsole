@@ -3,15 +3,17 @@ package hu.raven.puppet.logic.evolutionary.bacterial.mutationoperator
 import hu.raven.puppet.logic.evolutionary.BacterialAlgorithm
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.logic.statistics.Statistics
-import hu.raven.puppet.model.mtsp.DEdge
-import hu.raven.puppet.model.mtsp.DGraph
-import org.koin.java.KoinJavaComponent
+import hu.raven.puppet.model.DEdge
+import hu.raven.puppet.model.DGraph
+import org.koin.java.KoinJavaComponent.inject
 import kotlin.random.Random
 
-class MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics : BacterialMutationOperator {
-    val statistics: Statistics by KoinJavaComponent.inject(Statistics::class.java)
-    override fun <S : ISpecimenRepresentation> invoke(
-        algorithm: BacterialAlgorithm<S>,
+class MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics<S : ISpecimenRepresentation>(
+    override val algorithm: BacterialAlgorithm<S>,
+
+    ) : BacterialMutationOperator<S> {
+    val statistics: Statistics by inject(Statistics::class.java)
+    override fun invoke(
         clone: S,
         selectedPositions: IntArray,
         selectedElements: IntArray
@@ -194,7 +196,7 @@ class MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics : BacterialM
         selectedPositions: IntArray,
         selectedElements: IntArray
     ): DoubleArray = algorithm.run {
-        val objectiveCount = algorithm.costGraph.objectives.size
+        val objectiveCount = algorithm.task.costGraph.objectives.size
         val nextElement = if (selectedPositions.last() == 0) {
             objectiveCount
         } else {
@@ -215,7 +217,7 @@ class MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics : BacterialM
         selectedPositions: IntArray,
         selectedElements: IntArray
     ): DoubleArray = algorithm.run {
-        val objectiveCount = algorithm.costGraph.objectives.size
+        val objectiveCount = algorithm.task.costGraph.objectives.size
         val previousElement = if (selectedPositions.first() == 0) {
             objectiveCount
         } else {
@@ -251,18 +253,18 @@ class MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics : BacterialM
         fromElement: Int,
         toElement: Int
     ): Double {
-        val objectiveCount = algorithm.costGraph.objectives.size
+        val objectiveCount = algorithm.task.costGraph.objectives.size
         return when {
             fromElement == toElement -> 0.0
-            fromElement < objectiveCount && toElement < objectiveCount -> algorithm.costGraph
+            fromElement < objectiveCount && toElement < objectiveCount -> algorithm.task.costGraph
                 .getEdgeBetween(fromElement, toElement)
                 .length_Meter
                 .multiplicativeInverse()
-            toElement < objectiveCount -> algorithm.costGraph
+            toElement < objectiveCount -> algorithm.task.costGraph
                 .edgesFromCenter[toElement]
                 .length_Meter
                 .multiplicativeInverse()
-            fromElement < objectiveCount -> algorithm.costGraph
+            fromElement < objectiveCount -> algorithm.task.costGraph
                 .edgesToCenter[fromElement]
                 .length_Meter
                 .multiplicativeInverse()
