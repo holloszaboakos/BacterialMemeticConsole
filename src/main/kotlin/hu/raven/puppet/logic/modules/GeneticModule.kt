@@ -27,14 +27,26 @@ val geneticModule = module {
             algorithm = get()
         )
     }
-    factory { SelectSurvivors() }
+    factory {
+        SelectSurvivors<DOnePartRepresentation>(
+            algorithm = get()
+        )
+    }
     factory {
         CrossOvers<DOnePartRepresentation>(
             algorithm = get()
         )
     }
-    factory<CrossOverOperator> { HeuristicCrossOver() }
-    factory<MutateChildren> { MutateChildrenBySwap() }
+    factory<CrossOverOperator<*>> {
+        HeuristicCrossOver<DOnePartRepresentation>(
+            algorithm = get()
+        )
+    }
+    factory<MutateChildren<*>> {
+        MutateChildrenBySwap<DOnePartRepresentation>(
+            algorithm = get()
+        )
+    }
 
     single<SEvolutionaryAlgorithm<DOnePartRepresentation>> {
         GeneticAlgorithm(

@@ -4,8 +4,11 @@ import hu.raven.puppet.logic.evolutionary.GeneticAlgorithm
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.utility.extention.slice
 
-class MutateChildrenByReset : MutateChildren {
-    override fun <S : ISpecimenRepresentation> invoke(algorithm: GeneticAlgorithm<S>) {
+class MutateChildrenByReset<S : ISpecimenRepresentation>(
+    override val algorithm: GeneticAlgorithm<S>
+) : MutateChildren<S> {
+
+    override fun  invoke() {
         val basePermutation =
             List(algorithm.copyOfBest?.permutationIndices?.count() ?: 0) { it }.shuffled().toIntArray()
         if (algorithm.task.costGraph.objectives.size > 1)

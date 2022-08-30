@@ -4,11 +4,13 @@ import hu.raven.puppet.logic.evolutionary.GeneticAlgorithm
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import kotlin.random.Random
 
-class PartiallyMatchedCrossOver : CrossOverOperator {
-    override fun <S : ISpecimenRepresentation> invoke(
+class PartiallyMatchedCrossOver<S : ISpecimenRepresentation>(
+    override val algorithm: GeneticAlgorithm<S>
+) : CrossOverOperator<S> {
+
+    override fun invoke(
         parents: Pair<S, S>,
         child: S,
-        algorithm: GeneticAlgorithm<S>
     ) {
         val cut = arrayOf(
             Random.nextInt(parents.first.permutationIndices.count()),

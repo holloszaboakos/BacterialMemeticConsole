@@ -3,11 +3,13 @@ package hu.raven.puppet.logic.evolutionary.genetic.crossoveroperator
 import hu.raven.puppet.logic.evolutionary.GeneticAlgorithm
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 
-class CycleCrossOver : CrossOverOperator {
-    override fun <S : ISpecimenRepresentation> invoke(
+class CycleCrossOver<S : ISpecimenRepresentation>(
+    override val algorithm: GeneticAlgorithm<S>
+) : CrossOverOperator<S> {
+
+    override fun invoke(
         parents: Pair<S, S>,
         child: S,
-        algorithm: GeneticAlgorithm<S>
     ) {
         val primerParent = parents.first
         val seconderCopy = parents.second.copyOfPermutationBy(::MutableList) as MutableList

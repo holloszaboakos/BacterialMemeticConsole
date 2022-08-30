@@ -10,18 +10,21 @@ import hu.raven.puppet.logic.statistics.Statistics
 import org.koin.java.KoinJavaComponent.inject
 import kotlin.math.pow
 
-class StatisticalRacingCrossOverWithLeader : CrossOverOperator {
+class StatisticalRacingCrossOverWithLeader<S : ISpecimenRepresentation>(
+    override val algorithm: GeneticAlgorithm<S>
+) : CrossOverOperator<S> {
+
     val logger: DoubleLogger by inject(DoubleLogger::class.java)
-    private val statistics: Statistics by inject(Statistics::class.java)
+    private val statistics: Statistics<S> by inject(Statistics::class.java)
     val calculateCostOf: CalculateCost<DOnePartRepresentation> by inject(DoubleLogger::class.java)
 
     var iteration = -1
-    private var operator: CrossOverOperator? = null
+    private var operator: CrossOverOperator<S>? = null
     private var actualStatistics: OperatorStatistics? = null
-    override fun <S : ISpecimenRepresentation> invoke(
+
+    override fun invoke(
         parents: Pair<S, S>,
         child: S,
-        algorithm: GeneticAlgorithm<S>
     ) {
         /*
         if (algorithm.iteration == 0 && iteration != -1){
@@ -55,7 +58,7 @@ class StatisticalRacingCrossOverWithLeader : CrossOverOperator {
 
         operator?.let { operator ->
             actualStatistics?.let { statistics ->
-                operator.invoke(parents, child, algorithm)
+                operator.invoke(parents, child)
                 calculateCostOf(child)
                 synchronized(statistics) {
                     if (parents.first.cost > child.cost)

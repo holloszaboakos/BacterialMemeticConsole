@@ -11,7 +11,7 @@ class MutationOperatorWithContinuesSegment<S : ISpecimenRepresentation>(
 
     ) : BacterialMutationOperator<S> {
 
-    val statistics: Statistics by inject(Statistics::class.java)
+    val statistics: Statistics<S> by inject(Statistics::class.java)
     override fun invoke(
         clone: S,
         selectedPositions: IntArray,

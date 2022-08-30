@@ -9,13 +9,15 @@ import org.koin.java.KoinJavaComponent.inject
 import kotlin.random.Random
 import kotlin.random.Random.Default.nextInt
 
-class HeuristicCrossOver : CrossOverOperator {
+class HeuristicCrossOver<S : ISpecimenRepresentation>(
+    override val algorithm: GeneticAlgorithm<S>
+) : CrossOverOperator<S> {
+
     val logger: DoubleLogger by inject(DoubleLogger::class.java)
 
-    override fun <S : ISpecimenRepresentation> invoke(
+    override fun invoke(
         parents: Pair<S, S>,
         child: S,
-        algorithm: GeneticAlgorithm<S>
     ) {
         val parentsL = parents.toList()
         val parentsInverse = Array(2) {

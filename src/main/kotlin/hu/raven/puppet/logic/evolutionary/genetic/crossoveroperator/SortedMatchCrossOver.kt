@@ -5,11 +5,13 @@ import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import kotlin.math.abs
 
 //broken
-class SortedMatchCrossOver : CrossOverOperator {
-    override fun <S : ISpecimenRepresentation> invoke(
+class SortedMatchCrossOver<S : ISpecimenRepresentation>(
+    override val algorithm: GeneticAlgorithm<S>
+) : CrossOverOperator<S> {
+
+    override fun invoke(
         parents: Pair<S, S>,
         child: S,
-        algorithm: GeneticAlgorithm<S>
     ) {
         val parentsInverse = listOf(
             Array(parents.first.permutationIndices.count()) {

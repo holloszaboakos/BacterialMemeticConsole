@@ -17,7 +17,7 @@ class BacterialMutationWithElitistSelectionThatTouchesAllGenesAndContinuesSegmen
     override val algorithm: BacterialAlgorithm<S>
 ) : BacterialMutation<S> {
 
-    private val statistics: Statistics by inject(Statistics::class.java)
+    private val statistics: Statistics<S> by inject(Statistics::class.java)
     val calculateCostOf: CalculateCost<S> by inject(CalculateCost::class.java)
     val mutationOperator: BacterialMutationOperator<S> by inject(BacterialMutationOperator::class.java)
 

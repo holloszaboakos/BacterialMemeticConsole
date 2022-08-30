@@ -23,9 +23,9 @@ class GeneticIteration<S : ISpecimenRepresentation>(
 
     val orderPopulationByCost: OrderPopulationByCost<S> by inject(OrderPopulationByCost::class.java)
     val boost: Boost<S> by inject(Boost::class.java)
-    val selection: SelectSurvivors by inject(SelectSurvivors::class.java)
+    val selection: SelectSurvivors<S> by inject(SelectSurvivors::class.java)
     val crossover: CrossOvers<S> by inject(CrossOvers::class.java)
-    val mutate: MutateChildren by inject(MutateChildren::class.java)
+    val mutate: MutateChildren<S> by inject(MutateChildren::class.java)
 
 
     override fun invoke(
@@ -36,13 +36,13 @@ class GeneticIteration<S : ISpecimenRepresentation>(
                 state = AAlgorithm4VRP.State.RESUMED
 
             runAndLogTime("selection") {
-                selection(this)
+                selection()
             }
             runAndLogTime("crossover") {
                 crossover()
             }
             runAndLogTime("mutate") {
-                mutate(this)
+                mutate()
             }
             runAndLogTime("orderPopulationByCost") {
                 orderPopulationByCost()

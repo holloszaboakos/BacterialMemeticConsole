@@ -9,7 +9,7 @@ import org.koin.java.KoinJavaComponent.inject
 class CalculateCostOfVRPSolutionWithoutCapacity<S : ISpecimenRepresentation>(
     override val algorithm: AAlgorithm4VRP<S>
 ) : CalculateCost<S> {
-    val statistics: Statistics by inject(Statistics::class.java)
+    val statistics: Statistics<S> by inject(Statistics::class.java)
 
     override operator fun invoke(
         specimen: ISpecimenRepresentation

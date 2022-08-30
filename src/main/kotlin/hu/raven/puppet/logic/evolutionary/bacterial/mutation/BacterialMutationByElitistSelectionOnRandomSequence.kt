@@ -17,7 +17,7 @@ class BacterialMutationByElitistSelectionOnRandomSequence<S : ISpecimenRepresent
     override val algorithm: BacterialAlgorithm<S>
 ) : BacterialMutation<S> {
 
-    val statistics: Statistics by inject(Statistics::class.java)
+    val statistics: Statistics<S> by inject(Statistics::class.java)
     val calculateCostOf: CalculateCost<S> by inject(CalculateCost::class.java)
     val mutationOperator: BacterialMutationOperator<S> by inject(BacterialMutationOperator::class.java)
     val selectSegment: SelectSegment<S> by inject(BacterialMutationOperator::class.java)

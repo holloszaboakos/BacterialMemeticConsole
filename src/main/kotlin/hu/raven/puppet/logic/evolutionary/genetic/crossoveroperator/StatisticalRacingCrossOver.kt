@@ -16,20 +16,23 @@ import kotlin.random.Random.Default.nextDouble
 //a mostani a méh kolónia algoritmus scout fázis menjen bele
 //abc: artificial bee colony
 //cinti
-class StatisticalRacingCrossOver : CrossOverOperator {
+class StatisticalRacingCrossOver<S : ISpecimenRepresentation>(
+    override val algorithm: GeneticAlgorithm<S>
+) : CrossOverOperator<S> {
+
     val logger: DoubleLogger by inject(DoubleLogger::class.java)
     val calculateCostOf: CalculateCost<DOnePartRepresentation> by inject(DoubleLogger::class.java)
 
-    private val statistics: Statistics by inject(Statistics::class.java)
+    private val statistics: Statistics<S> by inject(Statistics::class.java)
 
     var iteration = -1
     var iterationLock = Object()
-    private var operator: CrossOverOperator? = null
+    private var operator: CrossOverOperator<S>? = null
     private var actualStatistics: OperatorStatistics? = null
-    override fun <S : ISpecimenRepresentation> invoke(
+
+    override fun invoke(
         parents: Pair<S, S>,
         child: S,
-        algorithm: GeneticAlgorithm<S>
     ) {
         var newIteration: Boolean
         synchronized(iterationLock) {
@@ -49,8 +52,7 @@ class StatisticalRacingCrossOver : CrossOverOperator {
                 }
             }
             if (iteration < 10 * statistics.operatorsWithStatistics.size) {
-                operator =
-                    statistics.operatorsWithStatistics.keys.toList()[iteration % statistics.operatorsWithStatistics.size]
+                operator = statistics.operatorsWithStatistics.keys.toList()[iteration % statistics.operatorsWithStatistics.size]
                 logger(operator!!::class.java.simpleName)
                 actualStatistics = statistics.operatorsWithStatistics[operator]
             } else {
@@ -73,7 +75,7 @@ class StatisticalRacingCrossOver : CrossOverOperator {
         operator?.let { operator ->
             actualStatistics?.let { actualStatistics ->
                 synchronized(statistics.operatorsWithStatistics) {
-                    operator.invoke(parents, child, algorithm)
+                    operator.invoke(parents, child)
                 }
                 calculateCostOf(child)
                 /*    AuditWorkstation, ExpeditionArea*/

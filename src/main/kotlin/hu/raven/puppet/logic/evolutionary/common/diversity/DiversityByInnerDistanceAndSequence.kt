@@ -10,7 +10,7 @@ class DiversityByInnerDistanceAndSequence<S : ISpecimenRepresentation>(
     override val algorithm: SEvolutionaryAlgorithm<S>
 ) : Diversity<S> {
 
-    val statistics: Statistics by inject(Statistics::class.java)
+    val statistics: Statistics<S> by inject(Statistics::class.java)
     override fun invoke(): Unit = runBlocking {
         statistics.diversity = 0.0
 

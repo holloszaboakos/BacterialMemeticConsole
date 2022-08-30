@@ -3,12 +3,13 @@ package hu.raven.puppet.logic.evolutionary.genetic.crossoveroperator
 import hu.raven.puppet.logic.evolutionary.GeneticAlgorithm
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 
-class GeneticEdgeRecombinationCrossOver : CrossOverOperator {
+class GeneticEdgeRecombinationCrossOver <S : ISpecimenRepresentation>(
+    override val algorithm: GeneticAlgorithm<S>
+) : CrossOverOperator<S> {
 
-    override fun <S : ISpecimenRepresentation> invoke(
+    override fun invoke(
         parents: Pair<S, S>,
         child: S,
-        algorithm: GeneticAlgorithm<S>
     ) {
         val parentsL = parents.toList()
         val parentsInverses = Array(2) { parentsL[it].inverseOfPermutation() }

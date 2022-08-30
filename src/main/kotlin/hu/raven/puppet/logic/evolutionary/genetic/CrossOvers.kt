@@ -9,18 +9,20 @@ import org.koin.java.KoinJavaComponent.inject
 class CrossOvers<S : ISpecimenRepresentation>(
     val algorithm: GeneticAlgorithm<S>
 ) {
-    val crossoverOperator: CrossOverOperator by inject(CrossOverOperator::class.java)
+    val crossoverOperator: CrossOverOperator<S> by inject(CrossOverOperator::class.java)
 
     operator fun invoke() = runBlocking {
-        val children = algorithm.population.filter { !it.inUse }
-        val parent = algorithm.population.filter { it.inUse }.shuffled()
-        parent.mapIndexed { index, primerParent ->
-            val seconderParent =
-                if (index % 2 == 0)
-                    parent[index + 1]
-                else
-                    parent[index - 1]
-            crossoverOperator(Pair(primerParent, seconderParent), children[index], algorithm)
+        val children = algorithm.population
+            .filter { !it.inUse }
+            .chunked(2)
+        val parent = algorithm.population
+            .filter { it.inUse }
+            .shuffled()
+            .chunked(2)
+
+        parent.forEachIndexed { index, parentPair ->
+            crossoverOperator(Pair(parentPair[0], parentPair[1]), children[index][0])
+            crossoverOperator(Pair(parentPair[1], parentPair[0]), children[index][1])
         }
 
     }

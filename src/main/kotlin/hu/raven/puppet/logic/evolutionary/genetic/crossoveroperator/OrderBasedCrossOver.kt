@@ -4,11 +4,13 @@ import hu.raven.puppet.logic.evolutionary.GeneticAlgorithm
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import kotlin.random.Random
 
-class OrderBasedCrossOver : CrossOverOperator {
-    override fun <S : ISpecimenRepresentation> invoke(
+class OrderBasedCrossOver<S : ISpecimenRepresentation>(
+    override val algorithm: GeneticAlgorithm<S>
+) : CrossOverOperator<S> {
+
+    override fun invoke(
         parents: Pair<S, S>,
         child: S,
-        algorithm: GeneticAlgorithm<S>
     ) {
         val primerParent = parents.first
         val seconderParent = parents.second

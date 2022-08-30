@@ -18,7 +18,7 @@ fun main(arguments: Array<String>) {
     startKoin {
         modules(commonModule)
     }
-    val statistics: Statistics by inject(Statistics::class.java)
+    val statistics: Statistics<*> by inject(Statistics::class.java)
     val logger: DoubleLogger by inject(DoubleLogger::class.java)
     val initialize: InitializeAlgorithm<*> by inject(InitializeAlgorithm::class.java)
     val iterate: EvolutionaryIteration<*> by inject(EvolutionaryIteration::class.java)

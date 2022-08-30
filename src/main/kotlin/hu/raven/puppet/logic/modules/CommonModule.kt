@@ -67,7 +67,11 @@ val commonModule = module {
         )
     }
 
-    single { Statistics() }
+    single {
+        Statistics<DOnePartRepresentation>(
+            algorithm = get()
+        )
+    }
 
 
 }

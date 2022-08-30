@@ -24,7 +24,7 @@ fun main(arguments: Array<String>) {
         modules(bacterialModule)
         modules(commonPostModule)
     }
-    val statistics: Statistics by inject(Statistics::class.java)
+    val statistics: Statistics<*> by inject(Statistics::class.java)
     val logger: DoubleLogger by inject(DoubleLogger::class.java)
     //val diversity: Diversity by inject(Diversity::class.java)
 

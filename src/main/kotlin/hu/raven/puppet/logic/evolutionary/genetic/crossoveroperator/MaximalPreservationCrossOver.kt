@@ -4,11 +4,13 @@ import hu.raven.puppet.logic.evolutionary.GeneticAlgorithm
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import kotlin.random.Random.Default.nextInt
 
-class MaximalPreservationCrossOver : CrossOverOperator {
-    override fun <S : ISpecimenRepresentation> invoke(
+class MaximalPreservationCrossOver<S : ISpecimenRepresentation>(
+    override val algorithm: GeneticAlgorithm<S>
+) : CrossOverOperator<S> {
+
+    override fun invoke(
         parents: Pair<S, S>,
         child: S,
-        algorithm: GeneticAlgorithm<S>
     ) {
         val size = child.permutationSize / 4 + nextInt(child.permutationSize / 4)
         val start = nextInt(child.permutationSize - size)

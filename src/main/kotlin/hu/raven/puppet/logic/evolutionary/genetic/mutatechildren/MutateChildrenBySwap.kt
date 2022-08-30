@@ -5,8 +5,11 @@ import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.utility.extention.slice
 import kotlin.random.Random
 
-class MutateChildrenBySwap : MutateChildren {
-    override fun <S : ISpecimenRepresentation> invoke(algorithm: GeneticAlgorithm<S>) {
+class MutateChildrenBySwap<S : ISpecimenRepresentation>(
+    override val algorithm: GeneticAlgorithm<S>
+) : MutateChildren<S> {
+
+    override fun  invoke() {
         if (algorithm.task.costGraph.objectives.size > 1)
             algorithm.population.asSequence()
                 .filter { it.iteration == algorithm.iteration }
