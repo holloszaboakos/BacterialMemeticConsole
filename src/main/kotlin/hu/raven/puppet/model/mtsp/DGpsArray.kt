@@ -4,9 +4,9 @@ import java.util.*
 
 data class DGpsArray(
     var id: String = UUID.randomUUID().toString(),
-    var orderInOwner : Int = 0,
+    var orderInOwner: Int = 0,
     var values: Array<DGps> = arrayOf()
-){
+) {
     init {
         values.forEachIndexed { index, gps -> gps.orderInOwner = index }
     }

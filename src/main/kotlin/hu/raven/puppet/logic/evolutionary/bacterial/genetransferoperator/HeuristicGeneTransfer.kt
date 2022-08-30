@@ -19,7 +19,7 @@ class HeuristicGeneTransfer : GeneTransferOperator {
             algorithm
         )
         algorithm.calculateCostOf(child)
-        if (child.cost < target.cost){
+        if (child.cost < target.cost) {
             target.setData(child.getData())
             target.cost = child.cost
         }

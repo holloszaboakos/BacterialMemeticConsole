@@ -7,7 +7,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.java.KoinJavaComponent
-import kotlin.math.max
 
 class BacterialMutationOnAllAndFullCoverRandomOrder(
     val mutationPercentage: Float
@@ -25,13 +24,9 @@ class BacterialMutationOnAllAndFullCoverRandomOrder(
                 .toIntArray()
         }
 
-        val selectedPosition = order[algorithm.iteration % order.size]
-        val selectedPositions =
-            (selectedPosition until selectedPosition + algorithm.cloneSegmentLength).toList().toIntArray()
-
 
         algorithm.run {
-            val selectedCount = (population.size - 1 * mutationPercentage).toInt()
+            val selectedCount = ((population.size - 1) * mutationPercentage).toInt()
 
             val populationRandomized = population.slice(1 until population.size)
                 .shuffled()
@@ -46,7 +41,7 @@ class BacterialMutationOnAllAndFullCoverRandomOrder(
                     launch {
                         val oldCost = specimen.cost
 
-                        mutateSpecimen(specimen, selectedPositions)
+                        mutateSpecimen(specimen)
 
                         if (specimen.cost == oldCost) {
                             return@launch
@@ -66,10 +61,13 @@ class BacterialMutationOnAllAndFullCoverRandomOrder(
     }
 
     private suspend fun <S : ISpecimenRepresentation> BacterialAlgorithm<S>.mutateSpecimen(
-        specimen: S,
-        selectedPositions: IntArray
+        specimen: S
     ) {
-        repeat(cloneCycleCount) {
+        repeat(cloneCycleCount) { cycleIndex ->
+            val selectedPosition = order[(iteration * cloneCycleCount + cycleIndex) % order.size]
+            val selectedPositions =
+                (selectedPosition until selectedPosition + cloneSegmentLength).toList().toIntArray()
+
             val selectedElements = IntArray(cloneSegmentLength) {
                 specimen[selectedPositions[it]]
             }

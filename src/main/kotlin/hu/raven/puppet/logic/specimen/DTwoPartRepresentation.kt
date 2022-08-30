@@ -5,7 +5,7 @@ import hu.raven.puppet.utility.extention.isPermutation
 import hu.raven.puppet.utility.extention.sequential
 
 data class DTwoPartRepresentation(
-    override val id:Int,
+    override val id: Int,
     val permutation: IntArray,
     val sliceLengths: IntArray,
     override var inUse: Boolean = true,
@@ -15,7 +15,7 @@ data class DTwoPartRepresentation(
     override var orderInPopulation: Int = -1,
 ) : ISpecimenRepresentation {
 
-    constructor(id:Int, data: Array<IntArray>) : this(
+    constructor(id: Int, data: Array<IntArray>) : this(
         id,
         data.let {
             val sum = mutableListOf<Int>()

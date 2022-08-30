@@ -2,9 +2,10 @@ package hu.raven.puppet
 
 import com.google.gson.Gson
 import hu.raven.puppet.logic.AlgorithmManagerService
+import hu.raven.puppet.logic.bacterialModule
 import hu.raven.puppet.logic.common.logging.DoubleLogger
-import hu.raven.puppet.logic.evolutionary.common.diversity.Diversity
-import hu.raven.puppet.logic.logicModule
+import hu.raven.puppet.logic.commonModule
+import hu.raven.puppet.logic.modules.commonPostModule
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.logic.statistics.Statistics
 import hu.raven.puppet.model.mtsp.*
@@ -19,11 +20,13 @@ import kotlin.time.measureTime
 @ExperimentalTime
 fun main(arguments: Array<String>) {
     startKoin {
-        modules(logicModule)
+        modules(commonModule)
+        modules(bacterialModule)
+        modules(commonPostModule)
     }
     val statistics: Statistics by inject(Statistics::class.java)
     val logger: DoubleLogger by inject(DoubleLogger::class.java)
-    val diversity: Diversity by inject(Diversity::class.java)
+    //val diversity: Diversity by inject(Diversity::class.java)
 
     val argumentMap = loadArgumentsToMap(arguments)
 
@@ -71,7 +74,7 @@ fun main(arguments: Array<String>) {
         }
     }
 
-    println("FULL RUNTIME: $fullRuntime")
+    logger("FULL RUNTIME: $fullRuntime")
 
 }
 

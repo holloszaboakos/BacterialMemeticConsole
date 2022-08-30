@@ -9,7 +9,7 @@ class InitializePopulationByModuloStepper : InitializePopulation {
             val sizeOfPermutation = costGraph.objectives.size + salesmen.size - 1
             val basePermutation = IntArray(sizeOfPermutation) { it }
             population = if (costGraph.objectives.size != 1)
-                ArrayList(List(sizeOfPopulation) { specimenIndex->
+                ArrayList(List(sizeOfPopulation) { specimenIndex ->
                     subSolutionFactory.produce(
                         specimenIndex,
                         Array(salesmen.size) { index ->
@@ -56,9 +56,9 @@ class InitializePopulationByModuloStepper : InitializePopulation {
 
                 breakPoints.add(0, -1)
                 breakPoints.add(sizeOfPermutation)
-                    instance.setData(List(breakPoints.size - 1) {
-                        newPermutation.slice((breakPoints[it] + 1) until breakPoints[it + 1]).toIntArray()
-                    })
+                instance.setData(List(breakPoints.size - 1) {
+                    newPermutation.slice((breakPoints[it] + 1) until breakPoints[it + 1]).toIntArray()
+                })
                 instance.iteration = 0
                 instance.costCalculated = false
                 instance.inUse = true

@@ -1,9 +1,8 @@
 package hu.raven.puppet
 
-import hu.raven.puppet.logic.AlgorithmManagerService
 import hu.raven.puppet.logic.common.logging.DoubleLogger
 import hu.raven.puppet.logic.localsearch.SLocalSearch
-import hu.raven.puppet.logic.logicModule
+import hu.raven.puppet.logic.commonModule
 import hu.raven.puppet.logic.statistics.Statistics
 import org.koin.core.context.startKoin
 import org.koin.java.KoinJavaComponent.inject
@@ -13,9 +12,9 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
 @OptIn(ExperimentalTime::class)
-fun main(arguments: Array<String>){
+fun main(arguments: Array<String>) {
     startKoin {
-        modules(logicModule)
+        modules(commonModule)
     }
     val statistics: Statistics by inject(Statistics::class.java)
     val logger: DoubleLogger by inject(DoubleLogger::class.java)
@@ -27,14 +26,14 @@ fun main(arguments: Array<String>){
     val outputFile = File("$outputFolderPath\\statistics-$time.txt")
     logger.targetFile = outputFile
 
-    val localSearch : SLocalSearch<*> by inject(SLocalSearch::class.java)
+    val localSearch: SLocalSearch<*> by inject(SLocalSearch::class.java)
     val task = loadTask(argumentMap)
     localSearch.salesmen = task.salesmen
     localSearch.costGraph = task.costGraph
     localSearch.initialize()
 
     var index = 0
-    while (true){
+    while (true) {
         logger("STEP: ${index + 1}")
         val duration = measureTime {
             localSearch.iterate()

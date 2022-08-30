@@ -6,16 +6,16 @@ import hu.raven.puppet.utility.extention.slice
 
 class SelectSurvivors {
     operator fun <S : ISpecimenRepresentation> invoke(algorithm: GeneticAlgorithm<S>) {
-            algorithm.run {
-                population.asSequence()
-                    .slice(0 until population.size / 4)
-                    .forEach { it.inUse = true }
+        algorithm.run {
+            population.asSequence()
+                .slice(0 until population.size / 4)
+                .forEach { it.inUse = true }
 
-                population.asSequence()
-                    .slice(population.size / 4 until population.size)
-                    .shuffled()
-                    .slice(0 until population.size / 4)
-                    .forEach { it.inUse = true }
-            }
+            population.asSequence()
+                .slice(population.size / 4 until population.size)
+                .shuffled()
+                .slice(0 until population.size / 4)
+                .forEach { it.inUse = true }
         }
+    }
 }

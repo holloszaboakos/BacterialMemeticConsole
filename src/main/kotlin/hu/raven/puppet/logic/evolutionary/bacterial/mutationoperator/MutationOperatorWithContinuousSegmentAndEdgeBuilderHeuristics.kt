@@ -164,7 +164,7 @@ class MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics : BacterialM
                 }.average()
 
 
-            weightMatrix[columnIndex][rowIndex] /// weightsOfExclusionaryEdges
+            weightMatrix[columnIndex][rowIndex] / weightsOfExclusionaryEdges
         }
     }
 

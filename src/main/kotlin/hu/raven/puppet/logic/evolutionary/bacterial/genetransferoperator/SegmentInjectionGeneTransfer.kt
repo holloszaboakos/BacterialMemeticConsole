@@ -7,7 +7,7 @@ import hu.raven.puppet.utility.extention.nextSegmentStartPosition
 import org.koin.java.KoinJavaComponent
 import kotlin.random.Random
 
-class SegmentInjectionGeneTransfer: GeneTransferOperator {
+class SegmentInjectionGeneTransfer : GeneTransferOperator {
     val logger: DoubleLogger by KoinJavaComponent.inject(DoubleLogger::class.java)
 
     override fun <S : ISpecimenRepresentation> invoke(

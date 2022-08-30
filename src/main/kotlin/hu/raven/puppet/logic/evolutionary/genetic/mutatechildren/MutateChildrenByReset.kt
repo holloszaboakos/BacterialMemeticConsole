@@ -4,21 +4,22 @@ import hu.raven.puppet.logic.evolutionary.GeneticAlgorithm
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.utility.extention.slice
 
-class MutateChildrenByReset : MutateChildren{
-    override fun <S  : ISpecimenRepresentation> invoke(algorithm: GeneticAlgorithm<S>)  {
-        val basePermutation = List(algorithm.copyOfBest?.permutationIndices?.count() ?: 0) { it }.shuffled().toIntArray()
+class MutateChildrenByReset : MutateChildren {
+    override fun <S : ISpecimenRepresentation> invoke(algorithm: GeneticAlgorithm<S>) {
+        val basePermutation =
+            List(algorithm.copyOfBest?.permutationIndices?.count() ?: 0) { it }.shuffled().toIntArray()
         if (algorithm.costGraph.objectives.size > 1)
             algorithm.population.asSequence()
                 .filter { it.iteration == algorithm.iteration }
                 .shuffled()
-                .slice(0 until ( algorithm.population.size / 16))
+                .slice(0 until (algorithm.population.size / 16))
                 .forEachIndexed { instanceIndex, child ->
                     if (instanceIndex < child.permutationIndices.count()) {
                         val step = instanceIndex % (child.permutationIndices.count() - 1) + 1
                         if (step == 1) {
                             basePermutation.shuffle()
                         }
-                        val newContains = BooleanArray(child.permutationIndices.count()){false}
+                        val newContains = BooleanArray(child.permutationIndices.count()) { false }
                         val newPermutation = IntArray(child.permutationIndices.count()) { -1 }
                         var baseIndex = step
                         for (newIndex in 0 until child.permutationIndices.count()) {

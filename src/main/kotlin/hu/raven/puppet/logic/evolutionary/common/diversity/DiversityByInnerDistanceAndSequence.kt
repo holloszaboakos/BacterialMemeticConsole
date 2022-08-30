@@ -23,7 +23,7 @@ class DiversityByInnerDistanceAndSequence : Diversity {
             }
         }
 
-        statistics.diversity /= ( algorithm.sizeOfPopulation * algorithm.sizeOfPopulation)
+        statistics.diversity /= (algorithm.sizeOfPopulation * algorithm.sizeOfPopulation)
     }
 
     private fun distanceOfSpecimen(

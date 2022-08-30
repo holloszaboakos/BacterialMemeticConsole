@@ -8,7 +8,7 @@ import kotlin.concurrent.read
 import kotlin.concurrent.write
 
 data class DOnePartRepresentation(
-    override val id:Int,
+    override val id: Int,
     override val objectiveCount: Int,
     val permutation: IntArray,
     override var inUse: Boolean = true,
@@ -20,7 +20,7 @@ data class DOnePartRepresentation(
 
     private val lock = ReentrantReadWriteLock()
 
-    constructor(id:Int, data: Array<IntArray>) : this(
+    constructor(id: Int, data: Array<IntArray>) : this(
         id,
         data.sumOf { it.size },
         data.let {
@@ -93,18 +93,18 @@ data class DOnePartRepresentation(
     }
 
     override fun forEachSlice(operation: (slice: IntArray) -> Unit) {
-            mapSlice { it }
-                .toList()
-                .forEach { slice -> operation(slice) }
+        mapSlice { it }
+            .toList()
+            .forEach { slice -> operation(slice) }
 
     }
 
-    override fun forEachSliceIndexed(operation: (index: Int, slice: IntArray) -> Unit): Unit {
-            mapSlice { it }
-                .toList()
-                .forEachIndexed { index, flow ->
-                    operation(index, flow)
-                }
+    override fun forEachSliceIndexed(operation: (index: Int, slice: IntArray) -> Unit) {
+        mapSlice { it }
+            .toList()
+            .forEachIndexed { index, flow ->
+                operation(index, flow)
+            }
 
     }
 

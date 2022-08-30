@@ -6,7 +6,7 @@ import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import org.koin.java.KoinJavaComponent.inject
 
 class BoostOnBest : Boost {
-    val boostOperator : BoostOperator by inject(BoostOperator::class.java)
+    val boostOperator: BoostOperator by inject(BoostOperator::class.java)
 
     override suspend operator fun <S : ISpecimenRepresentation> invoke(algorithm: SEvolutionaryAlgorithm<S>) {
         val best = algorithm.population.first()

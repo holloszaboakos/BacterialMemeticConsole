@@ -11,7 +11,7 @@ import kotlin.math.pow
 class StatisticalRacingCrossOverWithLeader : CrossOverOperator {
     val logger: DoubleLogger by inject(DoubleLogger::class.java)
     private val statistics: Statistics by inject(Statistics::class.java)
-    
+
     var iteration = -1
     private var operator: CrossOverOperator? = null
     private var actualStatistics: OperatorStatistics? = null
@@ -19,7 +19,7 @@ class StatisticalRacingCrossOverWithLeader : CrossOverOperator {
         parents: Pair<S, S>,
         child: S,
         algorithm: GeneticAlgorithm<S>
-    ): Unit {
+    ) {
         /*
         if (algorithm.iteration == 0 && iteration != -1){
             iteration = -1
@@ -39,7 +39,8 @@ class StatisticalRacingCrossOverWithLeader : CrossOverOperator {
             }
 
             if (iteration < 10 * statistics.operatorsWithStatistics.size) {
-                operator = statistics.operatorsWithStatistics.keys.toList()[iteration % statistics.operatorsWithStatistics.size]
+                operator =
+                    statistics.operatorsWithStatistics.keys.toList()[iteration % statistics.operatorsWithStatistics.size]
                 logger(operator.toString())
                 actualStatistics = statistics.operatorsWithStatistics[operator]
             } else {

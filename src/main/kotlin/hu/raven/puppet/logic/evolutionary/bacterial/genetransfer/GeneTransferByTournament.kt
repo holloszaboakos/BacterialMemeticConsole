@@ -20,7 +20,7 @@ class GeneTransferByTournament : GeneTransfer {
                 .chunked(2)
                 .toMutableList()
 
-            if(populationInRandomPairs.last().size == 1){
+            if (populationInRandomPairs.last().size == 1) {
                 populationInRandomPairs.removeLast()
             }
 

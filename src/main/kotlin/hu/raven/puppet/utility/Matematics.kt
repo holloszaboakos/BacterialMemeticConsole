@@ -1,6 +1,6 @@
 package hu.raven.puppet.utility
 
-fun Int.biggestCommonDivider(other:Int):Int{
+fun Int.biggestCommonDivider(other: Int): Int {
     val numbers = intArrayOf(this, other).sorted()
     return biggestCommonDivisorRecursion(numbers[0], numbers[1])
 }

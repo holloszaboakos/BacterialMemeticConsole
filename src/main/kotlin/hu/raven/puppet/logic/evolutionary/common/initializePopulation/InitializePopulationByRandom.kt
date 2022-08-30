@@ -7,10 +7,10 @@ import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import kotlin.random.Random
 import kotlin.random.nextInt
 
-class InitializePopulationByRandom : InitializePopulation{
+class InitializePopulationByRandom : InitializePopulation {
     override fun <S : ISpecimenRepresentation> invoke(algorithm: SEvolutionaryAlgorithm<S>) {
         algorithm.population = if (algorithm.costGraph.objectives.size != 1)
-            ArrayList(List(algorithm.sizeOfPopulation) {specimenIndex->
+            ArrayList(List(algorithm.sizeOfPopulation) { specimenIndex ->
                 algorithm.subSolutionFactory.produce(
                     specimenIndex,
                     Array(algorithm.salesmen.size) { index ->

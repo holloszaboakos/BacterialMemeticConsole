@@ -5,12 +5,12 @@ import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.utility.extention.nextSegmentStartPosition
 import kotlin.random.Random
 
-class SelectContinuesSegment : SelectSegment{
+class SelectContinuesSegment : SelectSegment {
     override fun <S : ISpecimenRepresentation> invoke(
         algorithm: BacterialAlgorithm<S>,
         specimen: S,
         cloneSegmentLength: Int
-    ) : IntArray {
+    ): IntArray {
         val randomPosition =
             Random.nextSegmentStartPosition(
                 specimen.permutationIndices.count(),

@@ -8,15 +8,15 @@ class Opt2CycleLazy : BoostOperator {
     var improved = true
 
     override fun <S : ISpecimenRepresentation> invoke(algorithm: SEvolutionaryAlgorithm<S>, specimen: S) {
-        if(!improved && bestCost == specimen.cost){
+        if (!improved && bestCost == specimen.cost) {
             return
         }
 
         improved = false
         bestCost = specimen.cost
 
-        for(firstIndex in 0 until algorithm.population.first().permutationSize - 1){
-            for(secondIndex in firstIndex+1 until algorithm.population.first().permutationSize){
+        for (firstIndex in 0 until algorithm.population.first().permutationSize - 1) {
+            for (secondIndex in firstIndex + 1 until algorithm.population.first().permutationSize) {
                 specimen.swapGenes(firstIndex, secondIndex)
                 algorithm.calculateCostOf(specimen)
 

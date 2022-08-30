@@ -2,9 +2,6 @@ package hu.raven.puppet.logic.evolutionary
 
 import hu.raven.puppet.logic.evolutionary.setup.GeneticAlgorithmSetup
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
-import hu.raven.puppet.logic.specimen.factory.SSpecimenRepresentationFactory
-import hu.raven.puppet.model.mtsp.DGraph
-import hu.raven.puppet.model.mtsp.DSalesman
 import org.koin.java.KoinJavaComponent.inject
 
 class GeneticAlgorithm<S : ISpecimenRepresentation>(
@@ -13,7 +10,7 @@ class GeneticAlgorithm<S : ISpecimenRepresentation>(
 ) : SEvolutionaryAlgorithm<S>(
     iterationLimit,
     sizeOfPopulation //4 * (costGraph.objectives.size + salesmen.size)
-){
+) {
     override val setup: GeneticAlgorithmSetup by inject(GeneticAlgorithmSetup::class.java)
 
     fun selection() = setup.selection(this)

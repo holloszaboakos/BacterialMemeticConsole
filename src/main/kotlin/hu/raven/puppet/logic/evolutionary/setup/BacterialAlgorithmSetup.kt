@@ -4,15 +4,15 @@ import hu.raven.puppet.logic.common.initialize.InitializeAlgorithm
 import hu.raven.puppet.logic.common.steps.calculatecost.CalculateCost
 import hu.raven.puppet.logic.common.steps.calculatecostofedge.CalculateCostOfEdge
 import hu.raven.puppet.logic.common.steps.calculatecostofobjective.CalculateCostOfObjective
-import hu.raven.puppet.logic.evolutionary.common.initializePopulation.InitializePopulation
-import hu.raven.puppet.logic.evolutionary.common.OrderPopulationByCost
-import hu.raven.puppet.logic.evolutionary.common.iteration.EvolutionaryIteration
-import hu.raven.puppet.logic.evolutionary.common.boost.Boost
-import hu.raven.puppet.logic.evolutionary.bacterial.mutation.BacterialMutation
-import hu.raven.puppet.logic.evolutionary.bacterial.genetransferoperator.GeneTransferOperator
 import hu.raven.puppet.logic.evolutionary.bacterial.genetransfer.GeneTransfer
+import hu.raven.puppet.logic.evolutionary.bacterial.genetransferoperator.GeneTransferOperator
+import hu.raven.puppet.logic.evolutionary.bacterial.mutation.BacterialMutation
 import hu.raven.puppet.logic.evolutionary.bacterial.mutationoperator.BacterialMutationOperator
 import hu.raven.puppet.logic.evolutionary.bacterial.selectsegment.SelectSegment
+import hu.raven.puppet.logic.evolutionary.common.OrderPopulationByCost
+import hu.raven.puppet.logic.evolutionary.common.boost.Boost
+import hu.raven.puppet.logic.evolutionary.common.initializePopulation.InitializePopulation
+import hu.raven.puppet.logic.evolutionary.common.iteration.EvolutionaryIteration
 
 class BacterialAlgorithmSetup(
     override val initialize: InitializeAlgorithm,

@@ -6,7 +6,7 @@ import hu.raven.puppet.logic.statistics.Statistics
 import hu.raven.puppet.utility.extention.shuffled
 import org.koin.java.KoinJavaComponent
 
-class MutationOperatorWithContinuesSegment : BacterialMutationOperator{
+class MutationOperatorWithContinuesSegment : BacterialMutationOperator {
     val statistics: Statistics by KoinJavaComponent.inject(Statistics::class.java)
     override fun <S : ISpecimenRepresentation> invoke(
         algorithm: BacterialAlgorithm<S>,

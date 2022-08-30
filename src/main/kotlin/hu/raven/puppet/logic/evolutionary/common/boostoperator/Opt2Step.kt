@@ -8,7 +8,7 @@ class Opt2Step : BoostOperator {
         val bestCost = specimen.cost
 
         for (firstIndex in 0 until algorithm.population.first().permutationSize - 1) {
-            for (secondIndex in firstIndex+1 until algorithm.population.first().permutationSize) {
+            for (secondIndex in firstIndex + 1 until algorithm.population.first().permutationSize) {
                 specimen.swapGenes(firstIndex, secondIndex)
                 algorithm.calculateCostOf(specimen)
 

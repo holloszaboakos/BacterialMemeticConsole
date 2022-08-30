@@ -10,7 +10,7 @@ class Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit(
 ) : BoostOperator {
     var lastPositionPerSpecimen = arrayOf<Pair<Int, Int>>()
     var shuffler = intArrayOf()
-    val logger : DoubleLogger by KoinJavaComponent.inject(DoubleLogger::class.java)
+    val logger: DoubleLogger by KoinJavaComponent.inject(DoubleLogger::class.java)
 
     override fun <S : ISpecimenRepresentation> invoke(algorithm: SEvolutionaryAlgorithm<S>, specimen: S) {
         logger("BOOST")

@@ -3,7 +3,7 @@ package hu.raven.puppet.logic.evolutionary.genetic.crossoveroperator
 import hu.raven.puppet.logic.evolutionary.GeneticAlgorithm
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 
-class GeneticEdgeRecombinationCrossOver:CrossOverOperator {
+class GeneticEdgeRecombinationCrossOver : CrossOverOperator {
 
     override fun <S : ISpecimenRepresentation> invoke(
         parents: Pair<S, S>,

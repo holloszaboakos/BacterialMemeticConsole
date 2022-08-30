@@ -7,7 +7,7 @@ import hu.raven.puppet.model.mtsp.DEdge
 import org.koin.java.KoinJavaComponent.inject
 
 class CalculateCostOfVRPSolutionWithoutCapacity : CalculateCost {
-    val statistics : Statistics by inject(Statistics::class.java)
+    val statistics: Statistics by inject(Statistics::class.java)
 
     override operator fun <S : ISpecimenRepresentation> invoke(
         algorithm: AAlgorithm4VRP<S>,

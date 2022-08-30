@@ -4,7 +4,7 @@ import hu.raven.puppet.logic.evolutionary.GeneticAlgorithm
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import kotlin.random.Random.Default.nextInt
 
-class SubTourChunksCrossOver :CrossOverOperator{
+class SubTourChunksCrossOver : CrossOverOperator {
     override fun <S : ISpecimenRepresentation> invoke(
         parents: Pair<S, S>,
         child: S,

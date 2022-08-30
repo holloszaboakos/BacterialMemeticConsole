@@ -75,7 +75,7 @@ class MutationOperatorWithContinuousSegmentAndHeuristicApproach : BacterialMutat
     private fun selectElementByWeightedRandom(
         remainingElements: MutableList<Int>,
         weights: DoubleArray
-    ) : Int{
+    ): Int {
         val sumOfWeights = weights.sum()
         var randomPoint = Random.nextDouble(sumOfWeights)
         for (elementIndex in weights.indices) {
