@@ -1,26 +1,3 @@
-package hu.raven.puppet.logic.modules
-
-import hu.raven.puppet.logic.AAlgorithm4VRP
-import hu.raven.puppet.logic.common.initialize.InitializeAlgorithm
-import hu.raven.puppet.logic.common.initialize.InitializeBacterialAlgorithm
-import hu.raven.puppet.logic.evolutionary.BacterialAlgorithm
-import hu.raven.puppet.logic.evolutionary.SEvolutionaryAlgorithm
-import hu.raven.puppet.logic.evolutionary.bacterial.genetransfer.GeneTransfer
-import hu.raven.puppet.logic.evolutionary.bacterial.genetransfer.GeneTransferByTournament
-import hu.raven.puppet.logic.evolutionary.bacterial.genetransferoperator.GeneTransferOperator
-import hu.raven.puppet.logic.evolutionary.bacterial.genetransferoperator.HeuristicGeneTransfer
-import hu.raven.puppet.logic.evolutionary.bacterial.mutation.BacterialMutation
-import hu.raven.puppet.logic.evolutionary.bacterial.mutation.BacterialMutationOnAllAndFullCoverRandomOrder
-import hu.raven.puppet.logic.evolutionary.bacterial.mutationoperator.BacterialMutationOperator
-import hu.raven.puppet.logic.evolutionary.bacterial.mutationoperator.MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics
-import hu.raven.puppet.logic.evolutionary.bacterial.selectsegment.SelectContinuesSegment
-import hu.raven.puppet.logic.evolutionary.bacterial.selectsegment.SelectSegment
-import hu.raven.puppet.logic.evolutionary.common.iteration.BacterialIteration
-import hu.raven.puppet.logic.evolutionary.common.iteration.EvolutionaryIteration
-import hu.raven.puppet.logic.specimen.DOnePartRepresentation
-import org.koin.core.module.dsl.bind
-import org.koin.core.module.dsl.withOptions
-import org.koin.dsl.module
 
 val bacterialModule = module {
 
@@ -76,29 +53,6 @@ val bacterialModule = module {
         )
     }
 }
-
-package hu.raven.puppet.logic.modules
-
-import hu.raven.puppet.logic.common.logging.DoubleLogger
-import hu.raven.puppet.logic.common.steps.calculatecost.CalculateCost
-import hu.raven.puppet.logic.common.steps.calculatecost.CalculateCostOfVRPSolutionWithoutCapacity
-import hu.raven.puppet.logic.common.steps.calculatecostofedge.CalculateCostOfEdge
-import hu.raven.puppet.logic.common.steps.calculatecostofobjective.CalculateCostOfObjective
-import hu.raven.puppet.logic.evolutionary.common.OrderPopulationByCost
-import hu.raven.puppet.logic.evolutionary.common.boost.Boost
-import hu.raven.puppet.logic.evolutionary.common.boost.BoostOnBestLazy
-import hu.raven.puppet.logic.evolutionary.common.boostoperator.BoostOperator
-import hu.raven.puppet.logic.evolutionary.common.boostoperator.Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit
-import hu.raven.puppet.logic.evolutionary.common.diversity.Diversity
-import hu.raven.puppet.logic.evolutionary.common.diversity.DiversityByInnerDistanceAndSequence
-import hu.raven.puppet.logic.evolutionary.common.initializePopulation.InitializePopulation
-import hu.raven.puppet.logic.evolutionary.common.initializePopulation.InitializePopulationByModuloStepper
-import hu.raven.puppet.logic.specimen.DOnePartRepresentation
-import hu.raven.puppet.logic.specimen.factory.OnePartRepresentationFactory
-import hu.raven.puppet.logic.specimen.factory.SSpecimenRepresentationFactory
-import hu.raven.puppet.logic.statistics.Statistics
-import org.koin.dsl.module
-import java.io.File
 
 val commonModule = module {
     single {

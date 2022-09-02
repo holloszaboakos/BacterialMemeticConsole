@@ -39,8 +39,6 @@ class BacterialMutationOnAllAndFullCoverRandomOrder<S : ISpecimenRepresentation>
                 .toMutableList()
                 .apply { add(0, population.first()) }
 
-            statistics.mutationStepCall++
-
             populationRandomized
                 .forEachIndexed { index, specimen ->
                     launch {
@@ -53,11 +51,14 @@ class BacterialMutationOnAllAndFullCoverRandomOrder<S : ISpecimenRepresentation>
                         }
 
                         synchronized(statistics) {
-                            statistics.mutationCall++
-                            statistics.mutationImprovementCountOnAll++
+                            statistics.mutationImprovement = statistics.mutationImprovement.run {
+                                copy(improvementCountTotal = improvementCountTotal + 1)
+                            }
 
                             if (index == 0) {
-                                statistics.mutationImprovementCountOnBest++
+                                statistics.mutationOnBestImprovement = statistics.mutationOnBestImprovement.run {
+                                    copy(improvementCountTotal = improvementCountTotal + 1)
+                                }
                             }
                         }
                     }

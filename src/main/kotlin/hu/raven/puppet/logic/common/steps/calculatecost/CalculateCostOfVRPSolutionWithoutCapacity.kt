@@ -3,7 +3,7 @@ package hu.raven.puppet.logic.common.steps.calculatecost
 import hu.raven.puppet.logic.AAlgorithm4VRP
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.logic.statistics.BacterialAlgorithmStatistics
-import hu.raven.puppet.model.DEdge
+import hu.raven.puppet.model.task.graph.DEdge
 import org.koin.java.KoinJavaComponent.inject
 
 class CalculateCostOfVRPSolutionWithoutCapacity<S : ISpecimenRepresentation>(

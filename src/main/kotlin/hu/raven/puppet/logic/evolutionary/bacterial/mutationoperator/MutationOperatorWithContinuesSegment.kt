@@ -18,7 +18,9 @@ class MutationOperatorWithContinuesSegment<S : ISpecimenRepresentation>(
         selectedElements: IntArray
     ) {
         synchronized(statistics) {
-            statistics.mutationOperatorCall++
+            statistics.mutationImprovement = statistics.mutationImprovement.run {
+                copy(operatorCallCount = operatorCallCount + 1)
+            }
         }
 
         selectedPositions

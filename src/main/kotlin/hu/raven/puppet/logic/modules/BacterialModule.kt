@@ -31,7 +31,7 @@ val bacterialModule = module {
             sizeOfPopulation = 100,
 
             cloneCount = 10,
-            cloneSegmentLength = 16,
+            cloneSegmentLength = 32,
             cloneCycleCount = 100,
 
             geneTransferSegmentLength = 900,

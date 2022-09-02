@@ -1,4 +1,4 @@
-package hu.raven.puppet.model
+package hu.raven.puppet.model.task.graph
 
 import java.util.*
 

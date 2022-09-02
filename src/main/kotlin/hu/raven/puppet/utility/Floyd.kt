@@ -1,6 +1,6 @@
 package hu.raven.puppet.utility
 
-import hu.raven.puppet.model.DGraph
+import hu.raven.puppet.model.task.graph.DGraph
 
 fun DGraph.optimizeGraphByFloyd(objectivesIndices: IntRange) {
     var improvement: Boolean

@@ -3,7 +3,7 @@ package hu.raven.puppet.logic
 import hu.raven.puppet.logic.common.initialize.InitializeAlgorithm
 import hu.raven.puppet.logic.evolutionary.SEvolutionaryAlgorithm
 import hu.raven.puppet.logic.evolutionary.common.iteration.EvolutionaryIteration
-import hu.raven.puppet.model.DTask
+import hu.raven.puppet.model.task.DTask
 import org.koin.java.KoinJavaComponent.inject
 
 class AlgorithmManagerService {

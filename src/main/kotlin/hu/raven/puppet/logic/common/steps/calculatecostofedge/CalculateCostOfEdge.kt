@@ -1,7 +1,7 @@
 package hu.raven.puppet.logic.common.steps.calculatecostofedge
 
-import hu.raven.puppet.model.DEdge
-import hu.raven.puppet.model.DSalesman
+import hu.raven.puppet.model.task.graph.DEdge
+import hu.raven.puppet.model.task.DSalesman
 
 class CalculateCostOfEdge {
     operator fun invoke(edge: DEdge, salesman: DSalesman) =

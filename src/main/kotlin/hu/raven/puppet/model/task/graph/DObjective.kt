@@ -9,14 +9,17 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-package hu.raven.puppet.model
+package hu.raven.puppet.model.task.graph
 
 import java.util.*
 
-data class DGps(
+data class DObjective(
     var id: String = UUID.randomUUID().toString(),
+    val name: String = "",
     var orderInOwner: Int = 0,
-    val latitude: Float = 0.0f,
-    val longitude: Float = 0.0f
+    val location: DGps = DGps(),
+    val time_Second: Long = 0L,
+    val volume_Stere: Long = 0L,
+    val weight_Gramm: Long = 0L
 )
 

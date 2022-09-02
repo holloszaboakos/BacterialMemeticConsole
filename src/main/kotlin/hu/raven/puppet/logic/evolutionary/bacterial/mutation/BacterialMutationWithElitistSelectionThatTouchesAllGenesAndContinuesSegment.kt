@@ -24,8 +24,6 @@ class BacterialMutationWithElitistSelectionThatTouchesAllGenesAndContinuesSegmen
 
     override suspend fun invoke() = withContext(Dispatchers.Default) {
         algorithm.run {
-            statistics.mutationStepCall++
-
             val randomStartPosition =
                 nextInt(cloneSegmentLength)
 
@@ -34,9 +32,7 @@ class BacterialMutationWithElitistSelectionThatTouchesAllGenesAndContinuesSegmen
                     if (index != 0 && Random.nextFloat() > mutationPercentage) {
                         return@launch
                     }
-                    synchronized(statistics) {
-                        statistics.mutationCall++
-                    }
+
                     val oldCost = specimen.cost
 
                     mutateSpecimen(specimen, randomStartPosition)
@@ -46,10 +42,14 @@ class BacterialMutationWithElitistSelectionThatTouchesAllGenesAndContinuesSegmen
                     }
 
                     synchronized(statistics) {
-                        statistics.mutationImprovementCountOnAll++
+                        statistics.mutationImprovement = statistics.mutationImprovement.run {
+                            copy(improvementCountTotal = improvementCountTotal + 1)
+                        }
 
                         if (index == 0) {
-                            statistics.mutationImprovementCountOnBest++
+                            statistics.mutationOnBestImprovement = statistics.mutationOnBestImprovement.run {
+                                copy(improvementCountTotal = improvementCountTotal + 1)
+                            }
                         }
                     }
                 }
@@ -65,10 +65,6 @@ class BacterialMutationWithElitistSelectionThatTouchesAllGenesAndContinuesSegmen
         randomStartPosition: Int
     ) {
         repeat(cloneCycleCount) { cycleCount ->
-
-            synchronized(statistics) {
-                statistics.mutationCycleCall++
-            }
             val segmentPosition =
                 (randomStartPosition + cycleCount * cloneSegmentLength)
             val selectedPositions = IntArray(cloneSegmentLength) { segmentPosition + it }

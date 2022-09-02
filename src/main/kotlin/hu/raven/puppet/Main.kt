@@ -3,16 +3,27 @@ package hu.raven.puppet
 import com.google.gson.Gson
 import hu.raven.puppet.logic.AlgorithmManagerService
 import hu.raven.puppet.logic.common.logging.DoubleLogger
+import hu.raven.puppet.logic.evolutionary.SEvolutionaryAlgorithm
 import hu.raven.puppet.logic.modules.bacterialModule
 import hu.raven.puppet.logic.modules.commonModule
 import hu.raven.puppet.logic.modules.commonPostModule
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.logic.statistics.BacterialAlgorithmStatistics
-import hu.raven.puppet.model.*
+import hu.raven.puppet.model.logging.BacterialMemeticAlgorithmLogLine
+import hu.raven.puppet.model.logging.PopulationData
+import hu.raven.puppet.model.logging.ProgressData
+import hu.raven.puppet.model.logging.SpecimenData
+import hu.raven.puppet.model.task.DSalesman
+import hu.raven.puppet.model.task.DTask
+import hu.raven.puppet.model.task.graph.DEdge
+import hu.raven.puppet.model.task.graph.DEdgeArray
+import hu.raven.puppet.model.task.graph.DGraph
+import hu.raven.puppet.model.task.graph.DObjective
 import org.koin.core.context.startKoin
 import org.koin.java.KoinJavaComponent.inject
 import java.io.File
 import java.time.LocalDateTime
+import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
@@ -37,39 +48,39 @@ fun main(arguments: Array<String>) {
 
     val fullRuntime = measureTime {
         val algorithmManager: AlgorithmManagerService by inject(AlgorithmManagerService::class.java)
-        algorithmManager.apply {
+        algorithmManager.run {
             task = loadTask(argumentMap)
             checkIfTaskIsWellFormatted()
             initializeAlgorithm()
-        }
 
-        for (index in 0 until algorithmManager.algorithm.iterationLimit) {
-            logger("STEP: ${index + 1}")
-            val duration = measureTime {
-                algorithmManager.runIteration()
-            }
-            logger("time elapsed: $duration")
+            val gson = Gson()
+            var timeElapsedTotal = Duration.ZERO
+            var fitnessCallCountOld = 0L
+            for (index in 0 until algorithm.iterationLimit) {
+                val timeElapsed = measureTime {
+                    runIteration()
+                }
 
-            val best = algorithmManager.algorithm.copyOfBest!!
-            val second = algorithmManager.algorithm.population[1]
-            val third = algorithmManager.algorithm.population[2]
-            val worst = algorithmManager.algorithm.copyOfWorst!!
-            logger.logSpecimen("best", best)
-            logger.logSpecimen("second", second)
-            logger.logSpecimen("third", third)
-            logger.logSpecimen("worst", worst)
+                timeElapsedTotal += timeElapsed
 
-            //diversity(algorithmManager.algorithm)
-            logger("diversity: ${statistics.diversity}")
-            logger("fitness cost call count: ${statistics.fitnessCallCount}")
-            logger("mutation operator call count: ${statistics.mutationOperatorCall}")
-            logger("mutation improvement count on best: ${statistics.mutationImprovementCountOnBest}")
-            logger("mutation improvement count on all: ${statistics.mutationImprovementCountOnAll}")
 
-            println()
+                val logData = calculateLogData(
+                    algorithm,
+                    statistics,
+                    fitnessCallCountOld,
+                    timeElapsed,
+                    timeElapsedTotal
+                )
 
-            if (statistics.fitnessCallCount > 5_000_000) {
-                break
+                fitnessCallCountOld = statistics.fitnessCallCount
+
+                logger(gson.toJson(logData))
+
+                println()
+
+                if (statistics.fitnessCallCount > 5_000_000) {
+                    break
+                }
             }
         }
     }
@@ -77,6 +88,60 @@ fun main(arguments: Array<String>) {
     logger("FULL RUNTIME: $fullRuntime")
 
 }
+
+fun <S : ISpecimenRepresentation> calculateLogData(
+    algorithm: SEvolutionaryAlgorithm<S>,
+    statistics: BacterialAlgorithmStatistics,
+    fitnessCallCountOld: Long,
+    timeElapsed: Duration,
+    timeElapsedTotal: Duration
+): BacterialMemeticAlgorithmLogLine {
+    val best = algorithm.copyOfBest!!
+    val second =
+        if (algorithm.population.size > 1)
+            algorithm.population[1]
+        else null
+    val third =
+        if (algorithm.population.size > 2)
+            algorithm.population[2]
+        else null
+    val worst = algorithm.copyOfWorst!!
+    val median = algorithm.population.median()
+
+    val logOfBest = best.toLog()
+    val logOfSecond = second?.toLog()
+    val logOfThird = third?.toLog()
+    val logOfWorst = worst.toLog()
+    val logOfMedian = median.toLog()
+
+    return BacterialMemeticAlgorithmLogLine(
+        ProgressData(
+            generation = algorithm.iteration + 1,
+            timeTotal = timeElapsedTotal,
+            timeOfIteration = timeElapsed,
+            fitnessCallCountSoFar = statistics.fitnessCallCount,
+            fitnessCallCountOfIteration = statistics.fitnessCallCount - fitnessCallCountOld //TODO
+        ),
+        PopulationData(
+            best = logOfBest,
+            second = logOfSecond,
+            third = logOfThird,
+            worst = logOfWorst,
+            median = logOfMedian,
+            diversity = statistics.diversity, //TODO
+            geneBalance = 0.0 //TODO
+        ),
+        mutationImprovement = statistics.mutationImprovement,
+        mutationOnBestImprovement = statistics.mutationOnBestImprovement,
+        geneTransferImprovement = statistics.geneTransferImprovement,
+        boostImprovement = statistics.boostImprovement,
+        boostOnBestImprovement = statistics.boostOnBestImprovement
+    )
+}
+
+fun ISpecimenRepresentation.toLog() = SpecimenData(id, cost)
+
+fun <T> ArrayList<T>.median() = get(size / 2)
 
 fun getArgumentOrError(argumentMap: Map<String, String>, argumentName: String): String {
     return argumentMap["-$argumentName"] ?: throw Error("No path given")
@@ -121,8 +186,4 @@ fun loadArgumentsToMap(arguments: Array<String>): Map<String, String> {
         argumentMap[arguments[index * 2]] = arguments[index * 2 + 1]
     }
     return argumentMap
-}
-
-fun DoubleLogger.logSpecimen(name: String, specimen: ISpecimenRepresentation) {
-    invoke("$name identifier: ${specimen.id} cost: ${specimen.cost}")
 }

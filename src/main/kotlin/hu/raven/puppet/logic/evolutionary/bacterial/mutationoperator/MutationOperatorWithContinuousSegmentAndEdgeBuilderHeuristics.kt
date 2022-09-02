@@ -3,8 +3,8 @@ package hu.raven.puppet.logic.evolutionary.bacterial.mutationoperator
 import hu.raven.puppet.logic.evolutionary.BacterialAlgorithm
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.logic.statistics.BacterialAlgorithmStatistics
-import hu.raven.puppet.model.DEdge
-import hu.raven.puppet.model.DGraph
+import hu.raven.puppet.model.task.graph.DEdge
+import hu.raven.puppet.model.task.graph.DGraph
 import org.koin.java.KoinJavaComponent.inject
 import kotlin.random.Random
 
@@ -19,7 +19,9 @@ class MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics<S : ISpecime
         selectedElements: IntArray
     ) {
         synchronized(statistics) {
-            statistics.mutationOperatorCall++
+            statistics.mutationImprovement = statistics.mutationImprovement.run {
+                copy(operatorCallCount = operatorCallCount + 1)
+            }
         }
 
         val weightsOfInnerEdges = calculateWeightsOfInnerEdges(

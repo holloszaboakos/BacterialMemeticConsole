@@ -24,15 +24,10 @@ class BacterialMutationByElitistSelectionOnRandomSequence<S : ISpecimenRepresent
 
     override suspend fun invoke(): Unit = withContext(Dispatchers.Default) {
         algorithm.run {
-            statistics.mutationStepCall++
-
             population.mapIndexed { index, specimen ->
                 launch {
                     if (index != 0 && Random.nextFloat() > mutationPercentage) {
                         return@launch
-                    }
-                    synchronized(statistics) {
-                        statistics.mutationCall++
                     }
                     val oldCost = specimen.cost
 
@@ -43,10 +38,14 @@ class BacterialMutationByElitistSelectionOnRandomSequence<S : ISpecimenRepresent
                     }
 
                     synchronized(statistics) {
-                        statistics.mutationImprovementCountOnAll++
+                        statistics.mutationImprovement = statistics.mutationImprovement.run {
+                            copy(improvementCountTotal = improvementCountTotal + 1)
+                        }
 
                         if (index == 0) {
-                            statistics.mutationImprovementCountOnBest++
+                            statistics.mutationOnBestImprovement = statistics.mutationOnBestImprovement.run {
+                                copy(improvementCountTotal = improvementCountTotal + 1)
+                            }
                         }
                     }
                 }

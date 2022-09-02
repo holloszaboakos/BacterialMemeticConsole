@@ -2,7 +2,7 @@ package hu.raven.puppet.logic
 
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.logic.specimen.factory.SSpecimenRepresentationFactory
-import hu.raven.puppet.model.DTask
+import hu.raven.puppet.model.task.DTask
 import org.koin.java.KoinJavaComponent.inject
 import kotlin.properties.Delegates
 

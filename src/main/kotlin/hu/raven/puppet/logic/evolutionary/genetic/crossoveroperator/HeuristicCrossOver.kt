@@ -3,8 +3,8 @@ package hu.raven.puppet.logic.evolutionary.genetic.crossoveroperator
 import hu.raven.puppet.logic.common.logging.DoubleLogger
 import hu.raven.puppet.logic.evolutionary.GeneticAlgorithm
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
-import hu.raven.puppet.model.DEdge
-import hu.raven.puppet.model.DGraph
+import hu.raven.puppet.model.task.graph.DEdge
+import hu.raven.puppet.model.task.graph.DGraph
 import org.koin.java.KoinJavaComponent.inject
 import kotlin.random.Random
 import kotlin.random.Random.Default.nextInt

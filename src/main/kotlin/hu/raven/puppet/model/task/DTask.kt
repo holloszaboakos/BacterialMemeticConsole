@@ -9,32 +9,33 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-package hu.raven.puppet.model
+package hu.raven.puppet.model.task
 
+import hu.raven.puppet.model.task.graph.DGraph
 import java.util.*
 
-data class DEdge(
+data class DTask(
     var id: String = UUID.randomUUID().toString(),
     val name: String = "",
-    var orderInOwner: Int = 0,
-    val length_Meter: Long = 0L,
-    val route: Array<DGps> = arrayOf()
+    val salesmen: Array<DSalesman> = arrayOf(),
+    val costGraph: DGraph = DGraph()
 ) {
     init {
-        route.forEachIndexed { index, gps -> gps.orderInOwner = index }
+        salesmen.forEachIndexed { index, value ->
+            value.orderInOwner = index
+        }
     }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as DEdge
+        other as DTask
 
         if (id != other.id) return false
         if (name != other.name) return false
-        if (orderInOwner != other.orderInOwner) return false
-        if (length_Meter != other.length_Meter) return false
-        if (!route.contentEquals(other.route)) return false
+        if (!salesmen.contentEquals(other.salesmen)) return false
+        if (costGraph != other.costGraph) return false
 
         return true
     }
@@ -42,12 +43,9 @@ data class DEdge(
     override fun hashCode(): Int {
         var result = id.hashCode()
         result = 31 * result + name.hashCode()
-        result = 31 * result + orderInOwner
-        result = 31 * result + length_Meter.hashCode()
-        result = 31 * result + route.contentHashCode()
+        result = 31 * result + salesmen.contentHashCode()
+        result = 31 * result + costGraph.hashCode()
         return result
     }
-
 }
-
 

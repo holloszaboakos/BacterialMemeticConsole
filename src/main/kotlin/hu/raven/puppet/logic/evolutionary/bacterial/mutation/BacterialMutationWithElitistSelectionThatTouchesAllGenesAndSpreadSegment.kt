@@ -34,10 +34,16 @@ class BacterialMutationWithElitistSelectionThatTouchesAllGenesAndSpreadSegment<S
                         return@launch
                     }
 
-                    statistics.mutationImprovementCountOnAll++
+                    synchronized(statistics) {
+                        statistics.mutationImprovement = statistics.mutationImprovement.run {
+                            copy(improvementCountTotal = improvementCountTotal + 1)
+                        }
 
-                    if (index == 0) {
-                        statistics.mutationImprovementCountOnBest++
+                        if (index == 0) {
+                            statistics.mutationOnBestImprovement = statistics.mutationOnBestImprovement.run {
+                                copy(improvementCountTotal = improvementCountTotal + 1)
+                            }
+                        }
                     }
                 }
             }

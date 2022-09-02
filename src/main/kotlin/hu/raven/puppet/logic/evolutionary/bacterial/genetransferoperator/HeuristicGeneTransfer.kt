@@ -4,8 +4,8 @@ import hu.raven.puppet.logic.common.logging.DoubleLogger
 import hu.raven.puppet.logic.common.steps.calculatecost.CalculateCost
 import hu.raven.puppet.logic.evolutionary.BacterialAlgorithm
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
-import hu.raven.puppet.model.DEdge
-import hu.raven.puppet.model.DGraph
+import hu.raven.puppet.model.task.graph.DEdge
+import hu.raven.puppet.model.task.graph.DGraph
 import org.koin.java.KoinJavaComponent.inject
 import kotlin.random.Random
 

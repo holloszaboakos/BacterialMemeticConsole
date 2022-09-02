@@ -1,7 +1,7 @@
 package hu.raven.puppet.logic.common.steps.calculatecostofobjective
 
-import hu.raven.puppet.model.DObjective
-import hu.raven.puppet.model.DSalesman
+import hu.raven.puppet.model.task.graph.DObjective
+import hu.raven.puppet.model.task.DSalesman
 
 class CalculateCostOfObjective {
     operator fun invoke(objective: DObjective, salesman: DSalesman) =
