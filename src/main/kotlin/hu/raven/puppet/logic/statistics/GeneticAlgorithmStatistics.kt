@@ -1,29 +1,26 @@
 package hu.raven.puppet.logic.statistics
 
-import hu.raven.puppet.logic.evolutionary.GeneticAlgorithm
-import hu.raven.puppet.logic.evolutionary.genetic.crossoveroperator.*
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
+import hu.raven.puppet.logic.step.evolutionary.genetic.crossoveroperator.*
 
-class GeneticAlgorithmStatistics<S : ISpecimenRepresentation>(
-    val algorithm: GeneticAlgorithm<S>
-) : AlgorithmStatistics {
+class GeneticAlgorithmStatistics<S : ISpecimenRepresentation> : AlgorithmStatistics {
     override var diversity = Double.MAX_VALUE
     val operatorsWithStatistics =
-        listOf(
-            AlternatingEdgeCrossOver(algorithm),
-            AlternatingPositionCrossOver(algorithm),
-            CycleCrossOver(algorithm),
-            DistancePreservingCrossOver(algorithm),
-            GeneticEdgeRecombinationCrossOver(algorithm),
-            HeuristicCrossOver(algorithm),
-            MaximalPreservationCrossOver(algorithm),
-            OrderBasedCrossOver(algorithm),
-            OrderCrossOver(algorithm),
-            PartiallyMatchedCrossOver(algorithm),
-            PositionBasedCrossOver(algorithm),
+        listOf<CrossOverOperator<S>>(
+            AlternatingEdgeCrossOver(),
+            AlternatingPositionCrossOver(),
+            CycleCrossOver(),
+            DistancePreservingCrossOver(),
+            GeneticEdgeRecombinationCrossOver(),
+            HeuristicCrossOver(),
+            MaximalPreservationCrossOver(),
+            OrderBasedCrossOver(),
+            OrderCrossOver(),
+            PartiallyMatchedCrossOver(),
+            PositionBasedCrossOver(),
             //broken SortedMatchCrossOver,
-            SubTourChunksCrossOver(algorithm),
-            VotingRecombinationCrossOver(algorithm),
+            SubTourChunksCrossOver(),
+            VotingRecombinationCrossOver(),
         ).associateWith {
             OperatorStatistics(0.0, 1, Int.MAX_VALUE.toDouble())
         }.toMutableMap()

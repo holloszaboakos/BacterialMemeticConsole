@@ -1,10 +1,10 @@
 package hu.raven.puppet.model.logging
 
+import kotlin.time.Duration
+
 data class StepEfficiencyData(
-    val operatorCallCount: Int,
-    val spentBudget: Long,
-    val improvementCountTotal: Int,
-    val improvementCountPerCall: Double,
-    val improvementAmountTotal: Double,
-    val improvementAmountPerBudgetSpent: Double,
+    val spentTime: Duration = Duration.ZERO,
+    val spentBudget: Long = 0,
+    val improvementCountPerRun: Long = 0,
+    val improvementPercentagePerBudget: Double = 0.0,
 )

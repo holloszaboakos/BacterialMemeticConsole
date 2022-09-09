@@ -1,6 +1,6 @@
 package hu.raven.puppet.logic.specimen
 
-interface ISpecimenRepresentation {
+sealed interface ISpecimenRepresentation {
     val id: Int
     var inUse: Boolean
     var costCalculated: Boolean
