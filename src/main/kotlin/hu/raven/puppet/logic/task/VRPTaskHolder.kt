@@ -39,7 +39,7 @@ class VRPTaskHolder() {
             )
         )
 
-        if(!isTaskWellFormatted()){
+        if (!isTaskWellFormatted()) {
             throw Exception("Task is wrongly formatted!")
         }
     }

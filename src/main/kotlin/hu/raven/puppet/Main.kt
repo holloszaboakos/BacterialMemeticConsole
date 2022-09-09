@@ -73,7 +73,7 @@ fun main() {
 
 }
 
-private fun logGeneration(logData: BacterialMemeticAlgorithmLogLine){
+private fun logGeneration(logData: BacterialMemeticAlgorithmLogLine) {
     val logger: DoubleLogger by inject()
 
     logger.logProgress(logData.progressData)

@@ -87,7 +87,12 @@ class MutationOnSpecimenWithRandomContinuousSegmentAndFullCoverAndSimulatedAnnea
         clones: MutableList<S>,
         doSimulatedAnnealing: Boolean
     ) {
-        if (!doSimulatedAnnealing || Random.nextFloat() > simulatedAnnealingHeat(algorithmState.iteration, iterationLimit)) {
+        if (!doSimulatedAnnealing ||
+            Random.nextFloat() > simulatedAnnealingHeat(
+                algorithmState.iteration,
+                iterationLimit
+            )
+        ) {
             specimen.setData(clones.first().getData())
             specimen.cost = clones.first().cost
             return
