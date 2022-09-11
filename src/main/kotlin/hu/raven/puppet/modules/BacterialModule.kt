@@ -5,7 +5,7 @@ import hu.raven.puppet.logic.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.logic.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.logic.step.common.initialize.InitializeAlgorithm
 import hu.raven.puppet.logic.step.common.initialize.InitializeBacterialAlgorithm
-import hu.raven.puppet.logic.step.common.logging.CSVLogger
+import hu.raven.puppet.logic.logging.CSVLogger
 import hu.raven.puppet.logic.step.evolutionary.bacterial.genetransfer.GeneTransfer
 import hu.raven.puppet.logic.step.evolutionary.bacterial.genetransfer.GeneTransferByTournament
 import hu.raven.puppet.logic.step.evolutionary.bacterial.genetransferoperator.GeneTransferOperator
@@ -26,15 +26,15 @@ import org.koin.dsl.module
 
 val bacterialModule = module {
     single(named(ITERATION_LIMIT)) { Int.MAX_VALUE }
-    single(named(SIZE_OF_POPULATION)) { 160 }
+    single(named(SIZE_OF_POPULATION)) { 100 }
 
     single(named(MUTATION_PERCENTAGE)) { 0f }
     single(named(CLONE_COUNT)) { 10 }
-    single(named(CLONE_SEGMENT_LENGTH)) { 8 }
-    single(named(CLONE_CYCLE_COUNT)) { 180 }
+    single(named(CLONE_SEGMENT_LENGTH)) { 32 }
+    single(named(CLONE_CYCLE_COUNT)) { 100 }
 
     single(named(GENE_TRANSFER_SEGMENT_LENGTH)) { 900 }
-    single(named(INJECTION_COUNT)) { 2000 }
+    single(named(INJECTION_COUNT)) { 100 }
 
     single<EvolutionaryAlgorithmState<DOnePartRepresentation>> {
         EvolutionaryAlgorithmState()

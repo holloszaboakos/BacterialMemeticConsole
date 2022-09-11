@@ -1,4 +1,4 @@
-package hu.raven.puppet.logic.step.common.steps.calculatecost
+package hu.raven.puppet.logic.step.common.calculatecost
 
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.logic.statistics.BacterialAlgorithmStatistics

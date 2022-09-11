@@ -1,10 +1,11 @@
 package hu.raven.puppet
 
+import hu.raven.puppet.logic.logging.CSVLogger
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.logic.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.logic.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.logic.step.common.initialize.InitializeAlgorithm
-import hu.raven.puppet.logic.step.common.logging.DoubleLogger
+import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.logic.step.evolutionary.common.iteration.EvolutionaryIteration
 import hu.raven.puppet.model.logging.BacterialMemeticAlgorithmLogLine
 import hu.raven.puppet.model.logging.PopulationData
@@ -35,7 +36,8 @@ fun main() {
     val initialize: InitializeAlgorithm<*> by inject()
     val iterate: EvolutionaryIteration<*> by inject()
     val statistics: BacterialAlgorithmStatistics by inject()
-    val logger: DoubleLogger by inject()
+    val doubleLogger: DoubleLogger by inject()
+    val csvLogger: CSVLogger by inject()
 
     val fullRuntime = measureTime {
         initialize()
@@ -57,6 +59,7 @@ fun main() {
             )
 
             logGeneration(logData)
+            csvLogger(logData)
 
             fitnessCallCountOld = statistics.fitnessCallCount
 
@@ -69,7 +72,7 @@ fun main() {
 
     }
 
-    logger("FULL RUNTIME: $fullRuntime")
+    doubleLogger("FULL RUNTIME: $fullRuntime")
 
 }
 

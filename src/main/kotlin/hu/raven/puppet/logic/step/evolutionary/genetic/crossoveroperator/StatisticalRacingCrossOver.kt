@@ -4,7 +4,7 @@ import hu.raven.puppet.logic.specimen.DOnePartRepresentation
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.logic.statistics.GeneticAlgorithmStatistics
 import hu.raven.puppet.logic.statistics.OperatorStatistics
-import hu.raven.puppet.logic.step.common.steps.calculatecost.CalculateCost
+import hu.raven.puppet.logic.step.common.calculatecost.CalculateCost
 import hu.raven.puppet.utility.inject
 import kotlin.math.pow
 import kotlin.random.Random.Default.nextDouble

@@ -1,6 +1,6 @@
 package hu.raven.puppet.utility.extention
 
-import hu.raven.puppet.logic.step.common.logging.DoubleLogger
+import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.model.logging.ProgressData
 import hu.raven.puppet.model.logging.SpecimenData
 import hu.raven.puppet.model.logging.StepEfficiencyData

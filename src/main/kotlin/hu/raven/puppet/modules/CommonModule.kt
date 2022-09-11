@@ -1,13 +1,14 @@
 package hu.raven.puppet.modules
 
+import hu.raven.puppet.logic.logging.CSVLogger
 import hu.raven.puppet.logic.specimen.DOnePartRepresentation
 import hu.raven.puppet.logic.specimen.factory.OnePartRepresentationFactory
 import hu.raven.puppet.logic.specimen.factory.SSpecimenRepresentationFactory
-import hu.raven.puppet.logic.step.common.logging.DoubleLogger
-import hu.raven.puppet.logic.step.common.steps.calculatecost.CalculateCost
-import hu.raven.puppet.logic.step.common.steps.calculatecost.CalculateCostOfVRPSolutionWithoutCapacity
-import hu.raven.puppet.logic.step.common.steps.calculatecostofedge.CalculateCostOfEdge
-import hu.raven.puppet.logic.step.common.steps.calculatecostofobjective.CalculateCostOfObjective
+import hu.raven.puppet.logic.logging.DoubleLogger
+import hu.raven.puppet.logic.step.common.calculatecost.CalculateCost
+import hu.raven.puppet.logic.step.common.calculatecost.CalculateCostOfVRPSolutionWithoutCapacity
+import hu.raven.puppet.logic.step.common.calculatecostofedge.CalculateCostOfEdge
+import hu.raven.puppet.logic.step.common.calculatecostofobjective.CalculateCostOfObjective
 import hu.raven.puppet.logic.step.evolutionary.common.OrderPopulationByCost
 import hu.raven.puppet.logic.step.evolutionary.common.boost.Boost
 import hu.raven.puppet.logic.step.evolutionary.common.boost.BoostOnBestLazy
@@ -35,6 +36,10 @@ val commonModule = module {
 
     single {
         DoubleLogger()
+    }
+
+    single {
+        CSVLogger()
     }
 
     single {

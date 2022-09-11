@@ -1,4 +1,4 @@
-package hu.raven.puppet.logic.step.common.steps.calculatecostofedge
+package hu.raven.puppet.logic.step.common.calculatecostofedge
 
 import hu.raven.puppet.model.task.DSalesman
 import hu.raven.puppet.model.task.graph.DEdge

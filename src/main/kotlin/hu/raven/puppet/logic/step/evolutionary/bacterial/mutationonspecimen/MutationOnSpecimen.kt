@@ -1,7 +1,7 @@
 package hu.raven.puppet.logic.step.evolutionary.bacterial.mutationonspecimen
 
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
-import hu.raven.puppet.logic.step.common.steps.calculatecost.CalculateCost
+import hu.raven.puppet.logic.step.common.calculatecost.CalculateCost
 import hu.raven.puppet.logic.step.evolutionary.EvolutionaryAlgorithmStep
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.modules.AlgorithmParameters

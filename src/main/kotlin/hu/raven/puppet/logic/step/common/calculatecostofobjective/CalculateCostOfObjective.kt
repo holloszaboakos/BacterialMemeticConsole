@@ -1,4 +1,4 @@
-package hu.raven.puppet.logic.step.common.steps.calculatecostofobjective
+package hu.raven.puppet.logic.step.common.calculatecostofobjective
 
 import hu.raven.puppet.model.task.DSalesman
 import hu.raven.puppet.model.task.graph.DObjective

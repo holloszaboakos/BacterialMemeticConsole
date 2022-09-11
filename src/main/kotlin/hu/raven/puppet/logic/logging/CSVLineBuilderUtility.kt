@@ -1,4 +1,4 @@
-package hu.raven.puppet.logic.step.common.logging
+package hu.raven.puppet.logic.logging
 
 import kotlin.time.Duration
 

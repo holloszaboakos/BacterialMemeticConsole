@@ -1,7 +1,7 @@
 package hu.raven.puppet.logic.step.evolutionary.common
 
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
-import hu.raven.puppet.logic.step.common.steps.calculatecost.CalculateCost
+import hu.raven.puppet.logic.step.common.calculatecost.CalculateCost
 import hu.raven.puppet.logic.step.evolutionary.EvolutionaryAlgorithmStep
 import hu.raven.puppet.utility.inject
 import kotlinx.coroutines.Dispatchers

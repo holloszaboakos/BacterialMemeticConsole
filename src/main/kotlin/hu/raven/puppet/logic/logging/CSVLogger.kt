@@ -1,18 +1,19 @@
-package hu.raven.puppet.logic.step.common.logging
+package hu.raven.puppet.logic.logging
 
-import hu.raven.puppet.logic.step.common.logging.CSVLineBuilderUtility.appendDuration
-import hu.raven.puppet.logic.step.common.logging.CSVLineBuilderUtility.appendField
-import hu.raven.puppet.logic.step.common.logging.CSVLineBuilderUtility.appendString
-import hu.raven.puppet.logic.step.common.logging.CSVLineBuilderUtility.buildCsvLine
+import hu.raven.puppet.logic.logging.CSVLineBuilderUtility.appendDuration
+import hu.raven.puppet.logic.logging.CSVLineBuilderUtility.appendField
+import hu.raven.puppet.logic.logging.CSVLineBuilderUtility.appendString
+import hu.raven.puppet.logic.logging.CSVLineBuilderUtility.buildCsvLine
 import hu.raven.puppet.model.logging.*
 import java.io.File
 
-class CSVLogger {
-    var targetFile: File? = null
-        set(value) {
-            field = value
-            targetFile?.writeText("${produceHeader()}\n")
-        }
+class CSVLogger : AlgorithmLogger() {
+    override val targetFile: File = File("$outputFolderPath\\statistics-$creationTime.csv")
+
+    init {
+        val header = produceHeader()
+        targetFile.appendText(header)
+    }
 
     private fun produceHeader(): String {
         return buildCsvLine {
@@ -40,48 +41,37 @@ class CSVLogger {
             appendString("diversity")
             appendString("geneBalance")
 
-            appendString("operatorCallCountOfMutation")
+            appendString("spentTimeOfMutation")
             appendString("spentBudgetOfMutation")
-            appendString("improvementCountTotalOfMutation")
-            appendString("improvementCountPerCallOfMutation")
-            appendString("improvementAmountTotalOfMutation")
-            appendString("improvementAmountPerBudgetSpentOfMutation")
+            appendString("improvementCountPerRunOfMutation")
+            appendString("improvementCountPerBudgetOfMutation")
 
-            appendString("operatorCallCountOfMutationOnBest")
+            appendString("spentTimeOfMutationOnBest")
             appendString("spentBudgetOfMutationOnBest")
-            appendString("improvementCountTotalOfMutationOnBest")
-            appendString("improvementCountPerCallOfMutationOnBest")
-            appendString("improvementAmountTotalOfMutationOnBest")
-            appendString("improvementAmountPerBudgetSpentOfMutationOnBest")
+            appendString("improvementCountPerRunOfMutationOnBest")
+            appendString("improvementCountPerBudgetOfMutationOnBest")
 
-
-            appendString("operatorCallCountOfGeneTransfer")
+            appendString("spentTimeOfGeneTransfer")
             appendString("spentBudgetOfGeneTransfer")
-            appendString("improvementCountTotalOfGeneTransfer")
-            appendString("improvementCountPerCallOfGeneTransfer")
-            appendString("improvementAmountTotalOfGeneTransfer")
-            appendString("improvementAmountPerBudgetSpentOfGeneTransfer")
+            appendString("improvementCountPerRunOfGeneTransfer")
+            appendString("improvementCountPerBudgetOfGeneTransfer")
 
 
-            appendString("operatorCallCountOfBoost")
+            appendString("spentTimeOfBoost")
             appendString("spentBudgetOfBoost")
-            appendString("improvementCountTotalOfBoost")
-            appendString("improvementCountPerCallOfBoost")
-            appendString("improvementAmountTotalOfBoost")
-            appendString("improvementAmountPerBudgetSpentOfBoost")
+            appendString("improvementCountPerRunOfBoost")
+            appendString("improvementCountPerBudgetOfBoost")
 
-            appendString("operatorCallCountOfBoostOnBest")
+            appendString("spentTimeOfBoostOnBest")
             appendString("spentBudgetOfBoostOnBest")
-            appendString("improvementCountTotalOfBoostOnBest")
-            appendString("improvementCountPerCallOfBoostOnBest")
-            appendString("improvementAmountTotalOfBoostOnBest")
-            appendString("improvementAmountPerBudgetSpentOfBoostOnBest")
+            appendString("improvementCountPerRunOfBoostOnBest")
+            appendString("improvementCountPerBudgetOfBoostOnBest")
         }
     }
 
     operator fun invoke(message: BacterialMemeticAlgorithmLogLine) {
         val line = toCsvLine(message)
-        targetFile?.appendText("$line\n")
+        targetFile.appendText(line)
     }
 
     private fun toCsvLine(message: BacterialMemeticAlgorithmLogLine): String {
