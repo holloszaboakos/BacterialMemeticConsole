@@ -8,7 +8,6 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
 class MutationOnSpecimenWithRandomContinuousSegmentAndFullCover<S : ISpecimenRepresentation> : MutationOnSpecimen<S>() {
-    private val mutationOperator: BacterialMutationOperator<S> by inject()
     private val order by lazy {
         (0 until algorithmState.population.first().permutationSize - cloneSegmentLength)
             .shuffled()

@@ -8,7 +8,6 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
 class MutationOnSpecimenWithSpreadSegmentAndFullCover<S : ISpecimenRepresentation> : MutationOnSpecimen<S>() {
-    private val mutationOperator: BacterialMutationOperator<S> by inject()
     private val randomPermutation: IntArray by lazy {
         IntArray(geneCount) { it }
             .apply { shuffle() }

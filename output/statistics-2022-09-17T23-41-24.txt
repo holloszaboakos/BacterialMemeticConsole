@@ -1,0 +1,28 @@
+initializePopulation
+orderByCost
+orderedByCost
+generation: 2
+spent budget total: 8598778
+spent time total: 462.955800ms
+spent budget of generation: 8598778
+spent time of generation: 462.955800ms
+best: id: 0 cost: 958383.0
+second: id: 87 cost: 1225248.0
+third: id: 1 cost: 1236340.0
+worst: id: 99 cost: 1296401.0
+mutation:
+spentTime: 351.393300ms spentBudget: 1100
+improvement: count: 1 percentage: 1.9879980611910633E-4
+mutation on best:
+spentTime: 351.393300ms spentBudget: 1100
+improvement: count: 1 percentage: 1.9879980611910633E-4
+gene transfer:
+spentTime: 1.157125300s spentBudget: 100
+improvement: count: 0 percentage: 5.890457906547108E-4
+boost:
+spentTime: 0s spentBudget: 0
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 0s spentBudget: 0
+improvement: count: 0 percentage: 0.0
+FULL RUNTIME: 10m 10.891084300s

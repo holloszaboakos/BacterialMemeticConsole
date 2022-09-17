@@ -9,7 +9,6 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
 class MutationOnSpecimenWithRandomContinuousSegment<S : ISpecimenRepresentation> : MutationOnSpecimen<S>() {
-    private val mutationOperator: BacterialMutationOperator<S> by inject()
     private val selectSegment: SelectSegment<S> by inject()
 
     @OptIn(ExperimentalTime::class)

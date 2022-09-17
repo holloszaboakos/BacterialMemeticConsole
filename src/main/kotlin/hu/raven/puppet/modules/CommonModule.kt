@@ -16,6 +16,7 @@ import hu.raven.puppet.logic.step.evolutionary.common.boostoperator.BoostOperato
 import hu.raven.puppet.logic.step.evolutionary.common.boostoperator.Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit
 import hu.raven.puppet.logic.step.evolutionary.common.diversity.Diversity
 import hu.raven.puppet.logic.step.evolutionary.common.diversity.DiversityByInnerDistanceAndSequence
+import hu.raven.puppet.logic.step.evolutionary.common.initializePopulation.InitializeHugePopulationThanPreOptimizeThanSelectBest
 import hu.raven.puppet.logic.step.evolutionary.common.initializePopulation.InitializePopulation
 import hu.raven.puppet.logic.step.evolutionary.common.initializePopulation.InitializePopulationByModuloStepper
 import hu.raven.puppet.logic.task.VRPTaskHolder
@@ -55,7 +56,8 @@ val commonModule = module {
     }
 
     factory<InitializePopulation<*>> {
-        InitializePopulationByModuloStepper<DOnePartRepresentation>()
+        InitializeHugePopulationThanPreOptimizeThanSelectBest<DOnePartRepresentation>()
+        //InitializePopulationByModuloStepper<DOnePartRepresentation>()
     }
 
     factory {

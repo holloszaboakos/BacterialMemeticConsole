@@ -15,6 +15,10 @@ class GeneTransferByTournament<S : ISpecimenRepresentation> : GeneTransfer<S>() 
 
     override suspend fun invoke(): Unit = withContext(Dispatchers.Default) {
         algorithmState.run {
+            if (population.size <= 1 || injectionCount == 0) {
+                return@withContext
+            }
+
             val populationRandomizer = (1 until population.size)
                 .shuffled()
 

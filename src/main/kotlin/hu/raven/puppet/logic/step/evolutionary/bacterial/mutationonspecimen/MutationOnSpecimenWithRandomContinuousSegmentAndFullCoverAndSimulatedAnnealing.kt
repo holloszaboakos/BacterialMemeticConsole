@@ -11,7 +11,6 @@ import kotlin.time.measureTime
 
 class MutationOnSpecimenWithRandomContinuousSegmentAndFullCoverAndSimulatedAnnealing<S : ISpecimenRepresentation> :
     MutationOnSpecimen<S>() {
-    private val mutationOperator: BacterialMutationOperator<S> by inject()
     private val randomizer: IntArray by lazy {
         (0 until cloneSegmentLength)
             .shuffled()
