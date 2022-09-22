@@ -1,8 +1,8 @@
 package hu.raven.puppet.logic.step
 
+import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.logic.specimen.factory.SSpecimenRepresentationFactory
-import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.logic.task.VRPTaskHolder
 import hu.raven.puppet.utility.inject
 

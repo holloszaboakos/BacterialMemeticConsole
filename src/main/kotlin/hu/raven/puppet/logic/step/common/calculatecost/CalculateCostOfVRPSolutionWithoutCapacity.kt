@@ -1,13 +1,10 @@
 package hu.raven.puppet.logic.step.common.calculatecost
 
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
-import hu.raven.puppet.logic.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.model.task.graph.DEdge
-import hu.raven.puppet.utility.inject
 
 
 class CalculateCostOfVRPSolutionWithoutCapacity<S : ISpecimenRepresentation> : CalculateCost<S>() {
-    val statistics: BacterialAlgorithmStatistics by inject()
 
     override operator fun invoke(
         specimen: ISpecimenRepresentation
@@ -63,7 +60,7 @@ class CalculateCostOfVRPSolutionWithoutCapacity<S : ISpecimenRepresentation> : C
 
                 }
                 geneIndex += slice.size
-                sumCost += cost.toLong()
+                sumCost += cost
 
             }
             specimen.cost = sumCost

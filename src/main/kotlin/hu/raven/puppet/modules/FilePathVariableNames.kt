@@ -8,5 +8,6 @@ enum class FilePathVariableNames {
     EDGES_FROM_CENTER_FILE,
     EDGES_TO_CENTER_FILE,
     OBJECTIVES_FILE,
-    SALESMAN_FILE
+    SALESMAN_FILE,
+    DESMET_FILE,
 }

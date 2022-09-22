@@ -2,7 +2,6 @@ package hu.raven.puppet.logic.step.evolutionary.common.initializePopulation
 
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.logic.statistics.BacterialAlgorithmStatistics
-import hu.raven.puppet.logic.step.common.calculatecost.CalculateCost
 import hu.raven.puppet.logic.step.evolutionary.bacterial.mutationonspecimen.MutationOnSpecimen
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.utility.extention.sum
@@ -109,7 +108,7 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest<S : ISpecimenReprese
 
     private fun createPopulation(): MutableList<S> {
         return if (taskHolder.task.costGraph.objectives.size != 1)
-            ArrayList(List(4 * (taskHolder.task.costGraph.objectives.size + taskHolder.task.salesmen.size - 1)) { specimenIndex ->
+            ArrayList(List((taskHolder.task.costGraph.objectives.size + taskHolder.task.salesmen.size - 1)) { specimenIndex ->
                 subSolutionFactory.produce(
                     specimenIndex,
                     Array(taskHolder.task.salesmen.size) { index ->

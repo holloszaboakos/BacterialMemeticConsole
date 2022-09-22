@@ -1,9 +1,7 @@
 package hu.raven.puppet.logic.step.evolutionary.bacterial.mutationonspecimen
 
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
-import hu.raven.puppet.logic.step.evolutionary.bacterial.mutationoperator.BacterialMutationOperator
 import hu.raven.puppet.model.logging.StepEfficiencyData
-import hu.raven.puppet.utility.inject
 import kotlin.math.exp
 import kotlin.random.Random
 import kotlin.time.ExperimentalTime

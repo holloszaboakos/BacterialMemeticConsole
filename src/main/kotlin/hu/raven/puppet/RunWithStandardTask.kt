@@ -1,11 +1,11 @@
 package hu.raven.puppet
 
 import hu.raven.puppet.logic.logging.CSVLogger
+import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.logic.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.logic.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.logic.step.common.initialize.InitializeAlgorithm
-import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.logic.step.evolutionary.common.iteration.EvolutionaryIteration
 import hu.raven.puppet.model.logging.BacterialMemeticAlgorithmLogLine
 import hu.raven.puppet.model.logging.PopulationData
@@ -14,6 +14,7 @@ import hu.raven.puppet.model.logging.SpecimenData
 import hu.raven.puppet.modules.AlgorithmParameters
 import hu.raven.puppet.modules.bacterialModule
 import hu.raven.puppet.modules.commonModule
+import hu.raven.puppet.modules.standardTaskModule
 import hu.raven.puppet.utility.extention.logProgress
 import hu.raven.puppet.utility.extention.logSpecimen
 import hu.raven.puppet.utility.extention.logStepEfficiency
@@ -28,8 +29,11 @@ import kotlin.time.measureTime
 @ExperimentalTime
 fun main() {
     startKoin {
-        modules(commonModule)
-        modules(bacterialModule)
+        modules(
+            standardTaskModule,
+            commonModule,
+            bacterialModule
+        )
     }
 
     val iterationLimit: Int by inject(AlgorithmParameters.ITERATION_LIMIT)
@@ -152,6 +156,6 @@ private fun calculateLogData(
     )
 }
 
-fun ISpecimenRepresentation.toLog() = SpecimenData(id, cost)
+private fun ISpecimenRepresentation.toLog() = SpecimenData(id, cost)
 
 

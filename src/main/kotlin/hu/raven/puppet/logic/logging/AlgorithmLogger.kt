@@ -5,10 +5,10 @@ import hu.raven.puppet.utility.inject
 import java.io.File
 import java.time.LocalDateTime
 
-sealed class AlgorithmLogger{
+sealed class AlgorithmLogger {
     protected abstract val targetFile: File
     protected val outputFolderPath: String by inject(FilePathVariableNames.OUTPUT_FOLDER)
-    protected val creationTime : String = LocalDateTime.now()
+    protected val creationTime: String = LocalDateTime.now()
         .toString()
         .split('.')[0]
         .replace(':', '-')

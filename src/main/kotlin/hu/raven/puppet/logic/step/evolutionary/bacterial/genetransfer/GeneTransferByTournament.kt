@@ -38,7 +38,11 @@ class GeneTransferByTournament<S : ISpecimenRepresentation> : GeneTransfer<S>() 
                         val specimen = populationInRandomPairs[injectionCount % populationInRandomPairs.size]
                             .sortedBy { it.cost }
 
-                        geneTransferOperator(specimen[0], specimen[1])
+                        synchronized(populationInRandomPairs[injectionCount % populationInRandomPairs.size][0]) {
+                            synchronized(populationInRandomPairs[injectionCount % populationInRandomPairs.size][1]) {
+                                geneTransferOperator(specimen[0], specimen[1])
+                            }
+                        }
                     }
                 }
                 .map { it.await() }

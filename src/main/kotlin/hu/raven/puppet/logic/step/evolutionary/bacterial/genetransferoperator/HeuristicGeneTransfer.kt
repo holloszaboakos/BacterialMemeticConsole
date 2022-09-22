@@ -2,7 +2,6 @@ package hu.raven.puppet.logic.step.evolutionary.bacterial.genetransferoperator
 
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.logic.step.evolutionary.genetic.crossoveroperator.CrossOverOperator
-import hu.raven.puppet.logic.step.evolutionary.genetic.crossoveroperator.HeuristicCrossOver
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.utility.inject
 import kotlin.time.ExperimentalTime

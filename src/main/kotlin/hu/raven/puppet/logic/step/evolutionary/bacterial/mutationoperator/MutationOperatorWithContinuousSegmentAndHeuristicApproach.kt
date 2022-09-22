@@ -2,8 +2,7 @@ package hu.raven.puppet.logic.step.evolutionary.bacterial.mutationoperator
 
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.logic.statistics.BacterialAlgorithmStatistics
-import hu.raven.puppet.model.task.graph.DEdge
-import hu.raven.puppet.model.task.graph.DGraph
+import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.inject
 import kotlin.random.Random
 
@@ -129,11 +128,6 @@ class MutationOperatorWithContinuousSegmentAndHeuristicApproach<S : ISpecimenRep
                 else -> 1.0
             }
         }.toDoubleArray()
-    }
-
-    private fun DGraph.getEdgeBetween(from: Int, to: Int): DEdge {
-        return edgesBetween[from]
-            .values[if (to > from) to - 1 else to]
     }
 
     private fun Long.multiplicativeInverse() = 1.0 / this

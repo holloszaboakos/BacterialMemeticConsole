@@ -1,11 +1,11 @@
 package hu.raven.puppet.modules
 
+import hu.raven.puppet.logic.logging.CSVLogger
 import hu.raven.puppet.logic.specimen.DOnePartRepresentation
 import hu.raven.puppet.logic.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.logic.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.logic.step.common.initialize.InitializeAlgorithm
 import hu.raven.puppet.logic.step.common.initialize.InitializeBacterialAlgorithm
-import hu.raven.puppet.logic.logging.CSVLogger
 import hu.raven.puppet.logic.step.evolutionary.bacterial.genetransfer.GeneTransfer
 import hu.raven.puppet.logic.step.evolutionary.bacterial.genetransfer.GeneTransferByTournament
 import hu.raven.puppet.logic.step.evolutionary.bacterial.genetransferoperator.GeneTransferByCrossOver
@@ -13,7 +13,6 @@ import hu.raven.puppet.logic.step.evolutionary.bacterial.genetransferoperator.Ge
 import hu.raven.puppet.logic.step.evolutionary.bacterial.mutation.BacterialMutation
 import hu.raven.puppet.logic.step.evolutionary.bacterial.mutation.BacterialMutationOnBestAndLuckyByShuffling
 import hu.raven.puppet.logic.step.evolutionary.bacterial.mutationonspecimen.MutationOnSpecimen
-import hu.raven.puppet.logic.step.evolutionary.bacterial.mutationonspecimen.MutationOnSpecimenWithRandomContinuousSegmentAndFullCover
 import hu.raven.puppet.logic.step.evolutionary.bacterial.mutationonspecimen.MutationOnSpecimenWithRandomContinuousSegmentAndFullCoverAndCloneWithInvertion
 import hu.raven.puppet.logic.step.evolutionary.bacterial.mutationoperator.BacterialMutationOperator
 import hu.raven.puppet.logic.step.evolutionary.bacterial.mutationoperator.MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics
