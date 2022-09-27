@@ -46,20 +46,31 @@ class DefaultTaskLoader : TaskLoader() {
 
     override fun logEstimates(task: DTask) {
         task.costGraph.apply {
+            val salesman = task.salesmen.first()
+
             doubleLogger("OVERASTIMATE: ${
-                edgesFromCenter.sumOf { it.length_Meter }
-                        + edgesToCenter.sumOf { it.length_Meter }
+                edgesFromCenter.sumOf { calcCostOnEdge(salesman, it) }
+                        + edgesToCenter.sumOf { calcCostOnEdge(salesman, it) }
+                        + objectives.sumOf { calcCostOnNode(salesman, it) }
             }")
 
             doubleLogger("UNDERASTIMATE: ${
-                edgesFromCenter.minOf { it.length_Meter } +
-                        edgesBetween.sumOf { edge->
-                            min(
-                                edge.values.minOf { it.length_Meter },
-                                edgesToCenter[edge.orderInOwner].length_Meter
-                            )
-                        }
+                edgesFromCenter.minOf { calcCostOnEdge(salesman, it) }
+                        + edgesBetween.sumOf { edgeArray ->
+                    min(
+                        edgeArray.values.minOf { calcCostOnEdge(salesman, it) },
+                        calcCostOnEdge(salesman, edgesToCenter[edgeArray.orderInOwner])
+                    )
+                }
+                        + objectives.sumOf { calcCostOnNode(salesman, it) }
             }")
         }
     }
+
+    private fun calcCostOnEdge(salesman: DSalesman, edge: DEdge) =
+        salesman.fuelPrice_EuroPerLiter * salesman.fuelConsuption_LiterPerMeter * edge.length_Meter +
+                salesman.payment_EuroPerSecond * edge.length_Meter / salesman.vechicleSpeed_MeterPerSecond
+
+    private fun calcCostOnNode(salesman: DSalesman, objective: DObjective) =
+        salesman.payment_EuroPerSecond * objective.time_Second
 }

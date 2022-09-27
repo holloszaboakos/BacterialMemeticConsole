@@ -44,28 +44,28 @@ class CSVLogger : AlgorithmLogger() {
             appendString("spentTimeOfMutation")
             appendString("spentBudgetOfMutation")
             appendString("improvementCountPerRunOfMutation")
-            appendString("improvementCountPerBudgetOfMutation")
+            appendString("improvementPercentagePerBudgetOfMutation")
 
             appendString("spentTimeOfMutationOnBest")
             appendString("spentBudgetOfMutationOnBest")
             appendString("improvementCountPerRunOfMutationOnBest")
-            appendString("improvementCountPerBudgetOfMutationOnBest")
+            appendString("improvementPercentagePerBudgetOfMutationOnBest")
 
             appendString("spentTimeOfGeneTransfer")
             appendString("spentBudgetOfGeneTransfer")
             appendString("improvementCountPerRunOfGeneTransfer")
-            appendString("improvementCountPerBudgetOfGeneTransfer")
+            appendString("improvementPercentagePerBudgetOfGeneTransfer")
 
 
             appendString("spentTimeOfBoost")
             appendString("spentBudgetOfBoost")
             appendString("improvementCountPerRunOfBoost")
-            appendString("improvementCountPerBudgetOfBoost")
+            appendString("improvementPercentagePerBudgetOfBoost")
 
             appendString("spentTimeOfBoostOnBest")
             appendString("spentBudgetOfBoostOnBest")
             appendString("improvementCountPerRunOfBoostOnBest")
-            appendString("improvementCountPerBudgetOfBoostOnBest")
+            appendString("improvementPercentagePerBudgetOfBoostOnBest")
         }
     }
 
@@ -116,7 +116,7 @@ class CSVLogger : AlgorithmLogger() {
         appendField(stepEfficiencyData.spentTime)
         appendField(stepEfficiencyData.spentBudget)
 
-        appendField(stepEfficiencyData.spentTime)
+        appendField(stepEfficiencyData.improvementCountPerRun)
         appendField(stepEfficiencyData.improvementPercentagePerBudget)
     }
 

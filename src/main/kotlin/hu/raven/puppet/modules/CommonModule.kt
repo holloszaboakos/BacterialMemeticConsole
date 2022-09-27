@@ -24,7 +24,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val commonModule = module {
-    single(named(OUTPUT_FOLDER)) { "D:\\Git\\GitHub\\SourceCodes\\Kotlin\\JVM\\BacterialMemeticConsole\\output\\desmet" }
+    single(named(OUTPUT_FOLDER)) { "D:\\Git\\GitHub\\SourceCodes\\Kotlin\\JVM\\BacterialMemeticConsole\\output\\default" }
 
     single {
         DoubleLogger()

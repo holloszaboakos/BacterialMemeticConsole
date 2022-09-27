@@ -2,6 +2,7 @@ package hu.raven.puppet.modules.dataset
 
 import hu.raven.puppet.logic.specimen.DOnePartRepresentation
 import hu.raven.puppet.logic.step.common.calculatecost.CalculateCost
+import hu.raven.puppet.logic.step.common.calculatecost.CalculateCostOfACVRPWithMultipleCapacity
 import hu.raven.puppet.logic.step.common.calculatecost.CalculateCostOfVRPSolutionWithoutCapacity
 import hu.raven.puppet.logic.task.loader.DefaultTaskLoader
 import hu.raven.puppet.logic.task.loader.TaskLoader
@@ -19,6 +20,6 @@ val defaultDataSetModule = module {
     single(named(SALESMAN_FILE)) { "hungarianExample\\salesman.json" }
     single<TaskLoader> { DefaultTaskLoader() }
     factory<CalculateCost<*>> {
-        CalculateCostOfVRPSolutionWithoutCapacity<DOnePartRepresentation>()
+        CalculateCostOfACVRPWithMultipleCapacity<DOnePartRepresentation>()
     }
 }
