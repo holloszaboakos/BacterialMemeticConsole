@@ -2,15 +2,15 @@ package hu.raven.puppet.logic.step.evolutionary.common.boostoperator
 
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.model.logging.StepEfficiencyData
+import hu.raven.puppet.modules.AlgorithmParameters
+import hu.raven.puppet.utility.inject
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
-class Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit<S : ISpecimenRepresentation>(
-    var stepLimit: Int
-) : BoostOperator<S>() {
-
-    var lastPositionPerSpecimen = arrayOf<Pair<Int, Int>>()
-    var shuffler = intArrayOf()
+class Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit<S : ISpecimenRepresentation> : BoostOperator<S>() {
+    private val stepLimit: Int by inject(AlgorithmParameters.OPTIMISATION_STEP_LIMIT)
+    private var lastPositionPerSpecimen = arrayOf<Pair<Int, Int>>()
+    private var shuffler = intArrayOf()
 
     @OptIn(ExperimentalTime::class)
     override fun invoke(specimen: S): StepEfficiencyData {

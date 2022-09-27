@@ -3,6 +3,7 @@ package hu.raven.puppet.modules
 enum class AlgorithmParameters {
     ITERATION_LIMIT,
     SIZE_OF_POPULATION,
+    VEHICLE_COUNT,
 
     MUTATION_PERCENTAGE,
     CLONE_COUNT,
@@ -10,5 +11,7 @@ enum class AlgorithmParameters {
     CLONE_CYCLE_COUNT,
 
     GENE_TRANSFER_SEGMENT_LENGTH,
-    INJECTION_COUNT
+    INJECTION_COUNT,
+
+    OPTIMISATION_STEP_LIMIT,
 }

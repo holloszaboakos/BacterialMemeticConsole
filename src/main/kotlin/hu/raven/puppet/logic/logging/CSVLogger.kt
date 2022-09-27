@@ -8,9 +8,9 @@ import hu.raven.puppet.model.logging.*
 import java.io.File
 
 class CSVLogger : AlgorithmLogger() {
-    override val targetFile: File = File("$outputFolderPath\\statistics-$creationTime.csv")
 
-    init {
+    fun printHeader(){
+        val targetFile = File("$outputFolderPath\\$targetFileName.csv")
         val header = produceHeader()
         targetFile.appendText(header)
     }
@@ -70,6 +70,7 @@ class CSVLogger : AlgorithmLogger() {
     }
 
     operator fun invoke(message: BacterialMemeticAlgorithmLogLine) {
+        val targetFile = File("$outputFolderPath\\$targetFileName.csv")
         val line = toCsvLine(message)
         targetFile.appendText(line)
     }

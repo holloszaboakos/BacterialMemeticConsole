@@ -1,13 +1,16 @@
 package hu.raven.puppet.logic.task.loader
 
 import com.google.gson.Gson
+import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.model.task.DTask
 import hu.raven.puppet.modules.FilePathVariableNames
 import hu.raven.puppet.utility.inject
 import java.io.File
+import kotlin.math.min
 
 sealed class TaskLoader {
 
+    protected val doubleLogger: DoubleLogger by inject()
 
     abstract fun loadTak(folderPath: String): DTask
 
@@ -27,4 +30,6 @@ sealed class TaskLoader {
         val gson = Gson()
         return gson.fromJson(file.readText(), T::class.java)
     }
+
+    abstract fun logEstimates(task: DTask)
 }

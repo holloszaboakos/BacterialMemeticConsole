@@ -7,6 +7,7 @@ import hu.raven.puppet.model.task.graph.DEdgeArray
 import hu.raven.puppet.model.task.graph.DGraph
 import hu.raven.puppet.model.task.graph.DObjective
 import hu.raven.puppet.modules.FilePathVariableNames
+import kotlin.math.min
 
 class DefaultTaskLoader : TaskLoader() {
     override fun loadTak(folderPath: String): DTask {
@@ -37,7 +38,28 @@ class DefaultTaskLoader : TaskLoader() {
             throw Exception("Task is wrongly formatted!")
         }
 
+        logEstimates(task)
+
         return task
 
+    }
+
+    override fun logEstimates(task: DTask) {
+        task.costGraph.apply {
+            doubleLogger("OVERASTIMATE: ${
+                edgesFromCenter.sumOf { it.length_Meter }
+                        + edgesToCenter.sumOf { it.length_Meter }
+            }")
+
+            doubleLogger("UNDERASTIMATE: ${
+                edgesFromCenter.minOf { it.length_Meter } +
+                        edgesBetween.sumOf { edge->
+                            min(
+                                edge.values.minOf { it.length_Meter },
+                                edgesToCenter[edge.orderInOwner].length_Meter
+                            )
+                        }
+            }")
+        }
     }
 }

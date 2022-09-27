@@ -13,6 +13,7 @@ import hu.raven.puppet.logic.step.evolutionary.bacterial.genetransferoperator.Ge
 import hu.raven.puppet.logic.step.evolutionary.bacterial.mutation.BacterialMutation
 import hu.raven.puppet.logic.step.evolutionary.bacterial.mutation.BacterialMutationOnBestAndLuckyByShuffling
 import hu.raven.puppet.logic.step.evolutionary.bacterial.mutationonspecimen.MutationOnSpecimen
+import hu.raven.puppet.logic.step.evolutionary.bacterial.mutationonspecimen.MutationOnSpecimenWithRandomContinuousSegmentAndFullCover
 import hu.raven.puppet.logic.step.evolutionary.bacterial.mutationonspecimen.MutationOnSpecimenWithRandomContinuousSegmentAndFullCoverAndCloneWithInvertion
 import hu.raven.puppet.logic.step.evolutionary.bacterial.mutationoperator.BacterialMutationOperator
 import hu.raven.puppet.logic.step.evolutionary.bacterial.mutationoperator.MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics
@@ -28,15 +29,17 @@ import org.koin.dsl.module
 
 val bacterialModule = module {
     single(named(ITERATION_LIMIT)) { Int.MAX_VALUE }
-    single(named(SIZE_OF_POPULATION)) { 100 }
+    single(named(SIZE_OF_POPULATION)) { 50 }
 
     single(named(MUTATION_PERCENTAGE)) { 0f }
-    single(named(CLONE_COUNT)) { 10 }
-    single(named(CLONE_SEGMENT_LENGTH)) { 32 }
-    single(named(CLONE_CYCLE_COUNT)) { 100 }
+    single(named(CLONE_COUNT)) { 20 }
+    single(named(CLONE_SEGMENT_LENGTH)) { 8 }
+    single(named(CLONE_CYCLE_COUNT)) { 10 }
 
     single(named(GENE_TRANSFER_SEGMENT_LENGTH)) { 900 }
     single(named(INJECTION_COUNT)) { 100 }
+
+    single(named(OPTIMISATION_STEP_LIMIT)) { 1000 }
 
     single<EvolutionaryAlgorithmState<DOnePartRepresentation>> {
         EvolutionaryAlgorithmState()
@@ -56,7 +59,7 @@ val bacterialModule = module {
         )
     }
     factory<MutationOnSpecimen<*>> {
-        MutationOnSpecimenWithRandomContinuousSegmentAndFullCoverAndCloneWithInvertion<DOnePartRepresentation>()
+        MutationOnSpecimenWithRandomContinuousSegmentAndFullCover<DOnePartRepresentation>()
     }
     factory<BacterialMutationOperator<*>> {
         MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics<DOnePartRepresentation>()

@@ -11,7 +11,7 @@ repositories {
 }
 
 ext {
-    koin_version = '3.2.0'
+    koin_version = '3.2.1'
 }
 
 dependencies {
@@ -28,4 +28,5 @@ dependencies {
 
     implementation group: 'com.google.code.gson', name: 'gson', version: '2.9.1'
     testImplementation group: "junit", name: "junit", version: "4.12"
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.4'
 }

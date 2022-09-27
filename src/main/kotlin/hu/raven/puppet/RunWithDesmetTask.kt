@@ -11,10 +11,8 @@ import hu.raven.puppet.model.logging.BacterialMemeticAlgorithmLogLine
 import hu.raven.puppet.model.logging.PopulationData
 import hu.raven.puppet.model.logging.ProgressData
 import hu.raven.puppet.model.logging.SpecimenData
-import hu.raven.puppet.modules.AlgorithmParameters
-import hu.raven.puppet.modules.bacterialModule
-import hu.raven.puppet.modules.commonModule
-import hu.raven.puppet.modules.desmetTaskModule
+import hu.raven.puppet.modules.*
+import hu.raven.puppet.modules.dataset.desmetDataSetModule
 import hu.raven.puppet.utility.extention.logProgress
 import hu.raven.puppet.utility.extention.logSpecimen
 import hu.raven.puppet.utility.extention.logStepEfficiency
@@ -30,7 +28,7 @@ import kotlin.time.measureTime
 fun main() {
     startKoin {
         modules(
-            desmetTaskModule,
+            desmetDataSetModule,
             commonModule,
             bacterialModule
         )
@@ -69,7 +67,7 @@ fun main() {
 
             println()
 
-            if (statistics.fitnessCallCount > 5_000_000) {
+            if (statistics.fitnessCallCount > 150_000_000) {
                 break
             }
         }

@@ -145,6 +145,7 @@ class MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics<S : ISpecime
         finalWeightMatrix: Array<DoubleArray>
     ): Pair<Int, Int> {
         val sumOfWeights = finalWeightMatrix.sumOf { it.sum() }
+
         var randomPoint = Random.nextDouble(sumOfWeights)
 
         for (columnIndex in finalWeightMatrix.indices) {

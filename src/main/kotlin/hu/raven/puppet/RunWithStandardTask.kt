@@ -14,7 +14,7 @@ import hu.raven.puppet.model.logging.SpecimenData
 import hu.raven.puppet.modules.AlgorithmParameters
 import hu.raven.puppet.modules.bacterialModule
 import hu.raven.puppet.modules.commonModule
-import hu.raven.puppet.modules.standardTaskModule
+import hu.raven.puppet.modules.dataset.defaultDataSetModule
 import hu.raven.puppet.utility.extention.logProgress
 import hu.raven.puppet.utility.extention.logSpecimen
 import hu.raven.puppet.utility.extention.logStepEfficiency
@@ -30,7 +30,7 @@ import kotlin.time.measureTime
 fun main() {
     startKoin {
         modules(
-            standardTaskModule,
+            defaultDataSetModule,
             commonModule,
             bacterialModule
         )

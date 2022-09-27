@@ -6,7 +6,7 @@ class InitializePopulationByModuloStepper<S : ISpecimenRepresentation> : Initial
 
     override fun invoke() {
         algorithmState.run {
-            val sizeOfPermutation = taskHolder.task.costGraph.objectives.size + taskHolder.task.salesmen.size - 1
+            val sizeOfPermutation = (taskHolder.task.costGraph.objectives.size + taskHolder.task.salesmen.size - 1)
             val basePermutation = IntArray(sizeOfPermutation) { it }
             population = if (taskHolder.task.costGraph.objectives.size != 1)
                 ArrayList(List(sizeOfPopulation) { specimenIndex ->

@@ -9,20 +9,22 @@ import hu.raven.puppet.logic.step.common.calculatecostofedge.CalculateCostOfEdge
 import hu.raven.puppet.logic.step.common.calculatecostofobjective.CalculateCostOfObjective
 import hu.raven.puppet.logic.step.evolutionary.common.OrderPopulationByCost
 import hu.raven.puppet.logic.step.evolutionary.common.boost.Boost
-import hu.raven.puppet.logic.step.evolutionary.common.boost.BoostOnBestAndWorst
+import hu.raven.puppet.logic.step.evolutionary.common.boost.BoostOnBestLazy
 import hu.raven.puppet.logic.step.evolutionary.common.boostoperator.BoostOperator
+import hu.raven.puppet.logic.step.evolutionary.common.boostoperator.Opt2StepWithPerSpecimenProgressMemoryAndRandomOrder
 import hu.raven.puppet.logic.step.evolutionary.common.boostoperator.Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit
 import hu.raven.puppet.logic.step.evolutionary.common.diversity.Diversity
 import hu.raven.puppet.logic.step.evolutionary.common.diversity.DiversityByInnerDistanceAndSequence
 import hu.raven.puppet.logic.step.evolutionary.common.initializePopulation.InitializeHugePopulationThanPreOptimizeThanSelectBest
 import hu.raven.puppet.logic.step.evolutionary.common.initializePopulation.InitializePopulation
+import hu.raven.puppet.logic.step.evolutionary.common.initializePopulation.InitializePopulationByModuloStepper
 import hu.raven.puppet.logic.task.VRPTaskHolder
 import hu.raven.puppet.modules.FilePathVariableNames.OUTPUT_FOLDER
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val commonModule = module {
-    single(named(OUTPUT_FOLDER)) { "D:\\Git\\GitHub\\SourceCodes\\Kotlin\\JVM\\BacterialMemeticConsole\\output" }
+    single(named(OUTPUT_FOLDER)) { "D:\\Git\\GitHub\\SourceCodes\\Kotlin\\JVM\\BacterialMemeticConsole\\output\\desmet" }
 
     single {
         DoubleLogger()
@@ -56,12 +58,10 @@ val commonModule = module {
     factory { CalculateCostOfObjective() }
 
     factory<Boost<*>> {
-        BoostOnBestAndWorst<DOnePartRepresentation>()
+        BoostOnBestLazy<DOnePartRepresentation>()
     }
     factory<BoostOperator<*>> {
-        Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit<DOnePartRepresentation>(
-            stepLimit = 100
-        )
+        Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit<DOnePartRepresentation>()
     }
 
 
