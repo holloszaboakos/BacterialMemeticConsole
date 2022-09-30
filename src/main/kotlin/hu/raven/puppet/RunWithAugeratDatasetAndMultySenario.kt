@@ -126,9 +126,7 @@ private val bacterialCommonModule = module {
     }
 
     factory<BacterialMutation<*>> {
-        BacterialMutationOnBestAndLuckyByShuffling<DOnePartRepresentation>(
-            mutationPercentage = get(named(AlgorithmParameters.MUTATION_PERCENTAGE))
-        )
+        BacterialMutationOnBestAndLuckyByShuffling<DOnePartRepresentation>()
     }
     factory<MutationOnSpecimen<*>> {
         MutationOnSpecimenWithRandomContinuousSegmentAndFullCoverAndCloneWithInvertion<DOnePartRepresentation>()

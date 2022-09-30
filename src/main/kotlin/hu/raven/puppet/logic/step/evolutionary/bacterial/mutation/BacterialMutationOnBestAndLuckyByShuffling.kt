@@ -4,6 +4,7 @@ import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.logic.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.logic.step.evolutionary.bacterial.mutationonspecimen.MutationOnSpecimen
 import hu.raven.puppet.model.logging.StepEfficiencyData
+import hu.raven.puppet.modules.AlgorithmParameters
 import hu.raven.puppet.utility.extention.sum
 import hu.raven.puppet.utility.inject
 import kotlinx.coroutines.Dispatchers
@@ -11,10 +12,9 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import kotlin.random.Random
 
-class BacterialMutationOnBestAndLuckyByShuffling<S : ISpecimenRepresentation>(
-    private val mutationPercentage: Float
-) : BacterialMutation<S>() {
+class BacterialMutationOnBestAndLuckyByShuffling<S : ISpecimenRepresentation>  : BacterialMutation<S>() {
 
+    private val mutationPercentage: Float by inject(AlgorithmParameters.MUTATION_PERCENTAGE)
     private val statistics: BacterialAlgorithmStatistics by inject()
     private val mutationOnSpecimen: MutationOnSpecimen<S> by inject()
 

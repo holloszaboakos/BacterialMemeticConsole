@@ -32,9 +32,9 @@ val bacterialModule = module {
     single(named(SIZE_OF_POPULATION)) { 50 }
 
     single(named(MUTATION_PERCENTAGE)) { 0f }
-    single(named(CLONE_COUNT)) { 20 }
-    single(named(CLONE_SEGMENT_LENGTH)) { 8 }
-    single(named(CLONE_CYCLE_COUNT)) { 10 }
+    single(named(CLONE_COUNT)) { 40 }
+    single(named(CLONE_SEGMENT_LENGTH)) { 16 }
+    single(named(CLONE_CYCLE_COUNT)) { 5 }
 
     single(named(GENE_TRANSFER_SEGMENT_LENGTH)) { 900 }
     single(named(INJECTION_COUNT)) { 100 }
@@ -54,9 +54,7 @@ val bacterialModule = module {
     }
 
     factory<BacterialMutation<*>> {
-        BacterialMutationOnBestAndLuckyByShuffling<DOnePartRepresentation>(
-            mutationPercentage = get(named(MUTATION_PERCENTAGE))
-        )
+        BacterialMutationOnBestAndLuckyByShuffling<DOnePartRepresentation>()
     }
     factory<MutationOnSpecimen<*>> {
         MutationOnSpecimenWithRandomContinuousSegmentAndFullCover<DOnePartRepresentation>()

@@ -14,7 +14,6 @@ import hu.raven.puppet.model.logging.SpecimenData
 import hu.raven.puppet.modules.AlgorithmParameters
 import hu.raven.puppet.modules.bacterialModule
 import hu.raven.puppet.modules.dataset.defaultDataSetModule
-import hu.raven.puppet.modules.dataset.desmetDataSetModule
 import hu.raven.puppet.utility.extention.logProgress
 import hu.raven.puppet.utility.extention.logSpecimen
 import hu.raven.puppet.utility.extention.logStepEfficiency
@@ -29,7 +28,7 @@ import kotlin.time.measureTime
 
 @ExperimentalTime
 fun main() {
-    repeat(10) {roundIndex->
+    (8 until 10).forEach { roundIndex ->
         startKoin {
             modules(
                 defaultDataSetModule,
@@ -55,7 +54,7 @@ private fun runAlgorithm(
     val doubleLogger: DoubleLogger by inject()
     val csvLogger: CSVLogger by inject()
 
-    val outputFileName = "statistics-p0-round$roundIndex-${csvLogger.creationTime}"
+    val outputFileName = "statistics-p4-round$roundIndex-${csvLogger.creationTime}"
 
     doubleLogger.targetFileName = outputFileName
     csvLogger.targetFileName = outputFileName
