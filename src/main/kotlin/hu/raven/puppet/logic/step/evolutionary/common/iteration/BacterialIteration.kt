@@ -5,16 +5,17 @@ import hu.raven.puppet.logic.step.evolutionary.bacterial.genetransfer.GeneTransf
 import hu.raven.puppet.logic.step.evolutionary.bacterial.mutation.BacterialMutation
 import hu.raven.puppet.logic.step.evolutionary.common.OrderPopulationByCost
 import hu.raven.puppet.logic.step.evolutionary.common.boost.Boost
+import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.utility.inject
 import kotlinx.coroutines.runBlocking
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
-class BacterialIteration<S : ISpecimenRepresentation> : EvolutionaryIteration<S>() {
-    val boost: Boost<S> by inject()
-    val geneTransfer: GeneTransfer<S> by inject()
-    val mutate: BacterialMutation<S> by inject()
-    val orderPopulationByCost: OrderPopulationByCost<S> by inject()
+class BacterialIteration<S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>> : EvolutionaryIteration<S, C>() {
+    val boost: Boost<S, C> by inject()
+    val geneTransfer: GeneTransfer<S, C> by inject()
+    val mutate: BacterialMutation<S, C> by inject()
+    val orderPopulationByCost: OrderPopulationByCost<S, C> by inject()
 
     override fun invoke(): Unit = runBlocking {
         boost()

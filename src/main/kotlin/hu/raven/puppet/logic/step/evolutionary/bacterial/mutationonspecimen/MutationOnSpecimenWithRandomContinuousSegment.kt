@@ -3,12 +3,14 @@ package hu.raven.puppet.logic.step.evolutionary.bacterial.mutationonspecimen
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.logic.step.evolutionary.bacterial.selectsegment.SelectSegment
 import hu.raven.puppet.model.logging.StepEfficiencyData
+import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.utility.inject
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
-class MutationOnSpecimenWithRandomContinuousSegment<S : ISpecimenRepresentation> : MutationOnSpecimen<S>() {
-    private val selectSegment: SelectSegment<S> by inject()
+class MutationOnSpecimenWithRandomContinuousSegment<S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>> :
+    MutationOnSpecimen<S, C>() {
+    private val selectSegment: SelectSegment<S, C> by inject()
 
     @OptIn(ExperimentalTime::class)
     override fun invoke(specimen: S): StepEfficiencyData = algorithmState.run {
@@ -43,7 +45,7 @@ class MutationOnSpecimenWithRandomContinuousSegment<S : ISpecimenRepresentation>
             improvementCountPerRun = if (impruvement) 1 else 0,
             improvementPercentagePerBudget =
             if (impruvement)
-                (1 - (specimen.cost / oldSpecimenCost)) / spentBudget
+                (1 - (specimen.cost!!.value.toDouble() / oldSpecimenCost!!.value.toDouble())) / spentBudget
             else
                 0.0
         )

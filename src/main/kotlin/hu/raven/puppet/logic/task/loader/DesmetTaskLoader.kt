@@ -19,16 +19,16 @@ class DesmetTaskLoader : TaskLoader() {
     override fun logEstimates(task: DTask) {
         task.costGraph.apply {
             doubleLogger("OVERASTIMATE: ${
-                edgesFromCenter.sumOf { it.length_Meter }
-                        + edgesToCenter.sumOf { it.length_Meter }
+                edgesFromCenter.sumOf { it.length.value.toDouble() }
+                        + edgesToCenter.sumOf { it.length.value.toDouble() }
             }")
 
             doubleLogger("UNDERASTIMATE: ${
-                edgesFromCenter.minOf { it.length_Meter } +
-                        edgesBetween.sumOf { edge->
+                edgesFromCenter.minOf { it.length.value.toDouble() } +
+                        edgesBetween.sumOf { edge ->
                             min(
-                                edge.values.minOf { it.length_Meter },
-                                edgesToCenter[edge.orderInOwner].length_Meter
+                                edge.values.minOf { it.length.value.toDouble() },
+                                edgesToCenter[edge.orderInOwner].length.value.toDouble()
                             )
                         }
             }")

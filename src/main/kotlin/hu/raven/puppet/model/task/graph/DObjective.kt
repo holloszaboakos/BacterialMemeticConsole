@@ -11,6 +11,9 @@
  */
 package hu.raven.puppet.model.task.graph
 
+import hu.raven.puppet.model.physics.Gramm
+import hu.raven.puppet.model.physics.Second
+import hu.raven.puppet.model.physics.Stere
 import java.util.*
 
 data class DObjective(
@@ -18,8 +21,8 @@ data class DObjective(
     val name: String = "",
     var orderInOwner: Int = 0,
     val location: DGps = DGps(),
-    val time_Second: Long = 0L,
-    val volume_Stere: Long = 0L,
-    val weight_Gramm: Long = 0L
+    val time: Second = Second(0L),
+    val volume: Stere = Stere(0L),
+    val weight: Gramm = Gramm(0L)
 )
 

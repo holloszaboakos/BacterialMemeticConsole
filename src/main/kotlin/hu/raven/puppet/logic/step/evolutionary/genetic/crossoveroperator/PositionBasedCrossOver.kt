@@ -1,9 +1,10 @@
 package hu.raven.puppet.logic.step.evolutionary.genetic.crossoveroperator
 
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
+import hu.raven.puppet.model.physics.PhysicsUnit
 import kotlin.random.Random
 
-class PositionBasedCrossOver<S : ISpecimenRepresentation> : CrossOverOperator<S>() {
+class PositionBasedCrossOver<S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>> : CrossOverOperator<S, C>() {
 
     override fun invoke(
         parents: Pair<S, S>,

@@ -11,14 +11,13 @@ import hu.raven.puppet.logic.step.evolutionary.common.OrderPopulationByCost
 import hu.raven.puppet.logic.step.evolutionary.common.boost.Boost
 import hu.raven.puppet.logic.step.evolutionary.common.boost.BoostOnBestLazy
 import hu.raven.puppet.logic.step.evolutionary.common.boostoperator.BoostOperator
-import hu.raven.puppet.logic.step.evolutionary.common.boostoperator.Opt2StepWithPerSpecimenProgressMemoryAndRandomOrder
 import hu.raven.puppet.logic.step.evolutionary.common.boostoperator.Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit
 import hu.raven.puppet.logic.step.evolutionary.common.diversity.Diversity
 import hu.raven.puppet.logic.step.evolutionary.common.diversity.DiversityByInnerDistanceAndSequence
 import hu.raven.puppet.logic.step.evolutionary.common.initializePopulation.InitializeHugePopulationThanPreOptimizeThanSelectBest
 import hu.raven.puppet.logic.step.evolutionary.common.initializePopulation.InitializePopulation
-import hu.raven.puppet.logic.step.evolutionary.common.initializePopulation.InitializePopulationByModuloStepper
 import hu.raven.puppet.logic.task.VRPTaskHolder
+import hu.raven.puppet.model.physics.Meter
 import hu.raven.puppet.modules.FilePathVariableNames.OUTPUT_FOLDER
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -38,30 +37,30 @@ val commonModule = module {
         VRPTaskHolder()
     }
 
-    factory<Diversity<*>> {
-        DiversityByInnerDistanceAndSequence<DOnePartRepresentation>()
+    factory<Diversity<*, *>> {
+        DiversityByInnerDistanceAndSequence<DOnePartRepresentation<Meter>, Meter>()
     }
 
-    factory<SSpecimenRepresentationFactory<*>> {
+    factory<SSpecimenRepresentationFactory<*, *>> {
         OnePartRepresentationFactory()
     }
 
-    factory<InitializePopulation<*>> {
-        InitializeHugePopulationThanPreOptimizeThanSelectBest<DOnePartRepresentation>()
+    factory<InitializePopulation<*, *>> {
+        InitializeHugePopulationThanPreOptimizeThanSelectBest<DOnePartRepresentation<Meter>, Meter>()
         //InitializePopulationByModuloStepper<DOnePartRepresentation>()
     }
 
     factory {
-        OrderPopulationByCost<DOnePartRepresentation>()
+        OrderPopulationByCost<DOnePartRepresentation<Meter>, Meter>()
     }
     factory { CalculateCostOfEdge() }
     factory { CalculateCostOfObjective() }
 
-    factory<Boost<*>> {
-        BoostOnBestLazy<DOnePartRepresentation>()
+    factory<Boost<*, *>> {
+        BoostOnBestLazy<DOnePartRepresentation<Meter>, Meter>()
     }
-    factory<BoostOperator<*>> {
-        Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit<DOnePartRepresentation>()
+    factory<BoostOperator<*, *>> {
+        Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit<DOnePartRepresentation<Meter>, Meter>()
     }
 
 

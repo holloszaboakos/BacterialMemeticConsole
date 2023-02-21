@@ -14,6 +14,13 @@ value class Fraction private constructor(val value: Pair<Long, Long>) {
         )
     )
 
+    operator fun minus(other: Fraction) = Fraction(
+        Pair(
+            value.first * other.value.second - other.value.first * value.second,
+            value.second * other.value.second
+        )
+    )
+
     operator fun times(other: Fraction) = Fraction(
         Pair(
             value.first * other.value.first,

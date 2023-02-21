@@ -32,24 +32,32 @@ object DesmetDatasetLoader {
                             when (it.first) {
                                 NAME_HEADER ->
                                     name = it.second
+
                                 COMMENT_HEADER ->
                                     comments.add(it.second)
+
                                 TYPE_HEADER ->
                                     type = it.second
+
                                 DIMENSION_HEADER ->
                                     dimension = it.second.toInt()
+
                                 EDGE_WEIGHT_TYPE_HEADER ->
                                     edgeWeightType = it.second
+
                                 EDGE_WEIGHT_FORMAT_HEADER ->
                                     edgeWeightFormat = it.second
+
                                 EDGE_WEIGHT_UNIT_OF_MEASUREMENT_HEADER ->
                                     edgeWeightUnitOfMeasurement = it.second
+
                                 CAPACITY_HEADER ->
                                     capacity = it.second.toInt()
                             }
                         }
                     }
                 }
+
                 NODE_COORDINATES -> {
                     if (line == DISTANCE_MATRIX_START) {
                         currentSection = WEIGHT_MATRIX
@@ -59,6 +67,7 @@ object DesmetDatasetLoader {
                         DataFileLine(line).toNodeCoordinate()
                     )
                 }
+
                 WEIGHT_MATRIX -> {
                     if (line == NODE_DEMAND_LIST_START) {
                         currentSection = NODE_DEMAND
@@ -68,6 +77,7 @@ object DesmetDatasetLoader {
                         DataFileLine(line).toDistanceMatrixLine()
                     )
                 }
+
                 NODE_DEMAND -> {
                     if (line == DEPOT_LIST_START) {
                         currentSection = DEPOT
@@ -77,6 +87,7 @@ object DesmetDatasetLoader {
                         DataFileLine(line).toNodeDemand()
                     )
                 }
+
                 DEPOT -> {
                     if (line == "-1" || line == "EOF") {
                         return@forEachLine

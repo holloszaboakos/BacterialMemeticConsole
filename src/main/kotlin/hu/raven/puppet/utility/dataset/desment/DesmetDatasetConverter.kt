@@ -2,6 +2,8 @@ package hu.raven.puppet.utility.dataset.desment
 
 import hu.raven.puppet.model.dataset.desmet.Task
 import hu.raven.puppet.model.dataset.desmet.graph.NodeCoordinate
+import hu.raven.puppet.model.physics.Meter
+import hu.raven.puppet.model.physics.Stere
 import hu.raven.puppet.model.task.DSalesman
 import hu.raven.puppet.model.task.DTask
 import hu.raven.puppet.model.task.graph.*
@@ -9,7 +11,7 @@ import hu.raven.puppet.modules.AlgorithmParameters
 import hu.raven.puppet.utility.inject
 
 object DesmetDatasetConverter {
-    val vehicleCount : Int by inject(AlgorithmParameters.VEHICLE_COUNT)
+    val vehicleCount: Int by inject(AlgorithmParameters.VEHICLE_COUNT)
 
     fun toStandardTask(task: Task): DTask = task.run {
         val depot = nodeCoordinates.first { it.nodeId == depotId }
@@ -18,7 +20,7 @@ object DesmetDatasetConverter {
             name = name,
             salesmen = Array(vehicleCount) {
                 DSalesman(
-                    volumeCapacity_Stere = capacity.toLong()
+                    volumeCapacity = Stere(capacity.toLong())
                 )
             },
             costGraph = DGraph(
@@ -46,7 +48,7 @@ object DesmetDatasetConverter {
                 DObjective(
                     name = it.nodeId.toString(),
                     location = it.toGPS(),
-                    volume_Stere = nodeDemands.getValue(it.nodeId).demand.toLong()
+                    volume = Stere(nodeDemands.getValue(it.nodeId).demand.toLong())
                 )
             }.toTypedArray()
     }
@@ -61,7 +63,7 @@ object DesmetDatasetConverter {
         return targetNodesWithIndex
             .map { indexValuePair ->
                 val weight = distanceMatrix.distances[indexValuePair.index][depotIndex]
-                DEdge(length_Meter = weight.times(1000).toLong())
+                DEdge(length = Meter(weight.times(1000).toLong()))
             }
             .toTypedArray()
     }
@@ -76,7 +78,7 @@ object DesmetDatasetConverter {
         return targetNodesWithIndex
             .map { indexValuePair ->
                 val weight = distanceMatrix.distances[depotIndex][indexValuePair.index]
-                DEdge(length_Meter = weight.toLong())
+                DEdge(length = Meter(weight.toLong()))
             }
             .toTypedArray()
 
@@ -94,7 +96,7 @@ object DesmetDatasetConverter {
                         .filter { it.index != fromNodeIndexed.index }
                         .map { toNodeIndexed ->
                             val weight = distanceMatrix.distances[fromNodeIndexed.index][toNodeIndexed.index]
-                            DEdge(length_Meter = weight.times(1000).toLong())
+                            DEdge(length = Meter(weight.times(1000).toLong()))
                         }
                         .toTypedArray()
                 )

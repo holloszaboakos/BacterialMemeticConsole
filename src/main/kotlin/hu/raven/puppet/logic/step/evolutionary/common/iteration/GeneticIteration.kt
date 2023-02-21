@@ -6,18 +6,19 @@ import hu.raven.puppet.logic.step.evolutionary.common.boost.Boost
 import hu.raven.puppet.logic.step.evolutionary.genetic.CrossOvers
 import hu.raven.puppet.logic.step.evolutionary.genetic.SelectSurvivors
 import hu.raven.puppet.logic.step.evolutionary.genetic.mutatechildren.MutateChildren
+import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.utility.inject
 import kotlinx.coroutines.runBlocking
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
-class GeneticIteration<S : ISpecimenRepresentation> : EvolutionaryIteration<S>() {
+class GeneticIteration<S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>> : EvolutionaryIteration<S, C>() {
 
-    val orderPopulationByCost: OrderPopulationByCost<S> by inject()
-    val boost: Boost<S> by inject()
-    val selection: SelectSurvivors<S> by inject()
-    val crossover: CrossOvers<S> by inject()
-    val mutate: MutateChildren<S> by inject()
+    val orderPopulationByCost: OrderPopulationByCost<S, C> by inject()
+    val boost: Boost<S, C> by inject()
+    val selection: SelectSurvivors<S, C> by inject()
+    val crossover: CrossOvers<S, C> by inject()
+    val mutate: MutateChildren<S, C> by inject()
 
 
     override fun invoke(): Unit = runBlocking {

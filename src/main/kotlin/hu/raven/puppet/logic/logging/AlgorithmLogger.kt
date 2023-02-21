@@ -2,7 +2,6 @@ package hu.raven.puppet.logic.logging
 
 import hu.raven.puppet.modules.FilePathVariableNames
 import hu.raven.puppet.utility.inject
-import java.io.File
 import java.time.LocalDateTime
 
 sealed class AlgorithmLogger {

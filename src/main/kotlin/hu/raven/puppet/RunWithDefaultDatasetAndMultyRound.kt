@@ -11,6 +11,7 @@ import hu.raven.puppet.model.logging.BacterialMemeticAlgorithmLogLine
 import hu.raven.puppet.model.logging.PopulationData
 import hu.raven.puppet.model.logging.ProgressData
 import hu.raven.puppet.model.logging.SpecimenData
+import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.modules.AlgorithmParameters
 import hu.raven.puppet.modules.bacterialModule
 import hu.raven.puppet.modules.dataset.defaultDataSetModule
@@ -48,13 +49,13 @@ private fun runAlgorithm(
 
 
     val iterationLimit: Int by inject(AlgorithmParameters.ITERATION_LIMIT)
-    val initialize: InitializeAlgorithm<*> by inject()
-    val iterate: EvolutionaryIteration<*> by inject()
+    val initialize: InitializeAlgorithm<*, *> by inject()
+    val iterate: EvolutionaryIteration<*, *> by inject()
     val statistics: BacterialAlgorithmStatistics by inject()
     val doubleLogger: DoubleLogger by inject()
     val csvLogger: CSVLogger by inject()
 
-    val outputFileName = "statistics-p4-round$roundIndex-${csvLogger.creationTime}"
+    val outputFileName = "statistics-p10-round$roundIndex-${csvLogger.creationTime}"
 
     doubleLogger.targetFileName = outputFileName
     csvLogger.targetFileName = outputFileName
@@ -97,7 +98,7 @@ private fun runAlgorithm(
     doubleLogger("FULL RUNTIME: $fullRuntime")
 }
 
-private fun logGeneration(logData: BacterialMemeticAlgorithmLogLine) {
+private fun <C : PhysicsUnit<C>> logGeneration(logData: BacterialMemeticAlgorithmLogLine<C>) {
     val logger: DoubleLogger by inject()
 
     logger.logProgress(logData.progressData)
@@ -122,13 +123,13 @@ private fun logGeneration(logData: BacterialMemeticAlgorithmLogLine) {
     }
 }
 
-private fun calculateLogData(
+private fun <C : PhysicsUnit<C>> calculateLogData(
     statistics: BacterialAlgorithmStatistics,
     fitnessCallCountOld: Long,
     timeElapsed: Duration,
     timeElapsedTotal: Duration
-): BacterialMemeticAlgorithmLogLine {
-    val algorithmState: EvolutionaryAlgorithmState<*> by inject()
+): BacterialMemeticAlgorithmLogLine<C> {
+    val algorithmState: EvolutionaryAlgorithmState<ISpecimenRepresentation<C>, C> by inject()
 
     val best = algorithmState.copyOfBest!!
     val second =
@@ -148,7 +149,7 @@ private fun calculateLogData(
     val logOfWorst = worst.toLog()
     val logOfMedian = median.toLog()
 
-    return BacterialMemeticAlgorithmLogLine(
+    return BacterialMemeticAlgorithmLogLine<C>(
         ProgressData(
             generation = algorithmState.iteration + 1,
             spentTimeTotal = timeElapsedTotal,
@@ -156,7 +157,7 @@ private fun calculateLogData(
             spentBudgetTotal = statistics.fitnessCallCount,
             spentBudgetOfGeneration = statistics.fitnessCallCount - fitnessCallCountOld
         ),
-        PopulationData(
+        PopulationData<C>(
             best = logOfBest,
             second = logOfSecond,
             third = logOfThird,
@@ -173,4 +174,4 @@ private fun calculateLogData(
     )
 }
 
-private fun ISpecimenRepresentation.toLog() = SpecimenData(id, cost)
+private fun <C : PhysicsUnit<C>> ISpecimenRepresentation<C>.toLog() = SpecimenData(id, cost!!)

@@ -1,19 +1,20 @@
 package hu.raven.puppet.logic.specimen
 
+import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.utility.extention.inverse
 import hu.raven.puppet.utility.extention.isPermutation
 import hu.raven.puppet.utility.extention.sequential
 
-data class DTwoPartRepresentation(
+data class DTwoPartRepresentation<C : PhysicsUnit<C>>(
     override val id: Int,
     val permutation: IntArray,
     val sliceLengths: IntArray,
     override var inUse: Boolean = true,
     override var costCalculated: Boolean = false,
-    override var cost: Double = -1.0,
+    override var cost: C? = null,
     override var iteration: Int = 0,
     override var orderInPopulation: Int = -1,
-) : ISpecimenRepresentation {
+) : ISpecimenRepresentation<C> {
 
     constructor(id: Int, data: Array<IntArray>) : this(
         id,
@@ -25,7 +26,7 @@ data class DTwoPartRepresentation(
         data.map { it.size }.toIntArray(),
     )
 
-    constructor(other: DTwoPartRepresentation) : this(
+    constructor(other: DTwoPartRepresentation<C>) : this(
         other.id,
         other.permutation.clone(),
         other.sliceLengths.clone(),
@@ -131,7 +132,7 @@ data class DTwoPartRepresentation(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as DTwoPartRepresentation
+        other as DTwoPartRepresentation<C>
 
         if (!permutation.contentEquals(other.permutation)) return false
         if (!sliceLengths.contentEquals(other.sliceLengths)) return false

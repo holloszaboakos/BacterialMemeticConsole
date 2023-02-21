@@ -1,10 +1,13 @@
 package hu.raven.puppet.logic.step.evolutionary.genetic.crossoveroperator
 
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
+import hu.raven.puppet.model.physics.Meter
+import hu.raven.puppet.model.physics.PhysicsUnit
+import hu.raven.puppet.model.physics.sum
 import kotlin.math.abs
 
 //broken
-class SortedMatchCrossOver<S : ISpecimenRepresentation> : CrossOverOperator<S>() {
+class SortedMatchCrossOver<S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>> : CrossOverOperator<S, C>() {
 
     override fun invoke(
         parents: Pair<S, S>,
@@ -44,19 +47,22 @@ class SortedMatchCrossOver<S : ISpecimenRepresentation> : CrossOverOperator<S>()
             }
         }
         if (foundSlices.isNotEmpty()) {
-            val cheaperIndex = LongArray(2) { sliceIndex ->
-                (1 until foundSlices[sliceIndex].size).sumOf { geneIndex ->
-                    taskHolder.task.costGraph
-                        .edgesBetween[foundSlices[sliceIndex][geneIndex - 1]]
-                        .values[
+            val cheaperIndex = Array<Meter>(2) { sliceIndex ->
+                (1 until foundSlices[sliceIndex].size)
+                    .map { geneIndex ->
+                        taskHolder.task.costGraph
+                            .edgesBetween[foundSlices[sliceIndex][geneIndex - 1]]
+                            .values[
                             if (foundSlices[sliceIndex][geneIndex] > foundSlices[sliceIndex][geneIndex - 1])
                                 foundSlices[sliceIndex][geneIndex] - 1
                             else
                                 foundSlices[sliceIndex][geneIndex]
-                    ]
-                        .length_Meter
-                }
-            }.let { costs -> costs.indexOf(costs.minOf { it }) }
+                        ]
+                            .length
+                    }
+                    .toTypedArray()
+                    .sum()
+            }.let { costs -> costs.indexOf(costs.minBy { it.value.toDouble() }) }
             val indices = Array(2) { index ->
                 parentsInverse[index][foundSlices[index].first()]..
                         parentsInverse[index][foundSlices[index].last()]

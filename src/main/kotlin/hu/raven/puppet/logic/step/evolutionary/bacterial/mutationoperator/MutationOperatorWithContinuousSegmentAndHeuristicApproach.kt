@@ -2,12 +2,16 @@ package hu.raven.puppet.logic.step.evolutionary.bacterial.mutationoperator
 
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.logic.statistics.BacterialAlgorithmStatistics
+import hu.raven.puppet.model.physics.Meter
+import hu.raven.puppet.model.physics.PhysicsUnit
+import hu.raven.puppet.model.physics.math.Fraction
+import hu.raven.puppet.model.physics.sum
 import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.inject
 import kotlin.random.Random
 
-class MutationOperatorWithContinuousSegmentAndHeuristicApproach<S : ISpecimenRepresentation> :
-    BacterialMutationOperator<S>() {
+class MutationOperatorWithContinuousSegmentAndHeuristicApproach<S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>> :
+    BacterialMutationOperator<S, C>() {
 
     val statistics: BacterialAlgorithmStatistics by inject()
 
@@ -51,10 +55,10 @@ class MutationOperatorWithContinuousSegmentAndHeuristicApproach<S : ISpecimenRep
             val sumWeightOfEdgesLost = calculateWeightsOfNeighbouringEdges(
                 currentElement,
                 remainingElements
-            )
+            )!!.value.toDouble()
 
             if (sumWeightOfEdgesLost != 0.0)
-                weights[weightIndex] = weight * remainingElements.size / sumWeightOfEdgesLost
+                weights[weightIndex] = weight / sumWeightOfEdgesLost * remainingElements.size.toLong()
         }
 
         return selectElementByWeightedRandom(
@@ -83,27 +87,31 @@ class MutationOperatorWithContinuousSegmentAndHeuristicApproach<S : ISpecimenRep
     private fun calculateWeightsOfNeighbouringEdges(
         currentElement: Int,
         remainingElements: MutableList<Int>
-    ): Double = taskHolder.task.run {
+    ): Meter = taskHolder.task.run {
         val objectiveCount = costGraph.objectives.size
-        remainingElements.map { element ->
-            if (currentElement == element)
-                return@map 0.0
-            when {
-                element < objectiveCount && currentElement < objectiveCount -> costGraph
-                    .getEdgeBetween(element, currentElement)
-                    .length_Meter
-                    .multiplicativeInverse()
-                currentElement < objectiveCount -> costGraph
-                    .edgesFromCenter[currentElement]
-                    .length_Meter
-                    .multiplicativeInverse()
-                element < objectiveCount -> costGraph
-                    .edgesToCenter[element]
-                    .length_Meter
-                    .multiplicativeInverse()
-                else -> 1.0
-            }
-        }.sum()
+        remainingElements
+            .map { element ->
+                if (currentElement == element)
+                    return@map Meter(0)
+                when {
+                    element < objectiveCount && currentElement < objectiveCount -> costGraph
+                        .getEdgeBetween(element, currentElement)
+                        .length
+                        .multiplicativeInverse()
+
+                    currentElement < objectiveCount -> costGraph
+                        .edgesFromCenter[currentElement]
+                        .length
+                        .multiplicativeInverse()
+
+                    element < objectiveCount -> costGraph
+                        .edgesToCenter[element]
+                        .length
+                        .multiplicativeInverse()
+
+                    else -> Meter(1)
+                }
+            }.toTypedArray().sum()
     }
 
     private fun calculateWeightsOfRemainingElements(
@@ -115,20 +123,23 @@ class MutationOperatorWithContinuousSegmentAndHeuristicApproach<S : ISpecimenRep
             when {
                 previousElement < objectiveCount && element < objectiveCount -> costGraph
                     .getEdgeBetween(previousElement, element)
-                    .length_Meter
-                    .multiplicativeInverse()
+                    .length
+                    .multiplicativeInverse()!!.value.toDouble()
+
                 element < objectiveCount -> costGraph
                     .edgesFromCenter[element]
-                    .length_Meter
-                    .multiplicativeInverse()
+                    .length
+                    .multiplicativeInverse()!!.value.toDouble()
+
                 previousElement < objectiveCount -> costGraph
                     .edgesToCenter[previousElement]
-                    .length_Meter
-                    .multiplicativeInverse()
+                    .length
+                    .multiplicativeInverse()!!.value.toDouble()
+
                 else -> 1.0
             }
         }.toDoubleArray()
     }
 
-    private fun Long.multiplicativeInverse() = 1.0 / this
+    private fun Meter.multiplicativeInverse() = Meter(Fraction(value.value.first, value.value.second))
 }

@@ -1,5 +1,6 @@
 package hu.raven.puppet.logic.specimen
 
+import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.utility.extention.inverse
 import hu.raven.puppet.utility.extention.isPermutation
 import hu.raven.puppet.utility.extention.sequential
@@ -7,16 +8,16 @@ import java.util.concurrent.locks.ReentrantReadWriteLock
 import kotlin.concurrent.read
 import kotlin.concurrent.write
 
-data class DOnePartRepresentation(
+data class DOnePartRepresentation<C : PhysicsUnit<C>>(
     override val id: Int,
     override val objectiveCount: Int,
     val permutation: IntArray,
     override var inUse: Boolean = true,
     override var costCalculated: Boolean = false,
-    override var cost: Double = -1.0,
+    override var cost: C? = null,
     override var iteration: Int = 0,
     override var orderInPopulation: Int = 0
-) : ISpecimenRepresentation {
+) : ISpecimenRepresentation<C> {
 
     private val lock = ReentrantReadWriteLock()
 
@@ -42,7 +43,7 @@ data class DOnePartRepresentation(
         }
     )
 
-    constructor(other: DOnePartRepresentation) : this(
+    constructor(other: DOnePartRepresentation<C>) : this(
         other.id,
         other.objectiveCount,
         other.permutation.clone(),
@@ -155,7 +156,7 @@ data class DOnePartRepresentation(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as DOnePartRepresentation
+        other as DOnePartRepresentation<*>
 
         if (objectiveCount != other.objectiveCount) return false
         if (!permutation.contentEquals(other.permutation)) return false

@@ -4,6 +4,7 @@ import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.logic.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.logic.step.evolutionary.bacterial.mutationonspecimen.MutationOnSpecimen
 import hu.raven.puppet.model.logging.StepEfficiencyData
+import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.utility.extention.sum
 import hu.raven.puppet.utility.inject
 import kotlinx.coroutines.Dispatchers
@@ -11,9 +12,10 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
-class InitializeHugePopulationThanPreOptimizeThanSelectBest<S : ISpecimenRepresentation> : InitializePopulation<S>() {
+class InitializeHugePopulationThanPreOptimizeThanSelectBest<S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>> :
+    InitializePopulation<S, C>() {
 
-    private val mutationOperator: MutationOnSpecimen<S> by inject()
+    private val mutationOperator: MutationOnSpecimen<S, C> by inject()
     private val statistics: BacterialAlgorithmStatistics by inject()
 
     override fun invoke() {
@@ -58,7 +60,7 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest<S : ISpecimenReprese
                 instance.iteration = 0
                 instance.costCalculated = false
                 instance.inUse = true
-                instance.cost = -1.0
+                instance.cost = null
             }
 
             val bestImprovements =

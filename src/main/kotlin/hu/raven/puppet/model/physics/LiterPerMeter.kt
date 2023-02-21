@@ -7,9 +7,8 @@ value class LiterPerMeter(override val value: Fraction) : PhysicsUnit<LiterPerMe
     constructor(value: Long) : this(Fraction(value))
 
     override operator fun plus(other: LiterPerMeter) = LiterPerMeter(value + other.value)
-    override operator fun times(other: LiterPerMeter) = LiterPerMeter(value * other.value)
+    override operator fun minus(other: LiterPerMeter) = LiterPerMeter(value - other.value)
     override operator fun times(other: Long) = LiterPerMeter(value * other)
-    override operator fun div(other: LiterPerMeter) = LiterPerMeter(value / other.value)
     override operator fun div(other: Long) = LiterPerMeter(value / other)
     override operator fun compareTo(other: LiterPerMeter) = value.compareTo(other.value)
 }

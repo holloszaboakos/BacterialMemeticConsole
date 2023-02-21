@@ -5,11 +5,12 @@ import hu.raven.puppet.logic.logging.CSVLineBuilderUtility.appendField
 import hu.raven.puppet.logic.logging.CSVLineBuilderUtility.appendString
 import hu.raven.puppet.logic.logging.CSVLineBuilderUtility.buildCsvLine
 import hu.raven.puppet.model.logging.*
+import hu.raven.puppet.model.physics.PhysicsUnit
 import java.io.File
 
 class CSVLogger : AlgorithmLogger() {
 
-    fun printHeader(){
+    fun printHeader() {
         val targetFile = File("$outputFolderPath\\$targetFileName.csv")
         val header = produceHeader()
         targetFile.appendText(header)
@@ -69,13 +70,13 @@ class CSVLogger : AlgorithmLogger() {
         }
     }
 
-    operator fun invoke(message: BacterialMemeticAlgorithmLogLine) {
+    operator fun <C : PhysicsUnit<C>> invoke(message: BacterialMemeticAlgorithmLogLine<C>) {
         val targetFile = File("$outputFolderPath\\$targetFileName.csv")
         val line = toCsvLine(message)
         targetFile.appendText(line)
     }
 
-    private fun toCsvLine(message: BacterialMemeticAlgorithmLogLine): String {
+    private fun toCsvLine(message: BacterialMemeticAlgorithmLogLine<*>): String {
         return buildCsvLine {
             appendProgressData(message.progressData)
             appendPopulationData(message.populationData)
@@ -96,7 +97,7 @@ class CSVLogger : AlgorithmLogger() {
         appendField(progressData.spentBudgetOfGeneration)
     }
 
-    private fun StringBuilder.appendPopulationData(populationData: PopulationData) {
+    private fun StringBuilder.appendPopulationData(populationData: PopulationData<*>) {
         appendSpecimenData(populationData.best)
         appendSpecimenData(populationData.second)
         appendSpecimenData(populationData.third)
@@ -107,7 +108,7 @@ class CSVLogger : AlgorithmLogger() {
         appendField(populationData.geneBalance)
     }
 
-    private fun StringBuilder.appendSpecimenData(specimenData: SpecimenData?) {
+    private fun StringBuilder.appendSpecimenData(specimenData: SpecimenData<*>?) {
         appendField(specimenData?.id)
         appendField(specimenData?.cost)
     }

@@ -14,7 +14,6 @@ import hu.raven.puppet.logic.step.evolutionary.bacterial.mutation.BacterialMutat
 import hu.raven.puppet.logic.step.evolutionary.bacterial.mutation.BacterialMutationOnBestAndLuckyByShuffling
 import hu.raven.puppet.logic.step.evolutionary.bacterial.mutationonspecimen.MutationOnSpecimen
 import hu.raven.puppet.logic.step.evolutionary.bacterial.mutationonspecimen.MutationOnSpecimenWithRandomContinuousSegmentAndFullCover
-import hu.raven.puppet.logic.step.evolutionary.bacterial.mutationonspecimen.MutationOnSpecimenWithRandomContinuousSegmentAndFullCoverAndCloneWithInvertion
 import hu.raven.puppet.logic.step.evolutionary.bacterial.mutationoperator.BacterialMutationOperator
 import hu.raven.puppet.logic.step.evolutionary.bacterial.mutationoperator.MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics
 import hu.raven.puppet.logic.step.evolutionary.bacterial.selectsegment.SelectContinuesSegment
@@ -23,6 +22,7 @@ import hu.raven.puppet.logic.step.evolutionary.common.iteration.BacterialIterati
 import hu.raven.puppet.logic.step.evolutionary.common.iteration.EvolutionaryIteration
 import hu.raven.puppet.logic.step.evolutionary.genetic.crossoveroperator.CrossOverOperator
 import hu.raven.puppet.logic.step.evolutionary.genetic.crossoveroperator.HeuristicCrossOver
+import hu.raven.puppet.model.physics.Meter
 import hu.raven.puppet.modules.AlgorithmParameters.*
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -41,38 +41,38 @@ val bacterialModule = module {
 
     single(named(OPTIMISATION_STEP_LIMIT)) { 1000 }
 
-    single<EvolutionaryAlgorithmState<DOnePartRepresentation>> {
+    single<EvolutionaryAlgorithmState<DOnePartRepresentation<Meter>, *>> {
         EvolutionaryAlgorithmState()
     }
 
-    factory<InitializeAlgorithm<*>> {
-        InitializeBacterialAlgorithm<DOnePartRepresentation>()
+    factory<InitializeAlgorithm<*, *>> {
+        InitializeBacterialAlgorithm<DOnePartRepresentation<Meter>, Meter>()
     }
 
-    factory<EvolutionaryIteration<*>> {
-        BacterialIteration<DOnePartRepresentation>()
+    factory<EvolutionaryIteration<*, *>> {
+        BacterialIteration<DOnePartRepresentation<Meter>, Meter>()
     }
 
-    factory<BacterialMutation<*>> {
-        BacterialMutationOnBestAndLuckyByShuffling<DOnePartRepresentation>()
+    factory<BacterialMutation<*, *>> {
+        BacterialMutationOnBestAndLuckyByShuffling<DOnePartRepresentation<Meter>, Meter>()
     }
-    factory<MutationOnSpecimen<*>> {
-        MutationOnSpecimenWithRandomContinuousSegmentAndFullCover<DOnePartRepresentation>()
+    factory<MutationOnSpecimen<*, *>> {
+        MutationOnSpecimenWithRandomContinuousSegmentAndFullCover<DOnePartRepresentation<Meter>, Meter>()
     }
-    factory<BacterialMutationOperator<*>> {
-        MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics<DOnePartRepresentation>()
+    factory<BacterialMutationOperator<*, *>> {
+        MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics<DOnePartRepresentation<Meter>, Meter>()
     }
-    factory<GeneTransfer<*>> {
-        GeneTransferByTournament<DOnePartRepresentation>()
+    factory<GeneTransfer<*, *>> {
+        GeneTransferByTournament<DOnePartRepresentation<Meter>, Meter>()
     }
-    factory<GeneTransferOperator<*>> {
-        GeneTransferByCrossOver<DOnePartRepresentation>()
+    factory<GeneTransferOperator<*, *>> {
+        GeneTransferByCrossOver<DOnePartRepresentation<Meter>, Meter>()
     }
-    factory<CrossOverOperator<*>> {
-        HeuristicCrossOver<DOnePartRepresentation>()
+    factory<CrossOverOperator<*, *>> {
+        HeuristicCrossOver<DOnePartRepresentation<Meter>, Meter>()
     }
-    factory<SelectSegment<*>> {
-        SelectContinuesSegment<DOnePartRepresentation>()
+    factory<SelectSegment<*, *>> {
+        SelectContinuesSegment<DOnePartRepresentation<Meter>, Meter>()
     }
 
     single {

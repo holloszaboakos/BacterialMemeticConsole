@@ -2,10 +2,10 @@ package hu.raven.puppet.model.dataset.augerat
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-data class InfoBean (
+data class InfoBean(
     @JsonProperty("dataset")
-    var dataset : String,
+    var dataset: String,
 
     @JsonProperty("name")
-    var name : String,
+    var name: String,
 )

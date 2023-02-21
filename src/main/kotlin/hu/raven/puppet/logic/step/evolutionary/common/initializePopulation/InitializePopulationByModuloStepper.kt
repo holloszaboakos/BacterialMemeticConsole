@@ -1,8 +1,10 @@
 package hu.raven.puppet.logic.step.evolutionary.common.initializePopulation
 
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
+import hu.raven.puppet.model.physics.PhysicsUnit
 
-class InitializePopulationByModuloStepper<S : ISpecimenRepresentation> : InitializePopulation<S>() {
+class InitializePopulationByModuloStepper<S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>> :
+    InitializePopulation<S, C>() {
 
     override fun invoke() {
         algorithmState.run {
@@ -62,7 +64,7 @@ class InitializePopulationByModuloStepper<S : ISpecimenRepresentation> : Initial
                 instance.iteration = 0
                 instance.costCalculated = false
                 instance.inUse = true
-                instance.cost = -1.0
+                instance.cost = null
             }
         }
     }

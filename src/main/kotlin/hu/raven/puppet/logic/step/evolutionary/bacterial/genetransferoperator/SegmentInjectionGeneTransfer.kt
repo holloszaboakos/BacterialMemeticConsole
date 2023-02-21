@@ -2,12 +2,13 @@ package hu.raven.puppet.logic.step.evolutionary.bacterial.genetransferoperator
 
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.model.logging.StepEfficiencyData
+import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.utility.extention.nextSegmentStartPosition
 import kotlin.random.Random
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
-class SegmentInjectionGeneTransfer<S : ISpecimenRepresentation> : GeneTransferOperator<S>() {
+class SegmentInjectionGeneTransfer<S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>> : GeneTransferOperator<S, C>() {
 
     @OptIn(ExperimentalTime::class)
     override fun invoke(
@@ -47,16 +48,16 @@ class SegmentInjectionGeneTransfer<S : ISpecimenRepresentation> : GeneTransferOp
             return StepEfficiencyData(
                 spentTime = spentTime,
                 spentBudget = 1,
-                improvementCountPerRun = if (target.cost < oldCost) 1 else 0,
+                improvementCountPerRun = if (target.cost!! < oldCost!!) 1 else 0,
                 improvementPercentagePerBudget =
-                if (target.cost < oldCost)
-                    1 - (target.cost / oldCost)
+                if (target.cost!! < oldCost!!)
+                    1 - (target.cost!!.value.toDouble() / oldCost!!.value.toDouble())
                 else 0.0
             )
         }
     }
 
-    private fun <S : ISpecimenRepresentation> collectElementsOfSegment(
+    private fun <S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>> collectElementsOfSegment(
         source: S,
         rangeOfSegment: IntRange
     ): IntArray {
@@ -66,7 +67,7 @@ class SegmentInjectionGeneTransfer<S : ISpecimenRepresentation> : GeneTransferOp
             .toIntArray()
     }
 
-    private fun <S : ISpecimenRepresentation> collectElementsNotInSegment(
+    private fun <S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>> collectElementsNotInSegment(
         target: S,
         elementsOfSegment: IntArray,
     ): IntArray {
@@ -81,7 +82,7 @@ class SegmentInjectionGeneTransfer<S : ISpecimenRepresentation> : GeneTransferOp
             .toIntArray()
     }
 
-    private fun <S : ISpecimenRepresentation> loadSegmentToTarget(
+    private fun <S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>> loadSegmentToTarget(
         target: S,
         rangeOfSegment: IntRange,
         elementsOfSegment: IntArray,
@@ -95,21 +96,24 @@ class SegmentInjectionGeneTransfer<S : ISpecimenRepresentation> : GeneTransferOp
             when (index) {
                 in rangeOfBeforeSegment ->
                     elementsOfTargetNotInSegment[index]
+
                 in rangeOfSegment ->
                     elementsOfSegment[index - rangeOfSegment.first]
+
                 in rangeOfAfterSegment ->
                     elementsOfTargetNotInSegment[index - geneTransferSegmentLength]
+
                 else -> throw IndexOutOfBoundsException()
             }
         }
     }
 
-    private fun <S : ISpecimenRepresentation> resetFlagsOf(specimen: S) {
+    private fun <S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>> resetFlagsOf(specimen: S) {
         specimen.iteration = algorithmState.iteration
         specimen.costCalculated = false
     }
 
-    private fun <S : ISpecimenRepresentation> checkFormatOf(specimen: S) {
+    private fun <S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>> checkFormatOf(specimen: S) {
         if (!specimen.checkFormat()) {
             logger("Wrongly formatted")
         }

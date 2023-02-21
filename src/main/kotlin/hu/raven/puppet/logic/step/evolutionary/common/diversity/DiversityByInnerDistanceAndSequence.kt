@@ -1,10 +1,11 @@
 package hu.raven.puppet.logic.step.evolutionary.common.diversity
 
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
+import hu.raven.puppet.model.physics.PhysicsUnit
 import kotlinx.coroutines.runBlocking
 
 
-class DiversityByInnerDistanceAndSequence<S : ISpecimenRepresentation> : Diversity<S>() {
+class DiversityByInnerDistanceAndSequence<S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>> : Diversity<S, C>() {
 
     override fun invoke(): Unit = runBlocking {
         statistics.diversity = 0.0

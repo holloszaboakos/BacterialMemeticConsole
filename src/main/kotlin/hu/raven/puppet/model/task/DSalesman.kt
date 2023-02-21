@@ -11,24 +11,20 @@
  */
 package hu.raven.puppet.model.task
 
+import hu.raven.puppet.model.physics.*
 import java.util.*
 
 data class DSalesman(
     var id: String = UUID.randomUUID().toString(),
     val name: String = "",
     var orderInOwner: Int = 0,
-    val workTime_SecondPerDay: Long = 0L,
-
-    val volumeCapacity_Stere: Long = 0L,
-    val weightCapacity_Gramm: Long = 0L,
-
-    val vechicleSpeed_MeterPerSecond: Long = 0L,
-
-    val payment_EuroPerSecond: Double = 0.0,
-
-    val fuelConsuption_LiterPerMeter: Double = 0.0,
-    val fuelPrice_EuroPerLiter: Double = 0.0,
-
-    val basePrice_Euro: Double = 0.0
+    val workTimePerDay: Second = Second(0),
+    val volumeCapacity: Stere = Stere(0),
+    val weightCapacity: Gramm = Gramm(0),
+    val vehicleSpeed: MeterPerSecond = MeterPerSecond(0),
+    val salary: EuroPerSecond = EuroPerSecond(0),
+    val fuelConsumption: LiterPerMeter = LiterPerMeter(0),
+    val fuelPrice: EuroPerLiter = EuroPerLiter(0),
+    val basePrice: Euro = Euro(0)
 )
 

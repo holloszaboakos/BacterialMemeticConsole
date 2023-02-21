@@ -1,9 +1,10 @@
 package hu.raven.puppet.logic.step.evolutionary.genetic.mutatechildren
 
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
+import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.utility.extention.slice
 
-class MutateChildrenByReset<S : ISpecimenRepresentation> : MutateChildren<S>() {
+class MutateChildrenByReset<S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>> : MutateChildren<S, C>() {
 
     override fun invoke() {
         val basePermutation =

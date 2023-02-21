@@ -9,23 +9,24 @@ import hu.raven.puppet.logic.step.localsearch.initialize.InitializeByRandom
 import hu.raven.puppet.logic.step.localsearch.initialize.InitializeLocalSearch
 import hu.raven.puppet.logic.step.localsearch.iteration.LocalSearchIteration
 import hu.raven.puppet.logic.step.localsearch.iteration.Opt2Iteration
+import hu.raven.puppet.model.physics.Meter
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val localSearchModule = module {
-    factory<InitializeAlgorithm<*>>(named("default")) {
-        InitializeLocalSearchAlgorithm<DTwoPartRepresentation>()
+    factory<InitializeAlgorithm<*, *>>(named("default")) {
+        InitializeLocalSearchAlgorithm<DTwoPartRepresentation<Meter>, Meter>()
     }
 
-    factory<InitializeLocalSearch<*>> {
-        InitializeByRandom<DTwoPartRepresentation>()
+    factory<InitializeLocalSearch<*, *>> {
+        InitializeByRandom<DTwoPartRepresentation<Meter>, Meter>()
     }
 
-    factory<LocalSearchIteration<*>> {
-        Opt2Iteration<DTwoPartRepresentation>()
+    factory<LocalSearchIteration<*, *>> {
+        Opt2Iteration<DTwoPartRepresentation<Meter>, Meter>()
     }
 
-    single<IterativeAlgorithmState<DOnePartRepresentation>> {
+    single<IterativeAlgorithmState<DOnePartRepresentation<Meter>, Meter>> {
         IterativeAlgorithmState()
     }
 }

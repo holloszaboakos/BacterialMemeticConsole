@@ -12,11 +12,9 @@ import hu.raven.puppet.logic.step.evolutionary.genetic.CrossOvers
 import hu.raven.puppet.logic.step.evolutionary.genetic.SelectSurvivors
 import hu.raven.puppet.logic.step.evolutionary.genetic.crossoveroperator.CrossOverOperator
 import hu.raven.puppet.logic.step.evolutionary.genetic.crossoveroperator.HeuristicCrossOver
-import hu.raven.puppet.logic.step.evolutionary.genetic.crossoveroperator.OrderCrossOver
-import hu.raven.puppet.logic.step.evolutionary.genetic.crossoveroperator.StatisticalRacingCrossOver
 import hu.raven.puppet.logic.step.evolutionary.genetic.mutatechildren.MutateChildren
-import hu.raven.puppet.logic.step.evolutionary.genetic.mutatechildren.MutateChildrenByReverse
 import hu.raven.puppet.logic.step.evolutionary.genetic.mutatechildren.MutateChildrenBySwap
+import hu.raven.puppet.model.physics.Meter
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
@@ -24,32 +22,32 @@ val geneticModule = module {
     single(named(AlgorithmParameters.ITERATION_LIMIT)) { 26000 }
     single(named(AlgorithmParameters.SIZE_OF_POPULATION)) { 10_000 }
 
-    factory<InitializeAlgorithm<*>> {
-        InitializeGeneticAlgorithm<DOnePartRepresentation>()
+    factory<InitializeAlgorithm<*, *>> {
+        InitializeGeneticAlgorithm<DOnePartRepresentation<Meter>, Meter>()
     }
 
-    factory<EvolutionaryIteration<*>> {
-        GeneticIteration<DOnePartRepresentation>()
+    factory<EvolutionaryIteration<*, *>> {
+        GeneticIteration<DOnePartRepresentation<Meter>, Meter>()
     }
     factory {
-        SelectSurvivors<DOnePartRepresentation>()
+        SelectSurvivors<DOnePartRepresentation<Meter>, Meter>()
     }
     factory {
-        CrossOvers<DOnePartRepresentation>()
+        CrossOvers<DOnePartRepresentation<Meter>, Meter>()
     }
-    factory<CrossOverOperator<*>> {
-        HeuristicCrossOver<DOnePartRepresentation>()
+    factory<CrossOverOperator<*, *>> {
+        HeuristicCrossOver<DOnePartRepresentation<Meter>, Meter>()
     }
-    factory<MutateChildren<*>> {
-        MutateChildrenBySwap<DOnePartRepresentation>()
+    factory<MutateChildren<*, *>> {
+        MutateChildrenBySwap<DOnePartRepresentation<Meter>, Meter>()
     }
 
-    single<EvolutionaryAlgorithmState<DOnePartRepresentation>> {
+    single<EvolutionaryAlgorithmState<DOnePartRepresentation<Meter>, *>> {
         EvolutionaryAlgorithmState()
     }
 
     single {
-        GeneticAlgorithmStatistics<DOnePartRepresentation>()
+        GeneticAlgorithmStatistics<DOnePartRepresentation<Meter>, Meter>()
     }
 
     single {

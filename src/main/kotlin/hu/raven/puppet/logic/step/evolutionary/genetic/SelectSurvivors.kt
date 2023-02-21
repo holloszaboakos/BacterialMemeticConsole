@@ -2,9 +2,10 @@ package hu.raven.puppet.logic.step.evolutionary.genetic
 
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.logic.step.evolutionary.EvolutionaryAlgorithmStep
+import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.utility.extention.slice
 
-class SelectSurvivors<S : ISpecimenRepresentation> : EvolutionaryAlgorithmStep<S>() {
+class SelectSurvivors<S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>> : EvolutionaryAlgorithmStep<S, C>() {
     operator fun invoke() {
         algorithmState.run {
             population.asSequence()

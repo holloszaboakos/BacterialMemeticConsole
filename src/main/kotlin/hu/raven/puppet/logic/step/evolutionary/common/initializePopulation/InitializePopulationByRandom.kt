@@ -3,10 +3,11 @@ package hu.raven.puppet.logic.step.evolutionary.common.initializePopulation
 import hu.raven.puppet.logic.specimen.DOnePartRepresentation
 import hu.raven.puppet.logic.specimen.DTwoPartRepresentation
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
+import hu.raven.puppet.model.physics.PhysicsUnit
 import kotlin.random.Random
 import kotlin.random.nextInt
 
-class InitializePopulationByRandom<S : ISpecimenRepresentation> : InitializePopulation<S>() {
+class InitializePopulationByRandom<S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>> : InitializePopulation<S, C>() {
 
     override fun invoke() {
         algorithmState.population = if (taskHolder.task.costGraph.objectives.size != 1)
@@ -32,7 +33,7 @@ class InitializePopulationByRandom<S : ISpecimenRepresentation> : InitializePopu
             permutation.shuffle()
             var length = 0
             when (permutation) {
-                is DTwoPartRepresentation ->
+                is DTwoPartRepresentation<*> ->
                     permutation.forEachSliceIndexed { index, _ ->
                         if (index == permutation.sliceLengths.size - 1) {
                             permutation.sliceLengths[index] = taskHolder.task.costGraph.objectives.size - length
@@ -43,7 +44,8 @@ class InitializePopulationByRandom<S : ISpecimenRepresentation> : InitializePopu
                             length += permutation.sliceLengths[index]
                         }
                     }
-                is DOnePartRepresentation -> {
+
+                is DOnePartRepresentation<*> -> {
 
                 }
             }

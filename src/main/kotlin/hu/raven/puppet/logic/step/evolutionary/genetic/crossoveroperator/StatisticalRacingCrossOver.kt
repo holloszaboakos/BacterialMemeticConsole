@@ -1,10 +1,10 @@
 package hu.raven.puppet.logic.step.evolutionary.genetic.crossoveroperator
 
-import hu.raven.puppet.logic.specimen.DOnePartRepresentation
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.logic.statistics.GeneticAlgorithmStatistics
 import hu.raven.puppet.logic.statistics.OperatorStatistics
 import hu.raven.puppet.logic.step.common.calculatecost.CalculateCost
+import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.utility.inject
 import kotlin.math.pow
 import kotlin.random.Random.Default.nextDouble
@@ -14,14 +14,14 @@ import kotlin.random.Random.Default.nextDouble
 //a mostani a méh kolónia algoritmus scout fázis menjen bele
 //abc: artificial bee colony
 //cinti
-class StatisticalRacingCrossOver<S : ISpecimenRepresentation> : CrossOverOperator<S>() {
-    val calculateCostOf: CalculateCost<DOnePartRepresentation> by inject()
+class StatisticalRacingCrossOver<S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>> : CrossOverOperator<S, C>() {
+    val calculateCostOf: CalculateCost<S, C> by inject()
 
-    private val statistics: GeneticAlgorithmStatistics<S> by inject()
+    private val statistics: GeneticAlgorithmStatistics<S, C> by inject()
 
     var iteration = -1
     var iterationLock = Object()
-    private var operator: CrossOverOperator<S>? = null
+    private var operator: CrossOverOperator<S, C>? = null
     private var actualStatistics: OperatorStatistics? = null
 
     override fun invoke(
@@ -80,13 +80,13 @@ class StatisticalRacingCrossOver<S : ISpecimenRepresentation> : CrossOverOperato
                             (algorithm.population.size - parents.first.orderInPopulation).toDouble().pow(2) *
                                     (algorithm.population.size - parents.second.orderInPopulation).toDouble().pow(2)
                     }
-                    else*/ if (parents.first.cost > child.cost) {
-                    actualStatistics.success += (algorithmState.iteration - parents.first.iteration) / child.cost /
+                    else*/ if (parents.first.cost!! > child.cost!!) {
+                    actualStatistics.success += (algorithmState.iteration - parents.first.iteration) / child.cost!!.value.toDouble() /
                             (parents.first.orderInPopulation + 1).toDouble().pow(2)
 
                 }
-                    /*else*/ if (parents.second.cost > child.cost) {
-                    actualStatistics.success += (algorithmState.iteration - parents.second.iteration) / child.cost /
+                    /*else*/ if (parents.second.cost!! > child.cost!!) {
+                    actualStatistics.success += (algorithmState.iteration - parents.second.iteration) / child.cost!!.value.toDouble() /
                             (parents.second.orderInPopulation + 1).toDouble().pow(2)
                 }
                 }

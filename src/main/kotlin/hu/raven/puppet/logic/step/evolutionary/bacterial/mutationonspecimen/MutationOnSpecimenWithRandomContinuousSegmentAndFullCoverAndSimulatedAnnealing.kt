@@ -2,13 +2,14 @@ package hu.raven.puppet.logic.step.evolutionary.bacterial.mutationonspecimen
 
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.model.logging.StepEfficiencyData
+import hu.raven.puppet.model.physics.PhysicsUnit
 import kotlin.math.exp
 import kotlin.random.Random
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
-class MutationOnSpecimenWithRandomContinuousSegmentAndFullCoverAndSimulatedAnnealing<S : ISpecimenRepresentation> :
-    MutationOnSpecimen<S>() {
+class MutationOnSpecimenWithRandomContinuousSegmentAndFullCoverAndSimulatedAnnealing<S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>> :
+    MutationOnSpecimen<S, C>() {
     private val randomizer: IntArray by lazy {
         (0 until cloneSegmentLength)
             .shuffled()
@@ -55,7 +56,7 @@ class MutationOnSpecimenWithRandomContinuousSegmentAndFullCoverAndSimulatedAnnea
             improvementCountPerRun = if (impruvement) 1 else 0,
             improvementPercentagePerBudget =
             if (impruvement)
-                (1 - (specimen.cost / oldSpecimenCost)) / spentBudget
+                (1 - (specimen.cost!!.value.toDouble() / oldSpecimenCost!!.value.toDouble())) / spentBudget
             else
                 0.0
         )
@@ -79,7 +80,7 @@ class MutationOnSpecimenWithRandomContinuousSegmentAndFullCoverAndSimulatedAnnea
         return clones
     }
 
-    private fun <S : ISpecimenRepresentation> loadDataToSpecimen(
+    private fun <S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>> loadDataToSpecimen(
         specimen: S,
         clones: MutableList<S>,
         doSimulatedAnnealing: Boolean

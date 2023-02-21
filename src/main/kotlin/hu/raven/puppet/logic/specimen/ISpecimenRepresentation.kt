@@ -1,10 +1,12 @@
 package hu.raven.puppet.logic.specimen
 
-sealed interface ISpecimenRepresentation {
+import hu.raven.puppet.model.physics.PhysicsUnit
+
+sealed interface ISpecimenRepresentation<C : PhysicsUnit<C>> {
     val id: Int
     var inUse: Boolean
     var costCalculated: Boolean
-    var cost: Double
+    var cost: C?
     var iteration: Int
     var orderInPopulation: Int
     val objectiveCount: Int

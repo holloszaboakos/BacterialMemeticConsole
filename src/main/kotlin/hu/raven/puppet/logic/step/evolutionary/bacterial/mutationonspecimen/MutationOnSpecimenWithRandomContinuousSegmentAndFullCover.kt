@@ -2,10 +2,12 @@ package hu.raven.puppet.logic.step.evolutionary.bacterial.mutationonspecimen
 
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.model.logging.StepEfficiencyData
+import hu.raven.puppet.model.physics.PhysicsUnit
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
-class MutationOnSpecimenWithRandomContinuousSegmentAndFullCover<S : ISpecimenRepresentation> : MutationOnSpecimen<S>() {
+class MutationOnSpecimenWithRandomContinuousSegmentAndFullCover<S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>> :
+    MutationOnSpecimen<S, C>() {
     private val order by lazy {
         (0 until algorithmState.population.first().permutationSize - cloneSegmentLength)
             .shuffled()
@@ -48,7 +50,7 @@ class MutationOnSpecimenWithRandomContinuousSegmentAndFullCover<S : ISpecimenRep
             improvementCountPerRun = if (impruvement) 1 else 0,
             improvementPercentagePerBudget =
             if (impruvement)
-                (1 - (specimen.cost / oldSpecimenCost)) / spentBudget
+                (1 - (specimen.cost!!.value.toDouble() / oldSpecimenCost!!.value.toDouble())) / spentBudget
             else
                 0.0
         )

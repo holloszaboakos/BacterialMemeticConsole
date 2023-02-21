@@ -3,14 +3,15 @@ package hu.raven.puppet.logic.step.evolutionary.common.boost
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.logic.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.logic.step.evolutionary.common.boostoperator.BoostOperator
+import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.utility.extention.sum
 import hu.raven.puppet.utility.inject
 
 
-class BoostOnBestAndLucky<S : ISpecimenRepresentation>(
+class BoostOnBestAndLucky<S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>>(
     val luckyCount: Int
-) : Boost<S>() {
-    val boostOperator: BoostOperator<S> by inject()
+) : Boost<S, C>() {
+    val boostOperator: BoostOperator<S, C> by inject()
     val statistics: BacterialAlgorithmStatistics by inject()
 
     override suspend fun invoke() {

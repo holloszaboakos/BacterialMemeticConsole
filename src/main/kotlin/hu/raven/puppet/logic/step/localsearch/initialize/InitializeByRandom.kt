@@ -2,11 +2,12 @@ package hu.raven.puppet.logic.step.localsearch.initialize
 
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.logic.step.common.calculatecost.CalculateCost
+import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.utility.inject
 
 
-class InitializeByRandom<S : ISpecimenRepresentation> : InitializeLocalSearch<S>() {
-    val calculateCostOf: CalculateCost<S> by inject()
+class InitializeByRandom<S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>> : InitializeLocalSearch<S, C>() {
+    val calculateCostOf: CalculateCost<S, C> by inject()
 
     override operator fun invoke() = algorithmState.run {
         actualCandidate = subSolutionFactory.produce(0, Array(taskHolder.task.salesmen.size) { index ->

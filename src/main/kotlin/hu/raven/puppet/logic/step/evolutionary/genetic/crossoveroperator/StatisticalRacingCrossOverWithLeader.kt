@@ -5,16 +5,18 @@ import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.logic.statistics.GeneticAlgorithmStatistics
 import hu.raven.puppet.logic.statistics.OperatorStatistics
 import hu.raven.puppet.logic.step.common.calculatecost.CalculateCost
+import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.utility.inject
 import kotlin.math.pow
 
-class StatisticalRacingCrossOverWithLeader<S : ISpecimenRepresentation> : CrossOverOperator<S>() {
+class StatisticalRacingCrossOverWithLeader<S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>> :
+    CrossOverOperator<S, C>() {
 
-    private val statistics: GeneticAlgorithmStatistics<S> by inject()
-    val calculateCostOf: CalculateCost<DOnePartRepresentation> by inject()
+    private val statistics: GeneticAlgorithmStatistics<S, C> by inject()
+    val calculateCostOf: CalculateCost<DOnePartRepresentation<C>, C> by inject()
 
     var iteration = -1
-    private var operator: CrossOverOperator<S>? = null
+    private var operator: CrossOverOperator<S, C>? = null
     private var actualStatistics: OperatorStatistics? = null
 
     override fun invoke(
@@ -56,15 +58,19 @@ class StatisticalRacingCrossOverWithLeader<S : ISpecimenRepresentation> : CrossO
                 operator.invoke(parents, child)
                 calculateCostOf(child)
                 synchronized(statistics) {
-                    if (parents.first.cost > child.cost)
+                    if (parents.first.cost!! > child.cost!!)
                         statistics.success += (algorithmState.iteration - parents.first.iteration) *
                                 (algorithmState.population.size - parents.first.orderInPopulation) *
-                                ((parents.first.cost - child.cost) / parents.first.cost).pow(2) * 1.5
+                                ((parents.first.cost!!.value.toDouble() - child.cost!!.value.toDouble()) / parents.first.cost!!.value.toDouble()).pow(
+                                    2
+                                ) * 1.5
 
-                    if (parents.second.cost > child.cost)
+                    if (parents.second.cost!! > child.cost!!)
                         statistics.success += (algorithmState.iteration - parents.second.iteration) *
                                 (algorithmState.population.size - parents.second.orderInPopulation) *
-                                ((parents.second.cost - child.cost) / parents.second.cost).pow(2)
+                                ((parents.second.cost!!.value.toDouble() - child.cost!!.value.toDouble()) / parents.second.cost!!.value.toDouble()).pow(
+                                    2
+                                )
                 }
             }
         }

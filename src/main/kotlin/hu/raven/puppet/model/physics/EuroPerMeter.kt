@@ -7,9 +7,8 @@ value class EuroPerMeter(override val value: Fraction) : PhysicsUnit<EuroPerMete
     constructor(value: Long) : this(Fraction(value))
 
     override operator fun plus(other: EuroPerMeter) = EuroPerMeter(value + other.value)
-    override operator fun times(other: EuroPerMeter) = EuroPerMeter(value * other.value)
+    override operator fun minus(other: EuroPerMeter) = EuroPerMeter(value - other.value)
     override operator fun times(other: Long) = EuroPerMeter(value * other)
-    override operator fun div(other: EuroPerMeter) = EuroPerMeter(value / other.value)
     override operator fun div(other: Long) = EuroPerMeter(value / other)
     override operator fun compareTo(other: EuroPerMeter) = value.compareTo(other.value)
     operator fun times(other: Meter) = Euro(value * other.value)

@@ -49,28 +49,28 @@ class DefaultTaskLoader : TaskLoader() {
             val salesman = task.salesmen.first()
 
             doubleLogger("OVERASTIMATE: ${
-                edgesFromCenter.sumOf { calcCostOnEdge(salesman, it) }
-                        + edgesToCenter.sumOf { calcCostOnEdge(salesman, it) }
-                        + objectives.sumOf { calcCostOnNode(salesman, it) }
+                edgesFromCenter.sumOf { calcCostOnEdge(salesman, it).value.toDouble() }
+                        + edgesToCenter.sumOf { calcCostOnEdge(salesman, it).value.toDouble() }
+                        + objectives.sumOf { calcCostOnNode(salesman, it).value.toDouble() }
             }")
 
             doubleLogger("UNDERASTIMATE: ${
-                edgesFromCenter.minOf { calcCostOnEdge(salesman, it) }
+                edgesFromCenter.minOf { calcCostOnEdge(salesman, it).value.toDouble() }
                         + edgesBetween.sumOf { edgeArray ->
                     min(
-                        edgeArray.values.minOf { calcCostOnEdge(salesman, it) },
-                        calcCostOnEdge(salesman, edgesToCenter[edgeArray.orderInOwner])
+                        edgeArray.values.minOf { calcCostOnEdge(salesman, it).value.toDouble() },
+                        calcCostOnEdge(salesman, edgesToCenter[edgeArray.orderInOwner]).value.toDouble()
                     )
                 }
-                        + objectives.sumOf { calcCostOnNode(salesman, it) }
+                        + objectives.sumOf { calcCostOnNode(salesman, it).value.toDouble() }
             }")
         }
     }
 
     private fun calcCostOnEdge(salesman: DSalesman, edge: DEdge) =
-        salesman.fuelPrice_EuroPerLiter * salesman.fuelConsuption_LiterPerMeter * edge.length_Meter +
-                salesman.payment_EuroPerSecond * edge.length_Meter / salesman.vechicleSpeed_MeterPerSecond
+        salesman.fuelPrice * salesman.fuelConsumption * edge.length +
+                salesman.salary * (edge.length / salesman.vehicleSpeed)
 
     private fun calcCostOnNode(salesman: DSalesman, objective: DObjective) =
-        salesman.payment_EuroPerSecond * objective.time_Second
+        salesman.salary * objective.time
 }

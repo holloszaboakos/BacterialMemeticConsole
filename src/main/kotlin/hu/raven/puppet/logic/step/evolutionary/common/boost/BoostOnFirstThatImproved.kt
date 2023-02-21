@@ -4,22 +4,23 @@ import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.logic.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.logic.step.evolutionary.common.boostoperator.BoostOperator
 import hu.raven.puppet.model.logging.StepEfficiencyData
+import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.utility.inject
 
 
-class BoostOnFirstThatImproved<S : ISpecimenRepresentation> : Boost<S>() {
-    val boostOperator: BoostOperator<S> by inject()
+class BoostOnFirstThatImproved<S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>> : Boost<S, C>() {
+    val boostOperator: BoostOperator<S, C> by inject()
     val statistics: BacterialAlgorithmStatistics by inject()
-    var costPerPermutation = doubleArrayOf()
+    var costPerPermutation = mutableListOf<C?>()
 
     override suspend fun invoke() {
         if (costPerPermutation.isEmpty()) {
-            costPerPermutation = DoubleArray(sizeOfPopulation) { Double.MAX_VALUE }
+            costPerPermutation = MutableList(sizeOfPopulation) { null }
         }
 
         algorithmState.population
             .firstOrNull {
-                it.cost < costPerPermutation[it.id]
+                costPerPermutation[it.id] != null && it.cost!! < costPerPermutation[it.id]!!
             }
             ?.let {
                 costPerPermutation[it.id] = it.cost

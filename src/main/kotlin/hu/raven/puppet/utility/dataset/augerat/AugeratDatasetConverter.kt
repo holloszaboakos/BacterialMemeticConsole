@@ -3,6 +3,8 @@ package hu.raven.puppet.utility.dataset.augerat
 import hu.raven.puppet.model.dataset.augerat.InstanceBean
 import hu.raven.puppet.model.dataset.augerat.NodeBean
 import hu.raven.puppet.model.dataset.augerat.RequestBean
+import hu.raven.puppet.model.physics.Meter
+import hu.raven.puppet.model.physics.Stere
 import hu.raven.puppet.model.task.DSalesman
 import hu.raven.puppet.model.task.DTask
 import hu.raven.puppet.model.task.graph.*
@@ -13,12 +15,12 @@ import kotlin.math.pow
 import kotlin.math.sqrt
 
 object AugeratDatasetConverter {
-    private val vehicleCount : Int by inject(AlgorithmParameters.VEHICLE_COUNT)
+    private val vehicleCount: Int by inject(AlgorithmParameters.VEHICLE_COUNT)
     fun toStandardTask(task: InstanceBean): DTask = task.run {
         DTask(
             name = task.infoBean.name,
             salesmen = Array(vehicleCount) {
-                DSalesman(volumeCapacity_Stere = task.fleetBean.vehicle_profileBean.capacity.toDouble().toLong())
+                DSalesman(volumeCapacity = Stere(task.fleetBean.vehicle_profileBean.capacity.toDouble().toLong()))
             },
             costGraph = DGraph(
                 center = task.networkBean.nodeBeanList
@@ -54,7 +56,7 @@ object AugeratDatasetConverter {
                 location = nodes
                     .first { node -> node.id == it.node }
                     .toGPS(),
-                volume_Stere = it.quantity.toDouble().toLong()
+                volume = Stere(it.quantity.toDouble().toLong())
             )
         }
             .toTypedArray()
@@ -69,7 +71,7 @@ object AugeratDatasetConverter {
         return clients.map {
             DEdge(
                 name = it.id,
-                length_Meter = ((it.toGPS() eucledienDist center.toGPS())).toLong()
+                length = Meter(((it.toGPS() eucledienDist center.toGPS())).toLong())
             )
         }.toTypedArray()
     }
@@ -87,7 +89,7 @@ object AugeratDatasetConverter {
                     .map { nodeTo ->
                         DEdge(
                             name = "${nodeFrom.id} to ${nodeTo.id}",
-                            length_Meter = ((nodeFrom.toGPS() eucledienDist nodeTo.toGPS())).toLong()
+                            length = Meter((nodeFrom.toGPS() eucledienDist nodeTo.toGPS()).toLong())
                         )
                     }
                     .toTypedArray()

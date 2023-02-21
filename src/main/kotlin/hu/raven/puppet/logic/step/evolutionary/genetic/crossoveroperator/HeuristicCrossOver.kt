@@ -1,12 +1,16 @@
 package hu.raven.puppet.logic.step.evolutionary.genetic.crossoveroperator
 
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
+import hu.raven.puppet.model.physics.Meter
+import hu.raven.puppet.model.physics.PhysicsUnit
+import hu.raven.puppet.model.physics.math.Fraction
+import hu.raven.puppet.model.physics.sum
 import hu.raven.puppet.model.task.graph.DEdge
 import hu.raven.puppet.model.task.graph.DGraph
 import kotlin.random.Random
 import kotlin.random.Random.Default.nextInt
 
-class HeuristicCrossOver<S : ISpecimenRepresentation> : CrossOverOperator<S>() {
+class HeuristicCrossOver<S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>> : CrossOverOperator<S, C>() {
 
     override fun invoke(
         parents: Pair<S, S>,
@@ -83,7 +87,7 @@ class HeuristicCrossOver<S : ISpecimenRepresentation> : CrossOverOperator<S>() {
 
     }
 
-    private fun <S : ISpecimenRepresentation> gatherNeighbouringValues(
+    private fun <S : ISpecimenRepresentation<C>> gatherNeighbouringValues(
         parentsL: List<S>,
         parentsInverse: Array<IntArray>,
         previousValue: Int,
@@ -98,7 +102,7 @@ class HeuristicCrossOver<S : ISpecimenRepresentation> : CrossOverOperator<S>() {
         ).filter { !childContains[it] }
     }
 
-    private fun <S : ISpecimenRepresentation> chooseNextValueAtRandom(
+    private fun <S : ISpecimenRepresentation<C>> chooseNextValueAtRandom(
         lastIndexUsed: Int,
         randomPermutation: IntArray,
         childContains: BooleanArray,
@@ -120,25 +124,28 @@ class HeuristicCrossOver<S : ISpecimenRepresentation> : CrossOverOperator<S>() {
     private fun calculateWeightForNeighbours(
         neighbours: List<Int>,
         previousValue: Int
-    ): DoubleArray = taskHolder.task.costGraph.run {
-        DoubleArray(neighbours.size) { neighbourIndex ->
+    ): Array<Meter> = taskHolder.task.costGraph.run {
+        Array(neighbours.size) { neighbourIndex ->
             when {
                 previousValue < objectives.size && neighbours[neighbourIndex] < objectives.size -> {
                     getEdgeBetween(previousValue, neighbours[neighbourIndex])
-                        .length_Meter
+                        .length
                         .multiplicativeInverse()
                 }
+
                 previousValue < objectives.size -> {
                     edgesToCenter[previousValue]
-                        .length_Meter
+                        .length
                         .multiplicativeInverse()
                 }
+
                 neighbours[neighbourIndex] < objectives.size -> {
                     edgesFromCenter[neighbours[neighbourIndex]]
-                        .length_Meter
+                        .length
                         .multiplicativeInverse()
                 }
-                else -> 1.0
+
+                else -> Meter(1)
             }
         }
     }
@@ -148,20 +155,20 @@ class HeuristicCrossOver<S : ISpecimenRepresentation> : CrossOverOperator<S>() {
             .values[if (to > from) to - 1 else to]
     }
 
-    private fun Long.multiplicativeInverse() = 1.0 / this
+    private fun Meter.multiplicativeInverse() = Meter(Fraction(value.value.second, value.value.first))
 
-    private fun <S : ISpecimenRepresentation> chooseNextValueBasedOnWeight(
-        weights: DoubleArray,
+    private fun <S : ISpecimenRepresentation<C>> chooseNextValueBasedOnWeight(
+        weights: Array<Meter>,
         child: S,
         geneIndex: Int,
         neighbours: List<Int>,
         childContains: BooleanArray
     ) {
         val sum = weights.sum()
-        var choice = Random.nextDouble(sum)
+        var choice = Random.nextDouble(sum.value.toDouble())
 
         for (weightIndex in weights.indices) {
-            choice -= weights[weightIndex]
+            choice -= weights[weightIndex].value.toDouble()
             if (choice <= 0) {
                 child[geneIndex] = neighbours[weightIndex]
                 childContains[child[geneIndex]] = true

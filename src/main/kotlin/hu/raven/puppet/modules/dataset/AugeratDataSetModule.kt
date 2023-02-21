@@ -5,6 +5,7 @@ import hu.raven.puppet.logic.step.common.calculatecost.CalculateCost
 import hu.raven.puppet.logic.step.common.calculatecost.CalculateCostOfCVRPSolutionWithCapacity
 import hu.raven.puppet.logic.task.loader.AugeratTaskLoader
 import hu.raven.puppet.logic.task.loader.TaskLoader
+import hu.raven.puppet.model.physics.Meter
 import hu.raven.puppet.modules.AlgorithmParameters
 import hu.raven.puppet.modules.FilePathVariableNames
 import org.koin.core.qualifier.named
@@ -18,7 +19,7 @@ val augeratDataSetModule = module {
     single(named(FilePathVariableNames.SINGLE_FILE)) { "augerat-1995-set-a\\A-n80-k10.xml" }
 
     single<TaskLoader> { AugeratTaskLoader() }
-    factory<CalculateCost<*>> {
-        CalculateCostOfCVRPSolutionWithCapacity<DOnePartRepresentation>()
+    factory<CalculateCost<*, *>> {
+        CalculateCostOfCVRPSolutionWithCapacity<DOnePartRepresentation<Meter>>()
     }
 }

@@ -7,9 +7,8 @@ value class EuroPerSecond(override val value: Fraction) : PhysicsUnit<EuroPerSec
     constructor(value: Long) : this(Fraction(value))
 
     override operator fun plus(other: EuroPerSecond) = EuroPerSecond(value + other.value)
-    override operator fun times(other: EuroPerSecond) = EuroPerSecond(value * other.value)
+    override operator fun minus(other: EuroPerSecond) = EuroPerSecond(value - other.value)
     override operator fun times(other: Long) = EuroPerSecond(value * other)
-    override operator fun div(other: EuroPerSecond) = EuroPerSecond(value / other.value)
     override operator fun div(other: Long) = EuroPerSecond(value / other)
     override operator fun compareTo(other: EuroPerSecond) = value.compareTo(other.value)
     operator fun times(other: Second) = Euro(value * other.value)

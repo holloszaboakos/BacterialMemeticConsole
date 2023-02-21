@@ -2,13 +2,16 @@ package hu.raven.puppet.logic.step.evolutionary.bacterial.mutationoperator
 
 import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.logic.statistics.BacterialAlgorithmStatistics
+import hu.raven.puppet.model.physics.Meter
+import hu.raven.puppet.model.physics.PhysicsUnit
+import hu.raven.puppet.model.physics.math.Fraction
 import hu.raven.puppet.model.task.graph.DEdge
 import hu.raven.puppet.model.task.graph.DGraph
 import hu.raven.puppet.utility.inject
 import kotlin.random.Random
 
-class MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics<S : ISpecimenRepresentation> :
-    BacterialMutationOperator<S>() {
+class MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics<S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>> :
+    BacterialMutationOperator<S, C>() {
     val statistics: BacterialAlgorithmStatistics by inject()
     override fun invoke(
         clone: S,
@@ -121,16 +124,19 @@ class MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics<S : ISpecime
                     segmentWithCommonEnd.first,
                     segmentWithCommonStart.second
                 )
+
             segmentWithCommonStart != null ->
                 Pair(
                     selectedEdge.first,
                     segmentWithCommonStart.second
                 )
+
             segmentWithCommonEnd != null ->
                 Pair(
                     segmentWithCommonEnd.first,
                     selectedEdge.second
                 )
+
             else ->
                 selectedEdge
 
@@ -144,7 +150,7 @@ class MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics<S : ISpecime
     private fun selectEdgeBasedOnWeights(
         finalWeightMatrix: Array<DoubleArray>
     ): Pair<Int, Int> {
-        val sumOfWeights = finalWeightMatrix.sumOf { it.sum() }
+        val sumOfWeights = finalWeightMatrix.map { it.sum() }.toTypedArray().sum()
 
         var randomPoint = Random.nextDouble(sumOfWeights)
 
@@ -171,12 +177,13 @@ class MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics<S : ISpecime
                         0.0
                     else
                         weightMatrix[columnIndex][index]
-                }.average() + DoubleArray(weightMatrix[columnIndex].size) { index ->
-                    if (index == columnIndex)
-                        0.0
-                    else
-                        weightMatrix[index][rowIndex]
-                }.average()
+                }.run { sum() / size.toLong() } +
+                        DoubleArray(weightMatrix[columnIndex].size) { index ->
+                            if (index == columnIndex)
+                                0.0
+                            else
+                                weightMatrix[index][rowIndex]
+                        }.run { sum() / size.toLong() }
 
 
             weightMatrix[columnIndex][rowIndex] / weightsOfExclusionaryEdges
@@ -203,7 +210,7 @@ class MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics<S : ISpecime
         }
     }
 
-    private fun <S : ISpecimenRepresentation> calculateWeightsOfEdgesToNext(
+    private fun <S : ISpecimenRepresentation<C>> calculateWeightsOfEdgesToNext(
         clone: S,
         selectedPositions: IntArray,
         selectedElements: IntArray
@@ -218,11 +225,11 @@ class MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics<S : ISpecime
             calculateWeightBetween(
                 selectedElements[fromIndex],
                 nextElement
-            )
+            )!!.value.toDouble()
         }
     }
 
-    private fun <S : ISpecimenRepresentation> calculateWeightsOfEdgesFromPrevious(
+    private fun <S : ISpecimenRepresentation<C>> calculateWeightsOfEdgesFromPrevious(
         clone: S,
         selectedPositions: IntArray,
         selectedElements: IntArray
@@ -238,7 +245,7 @@ class MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics<S : ISpecime
             calculateWeightBetween(
                 previousElement,
                 selectedElements[toIndex]
-            )
+            )!!.value.toDouble()
         }
     }
 
@@ -250,7 +257,7 @@ class MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics<S : ISpecime
                 calculateWeightBetween(
                     selectedElements[fromIndex],
                     selectedElements[toIndex]
-                )
+                )!!.value.toDouble()
             }
         }
     }
@@ -258,24 +265,27 @@ class MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics<S : ISpecime
     private fun calculateWeightBetween(
         fromElement: Int,
         toElement: Int
-    ): Double {
+    ): Meter {
         taskHolder.task.apply {
             val objectiveCount = costGraph.objectives.size
             return when {
-                fromElement == toElement -> 0.0
+                fromElement == toElement -> Meter(0)
                 fromElement < objectiveCount && toElement < objectiveCount -> costGraph
                     .getEdgeBetween(fromElement, toElement)
-                    .length_Meter
+                    .length
                     .multiplicativeInverse()
+
                 toElement < objectiveCount -> costGraph
                     .edgesFromCenter[toElement]
-                    .length_Meter
+                    .length
                     .multiplicativeInverse()
+
                 fromElement < objectiveCount -> costGraph
                     .edgesToCenter[fromElement]
-                    .length_Meter
+                    .length
                     .multiplicativeInverse()
-                else -> 1.0
+
+                else -> Meter(1)
             }
         }
     }
@@ -285,5 +295,5 @@ class MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics<S : ISpecime
             .values[if (to > from) to - 1 else to]
     }
 
-    private fun Long.multiplicativeInverse() = 1.0 / this
+    private fun Meter.multiplicativeInverse() = Meter(Fraction(value.value.second, value.value.first))
 }

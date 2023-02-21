@@ -4,6 +4,7 @@ import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
 import hu.raven.puppet.logic.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.logic.step.evolutionary.bacterial.mutationonspecimen.MutationOnSpecimen
 import hu.raven.puppet.model.logging.StepEfficiencyData
+import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.utility.extention.sum
 import hu.raven.puppet.utility.inject
 import kotlinx.coroutines.Dispatchers
@@ -11,12 +12,12 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import kotlin.random.Random
 
-class BacterialMutationOnBestAndLuckyByCoinFlip<S : ISpecimenRepresentation>(
+class BacterialMutationOnBestAndLuckyByCoinFlip<S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>>(
     private val mutationPercentage: Float
-) : BacterialMutation<S>() {
+) : BacterialMutation<S, C>() {
 
     private val statistics: BacterialAlgorithmStatistics by inject()
-    private val mutationOnSpecimen: MutationOnSpecimen<S> by inject()
+    private val mutationOnSpecimen: MutationOnSpecimen<S, C> by inject()
 
     override suspend fun invoke(): Unit = withContext(Dispatchers.Default) {
         algorithmState.run {

@@ -4,6 +4,7 @@ import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.model.logging.ProgressData
 import hu.raven.puppet.model.logging.SpecimenData
 import hu.raven.puppet.model.logging.StepEfficiencyData
+import hu.raven.puppet.model.physics.PhysicsUnit
 
 
 fun DoubleLogger.logProgress(progressData: ProgressData) {
@@ -16,7 +17,7 @@ fun DoubleLogger.logProgress(progressData: ProgressData) {
     }
 }
 
-fun DoubleLogger.logSpecimen(name: String, specimenData: SpecimenData) {
+fun <C : PhysicsUnit<C>> DoubleLogger.logSpecimen(name: String, specimenData: SpecimenData<C>) {
     invoke("$name: id: ${specimenData.id} cost: ${specimenData.cost}")
 }
 
