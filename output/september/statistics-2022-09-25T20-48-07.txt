@@ -1,0 +1,5921 @@
+initializePopulation
+OVERASTIMATE: 11153734
+UNDERASTIMATE: 51012
+orderByCost
+orderedByCost
+generation: 2
+spent budget total: 97994
+spent time total: 276.818500ms
+spent budget of generation: 97994
+spent time of generation: 276.818500ms
+best: id: 0 cost: 539695.0
+second: id: 1 cost: 544503.0
+third: id: 2 cost: 567106.0
+worst: id: 49 cost: 710478.0
+mutation:
+spentTime: 251.241500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 251.241500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 145.918100ms spentBudget: 100
+improvement: count: 0 percentage: 0.001608236199298182
+boost:
+spentTime: 0s spentBudget: 0
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 0s spentBudget: 0
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 3
+spent budget total: 99198
+spent time total: 527.908700ms
+spent budget of generation: 1204
+spent time of generation: 251.090200ms
+best: id: 0 cost: 475528.0
+second: id: 1 cost: 544503.0
+third: id: 2 cost: 567106.0
+worst: id: 49 cost: 710478.0
+mutation:
+spentTime: 243.550600ms spentBudget: 1100
+improvement: count: 1 percentage: 8.145352067178964E-5
+mutation on best:
+spentTime: 243.550600ms spentBudget: 1100
+improvement: count: 1 percentage: 8.145352067178964E-5
+gene transfer:
+spentTime: 17.095200ms spentBudget: 100
+improvement: count: 0 percentage: 5.059475770425726E-4
+boost:
+spentTime: 2.341500ms spentBudget: 4
+improvement: count: 1 percentage: 0.008044821612206904
+boost on best:
+spentTime: 2.341500ms spentBudget: 4
+improvement: count: 1 percentage: 0.008044821612206904
+generation: 4
+spent budget total: 100393
+spent time total: 773.668300ms
+spent budget of generation: 1195
+spent time of generation: 245.759600ms
+best: id: 0 cost: 474751.0
+second: id: 1 cost: 544503.0
+third: id: 2 cost: 567106.0
+worst: id: 49 cost: 710478.0
+mutation:
+spentTime: 241.506ms spentBudget: 1100
+improvement: count: 1 percentage: 1.4854301668117258E-6
+mutation on best:
+spentTime: 241.506ms spentBudget: 1100
+improvement: count: 1 percentage: 1.4854301668117258E-6
+gene transfer:
+spentTime: 22.224500ms spentBudget: 100
+improvement: count: 0 percentage: 8.96600564121095E-4
+boost:
+spentTime: 0s spentBudget: 0
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 0s spentBudget: 0
+improvement: count: 0 percentage: 0.0
+generation: 5
+spent budget total: 101593
+spent time total: 1.022430600s
+spent budget of generation: 1200
+spent time of generation: 248.762300ms
+best: id: 0 cost: 474751.0
+second: id: 1 cost: 544503.0
+third: id: 2 cost: 567106.0
+worst: id: 49 cost: 710478.0
+mutation:
+spentTime: 245.038300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 245.038300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 5.352700ms spentBudget: 100
+improvement: count: 0 percentage: 0.0011845238867547604
+boost:
+spentTime: 0s spentBudget: 0
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 0s spentBudget: 0
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 6
+spent budget total: 102844
+spent time total: 1.274196500s
+spent budget of generation: 1251
+spent time of generation: 251.765900ms
+best: id: 0 cost: 474751.0
+second: id: 1 cost: 544503.0
+third: id: 2 cost: 567106.0
+worst: id: 49 cost: 710478.0
+mutation:
+spentTime: 244.358400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 244.358400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.671100ms spentBudget: 100
+improvement: count: 0 percentage: 0.0010432844796549657
+boost:
+spentTime: 2.321700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 2.321700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 7
+spent budget total: 104083
+spent time total: 1.526331900s
+spent budget of generation: 1239
+spent time of generation: 252.135400ms
+best: id: 0 cost: 467882.0
+second: id: 1 cost: 544503.0
+third: id: 2 cost: 567106.0
+worst: id: 48 cost: 709455.0
+mutation:
+spentTime: 247.053800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 247.053800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 5.861100ms spentBudget: 100
+improvement: count: 0 percentage: 0.0010029335344174173
+boost:
+spentTime: 2.304400ms spentBudget: 45
+improvement: count: 1 percentage: 3.2152527207829844E-4
+boost on best:
+spentTime: 2.304400ms spentBudget: 45
+improvement: count: 1 percentage: 3.2152527207829844E-4
+BOOST
+generation: 8
+spent budget total: 105298
+spent time total: 1.779075900s
+spent budget of generation: 1215
+spent time of generation: 252.744ms
+best: id: 0 cost: 467191.0
+second: id: 1 cost: 544503.0
+third: id: 2 cost: 567106.0
+worst: id: 48 cost: 709455.0
+mutation:
+spentTime: 247.515500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 247.515500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 6.155600ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 2.151500ms spentBudget: 17
+improvement: count: 1 percentage: 8.687459407186182E-5
+boost on best:
+spentTime: 2.151500ms spentBudget: 17
+improvement: count: 1 percentage: 8.687459407186182E-5
+BOOST
+generation: 9
+spent budget total: 106545
+spent time total: 2.031418800s
+spent budget of generation: 1247
+spent time of generation: 252.342900ms
+best: id: 0 cost: 467191.0
+second: id: 1 cost: 544503.0
+third: id: 2 cost: 567106.0
+worst: id: 48 cost: 709455.0
+mutation:
+spentTime: 247.909500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 247.909500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 8.945400ms spentBudget: 100
+improvement: count: 0 percentage: 0.002193988259985886
+boost:
+spentTime: 2.112200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 2.112200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 10
+spent budget total: 107763
+spent time total: 2.279726100s
+spent budget of generation: 1218
+spent time of generation: 248.307300ms
+best: id: 0 cost: 466475.0
+second: id: 1 cost: 544503.0
+third: id: 2 cost: 567106.0
+worst: id: 48 cost: 709455.0
+mutation:
+spentTime: 244.396600ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 244.396600ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.592600ms spentBudget: 100
+improvement: count: 0 percentage: 0.001446566653556921
+boost:
+spentTime: 2.079300ms spentBudget: 22
+improvement: count: 1 percentage: 6.966198951917735E-5
+boost on best:
+spentTime: 2.079300ms spentBudget: 22
+improvement: count: 1 percentage: 6.966198951917735E-5
+BOOST
+generation: 11
+spent budget total: 109012
+spent time total: 2.530020100s
+spent budget of generation: 1249
+spent time of generation: 250.294ms
+best: id: 0 cost: 466475.0
+second: id: 1 cost: 544503.0
+third: id: 2 cost: 567106.0
+worst: id: 48 cost: 709455.0
+mutation:
+spentTime: 246.356100ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 246.356100ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.610300ms spentBudget: 100
+improvement: count: 0 percentage: 0.0011071800081329664
+boost:
+spentTime: 2.199500ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 2.199500ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 12
+spent budget total: 110256
+spent time total: 2.777907900s
+spent budget of generation: 1244
+spent time of generation: 247.887800ms
+best: id: 0 cost: 466475.0
+second: id: 1 cost: 544503.0
+third: id: 2 cost: 567106.0
+worst: id: 48 cost: 709455.0
+mutation:
+spentTime: 244.267900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 244.267900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.281500ms spentBudget: 100
+improvement: count: 0 percentage: 0.0010196505097288134
+boost:
+spentTime: 2.291ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 2.291ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 13
+spent budget total: 111502
+spent time total: 3.030951900s
+spent budget of generation: 1246
+spent time of generation: 253.044ms
+best: id: 0 cost: 466475.0
+second: id: 1 cost: 544503.0
+third: id: 2 cost: 567106.0
+worst: id: 48 cost: 709455.0
+mutation:
+spentTime: 249.168800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 249.168800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.304400ms spentBudget: 100
+improvement: count: 0 percentage: 4.874149882384393E-4
+boost:
+spentTime: 2.315500ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 2.315500ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 14
+spent budget total: 112746
+spent time total: 3.284383900s
+spent budget of generation: 1244
+spent time of generation: 253.432ms
+best: id: 0 cost: 466475.0
+second: id: 1 cost: 544503.0
+third: id: 2 cost: 567106.0
+worst: id: 44 cost: 690183.0
+mutation:
+spentTime: 249.534900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 249.534900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.307600ms spentBudget: 100
+improvement: count: 0 percentage: 0.0017797182344193785
+boost:
+spentTime: 2.511100ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 2.511100ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 15
+spent budget total: 113994
+spent time total: 3.535455300s
+spent budget of generation: 1248
+spent time of generation: 251.071400ms
+best: id: 0 cost: 466475.0
+second: id: 13 cost: 543252.0
+third: id: 1 cost: 544503.0
+worst: id: 44 cost: 690183.0
+mutation:
+spentTime: 246.852200ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 246.852200ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.587400ms spentBudget: 100
+improvement: count: 0 percentage: 0.0027809152497098046
+boost:
+spentTime: 2.693900ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 2.693900ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 16
+spent budget total: 115242
+spent time total: 3.785400200s
+spent budget of generation: 1248
+spent time of generation: 249.944900ms
+best: id: 0 cost: 466475.0
+second: id: 13 cost: 543252.0
+third: id: 1 cost: 544503.0
+worst: id: 44 cost: 690183.0
+mutation:
+spentTime: 246.104300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 246.104300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.736100ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 2.416400ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 2.416400ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 17
+spent budget total: 116477
+spent time total: 4.036544900s
+spent budget of generation: 1235
+spent time of generation: 251.144700ms
+best: id: 0 cost: 463778.0
+second: id: 13 cost: 543252.0
+third: id: 1 cost: 544503.0
+worst: id: 44 cost: 690183.0
+mutation:
+spentTime: 247.223700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 247.223700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.572900ms spentBudget: 100
+improvement: count: 0 percentage: 0.001055418622960741
+boost:
+spentTime: 2.450700ms spentBudget: 37
+improvement: count: 1 percentage: 1.5626108985881696E-4
+boost on best:
+spentTime: 2.450700ms spentBudget: 37
+improvement: count: 1 percentage: 1.5626108985881696E-4
+BOOST
+generation: 18
+spent budget total: 117718
+spent time total: 4.288472800s
+spent budget of generation: 1241
+spent time of generation: 251.927900ms
+best: id: 0 cost: 463778.0
+second: id: 13 cost: 543252.0
+third: id: 1 cost: 544503.0
+worst: id: 41 cost: 685025.0
+mutation:
+spentTime: 247.802900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 247.802900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.543800ms spentBudget: 100
+improvement: count: 0 percentage: 6.236220039103024E-4
+boost:
+spentTime: 2.734300ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 2.734300ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 19
+spent budget total: 118928
+spent time total: 4.536536200s
+spent budget of generation: 1210
+spent time of generation: 248.063400ms
+best: id: 0 cost: 457126.0
+second: id: 34 cost: 457402.0
+third: id: 13 cost: 543252.0
+worst: id: 41 cost: 685025.0
+mutation:
+spentTime: 244.172300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 244.172300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.568300ms spentBudget: 100
+improvement: count: 0 percentage: 0.0031694768109557857
+boost:
+spentTime: 2.438800ms spentBudget: 13
+improvement: count: 1 percentage: 0.0011033130241027145
+boost on best:
+spentTime: 2.438800ms spentBudget: 13
+improvement: count: 1 percentage: 0.0011033130241027145
+BOOST
+generation: 20
+spent budget total: 120176
+spent time total: 4.787669400s
+spent budget of generation: 1248
+spent time of generation: 251.133200ms
+best: id: 0 cost: 457126.0
+second: id: 34 cost: 457402.0
+third: id: 47 cost: 513474.0
+worst: id: 41 cost: 685025.0
+mutation:
+spentTime: 247.072700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 247.072700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.517200ms spentBudget: 100
+improvement: count: 0 percentage: 0.001205995639597116
+boost:
+spentTime: 2.652200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 2.652200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 21
+spent budget total: 121393
+spent time total: 5.036896s
+spent budget of generation: 1217
+spent time of generation: 249.226600ms
+best: id: 0 cost: 448724.0
+second: id: 34 cost: 457402.0
+third: id: 47 cost: 513474.0
+worst: id: 41 cost: 685025.0
+mutation:
+spentTime: 245.050100ms spentBudget: 1100
+improvement: count: 1 percentage: 1.39323665792369E-5
+mutation on best:
+spentTime: 245.050100ms spentBudget: 1100
+improvement: count: 1 percentage: 1.39323665792369E-5
+gene transfer:
+spentTime: 3.556900ms spentBudget: 100
+improvement: count: 0 percentage: 0.0021437779594393213
+boost:
+spentTime: 2.759900ms spentBudget: 23
+improvement: count: 1 percentage: 1.3486910373298238E-4
+boost on best:
+spentTime: 2.759900ms spentBudget: 23
+improvement: count: 1 percentage: 1.3486910373298238E-4
+generation: 22
+spent budget total: 122590
+spent time total: 5.316795s
+spent budget of generation: 1197
+spent time of generation: 279.899ms
+best: id: 0 cost: 441178.0
+second: id: 34 cost: 457402.0
+third: id: 47 cost: 513474.0
+worst: id: 36 cost: 671813.0
+mutation:
+spentTime: 278.410100ms spentBudget: 1100
+improvement: count: 1 percentage: 1.5287793833180293E-5
+mutation on best:
+spentTime: 278.410100ms spentBudget: 1100
+improvement: count: 1 percentage: 1.5287793833180293E-5
+gene transfer:
+spentTime: 3.342300ms spentBudget: 100
+improvement: count: 0 percentage: 0.0019009894561459618
+boost:
+spentTime: 0s spentBudget: 0
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 0s spentBudget: 0
+improvement: count: 0 percentage: 0.0
+generation: 23
+spent budget total: 123785
+spent time total: 5.571928300s
+spent budget of generation: 1195
+spent time of generation: 255.133300ms
+best: id: 0 cost: 441178.0
+second: id: 34 cost: 457402.0
+third: id: 47 cost: 513474.0
+worst: id: 36 cost: 671813.0
+mutation:
+spentTime: 253.727300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 253.727300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.730700ms spentBudget: 100
+improvement: count: 0 percentage: 0.001219835657210816
+boost:
+spentTime: 0s spentBudget: 0
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 0s spentBudget: 0
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 24
+spent budget total: 124983
+spent time total: 5.827584s
+spent budget of generation: 1198
+spent time of generation: 255.655700ms
+best: id: 0 cost: 432401.0
+second: id: 34 cost: 457402.0
+third: id: 47 cost: 513474.0
+worst: id: 36 cost: 671813.0
+mutation:
+spentTime: 251.554200ms spentBudget: 1100
+improvement: count: 1 percentage: 1.800710516104077E-5
+mutation on best:
+spentTime: 251.554200ms spentBudget: 1100
+improvement: count: 1 percentage: 1.800710516104077E-5
+gene transfer:
+spentTime: 3.527500ms spentBudget: 100
+improvement: count: 0 percentage: 4.773844835380758E-4
+boost:
+spentTime: 2.787800ms spentBudget: 1
+improvement: count: 1 percentage: 8.839969354768051E-5
+boost on best:
+spentTime: 2.787800ms spentBudget: 1
+improvement: count: 1 percentage: 8.839969354768051E-5
+generation: 25
+spent budget total: 126177
+spent time total: 6.078399200s
+spent budget of generation: 1194
+spent time of generation: 250.815200ms
+best: id: 0 cost: 432401.0
+second: id: 34 cost: 457402.0
+third: id: 47 cost: 513474.0
+worst: id: 31 cost: 667795.0
+mutation:
+spentTime: 249.433200ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 249.433200ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.472800ms spentBudget: 100
+improvement: count: 0 percentage: 4.517030780886944E-4
+boost:
+spentTime: 0s spentBudget: 0
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 0s spentBudget: 0
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 26
+spent budget total: 127392
+spent time total: 6.330535100s
+spent budget of generation: 1215
+spent time of generation: 252.135900ms
+best: id: 0 cost: 421852.0
+second: id: 34 cost: 457402.0
+third: id: 11 cost: 509156.0
+worst: id: 31 cost: 667795.0
+mutation:
+spentTime: 247.820400ms spentBudget: 1100
+improvement: count: 1 percentage: 1.8305516086112205E-5
+mutation on best:
+spentTime: 247.820400ms spentBudget: 1100
+improvement: count: 1 percentage: 1.8305516086112205E-5
+gene transfer:
+spentTime: 3.437900ms spentBudget: 100
+improvement: count: 0 percentage: 0.00399884908441411
+boost:
+spentTime: 2.987ms spentBudget: 15
+improvement: count: 1 percentage: 2.898544021251892E-4
+boost on best:
+spentTime: 2.987ms spentBudget: 15
+improvement: count: 1 percentage: 2.898544021251892E-4
+generation: 27
+spent budget total: 128588
+spent time total: 6.581568600s
+spent budget of generation: 1196
+spent time of generation: 251.033500ms
+best: id: 0 cost: 402059.0
+second: id: 34 cost: 457402.0
+third: id: 11 cost: 509156.0
+worst: id: 31 cost: 667795.0
+mutation:
+spentTime: 249.592100ms spentBudget: 1100
+improvement: count: 1 percentage: 4.265390791945131E-5
+mutation on best:
+spentTime: 249.592100ms spentBudget: 1100
+improvement: count: 1 percentage: 4.265390791945131E-5
+gene transfer:
+spentTime: 3.561600ms spentBudget: 100
+improvement: count: 0 percentage: 0.0011523972575918251
+boost:
+spentTime: 0s spentBudget: 0
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 0s spentBudget: 0
+improvement: count: 0 percentage: 0.0
+generation: 28
+spent budget total: 129787
+spent time total: 6.831879600s
+spent budget of generation: 1199
+spent time of generation: 250.311ms
+best: id: 0 cost: 402059.0
+second: id: 34 cost: 457402.0
+third: id: 11 cost: 509156.0
+worst: id: 31 cost: 667795.0
+mutation:
+spentTime: 248.887600ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 248.887600ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.861600ms spentBudget: 100
+improvement: count: 0 percentage: 1.8458206471567819E-4
+boost:
+spentTime: 0s spentBudget: 0
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 0s spentBudget: 0
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 29
+spent budget total: 131034
+spent time total: 7.079113300s
+spent budget of generation: 1247
+spent time of generation: 247.233700ms
+best: id: 0 cost: 400296.0
+second: id: 34 cost: 457402.0
+third: id: 5 cost: 484877.0
+worst: id: 31 cost: 667795.0
+mutation:
+spentTime: 242.794ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 242.794ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.554800ms spentBudget: 100
+improvement: count: 0 percentage: 0.0046721797785279524
+boost:
+spentTime: 3.063400ms spentBudget: 48
+improvement: count: 1 percentage: 9.135267875278602E-5
+boost on best:
+spentTime: 3.063400ms spentBudget: 48
+improvement: count: 1 percentage: 9.135267875278602E-5
+BOOST
+generation: 30
+spent budget total: 132240
+spent time total: 7.328346400s
+spent budget of generation: 1206
+spent time of generation: 249.233100ms
+best: id: 0 cost: 396831.0
+second: id: 34 cost: 457402.0
+third: id: 5 cost: 484877.0
+worst: id: 31 cost: 667795.0
+mutation:
+spentTime: 245.092800ms spentBudget: 1100
+improvement: count: 1 percentage: 3.038964039762721E-6
+mutation on best:
+spentTime: 245.092800ms spentBudget: 1100
+improvement: count: 1 percentage: 3.038964039762721E-6
+gene transfer:
+spentTime: 3.534900ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 2.909500ms spentBudget: 11
+improvement: count: 1 percentage: 4.8464136538961533E-4
+boost on best:
+spentTime: 2.909500ms spentBudget: 11
+improvement: count: 1 percentage: 4.8464136538961533E-4
+generation: 31
+spent budget total: 133438
+spent time total: 7.584079700s
+spent budget of generation: 1198
+spent time of generation: 255.733300ms
+best: id: 0 cost: 396831.0
+second: id: 34 cost: 457402.0
+third: id: 5 cost: 484877.0
+worst: id: 31 cost: 667795.0
+mutation:
+spentTime: 254.334600ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 254.334600ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.559600ms spentBudget: 100
+improvement: count: 0 percentage: 0.0023242511613487406
+boost:
+spentTime: 0s spentBudget: 0
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 0s spentBudget: 0
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 32
+spent budget total: 134658
+spent time total: 7.838327900s
+spent budget of generation: 1220
+spent time of generation: 254.248200ms
+best: id: 0 cost: 393568.0
+second: id: 34 cost: 457402.0
+third: id: 5 cost: 484877.0
+worst: id: 31 cost: 667795.0
+mutation:
+spentTime: 249.712700ms spentBudget: 1100
+improvement: count: 1 percentage: 1.0935613231815628E-6
+mutation on best:
+spentTime: 249.712700ms spentBudget: 1100
+improvement: count: 1 percentage: 1.0935613231815628E-6
+gene transfer:
+spentTime: 3.604700ms spentBudget: 100
+improvement: count: 0 percentage: 0.0017383501519854128
+boost:
+spentTime: 3.016200ms spentBudget: 22
+improvement: count: 1 percentage: 3.194627619130757E-4
+boost on best:
+spentTime: 3.016200ms spentBudget: 22
+improvement: count: 1 percentage: 3.194627619130757E-4
+generation: 33
+spent budget total: 135856
+spent time total: 8.110022900s
+spent budget of generation: 1198
+spent time of generation: 271.695ms
+best: id: 0 cost: 393568.0
+second: id: 34 cost: 457402.0
+third: id: 5 cost: 484877.0
+worst: id: 24 cost: 646920.0
+mutation:
+spentTime: 270.260700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 270.260700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.467900ms spentBudget: 100
+improvement: count: 0 percentage: 0.002373157333425393
+boost:
+spentTime: 0s spentBudget: 0
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 0s spentBudget: 0
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 34
+spent budget total: 137055
+spent time total: 8.359799100s
+spent budget of generation: 1199
+spent time of generation: 249.776200ms
+best: id: 0 cost: 391811.0
+second: id: 34 cost: 457402.0
+third: id: 5 cost: 484877.0
+worst: id: 24 cost: 646920.0
+mutation:
+spentTime: 245.461700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 245.461700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.496700ms spentBudget: 100
+improvement: count: 0 percentage: 0.001511196438412421
+boost:
+spentTime: 2.977300ms spentBudget: 1
+improvement: count: 1 percentage: 0.004464285714285698
+boost on best:
+spentTime: 2.977300ms spentBudget: 1
+improvement: count: 1 percentage: 0.004464285714285698
+BOOST
+generation: 35
+spent budget total: 138303
+spent time total: 8.608749800s
+spent budget of generation: 1248
+spent time of generation: 248.950700ms
+best: id: 0 cost: 391811.0
+second: id: 34 cost: 457402.0
+third: id: 5 cost: 484877.0
+worst: id: 24 cost: 646920.0
+mutation:
+spentTime: 244.317300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 244.317300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.561400ms spentBudget: 100
+improvement: count: 0 percentage: 5.860614668341469E-4
+boost:
+spentTime: 3.331900ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 3.331900ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 36
+spent budget total: 139553
+spent time total: 8.895980800s
+spent budget of generation: 1250
+spent time of generation: 287.231ms
+best: id: 0 cost: 391811.0
+second: id: 35 cost: 429705.0
+third: id: 34 cost: 457402.0
+worst: id: 24 cost: 646920.0
+mutation:
+spentTime: 282.481200ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 282.481200ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.447400ms spentBudget: 100
+improvement: count: 0 percentage: 0.004556814110463981
+boost:
+spentTime: 3.487700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 3.487700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 37
+spent budget total: 140801
+spent time total: 9.157135200s
+spent budget of generation: 1248
+spent time of generation: 261.154400ms
+best: id: 0 cost: 391811.0
+second: id: 35 cost: 429705.0
+third: id: 34 cost: 457402.0
+worst: id: 36 cost: 641467.0
+mutation:
+spentTime: 256.305200ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 256.305200ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.454500ms spentBudget: 100
+improvement: count: 0 percentage: 0.0016798300813714452
+boost:
+spentTime: 3.389700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 3.389700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 38
+spent budget total: 142048
+spent time total: 9.408556800s
+spent budget of generation: 1247
+spent time of generation: 251.421600ms
+best: id: 0 cost: 391811.0
+second: id: 35 cost: 429705.0
+third: id: 34 cost: 457402.0
+worst: id: 36 cost: 641467.0
+mutation:
+spentTime: 246.848700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 246.848700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.398300ms spentBudget: 100
+improvement: count: 0 percentage: 3.736621599967027E-4
+boost:
+spentTime: 3.357900ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 3.357900ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 39
+spent budget total: 143297
+spent time total: 9.661732600s
+spent budget of generation: 1249
+spent time of generation: 253.175800ms
+best: id: 0 cost: 391811.0
+second: id: 35 cost: 429705.0
+third: id: 34 cost: 457402.0
+worst: id: 36 cost: 641467.0
+mutation:
+spentTime: 248.256900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 248.256900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.662800ms spentBudget: 100
+improvement: count: 0 percentage: 3.407789279728124E-4
+boost:
+spentTime: 3.674800ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 3.674800ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 40
+spent budget total: 144546
+spent time total: 9.913863900s
+spent budget of generation: 1249
+spent time of generation: 252.131300ms
+best: id: 0 cost: 391811.0
+second: id: 35 cost: 429705.0
+third: id: 34 cost: 457402.0
+worst: id: 36 cost: 641467.0
+mutation:
+spentTime: 247.208100ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 247.208100ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.649700ms spentBudget: 100
+improvement: count: 0 percentage: 4.6625281089649807E-4
+boost:
+spentTime: 3.528200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 3.528200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 41
+spent budget total: 145794
+spent time total: 10.182940s
+spent budget of generation: 1248
+spent time of generation: 269.076100ms
+best: id: 0 cost: 391811.0
+second: id: 35 cost: 429705.0
+third: id: 34 cost: 457402.0
+worst: id: 36 cost: 641467.0
+mutation:
+spentTime: 264.128900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 264.128900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.593100ms spentBudget: 100
+improvement: count: 0 percentage: 4.6884278016967926E-4
+boost:
+spentTime: 3.671600ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 3.671600ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 42
+spent budget total: 146998
+spent time total: 10.462072900s
+spent budget of generation: 1204
+spent time of generation: 279.132900ms
+best: id: 0 cost: 389706.0
+second: id: 35 cost: 429705.0
+third: id: 34 cost: 457402.0
+worst: id: 17 cost: 637618.0
+mutation:
+spentTime: 273.700100ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 273.700100ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 4.720700ms spentBudget: 100
+improvement: count: 0 percentage: 0.0012688561272479549
+boost:
+spentTime: 3.647700ms spentBudget: 11
+improvement: count: 1 percentage: 4.884080241842008E-4
+boost on best:
+spentTime: 3.647700ms spentBudget: 11
+improvement: count: 1 percentage: 4.884080241842008E-4
+BOOST
+generation: 43
+spent budget total: 148223
+spent time total: 10.758553300s
+spent budget of generation: 1225
+spent time of generation: 296.480400ms
+best: id: 0 cost: 385608.0
+second: id: 35 cost: 429705.0
+third: id: 34 cost: 457402.0
+worst: id: 17 cost: 637618.0
+mutation:
+spentTime: 291.145400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 291.145400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.604100ms spentBudget: 100
+improvement: count: 0 percentage: 6.843015307343981E-4
+boost:
+spentTime: 3.990400ms spentBudget: 26
+improvement: count: 1 percentage: 4.044469025762601E-4
+boost on best:
+spentTime: 3.990400ms spentBudget: 26
+improvement: count: 1 percentage: 4.044469025762601E-4
+BOOST
+generation: 44
+spent budget total: 149470
+spent time total: 11.035153200s
+spent budget of generation: 1247
+spent time of generation: 276.599900ms
+best: id: 0 cost: 385608.0
+second: id: 35 cost: 429705.0
+third: id: 34 cost: 457402.0
+worst: id: 17 cost: 637618.0
+mutation:
+spentTime: 270.900400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 270.900400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.470900ms spentBudget: 100
+improvement: count: 0 percentage: 0.0019109212829039935
+boost:
+spentTime: 4.294600ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 4.294600ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 45
+spent budget total: 150698
+spent time total: 11.283615800s
+spent budget of generation: 1228
+spent time of generation: 248.462600ms
+best: id: 0 cost: 384287.0
+second: id: 35 cost: 429705.0
+third: id: 34 cost: 457402.0
+worst: id: 17 cost: 637618.0
+mutation:
+spentTime: 243.719300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 243.719300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.493900ms spentBudget: 100
+improvement: count: 0 percentage: 0.003827419014749226
+boost:
+spentTime: 3.560900ms spentBudget: 34
+improvement: count: 1 percentage: 1.0075761181425319E-4
+boost on best:
+spentTime: 3.560900ms spentBudget: 34
+improvement: count: 1 percentage: 1.0075761181425319E-4
+BOOST
+generation: 46
+spent budget total: 151948
+spent time total: 11.540726100s
+spent budget of generation: 1250
+spent time of generation: 257.110300ms
+best: id: 0 cost: 384287.0
+second: id: 35 cost: 429705.0
+third: id: 34 cost: 457402.0
+worst: id: 17 cost: 637618.0
+mutation:
+spentTime: 252.168800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 252.168800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.441500ms spentBudget: 100
+improvement: count: 0 percentage: 0.006412728281466665
+boost:
+spentTime: 3.692300ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 3.692300ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 47
+spent budget total: 153156
+spent time total: 11.818680800s
+spent budget of generation: 1208
+spent time of generation: 277.954700ms
+best: id: 0 cost: 382343.0
+second: id: 35 cost: 429705.0
+third: id: 34 cost: 457402.0
+worst: id: 17 cost: 637618.0
+mutation:
+spentTime: 272.186ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 272.186ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.473700ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 4.362500ms spentBudget: 11
+improvement: count: 1 percentage: 4.5988355767244795E-4
+boost on best:
+spentTime: 4.362500ms spentBudget: 11
+improvement: count: 1 percentage: 4.5988355767244795E-4
+BOOST
+generation: 48
+spent budget total: 154405
+spent time total: 12.070642s
+spent budget of generation: 1249
+spent time of generation: 251.961200ms
+best: id: 0 cost: 382343.0
+second: id: 35 cost: 429705.0
+third: id: 34 cost: 457402.0
+worst: id: 17 cost: 637618.0
+mutation:
+spentTime: 246.794200ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 246.794200ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.462900ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 3.773200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 3.773200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 49
+spent budget total: 155654
+spent time total: 12.357809700s
+spent budget of generation: 1249
+spent time of generation: 287.167700ms
+best: id: 0 cost: 382343.0
+second: id: 35 cost: 429705.0
+third: id: 34 cost: 457402.0
+worst: id: 17 cost: 637618.0
+mutation:
+spentTime: 281.005500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 281.005500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.587100ms spentBudget: 100
+improvement: count: 0 percentage: 0.001788274636285011
+boost:
+spentTime: 3.829100ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 3.829100ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 50
+spent budget total: 156902
+spent time total: 12.617594100s
+spent budget of generation: 1248
+spent time of generation: 259.784400ms
+best: id: 0 cost: 382343.0
+second: id: 35 cost: 429705.0
+third: id: 34 cost: 457402.0
+worst: id: 17 cost: 637618.0
+mutation:
+spentTime: 254.588300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 254.588300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.527600ms spentBudget: 100
+improvement: count: 0 percentage: 3.450263803863396E-4
+boost:
+spentTime: 3.944400ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 3.944400ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 51
+spent budget total: 158150
+spent time total: 12.896593200s
+spent budget of generation: 1248
+spent time of generation: 278.999100ms
+best: id: 0 cost: 382343.0
+second: id: 35 cost: 429705.0
+third: id: 34 cost: 457402.0
+worst: id: 17 cost: 637618.0
+mutation:
+spentTime: 273.618700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 273.618700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.510200ms spentBudget: 100
+improvement: count: 0 percentage: 7.828532531374343E-4
+boost:
+spentTime: 4.049700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 4.049700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 52
+spent budget total: 159398
+spent time total: 13.151363500s
+spent budget of generation: 1248
+spent time of generation: 254.770300ms
+best: id: 0 cost: 382343.0
+second: id: 35 cost: 429705.0
+third: id: 34 cost: 457402.0
+worst: id: 17 cost: 637618.0
+mutation:
+spentTime: 247.945500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 247.945500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.54ms spentBudget: 100
+improvement: count: 0 percentage: 3.0877810581756093E-4
+boost:
+spentTime: 5.508900ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 5.508900ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 53
+spent budget total: 160648
+spent time total: 13.434789100s
+spent budget of generation: 1250
+spent time of generation: 283.425600ms
+best: id: 0 cost: 382343.0
+second: id: 35 cost: 429705.0
+third: id: 34 cost: 457402.0
+worst: id: 17 cost: 637618.0
+mutation:
+spentTime: 276.573ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 276.573ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.497700ms spentBudget: 100
+improvement: count: 0 percentage: 0.002571388802304707
+boost:
+spentTime: 5.164200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 5.164200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 54
+spent budget total: 161897
+spent time total: 13.697618100s
+spent budget of generation: 1249
+spent time of generation: 262.829ms
+best: id: 0 cost: 382343.0
+second: id: 35 cost: 429705.0
+third: id: 34 cost: 457402.0
+worst: id: 17 cost: 637618.0
+mutation:
+spentTime: 255.864700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 255.864700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.837ms spentBudget: 100
+improvement: count: 0 percentage: 5.689084019302715E-4
+boost:
+spentTime: 5.433700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 5.433700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 55
+spent budget total: 163145
+spent time total: 13.975154800s
+spent budget of generation: 1248
+spent time of generation: 277.536700ms
+best: id: 0 cost: 382343.0
+second: id: 35 cost: 429705.0
+third: id: 34 cost: 457402.0
+worst: id: 17 cost: 637618.0
+mutation:
+spentTime: 271.293ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 271.293ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.59ms spentBudget: 100
+improvement: count: 0 percentage: 0.0017913047271799843
+boost:
+spentTime: 4.967700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 4.967700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 56
+spent budget total: 164392
+spent time total: 14.248263600s
+spent budget of generation: 1247
+spent time of generation: 273.108800ms
+best: id: 0 cost: 379423.0
+second: id: 35 cost: 429705.0
+third: id: 34 cost: 457402.0
+worst: id: 17 cost: 637618.0
+mutation:
+spentTime: 267.782400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 267.782400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.532ms spentBudget: 100
+improvement: count: 0 percentage: 0.0017307285169755405
+boost:
+spentTime: 4.047200ms spentBudget: 48
+improvement: count: 1 percentage: 1.591067008767863E-4
+boost on best:
+spentTime: 4.047200ms spentBudget: 48
+improvement: count: 1 percentage: 1.591067008767863E-4
+BOOST
+generation: 57
+spent budget total: 165592
+spent time total: 14.520072300s
+spent budget of generation: 1200
+spent time of generation: 271.808700ms
+best: id: 0 cost: 378512.0
+second: id: 35 cost: 429705.0
+third: id: 34 cost: 457402.0
+worst: id: 17 cost: 637618.0
+mutation:
+spentTime: 265.118800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 265.118800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.547300ms spentBudget: 100
+improvement: count: 0 percentage: 3.715113838877859E-4
+boost:
+spentTime: 5.376ms spentBudget: 3
+improvement: count: 1 percentage: 8.003380571727595E-4
+boost on best:
+spentTime: 5.376ms spentBudget: 3
+improvement: count: 1 percentage: 8.003380571727595E-4
+BOOST
+generation: 58
+spent budget total: 166840
+spent time total: 14.802613600s
+spent budget of generation: 1248
+spent time of generation: 282.541300ms
+best: id: 0 cost: 378512.0
+second: id: 35 cost: 429705.0
+third: id: 34 cost: 457402.0
+worst: id: 17 cost: 637618.0
+mutation:
+spentTime: 277.105600ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 277.105600ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.426900ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 4.114300ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 4.114300ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 59
+spent budget total: 168064
+spent time total: 15.072333500s
+spent budget of generation: 1224
+spent time of generation: 269.719900ms
+best: id: 0 cost: 360697.0
+second: id: 35 cost: 429705.0
+third: id: 34 cost: 457402.0
+worst: id: 17 cost: 637618.0
+mutation:
+spentTime: 264.507200ms spentBudget: 1100
+improvement: count: 1 percentage: 3.734265139350369E-5
+mutation on best:
+spentTime: 264.507200ms spentBudget: 1100
+improvement: count: 1 percentage: 3.734265139350369E-5
+gene transfer:
+spentTime: 3.549700ms spentBudget: 100
+improvement: count: 0 percentage: 3.647129154357609E-5
+boost:
+spentTime: 3.958200ms spentBudget: 25
+improvement: count: 1 percentage: 2.498203491566997E-4
+boost on best:
+spentTime: 3.958200ms spentBudget: 25
+improvement: count: 1 percentage: 2.498203491566997E-4
+generation: 60
+spent budget total: 169263
+spent time total: 15.337855500s
+spent budget of generation: 1199
+spent time of generation: 265.522ms
+best: id: 0 cost: 360697.0
+second: id: 35 cost: 429705.0
+third: id: 34 cost: 457402.0
+worst: id: 17 cost: 637618.0
+mutation:
+spentTime: 264.310300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 264.310300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.516100ms spentBudget: 100
+improvement: count: 0 percentage: 0.0010546253114598358
+boost:
+spentTime: 0s spentBudget: 0
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 0s spentBudget: 0
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 61
+spent budget total: 170466
+spent time total: 15.612720700s
+spent budget of generation: 1203
+spent time of generation: 274.865200ms
+best: id: 0 cost: 357512.0
+second: id: 35 cost: 429705.0
+third: id: 34 cost: 457402.0
+worst: id: 17 cost: 637618.0
+mutation:
+spentTime: 268.921800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 268.921800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.612ms spentBudget: 100
+improvement: count: 0 percentage: 3.614325524841089E-5
+boost:
+spentTime: 4.541300ms spentBudget: 4
+improvement: count: 1 percentage: 0.0022075315292336695
+boost on best:
+spentTime: 4.541300ms spentBudget: 4
+improvement: count: 1 percentage: 0.0022075315292336695
+BOOST
+generation: 62
+spent budget total: 171716
+spent time total: 15.869343100s
+spent budget of generation: 1250
+spent time of generation: 256.622400ms
+best: id: 0 cost: 357512.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 17 cost: 637618.0
+mutation:
+spentTime: 250.024ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 250.024ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 4.122900ms spentBudget: 100
+improvement: count: 0 percentage: 0.0023948030837185694
+boost:
+spentTime: 5.244800ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 5.244800ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 63
+spent budget total: 172935
+spent time total: 16.162735100s
+spent budget of generation: 1219
+spent time of generation: 293.392ms
+best: id: 0 cost: 355504.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 17 cost: 637618.0
+mutation:
+spentTime: 286.650900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 286.650900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.410500ms spentBudget: 100
+improvement: count: 0 percentage: 7.146571653648736E-5
+boost:
+spentTime: 5.556800ms spentBudget: 20
+improvement: count: 1 percentage: 2.8082973438653955E-4
+boost on best:
+spentTime: 5.556800ms spentBudget: 20
+improvement: count: 1 percentage: 2.8082973438653955E-4
+BOOST
+generation: 64
+spent budget total: 174173
+spent time total: 16.417637400s
+spent budget of generation: 1238
+spent time of generation: 254.902300ms
+best: id: 0 cost: 349203.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 17 cost: 637618.0
+mutation:
+spentTime: 249.392200ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 249.392200ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.398300ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 4.256400ms spentBudget: 41
+improvement: count: 1 percentage: 4.322959146149352E-4
+boost on best:
+spentTime: 4.256400ms spentBudget: 41
+improvement: count: 1 percentage: 4.322959146149352E-4
+BOOST
+generation: 65
+spent budget total: 175420
+spent time total: 16.699860200s
+spent budget of generation: 1247
+spent time of generation: 282.222800ms
+best: id: 0 cost: 349203.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 17 cost: 637618.0
+mutation:
+spentTime: 274.698500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 274.698500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.395100ms spentBudget: 100
+improvement: count: 0 percentage: 3.308663858395333E-4
+boost:
+spentTime: 6.090800ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 6.090800ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 66
+spent budget total: 176668
+spent time total: 16.953306200s
+spent budget of generation: 1248
+spent time of generation: 253.446ms
+best: id: 0 cost: 349203.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 17 cost: 637618.0
+mutation:
+spentTime: 247.7ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 247.7ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.454600ms spentBudget: 100
+improvement: count: 0 percentage: 0.0028234412110655993
+boost:
+spentTime: 4.527900ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 4.527900ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 67
+spent budget total: 177917
+spent time total: 17.239946s
+spent budget of generation: 1249
+spent time of generation: 286.639800ms
+best: id: 0 cost: 349203.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 17 cost: 637618.0
+mutation:
+spentTime: 279.022800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 279.022800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.914100ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 5.789600ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 5.789600ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 68
+spent budget total: 179167
+spent time total: 17.503643500s
+spent budget of generation: 1250
+spent time of generation: 263.697500ms
+best: id: 0 cost: 349203.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 37 cost: 636739.0
+mutation:
+spentTime: 256.923800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 256.923800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.754700ms spentBudget: 100
+improvement: count: 0 percentage: 0.0011791065830494896
+boost:
+spentTime: 5.350300ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 5.350300ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 69
+spent budget total: 180403
+spent time total: 17.772871100s
+spent budget of generation: 1236
+spent time of generation: 269.227600ms
+best: id: 0 cost: 347866.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 37 cost: 636739.0
+mutation:
+spentTime: 262.158ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 262.158ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 4.029800ms spentBudget: 100
+improvement: count: 0 percentage: 3.4453931268455196E-4
+boost:
+spentTime: 5.392200ms spentBudget: 37
+improvement: count: 1 percentage: 1.0347887943441337E-4
+boost on best:
+spentTime: 5.392200ms spentBudget: 37
+improvement: count: 1 percentage: 1.0347887943441337E-4
+BOOST
+generation: 70
+spent budget total: 181631
+spent time total: 18.049759800s
+spent budget of generation: 1228
+spent time of generation: 276.888700ms
+best: id: 0 cost: 347285.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 37 cost: 636739.0
+mutation:
+spentTime: 270.866600ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 270.866600ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.633ms spentBudget: 100
+improvement: count: 0 percentage: 4.91755916490002E-4
+boost:
+spentTime: 4.827200ms spentBudget: 28
+improvement: count: 1 percentage: 5.9649405230748674E-5
+boost on best:
+spentTime: 4.827200ms spentBudget: 28
+improvement: count: 1 percentage: 5.9649405230748674E-5
+BOOST
+generation: 71
+spent budget total: 182880
+spent time total: 18.328577s
+spent budget of generation: 1249
+spent time of generation: 278.817200ms
+best: id: 0 cost: 347285.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 37 cost: 636739.0
+mutation:
+spentTime: 272.640300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 272.640300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.450500ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 5.033300ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 5.033300ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 72
+spent budget total: 184131
+spent time total: 18.611573200s
+spent budget of generation: 1251
+spent time of generation: 282.996200ms
+best: id: 0 cost: 347285.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 37 cost: 636739.0
+mutation:
+spentTime: 276.955300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 276.955300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.623300ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 4.697600ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 4.697600ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 73
+spent budget total: 185372
+spent time total: 18.863501600s
+spent budget of generation: 1241
+spent time of generation: 251.928400ms
+best: id: 0 cost: 345362.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 37 cost: 636739.0
+mutation:
+spentTime: 245.937400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 245.937400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.461300ms spentBudget: 100
+improvement: count: 0 percentage: 5.961326157739133E-4
+boost:
+spentTime: 4.834900ms spentBudget: 43
+improvement: count: 1 percentage: 1.287729969119256E-4
+boost on best:
+spentTime: 4.834900ms spentBudget: 43
+improvement: count: 1 percentage: 1.287729969119256E-4
+BOOST
+generation: 74
+spent budget total: 186622
+spent time total: 19.127431900s
+spent budget of generation: 1250
+spent time of generation: 263.930300ms
+best: id: 0 cost: 345362.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 49 cost: 626062.0
+mutation:
+spentTime: 257.694ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 257.694ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.541600ms spentBudget: 100
+improvement: count: 0 percentage: 0.001358076526039087
+boost:
+spentTime: 5.059900ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 5.059900ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 75
+spent budget total: 187824
+spent time total: 19.380128100s
+spent budget of generation: 1202
+spent time of generation: 252.696200ms
+best: id: 0 cost: 344890.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 28 cost: 617774.0
+mutation:
+spentTime: 246.868900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 246.868900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.458200ms spentBudget: 100
+improvement: count: 0 percentage: 2.1798160565566937E-4
+boost:
+spentTime: 4.710100ms spentBudget: 4
+improvement: count: 1 percentage: 3.4167047909150483E-4
+boost on best:
+spentTime: 4.710100ms spentBudget: 4
+improvement: count: 1 percentage: 3.4167047909150483E-4
+BOOST
+generation: 76
+spent budget total: 189059
+spent time total: 19.648582200s
+spent budget of generation: 1235
+spent time of generation: 268.454100ms
+best: id: 0 cost: 343199.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 28 cost: 617774.0
+mutation:
+spentTime: 262.341900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 262.341900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.542300ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 4.970200ms spentBudget: 39
+improvement: count: 1 percentage: 1.2571827063404055E-4
+boost on best:
+spentTime: 4.970200ms spentBudget: 39
+improvement: count: 1 percentage: 1.2571827063404055E-4
+BOOST
+generation: 77
+spent budget total: 190310
+spent time total: 19.930293700s
+spent budget of generation: 1251
+spent time of generation: 281.711500ms
+best: id: 0 cost: 343199.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 28 cost: 617774.0
+mutation:
+spentTime: 275.465500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 275.465500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.603ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 4.964300ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 4.964300ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 78
+spent budget total: 191561
+spent time total: 20.181123500s
+spent budget of generation: 1251
+spent time of generation: 250.829800ms
+best: id: 0 cost: 343199.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 28 cost: 617774.0
+mutation:
+spentTime: 244.703100ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 244.703100ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.469700ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 5.060900ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 5.060900ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 79
+spent budget total: 192806
+spent time total: 20.434690800s
+spent budget of generation: 1245
+spent time of generation: 253.567300ms
+best: id: 0 cost: 343199.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 28 cost: 617774.0
+mutation:
+spentTime: 247.409ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 247.409ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.468300ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 5.089400ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 5.089400ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 80
+spent budget total: 194052
+spent time total: 20.704963100s
+spent budget of generation: 1246
+spent time of generation: 270.272300ms
+best: id: 0 cost: 343199.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 37 cost: 612585.0
+mutation:
+spentTime: 263.763500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 263.763500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.707100ms spentBudget: 100
+improvement: count: 0 percentage: 0.0010027453405290609
+boost:
+spentTime: 5.340900ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 5.340900ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 81
+spent budget total: 195301
+spent time total: 20.991252500s
+spent budget of generation: 1249
+spent time of generation: 286.289400ms
+best: id: 0 cost: 343199.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 37 cost: 612585.0
+mutation:
+spentTime: 279.229200ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 279.229200ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.578300ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 5.835100ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 5.835100ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 82
+spent budget total: 196507
+spent time total: 21.245928500s
+spent budget of generation: 1206
+spent time of generation: 254.676ms
+best: id: 0 cost: 342717.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 37 cost: 612585.0
+mutation:
+spentTime: 248.253300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 248.253300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.436800ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 5.128400ms spentBudget: 9
+improvement: count: 1 percentage: 1.5604811073329414E-4
+boost on best:
+spentTime: 5.128400ms spentBudget: 9
+improvement: count: 1 percentage: 1.5604811073329414E-4
+BOOST
+generation: 83
+spent budget total: 197756
+spent time total: 21.515278200s
+spent budget of generation: 1249
+spent time of generation: 269.349700ms
+best: id: 0 cost: 342717.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 37 cost: 612585.0
+mutation:
+spentTime: 261.354800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 261.354800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.509700ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 6.772700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 6.772700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 84
+spent budget total: 199002
+spent time total: 21.787690100s
+spent budget of generation: 1246
+spent time of generation: 272.411900ms
+best: id: 0 cost: 342717.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 37 cost: 612585.0
+mutation:
+spentTime: 265.892300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 265.892300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 4.001300ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 5.157700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 5.157700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 85
+spent budget total: 200252
+spent time total: 22.040923600s
+spent budget of generation: 1250
+spent time of generation: 253.233500ms
+best: id: 0 cost: 342717.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 37 cost: 612585.0
+mutation:
+spentTime: 247.000700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 247.000700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.493700ms spentBudget: 100
+improvement: count: 0 percentage: 0.002818122538216802
+boost:
+spentTime: 4.966600ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 4.966600ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 86
+spent budget total: 201482
+spent time total: 22.299375600s
+spent budget of generation: 1230
+spent time of generation: 258.452ms
+best: id: 0 cost: 338325.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 37 cost: 612585.0
+mutation:
+spentTime: 251.934500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 251.934500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.415900ms spentBudget: 100
+improvement: count: 0 percentage: 3.395801974957413E-4
+boost:
+spentTime: 5.215500ms spentBudget: 31
+improvement: count: 1 percentage: 4.133947815685793E-4
+boost on best:
+spentTime: 5.215500ms spentBudget: 31
+improvement: count: 1 percentage: 4.133947815685793E-4
+BOOST
+generation: 87
+spent budget total: 202721
+spent time total: 22.556522300s
+spent budget of generation: 1239
+spent time of generation: 257.146700ms
+best: id: 0 cost: 335239.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 37 cost: 612585.0
+mutation:
+spentTime: 250.853300ms spentBudget: 1100
+improvement: count: 1 percentage: 6.2106197288172825E-6
+mutation on best:
+spentTime: 250.853300ms spentBudget: 1100
+improvement: count: 1 percentage: 6.2106197288172825E-6
+gene transfer:
+spentTime: 3.418300ms spentBudget: 100
+improvement: count: 0 percentage: 5.880632575986522E-4
+boost:
+spentTime: 5.135900ms spentBudget: 42
+improvement: count: 1 percentage: 5.4892273912447786E-5
+boost on best:
+spentTime: 5.135900ms spentBudget: 42
+improvement: count: 1 percentage: 5.4892273912447786E-5
+generation: 88
+spent budget total: 203917
+spent time total: 22.831359800s
+spent budget of generation: 1196
+spent time of generation: 274.837500ms
+best: id: 0 cost: 335239.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 49 cost: 612415.0
+mutation:
+spentTime: 273.761600ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 273.761600ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.478300ms spentBudget: 100
+improvement: count: 0 percentage: 1.3821755348237375E-4
+boost:
+spentTime: 0s spentBudget: 0
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 0s spentBudget: 0
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 89
+spent budget total: 205166
+spent time total: 23.111155100s
+spent budget of generation: 1249
+spent time of generation: 279.795300ms
+best: id: 0 cost: 335239.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 49 cost: 612415.0
+mutation:
+spentTime: 273.311200ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 273.311200ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.59ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 5.327300ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 5.327300ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 90
+spent budget total: 206417
+spent time total: 23.400283400s
+spent budget of generation: 1251
+spent time of generation: 289.128300ms
+best: id: 0 cost: 335239.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 49 cost: 612415.0
+mutation:
+spentTime: 278.957900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 278.957900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.390100ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.098500ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.098500ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 91
+spent budget total: 207668
+spent time total: 23.653855300s
+spent budget of generation: 1251
+spent time of generation: 253.571900ms
+best: id: 0 cost: 335239.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 49 cost: 612415.0
+mutation:
+spentTime: 247.086200ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 247.086200ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.442600ms spentBudget: 100
+improvement: count: 0 percentage: 0.0010251558820480167
+boost:
+spentTime: 5.432ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 5.432ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 92
+spent budget total: 208896
+spent time total: 23.905697400s
+spent budget of generation: 1228
+spent time of generation: 251.842100ms
+best: id: 0 cost: 334002.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 49 cost: 612415.0
+mutation:
+spentTime: 245.381800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 245.381800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.431800ms spentBudget: 100
+improvement: count: 0 percentage: 1.1480806328867499E-4
+boost:
+spentTime: 5.387ms spentBudget: 32
+improvement: count: 1 percentage: 1.1530952544304071E-4
+boost on best:
+spentTime: 5.387ms spentBudget: 32
+improvement: count: 1 percentage: 1.1530952544304071E-4
+BOOST
+generation: 93
+spent budget total: 210143
+spent time total: 24.181674800s
+spent budget of generation: 1247
+spent time of generation: 275.977400ms
+best: id: 0 cost: 334002.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 49 cost: 612415.0
+mutation:
+spentTime: 269.458500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 269.458500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.396900ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 5.461700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 5.461700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 94
+spent budget total: 211390
+spent time total: 24.443875800s
+spent budget of generation: 1247
+spent time of generation: 262.201ms
+best: id: 0 cost: 334002.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 49 cost: 612415.0
+mutation:
+spentTime: 255.294100ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 255.294100ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.369ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 5.798100ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 5.798100ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 95
+spent budget total: 212640
+spent time total: 24.698867300s
+spent budget of generation: 1250
+spent time of generation: 254.991500ms
+best: id: 0 cost: 334002.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 49 cost: 612415.0
+mutation:
+spentTime: 248.274800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 248.274800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.434800ms spentBudget: 100
+improvement: count: 0 percentage: 4.1007790720080315E-4
+boost:
+spentTime: 5.582700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 5.582700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 96
+spent budget total: 213891
+spent time total: 24.952994200s
+spent budget of generation: 1251
+spent time of generation: 254.126900ms
+best: id: 0 cost: 334002.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 49 cost: 612415.0
+mutation:
+spentTime: 247.460100ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 247.460100ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.529100ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 5.456600ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 5.456600ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 97
+spent budget total: 215134
+spent time total: 25.227060300s
+spent budget of generation: 1243
+spent time of generation: 274.066100ms
+best: id: 0 cost: 332570.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 49 cost: 612415.0
+mutation:
+spentTime: 267.376700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 267.376700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.510700ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 5.446300ms spentBudget: 44
+improvement: count: 1 percentage: 9.744089719658637E-5
+boost on best:
+spentTime: 5.446300ms spentBudget: 44
+improvement: count: 1 percentage: 9.744089719658637E-5
+BOOST
+generation: 98
+spent budget total: 216383
+spent time total: 25.492336100s
+spent budget of generation: 1249
+spent time of generation: 265.275800ms
+best: id: 0 cost: 332570.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 49 cost: 612415.0
+mutation:
+spentTime: 256.921600ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 256.921600ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 5.405100ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 6.488400ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 6.488400ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 99
+spent budget total: 217632
+spent time total: 25.785731s
+spent budget of generation: 1249
+spent time of generation: 293.394900ms
+best: id: 0 cost: 332570.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 49 cost: 612415.0
+mutation:
+spentTime: 285.911700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 285.911700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.601ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 6.385600ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 6.385600ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 100
+spent budget total: 218883
+spent time total: 26.079583200s
+spent budget of generation: 1251
+spent time of generation: 293.852200ms
+best: id: 0 cost: 332570.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 49 cost: 612415.0
+mutation:
+spentTime: 285.574300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 285.574300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.598ms spentBudget: 100
+improvement: count: 0 percentage: 4.113261211892527E-4
+boost:
+spentTime: 7.160800ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 7.160800ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 101
+spent budget total: 220130
+spent time total: 26.359190900s
+spent budget of generation: 1247
+spent time of generation: 279.607700ms
+best: id: 0 cost: 331863.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 49 cost: 612415.0
+mutation:
+spentTime: 271.228300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 271.228300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.437800ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 7.332400ms spentBudget: 48
+improvement: count: 1 percentage: 4.4288921630534585E-5
+boost on best:
+spentTime: 7.332400ms spentBudget: 48
+improvement: count: 1 percentage: 4.4288921630534585E-5
+BOOST
+generation: 102
+spent budget total: 221373
+spent time total: 26.661888700s
+spent budget of generation: 1243
+spent time of generation: 302.697800ms
+best: id: 0 cost: 331863.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 37 cost: 604118.0
+mutation:
+spentTime: 295.687100ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 295.687100ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.496900ms spentBudget: 100
+improvement: count: 0 percentage: 0.001457427048742098
+boost:
+spentTime: 5.734100ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 5.734100ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 103
+spent budget total: 222622
+spent time total: 26.930235300s
+spent budget of generation: 1249
+spent time of generation: 268.346600ms
+best: id: 0 cost: 331863.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 37 cost: 604118.0
+mutation:
+spentTime: 259.254700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 259.254700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.434100ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 7.999200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 7.999200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 104
+spent budget total: 223855
+spent time total: 27.215171200s
+spent budget of generation: 1233
+spent time of generation: 284.935900ms
+best: id: 0 cost: 331338.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 37 cost: 604118.0
+mutation:
+spentTime: 278.009700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 278.009700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.494700ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 5.760100ms spentBudget: 34
+improvement: count: 1 percentage: 4.652876780656009E-5
+boost on best:
+spentTime: 5.760100ms spentBudget: 34
+improvement: count: 1 percentage: 4.652876780656009E-5
+BOOST
+generation: 105
+spent budget total: 225106
+spent time total: 27.468173700s
+spent budget of generation: 1251
+spent time of generation: 253.002500ms
+best: id: 0 cost: 331338.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 37 cost: 604118.0
+mutation:
+spentTime: 246.064100ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 246.064100ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.412ms spentBudget: 100
+improvement: count: 0 percentage: 0.0015309149156195556
+boost:
+spentTime: 5.927700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 5.927700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 106
+spent budget total: 226327
+spent time total: 27.779057100s
+spent budget of generation: 1221
+spent time of generation: 310.883400ms
+best: id: 0 cost: 331081.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 37 cost: 604118.0
+mutation:
+spentTime: 302.088ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 302.088ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.788600ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 7.408900ms spentBudget: 22
+improvement: count: 1 percentage: 3.525649995418277E-5
+boost on best:
+spentTime: 7.408900ms spentBudget: 22
+improvement: count: 1 percentage: 3.525649995418277E-5
+BOOST
+generation: 107
+spent budget total: 227542
+spent time total: 28.049652300s
+spent budget of generation: 1215
+spent time of generation: 270.595200ms
+best: id: 0 cost: 331081.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 37 cost: 604118.0
+mutation:
+spentTime: 263.462300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 263.462300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.557600ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 6.080400ms spentBudget: 17
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 6.080400ms spentBudget: 17
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 108
+spent budget total: 228756
+spent time total: 28.340844400s
+spent budget of generation: 1214
+spent time of generation: 291.192100ms
+best: id: 0 cost: 321201.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 37 cost: 604118.0
+mutation:
+spentTime: 284.051100ms spentBudget: 1100
+improvement: count: 1 percentage: 2.2485264919536377E-5
+mutation on best:
+spentTime: 284.051100ms spentBudget: 1100
+improvement: count: 1 percentage: 2.2485264919536377E-5
+gene transfer:
+spentTime: 3.439300ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 6.004500ms spentBudget: 17
+improvement: count: 1 percentage: 3.080817081016452E-4
+boost on best:
+spentTime: 6.004500ms spentBudget: 17
+improvement: count: 1 percentage: 3.080817081016452E-4
+generation: 109
+spent budget total: 229954
+spent time total: 28.622451800s
+spent budget of generation: 1198
+spent time of generation: 281.607400ms
+best: id: 0 cost: 321201.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 37 cost: 604118.0
+mutation:
+spentTime: 280.529400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 280.529400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.411600ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 0s spentBudget: 0
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 0s spentBudget: 0
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 110
+spent budget total: 231203
+spent time total: 28.875232s
+spent budget of generation: 1249
+spent time of generation: 252.780200ms
+best: id: 0 cost: 321201.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 37 cost: 604118.0
+mutation:
+spentTime: 245.093300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 245.093300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.509600ms spentBudget: 100
+improvement: count: 0 percentage: 2.054168898735209E-4
+boost:
+spentTime: 6.443100ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 6.443100ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 111
+spent budget total: 232452
+spent time total: 29.161259800s
+spent budget of generation: 1249
+spent time of generation: 286.027800ms
+best: id: 0 cost: 321201.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 27 cost: 575353.0
+mutation:
+spentTime: 277.251600ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 277.251600ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.580800ms spentBudget: 100
+improvement: count: 0 percentage: 0.001721563764626306
+boost:
+spentTime: 7.730800ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 7.730800ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 112
+spent budget total: 233700
+spent time total: 29.419901s
+spent budget of generation: 1248
+spent time of generation: 258.641200ms
+best: id: 0 cost: 321201.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 27 cost: 575353.0
+mutation:
+spentTime: 251.382600ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 251.382600ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.490600ms spentBudget: 100
+improvement: count: 0 percentage: 3.941901701202144E-4
+boost:
+spentTime: 6.231400ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 6.231400ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 113
+spent budget total: 234948
+spent time total: 29.695597100s
+spent budget of generation: 1248
+spent time of generation: 275.696100ms
+best: id: 0 cost: 321201.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 27 cost: 575353.0
+mutation:
+spentTime: 266.560600ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 266.560600ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.419600ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 7.773600ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 7.773600ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 114
+spent budget total: 236198
+spent time total: 29.975421300s
+spent budget of generation: 1250
+spent time of generation: 279.824200ms
+best: id: 0 cost: 321201.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 27 cost: 575353.0
+mutation:
+spentTime: 272.435400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 272.435400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.368800ms spentBudget: 100
+improvement: count: 0 percentage: 2.512688081577641E-4
+boost:
+spentTime: 6.168500ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 6.168500ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 115
+spent budget total: 237433
+spent time total: 30.235018600s
+spent budget of generation: 1235
+spent time of generation: 259.597300ms
+best: id: 0 cost: 319804.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 27 cost: 575353.0
+mutation:
+spentTime: 251.191500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 251.191500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.580100ms spentBudget: 100
+improvement: count: 0 percentage: 2.1355783481665557E-4
+boost:
+spentTime: 7.249300ms spentBudget: 37
+improvement: count: 1 percentage: 1.1754868993794196E-4
+boost on best:
+spentTime: 7.249300ms spentBudget: 37
+improvement: count: 1 percentage: 1.1754868993794196E-4
+BOOST
+generation: 116
+spent budget total: 238682
+spent time total: 30.499775400s
+spent budget of generation: 1249
+spent time of generation: 264.756800ms
+best: id: 0 cost: 319804.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 27 cost: 575353.0
+mutation:
+spentTime: 257.359500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 257.359500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.422300ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 6.348800ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 6.348800ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 117
+spent budget total: 239932
+spent time total: 30.759883400s
+spent budget of generation: 1250
+spent time of generation: 260.108ms
+best: id: 0 cost: 319804.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 27 cost: 575353.0
+mutation:
+spentTime: 252.747300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 252.747300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.374800ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 6.277900ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 6.277900ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 118
+spent budget total: 241181
+spent time total: 31.009481s
+spent budget of generation: 1249
+spent time of generation: 249.597600ms
+best: id: 0 cost: 319804.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 27 cost: 575353.0
+mutation:
+spentTime: 241.746700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 241.746700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.459400ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 6.794600ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 6.794600ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 119
+spent budget total: 242429
+spent time total: 31.261740800s
+spent budget of generation: 1248
+spent time of generation: 252.259800ms
+best: id: 0 cost: 319804.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 27 cost: 575353.0
+mutation:
+spentTime: 244.799500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 244.799500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.415300ms spentBudget: 100
+improvement: count: 0 percentage: 4.632409680185767E-4
+boost:
+spentTime: 6.358200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 6.358200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 120
+spent budget total: 243666
+spent time total: 31.518754100s
+spent budget of generation: 1237
+spent time of generation: 257.013300ms
+best: id: 0 cost: 319591.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 27 cost: 575353.0
+mutation:
+spentTime: 249.658600ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 249.658600ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.416ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 6.346800ms spentBudget: 38
+improvement: count: 1 percentage: 1.7527182767867728E-5
+boost on best:
+spentTime: 6.346800ms spentBudget: 38
+improvement: count: 1 percentage: 1.7527182767867728E-5
+BOOST
+generation: 121
+spent budget total: 244917
+spent time total: 31.770374300s
+spent budget of generation: 1251
+spent time of generation: 251.620200ms
+best: id: 0 cost: 319591.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 27 cost: 575353.0
+mutation:
+spentTime: 244.219ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 244.219ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.413300ms spentBudget: 100
+improvement: count: 0 percentage: 0.0011940892349878573
+boost:
+spentTime: 6.361100ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 6.361100ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 122
+spent budget total: 246166
+spent time total: 32.026088200s
+spent budget of generation: 1249
+spent time of generation: 255.713900ms
+best: id: 0 cost: 319591.0
+second: id: 35 cost: 429705.0
+third: id: 48 cost: 443529.0
+worst: id: 27 cost: 575353.0
+mutation:
+spentTime: 248.137300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 248.137300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.432600ms spentBudget: 100
+improvement: count: 0 percentage: 0.0012525495889057214
+boost:
+spentTime: 6.498700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 6.498700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 123
+spent budget total: 247376
+spent time total: 32.279670300s
+spent budget of generation: 1210
+spent time of generation: 253.582100ms
+best: id: 0 cost: 317681.0
+second: id: 35 cost: 429705.0
+third: id: 37 cost: 434549.0
+worst: id: 27 cost: 575353.0
+mutation:
+spentTime: 246.168400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 246.168400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.436200ms spentBudget: 100
+improvement: count: 0 percentage: 0.0016281386123735452
+boost:
+spentTime: 6.273700ms spentBudget: 12
+improvement: count: 1 percentage: 4.980323809702647E-4
+boost on best:
+spentTime: 6.273700ms spentBudget: 12
+improvement: count: 1 percentage: 4.980323809702647E-4
+BOOST
+generation: 124
+spent budget total: 248603
+spent time total: 32.532824s
+spent budget of generation: 1227
+spent time of generation: 253.153700ms
+best: id: 0 cost: 317481.0
+second: id: 35 cost: 429705.0
+third: id: 37 cost: 434549.0
+worst: id: 27 cost: 575353.0
+mutation:
+spentTime: 245.544ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 245.544ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.459900ms spentBudget: 100
+improvement: count: 0 percentage: 0.0010088369580551959
+boost:
+spentTime: 6.512900ms spentBudget: 28
+improvement: count: 1 percentage: 2.2484369990202362E-5
+boost on best:
+spentTime: 6.512900ms spentBudget: 28
+improvement: count: 1 percentage: 2.2484369990202362E-5
+BOOST
+generation: 125
+spent budget total: 249854
+spent time total: 32.784138200s
+spent budget of generation: 1251
+spent time of generation: 251.314200ms
+best: id: 0 cost: 317481.0
+second: id: 35 cost: 429705.0
+third: id: 37 cost: 434549.0
+worst: id: 27 cost: 575353.0
+mutation:
+spentTime: 243.548300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 243.548300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.914900ms spentBudget: 100
+improvement: count: 0 percentage: 0.0010527681645200926
+boost:
+spentTime: 6.577100ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 6.577100ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 126
+spent budget total: 251104
+spent time total: 33.042922200s
+spent budget of generation: 1250
+spent time of generation: 258.784ms
+best: id: 0 cost: 317481.0
+second: id: 35 cost: 429705.0
+third: id: 37 cost: 434549.0
+worst: id: 27 cost: 575353.0
+mutation:
+spentTime: 251.248ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 251.248ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.551300ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 6.395700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 6.395700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 127
+spent budget total: 252354
+spent time total: 33.336192s
+spent budget of generation: 1250
+spent time of generation: 293.269800ms
+best: id: 0 cost: 317481.0
+second: id: 35 cost: 429705.0
+third: id: 37 cost: 434549.0
+worst: id: 27 cost: 575353.0
+mutation:
+spentTime: 284.411900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 284.411900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 9.255ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 6.552300ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 6.552300ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 128
+spent budget total: 253602
+spent time total: 33.592825600s
+spent budget of generation: 1248
+spent time of generation: 256.633600ms
+best: id: 0 cost: 317481.0
+second: id: 35 cost: 429705.0
+third: id: 37 cost: 434549.0
+worst: id: 27 cost: 575353.0
+mutation:
+spentTime: 248.768200ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 248.768200ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.366ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 6.636500ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 6.636500ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 129
+spent budget total: 254851
+spent time total: 33.859635800s
+spent budget of generation: 1249
+spent time of generation: 266.810200ms
+best: id: 0 cost: 317481.0
+second: id: 35 cost: 429705.0
+third: id: 37 cost: 434549.0
+worst: id: 27 cost: 575353.0
+mutation:
+spentTime: 258.958400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 258.958400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.465900ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 6.713100ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 6.713100ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 130
+spent budget total: 256099
+spent time total: 34.147058200s
+spent budget of generation: 1248
+spent time of generation: 287.422400ms
+best: id: 0 cost: 317481.0
+second: id: 35 cost: 429705.0
+third: id: 37 cost: 434549.0
+worst: id: 27 cost: 575353.0
+mutation:
+spentTime: 279.567ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 279.567ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.369500ms spentBudget: 100
+improvement: count: 0 percentage: 4.9171753107325465E-5
+boost:
+spentTime: 6.676300ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 6.676300ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 131
+spent budget total: 257305
+spent time total: 34.400786100s
+spent budget of generation: 1206
+spent time of generation: 253.727900ms
+best: id: 0 cost: 314264.0
+second: id: 35 cost: 429705.0
+third: id: 37 cost: 434549.0
+worst: id: 27 cost: 575353.0
+mutation:
+spentTime: 245.714100ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 245.714100ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.401200ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 7.030200ms spentBudget: 7
+improvement: count: 1 percentage: 0.001447555691746689
+boost on best:
+spentTime: 7.030200ms spentBudget: 7
+improvement: count: 1 percentage: 0.001447555691746689
+BOOST
+generation: 132
+spent budget total: 258507
+spent time total: 34.652879100s
+spent budget of generation: 1202
+spent time of generation: 252.093ms
+best: id: 0 cost: 312867.0
+second: id: 35 cost: 429705.0
+third: id: 37 cost: 434549.0
+worst: id: 27 cost: 575353.0
+mutation:
+spentTime: 243.685300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 243.685300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.533200ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 7.310900ms spentBudget: 3
+improvement: count: 1 percentage: 0.001481769043436924
+boost on best:
+spentTime: 7.310900ms spentBudget: 3
+improvement: count: 1 percentage: 0.001481769043436924
+BOOST
+generation: 133
+spent budget total: 259721
+spent time total: 34.905096300s
+spent budget of generation: 1214
+spent time of generation: 252.217200ms
+best: id: 0 cost: 309699.0
+second: id: 35 cost: 429705.0
+third: id: 37 cost: 434549.0
+worst: id: 27 cost: 575353.0
+mutation:
+spentTime: 244.115500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 244.115500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.351600ms spentBudget: 100
+improvement: count: 0 percentage: 8.705679892842255E-4
+boost:
+spentTime: 7.078900ms spentBudget: 20
+improvement: count: 1 percentage: 5.062854184046284E-4
+boost on best:
+spentTime: 7.078900ms spentBudget: 20
+improvement: count: 1 percentage: 5.062854184046284E-4
+BOOST
+generation: 134
+spent budget total: 260972
+spent time total: 35.159378900s
+spent budget of generation: 1251
+spent time of generation: 254.282600ms
+best: id: 0 cost: 309699.0
+second: id: 35 cost: 429705.0
+third: id: 37 cost: 434549.0
+worst: id: 27 cost: 575353.0
+mutation:
+spentTime: 245.645400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 245.645400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.542700ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 7.367700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 7.367700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 135
+spent budget total: 262220
+spent time total: 35.413503100s
+spent budget of generation: 1248
+spent time of generation: 254.124200ms
+best: id: 0 cost: 309699.0
+second: id: 35 cost: 429705.0
+third: id: 37 cost: 434549.0
+worst: id: 27 cost: 575353.0
+mutation:
+spentTime: 245.750300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 245.750300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.533100ms spentBudget: 100
+improvement: count: 0 percentage: 2.7949845000693974E-4
+boost:
+spentTime: 7.270600ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 7.270600ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 136
+spent budget total: 263469
+spent time total: 35.667532200s
+spent budget of generation: 1249
+spent time of generation: 254.029100ms
+best: id: 0 cost: 309699.0
+second: id: 35 cost: 429705.0
+third: id: 37 cost: 434549.0
+worst: id: 27 cost: 575353.0
+mutation:
+spentTime: 245.539500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 245.539500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.415800ms spentBudget: 100
+improvement: count: 0 percentage: 4.99689453561436E-5
+boost:
+spentTime: 7.383700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 7.383700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 137
+spent budget total: 264719
+spent time total: 35.921185300s
+spent budget of generation: 1250
+spent time of generation: 253.653100ms
+best: id: 0 cost: 309699.0
+second: id: 35 cost: 429705.0
+third: id: 37 cost: 434549.0
+worst: id: 27 cost: 575353.0
+mutation:
+spentTime: 245.077300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 245.077300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.512500ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 7.451200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 7.451200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 138
+spent budget total: 265966
+spent time total: 36.194410300s
+spent budget of generation: 1247
+spent time of generation: 273.225ms
+best: id: 0 cost: 307871.0
+second: id: 35 cost: 429705.0
+third: id: 37 cost: 434549.0
+worst: id: 27 cost: 575353.0
+mutation:
+spentTime: 264.43ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 264.43ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.668300ms spentBudget: 100
+improvement: count: 0 percentage: 3.9764171225939004E-4
+boost:
+spentTime: 7.482500ms spentBudget: 49
+improvement: count: 1 percentage: 1.2045929256787828E-4
+boost on best:
+spentTime: 7.482500ms spentBudget: 49
+improvement: count: 1 percentage: 1.2045929256787828E-4
+BOOST
+generation: 139
+spent budget total: 267216
+spent time total: 36.450600200s
+spent budget of generation: 1250
+spent time of generation: 256.189900ms
+best: id: 0 cost: 307871.0
+second: id: 35 cost: 429705.0
+third: id: 37 cost: 434549.0
+worst: id: 49 cost: 572140.0
+mutation:
+spentTime: 247.522300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 247.522300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.444600ms spentBudget: 100
+improvement: count: 0 percentage: 0.0011588651971382957
+boost:
+spentTime: 7.541600ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 7.541600ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 140
+spent budget total: 268421
+spent time total: 36.715593s
+spent budget of generation: 1205
+spent time of generation: 264.992800ms
+best: id: 0 cost: 300381.0
+second: id: 35 cost: 429705.0
+third: id: 37 cost: 434549.0
+worst: id: 49 cost: 572140.0
+mutation:
+spentTime: 256.074500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 256.074500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.465200ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 7.826400ms spentBudget: 7
+improvement: count: 1 percentage: 0.0034754816140526446
+boost on best:
+spentTime: 7.826400ms spentBudget: 7
+improvement: count: 1 percentage: 0.0034754816140526446
+BOOST
+generation: 141
+spent budget total: 269671
+spent time total: 36.976987s
+spent budget of generation: 1250
+spent time of generation: 261.394ms
+best: id: 0 cost: 300381.0
+second: id: 35 cost: 429705.0
+third: id: 37 cost: 434549.0
+worst: id: 49 cost: 572140.0
+mutation:
+spentTime: 252.879ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 252.879ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.437500ms spentBudget: 100
+improvement: count: 0 percentage: 5.448434828432025E-4
+boost:
+spentTime: 7.501200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 7.501200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 142
+spent budget total: 270920
+spent time total: 37.231925400s
+spent budget of generation: 1249
+spent time of generation: 254.938400ms
+best: id: 0 cost: 300381.0
+second: id: 35 cost: 429705.0
+third: id: 37 cost: 434549.0
+worst: id: 49 cost: 572140.0
+mutation:
+spentTime: 246.360400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 246.360400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.483500ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 7.512700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 7.512700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 143
+spent budget total: 272170
+spent time total: 37.489427700s
+spent budget of generation: 1250
+spent time of generation: 257.502300ms
+best: id: 0 cost: 300381.0
+second: id: 35 cost: 429705.0
+third: id: 37 cost: 434549.0
+worst: id: 49 cost: 572140.0
+mutation:
+spentTime: 248.759200ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 248.759200ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.405300ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 7.717200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 7.717200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 144
+spent budget total: 273419
+spent time total: 37.743403700s
+spent budget of generation: 1249
+spent time of generation: 253.976ms
+best: id: 0 cost: 300381.0
+second: id: 35 cost: 429705.0
+third: id: 37 cost: 434549.0
+worst: id: 49 cost: 572140.0
+mutation:
+spentTime: 245.114200ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 245.114200ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.454700ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 7.815700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 7.815700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 145
+spent budget total: 274666
+spent time total: 38.014049600s
+spent budget of generation: 1247
+spent time of generation: 270.645900ms
+best: id: 0 cost: 300381.0
+second: id: 35 cost: 429705.0
+third: id: 37 cost: 434549.0
+worst: id: 49 cost: 572140.0
+mutation:
+spentTime: 261.574300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 261.574300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.520300ms spentBudget: 100
+improvement: count: 0 percentage: 2.14432559907467E-4
+boost:
+spentTime: 8.023300ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 8.023300ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 146
+spent budget total: 275916
+spent time total: 38.269242100s
+spent budget of generation: 1250
+spent time of generation: 255.192500ms
+best: id: 0 cost: 300381.0
+second: id: 35 cost: 429705.0
+third: id: 37 cost: 434549.0
+worst: id: 49 cost: 572140.0
+mutation:
+spentTime: 246.455700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 246.455700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.427ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 7.702600ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 7.702600ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 147
+spent budget total: 277165
+spent time total: 38.524173s
+spent budget of generation: 1249
+spent time of generation: 254.930900ms
+best: id: 0 cost: 300381.0
+second: id: 35 cost: 429705.0
+third: id: 37 cost: 434549.0
+worst: id: 49 cost: 572140.0
+mutation:
+spentTime: 245.995200ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 245.995200ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.441ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 7.949200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 7.949200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 148
+spent budget total: 278416
+spent time total: 38.776079700s
+spent budget of generation: 1251
+spent time of generation: 251.906700ms
+best: id: 0 cost: 300381.0
+second: id: 35 cost: 429705.0
+third: id: 37 cost: 434549.0
+worst: id: 49 cost: 572140.0
+mutation:
+spentTime: 242.976700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 242.976700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.360700ms spentBudget: 100
+improvement: count: 0 percentage: 8.522429877209848E-4
+boost:
+spentTime: 7.916500ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 7.916500ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 149
+spent budget total: 279666
+spent time total: 39.033843900s
+spent budget of generation: 1250
+spent time of generation: 257.764200ms
+best: id: 0 cost: 300381.0
+second: id: 35 cost: 429705.0
+third: id: 37 cost: 434549.0
+worst: id: 49 cost: 572140.0
+mutation:
+spentTime: 248.761500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 248.761500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.292100ms spentBudget: 100
+improvement: count: 0 percentage: 7.394337804161599E-4
+boost:
+spentTime: 7.943300ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 7.943300ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 150
+spent budget total: 280915
+spent time total: 39.295654900s
+spent budget of generation: 1249
+spent time of generation: 261.811ms
+best: id: 0 cost: 300381.0
+second: id: 35 cost: 429705.0
+third: id: 37 cost: 434549.0
+worst: id: 49 cost: 572140.0
+mutation:
+spentTime: 252.750300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 252.750300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.318500ms spentBudget: 100
+improvement: count: 0 percentage: 0.0013797951434072254
+boost:
+spentTime: 8.034300ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 8.034300ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 151
+spent budget total: 282165
+spent time total: 39.558799800s
+spent budget of generation: 1250
+spent time of generation: 263.144900ms
+best: id: 0 cost: 300381.0
+second: id: 35 cost: 429705.0
+third: id: 37 cost: 434549.0
+worst: id: 49 cost: 572140.0
+mutation:
+spentTime: 253.934700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 253.934700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.472100ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 8.176100ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 8.176100ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 152
+spent budget total: 283415
+spent time total: 39.820315300s
+spent budget of generation: 1250
+spent time of generation: 261.515500ms
+best: id: 0 cost: 300381.0
+second: id: 35 cost: 429705.0
+third: id: 37 cost: 434549.0
+worst: id: 49 cost: 572140.0
+mutation:
+spentTime: 252.479500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 252.479500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.441300ms spentBudget: 100
+improvement: count: 0 percentage: 8.674054619285143E-4
+boost:
+spentTime: 8.029900ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 8.029900ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 153
+spent budget total: 284663
+spent time total: 40.078560300s
+spent budget of generation: 1248
+spent time of generation: 258.245ms
+best: id: 0 cost: 300381.0
+second: id: 35 cost: 429705.0
+third: id: 37 cost: 434549.0
+worst: id: 49 cost: 572140.0
+mutation:
+spentTime: 248.649500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 248.649500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.404200ms spentBudget: 100
+improvement: count: 0 percentage: 0.0010298387398510866
+boost:
+spentTime: 8.528ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 8.528ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 154
+spent budget total: 285913
+spent time total: 40.339368100s
+spent budget of generation: 1250
+spent time of generation: 260.807800ms
+best: id: 0 cost: 300381.0
+second: id: 35 cost: 429705.0
+third: id: 37 cost: 434549.0
+worst: id: 49 cost: 572140.0
+mutation:
+spentTime: 251.702500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 251.702500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.446700ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 8.060900ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 8.060900ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 155
+spent budget total: 287162
+spent time total: 40.602664s
+spent budget of generation: 1249
+spent time of generation: 263.295900ms
+best: id: 0 cost: 300381.0
+second: id: 35 cost: 429705.0
+third: id: 37 cost: 434549.0
+worst: id: 49 cost: 572140.0
+mutation:
+spentTime: 254.170100ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 254.170100ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.498400ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 8.093800ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 8.093800ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 156
+spent budget total: 288412
+spent time total: 40.868997200s
+spent budget of generation: 1250
+spent time of generation: 266.333200ms
+best: id: 0 cost: 300381.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 49 cost: 572140.0
+mutation:
+spentTime: 256.841ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 256.841ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.283300ms spentBudget: 100
+improvement: count: 0 percentage: 0.0017799233526065495
+boost:
+spentTime: 8.385900ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 8.385900ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 157
+spent budget total: 289663
+spent time total: 41.135849s
+spent budget of generation: 1251
+spent time of generation: 266.851800ms
+best: id: 0 cost: 300381.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 49 cost: 572140.0
+mutation:
+spentTime: 255.826600ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 255.826600ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.435ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.825100ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.825100ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 158
+spent budget total: 290912
+spent time total: 41.394486600s
+spent budget of generation: 1249
+spent time of generation: 258.637600ms
+best: id: 0 cost: 300381.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 49 cost: 572140.0
+mutation:
+spentTime: 248.725100ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 248.725100ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.382700ms spentBudget: 100
+improvement: count: 0 percentage: 0.0011693783212653353
+boost:
+spentTime: 8.827500ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 8.827500ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 159
+spent budget total: 292161
+spent time total: 41.654712300s
+spent budget of generation: 1249
+spent time of generation: 260.225700ms
+best: id: 0 cost: 300381.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 49 cost: 572140.0
+mutation:
+spentTime: 250.796600ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 250.796600ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.356100ms spentBudget: 100
+improvement: count: 0 percentage: 7.458448061490864E-4
+boost:
+spentTime: 8.432600ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 8.432600ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 160
+spent budget total: 293411
+spent time total: 41.920454300s
+spent budget of generation: 1250
+spent time of generation: 265.742ms
+best: id: 0 cost: 300381.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 49 cost: 572140.0
+mutation:
+spentTime: 255.881900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 255.881900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 4.960400ms spentBudget: 100
+improvement: count: 0 percentage: 7.922824588157051E-4
+boost:
+spentTime: 8.186700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 8.186700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 161
+spent budget total: 294660
+spent time total: 42.179463500s
+spent budget of generation: 1249
+spent time of generation: 259.009200ms
+best: id: 0 cost: 300381.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 49 cost: 572140.0
+mutation:
+spentTime: 248.488100ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 248.488100ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.438ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.442500ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.442500ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 162
+spent budget total: 295909
+spent time total: 42.433627800s
+spent budget of generation: 1249
+spent time of generation: 254.164300ms
+best: id: 0 cost: 300381.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 49 cost: 572140.0
+mutation:
+spentTime: 244.830300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 244.830300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.380900ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 8.302ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 8.302ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 163
+spent budget total: 297156
+spent time total: 42.705791300s
+spent budget of generation: 1247
+spent time of generation: 272.163500ms
+best: id: 0 cost: 300381.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 49 cost: 564474.0
+mutation:
+spentTime: 262.441500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 262.441500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.549600ms spentBudget: 100
+improvement: count: 0 percentage: 1.339881847100355E-4
+boost:
+spentTime: 8.712600ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 8.712600ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 164
+spent budget total: 298407
+spent time total: 42.972775700s
+spent budget of generation: 1251
+spent time of generation: 266.984400ms
+best: id: 0 cost: 300381.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 49 cost: 564474.0
+mutation:
+spentTime: 255.563500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 255.563500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.900200ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.940200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.940200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 165
+spent budget total: 299657
+spent time total: 43.255323500s
+spent budget of generation: 1250
+spent time of generation: 282.547800ms
+best: id: 0 cost: 300381.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 49 cost: 564474.0
+mutation:
+spentTime: 271.593100ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 271.593100ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.470500ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.723800ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.723800ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 166
+spent budget total: 300906
+spent time total: 43.510762600s
+spent budget of generation: 1249
+spent time of generation: 255.439100ms
+best: id: 0 cost: 300381.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 49 cost: 564474.0
+mutation:
+spentTime: 246.068700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 246.068700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.444500ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 8.428500ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 8.428500ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 167
+spent budget total: 302108
+spent time total: 43.766524700s
+spent budget of generation: 1202
+spent time of generation: 255.762100ms
+best: id: 0 cost: 299285.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 49 cost: 564474.0
+mutation:
+spentTime: 246.070100ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 246.070100ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.678600ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 8.622ms spentBudget: 7
+improvement: count: 1 percentage: 5.21242783569623E-4
+boost on best:
+spentTime: 8.622ms spentBudget: 7
+improvement: count: 1 percentage: 5.21242783569623E-4
+BOOST
+generation: 168
+spent budget total: 303359
+spent time total: 44.016622s
+spent budget of generation: 1251
+spent time of generation: 250.097300ms
+best: id: 0 cost: 299285.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 49 cost: 564474.0
+mutation:
+spentTime: 240.412700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 240.412700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.404ms spentBudget: 100
+improvement: count: 0 percentage: 5.209005072331241E-5
+boost:
+spentTime: 8.654900ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 8.654900ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 169
+spent budget total: 304610
+spent time total: 44.269764600s
+spent budget of generation: 1251
+spent time of generation: 253.142600ms
+best: id: 0 cost: 299285.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 27 cost: 561942.0
+mutation:
+spentTime: 243.414800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 243.414800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.359400ms spentBudget: 100
+improvement: count: 0 percentage: 9.614260355658543E-4
+boost:
+spentTime: 8.676200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 8.676200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 170
+spent budget total: 305860
+spent time total: 44.521877500s
+spent budget of generation: 1250
+spent time of generation: 252.112900ms
+best: id: 0 cost: 299285.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 27 cost: 561942.0
+mutation:
+spentTime: 242.443300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 242.443300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.474900ms spentBudget: 100
+improvement: count: 0 percentage: 8.851165416186469E-4
+boost:
+spentTime: 8.686ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 8.686ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 171
+spent budget total: 307059
+spent time total: 44.790643300s
+spent budget of generation: 1199
+spent time of generation: 268.765800ms
+best: id: 0 cost: 299211.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 27 cost: 561942.0
+mutation:
+spentTime: 259.409300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 259.409300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.509ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 8.345600ms spentBudget: 1
+improvement: count: 1 percentage: 2.4725596003805084E-4
+boost on best:
+spentTime: 8.345600ms spentBudget: 1
+improvement: count: 1 percentage: 2.4725596003805084E-4
+BOOST
+generation: 172
+spent budget total: 308310
+spent time total: 45.059127400s
+spent budget of generation: 1251
+spent time of generation: 268.484100ms
+best: id: 0 cost: 299211.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 27 cost: 561942.0
+mutation:
+spentTime: 258.716800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 258.716800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.451700ms spentBudget: 100
+improvement: count: 0 percentage: 3.092532743359666E-4
+boost:
+spentTime: 8.703600ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 8.703600ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 173
+spent budget total: 309537
+spent time total: 45.312232400s
+spent budget of generation: 1227
+spent time of generation: 253.105ms
+best: id: 0 cost: 298470.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 27 cost: 561942.0
+mutation:
+spentTime: 243.392900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 243.392900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.518300ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 8.508700ms spentBudget: 28
+improvement: count: 1 percentage: 8.844690106408442E-5
+boost on best:
+spentTime: 8.508700ms spentBudget: 28
+improvement: count: 1 percentage: 8.844690106408442E-5
+BOOST
+generation: 174
+spent budget total: 310771
+spent time total: 45.564277800s
+spent budget of generation: 1234
+spent time of generation: 252.045400ms
+best: id: 0 cost: 297756.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 27 cost: 561942.0
+mutation:
+spentTime: 242.010800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 242.010800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.780700ms spentBudget: 100
+improvement: count: 0 percentage: 3.616973842185889E-4
+boost:
+spentTime: 8.866100ms spentBudget: 34
+improvement: count: 1 percentage: 7.035883003316878E-5
+boost on best:
+spentTime: 8.866100ms spentBudget: 34
+improvement: count: 1 percentage: 7.035883003316878E-5
+BOOST
+generation: 175
+spent budget total: 312021
+spent time total: 45.838165500s
+spent budget of generation: 1250
+spent time of generation: 273.887700ms
+best: id: 0 cost: 297756.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 25 cost: 561493.0
+mutation:
+spentTime: 263.873700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 263.873700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.492200ms spentBudget: 100
+improvement: count: 0 percentage: 8.474184168472898E-4
+boost:
+spentTime: 8.936500ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 8.936500ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 176
+spent budget total: 313269
+spent time total: 46.093658300s
+spent budget of generation: 1248
+spent time of generation: 255.492800ms
+best: id: 0 cost: 297756.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 25 cost: 561493.0
+mutation:
+spentTime: 245.673400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 245.673400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.537600ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 8.679500ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 8.679500ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 177
+spent budget total: 314520
+spent time total: 46.348401700s
+spent budget of generation: 1251
+spent time of generation: 254.743400ms
+best: id: 0 cost: 297756.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 25 cost: 561493.0
+mutation:
+spentTime: 244.777600ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 244.777600ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.420800ms spentBudget: 100
+improvement: count: 0 percentage: 0.0010377203319807194
+boost:
+spentTime: 8.936900ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 8.936900ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 178
+spent budget total: 315739
+spent time total: 46.626789500s
+spent budget of generation: 1219
+spent time of generation: 278.387800ms
+best: id: 0 cost: 295606.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 25 cost: 561493.0
+mutation:
+spentTime: 268.419300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 268.419300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.494200ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 8.896700ms spentBudget: 19
+improvement: count: 1 percentage: 3.800356491114934E-4
+boost on best:
+spentTime: 8.896700ms spentBudget: 19
+improvement: count: 1 percentage: 3.800356491114934E-4
+BOOST
+generation: 179
+spent budget total: 316986
+spent time total: 46.906679300s
+spent budget of generation: 1247
+spent time of generation: 279.889800ms
+best: id: 0 cost: 295606.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 25 cost: 561493.0
+mutation:
+spentTime: 270.096300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 270.096300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.408700ms spentBudget: 100
+improvement: count: 0 percentage: 2.649423440035259E-4
+boost:
+spentTime: 8.827300ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 8.827300ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 180
+spent budget total: 318235
+spent time total: 47.167532400s
+spent budget of generation: 1249
+spent time of generation: 260.853100ms
+best: id: 0 cost: 295606.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 25 cost: 561493.0
+mutation:
+spentTime: 250.878200ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 250.878200ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.380300ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 8.965400ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 8.965400ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 181
+spent budget total: 319439
+spent time total: 47.423135400s
+spent budget of generation: 1204
+spent time of generation: 255.603ms
+best: id: 0 cost: 294371.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 25 cost: 561493.0
+mutation:
+spentTime: 244.549700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 244.549700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.684ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.868200ms spentBudget: 9
+improvement: count: 1 percentage: 4.6420648505856525E-4
+boost on best:
+spentTime: 9.868200ms spentBudget: 9
+improvement: count: 1 percentage: 4.6420648505856525E-4
+BOOST
+generation: 182
+spent budget total: 320690
+spent time total: 47.685107200s
+spent budget of generation: 1251
+spent time of generation: 261.971800ms
+best: id: 0 cost: 294371.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 25 cost: 561493.0
+mutation:
+spentTime: 251.582500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 251.582500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.492400ms spentBudget: 100
+improvement: count: 0 percentage: 2.540888589478474E-4
+boost:
+spentTime: 9.315600ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.315600ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 183
+spent budget total: 321938
+spent time total: 47.946244900s
+spent budget of generation: 1248
+spent time of generation: 261.137700ms
+best: id: 0 cost: 294371.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 25 cost: 561493.0
+mutation:
+spentTime: 250.939800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 250.939800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.422300ms spentBudget: 100
+improvement: count: 0 percentage: 4.477929637233713E-4
+boost:
+spentTime: 9.194600ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.194600ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 184
+spent budget total: 323186
+spent time total: 48.198653900s
+spent budget of generation: 1248
+spent time of generation: 252.409ms
+best: id: 0 cost: 294371.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 25 cost: 561493.0
+mutation:
+spentTime: 242.354900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 242.354900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.363400ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.060900ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.060900ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 185
+spent budget total: 324386
+spent time total: 48.451137900s
+spent budget of generation: 1200
+spent time of generation: 252.484ms
+best: id: 0 cost: 294291.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 25 cost: 561493.0
+mutation:
+spentTime: 242.643100ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 242.643100ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.391600ms spentBudget: 100
+improvement: count: 0 percentage: 6.978202380409504E-4
+boost:
+spentTime: 8.821ms spentBudget: 5
+improvement: count: 1 percentage: 5.435318017059654E-5
+boost on best:
+spentTime: 8.821ms spentBudget: 5
+improvement: count: 1 percentage: 5.435318017059654E-5
+BOOST
+generation: 186
+spent budget total: 325636
+spent time total: 48.704843200s
+spent budget of generation: 1250
+spent time of generation: 253.705300ms
+best: id: 0 cost: 294291.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 25 cost: 561493.0
+mutation:
+spentTime: 242.6ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 242.6ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.727600ms spentBudget: 100
+improvement: count: 0 percentage: 8.120090834914429E-4
+boost:
+spentTime: 9.577700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.577700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 187
+spent budget total: 326845
+spent time total: 48.964867100s
+spent budget of generation: 1209
+spent time of generation: 260.023900ms
+best: id: 0 cost: 289056.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 25 cost: 561493.0
+mutation:
+spentTime: 248.806600ms spentBudget: 1100
+improvement: count: 1 percentage: 1.0857506875281622E-5
+mutation on best:
+spentTime: 248.806600ms spentBudget: 1100
+improvement: count: 1 percentage: 1.0857506875281622E-5
+gene transfer:
+spentTime: 3.430600ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.137300ms spentBudget: 10
+improvement: count: 1 percentage: 5.915913160782993E-4
+boost on best:
+spentTime: 9.137300ms spentBudget: 10
+improvement: count: 1 percentage: 5.915913160782993E-4
+generation: 188
+spent budget total: 328044
+spent time total: 49.209316500s
+spent budget of generation: 1199
+spent time of generation: 244.449400ms
+best: id: 0 cost: 289056.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 25 cost: 561493.0
+mutation:
+spentTime: 243.394300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 243.394300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.526200ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 0s spentBudget: 0
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 0s spentBudget: 0
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 189
+spent budget total: 329294
+spent time total: 49.463903700s
+spent budget of generation: 1250
+spent time of generation: 254.587200ms
+best: id: 0 cost: 289056.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 25 cost: 561493.0
+mutation:
+spentTime: 244.171900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 244.171900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.345800ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.406500ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.406500ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 190
+spent budget total: 330545
+spent time total: 49.718391100s
+spent budget of generation: 1251
+spent time of generation: 254.487400ms
+best: id: 0 cost: 289056.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 25 cost: 561493.0
+mutation:
+spentTime: 244.305700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 244.305700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.516ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.067500ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.067500ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 191
+spent budget total: 331754
+spent time total: 49.974999400s
+spent budget of generation: 1209
+spent time of generation: 256.608300ms
+best: id: 0 cost: 288008.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 25 cost: 561493.0
+mutation:
+spentTime: 246.334800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 246.334800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.531800ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.234400ms spentBudget: 10
+improvement: count: 1 percentage: 3.625595040407381E-4
+boost on best:
+spentTime: 9.234400ms spentBudget: 10
+improvement: count: 1 percentage: 3.625595040407381E-4
+BOOST
+generation: 192
+spent budget total: 332955
+spent time total: 50.230979900s
+spent budget of generation: 1201
+spent time of generation: 255.980500ms
+best: id: 0 cost: 287089.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 25 cost: 561493.0
+mutation:
+spentTime: 245.530400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 245.530400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.459300ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.331200ms spentBudget: 2
+improvement: count: 1 percentage: 0.0015954417932835252
+boost on best:
+spentTime: 9.331200ms spentBudget: 2
+improvement: count: 1 percentage: 0.0015954417932835252
+BOOST
+generation: 193
+spent budget total: 334204
+spent time total: 50.491077500s
+spent budget of generation: 1249
+spent time of generation: 260.097600ms
+best: id: 0 cost: 287089.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 25 cost: 561493.0
+mutation:
+spentTime: 248.698500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 248.698500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.358200ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 10.216200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 10.216200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 194
+spent budget total: 335452
+spent time total: 50.747711800s
+spent budget of generation: 1248
+spent time of generation: 256.634300ms
+best: id: 0 cost: 287089.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 25 cost: 561493.0
+mutation:
+spentTime: 246.152900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 246.152900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.670600ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.309900ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.309900ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 195
+spent budget total: 336671
+spent time total: 51.003324600s
+spent budget of generation: 1219
+spent time of generation: 255.612800ms
+best: id: 0 cost: 286059.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 25 cost: 561493.0
+mutation:
+spentTime: 244.632800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 244.632800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.090100ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.770200ms spentBudget: 20
+improvement: count: 1 percentage: 1.7938688002674952E-4
+boost on best:
+spentTime: 9.770200ms spentBudget: 20
+improvement: count: 1 percentage: 1.7938688002674952E-4
+BOOST
+generation: 196
+spent budget total: 337920
+spent time total: 51.271822500s
+spent budget of generation: 1249
+spent time of generation: 268.497900ms
+best: id: 0 cost: 286059.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 25 cost: 561493.0
+mutation:
+spentTime: 258.244900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 258.244900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.451400ms spentBudget: 100
+improvement: count: 0 percentage: 1.0146099863062475E-4
+boost:
+spentTime: 9.235400ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.235400ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 197
+spent budget total: 339169
+spent time total: 51.522630900s
+spent budget of generation: 1249
+spent time of generation: 250.808400ms
+best: id: 0 cost: 286059.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 25 cost: 561493.0
+mutation:
+spentTime: 239.977700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 239.977700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.520900ms spentBudget: 100
+improvement: count: 0 percentage: 4.5221694186270424E-5
+boost:
+spentTime: 9.721300ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.721300ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 198
+spent budget total: 340391
+spent time total: 51.791108s
+spent budget of generation: 1222
+spent time of generation: 268.477100ms
+best: id: 0 cost: 286059.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 25 cost: 561493.0
+mutation:
+spentTime: 258.068200ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 258.068200ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.801500ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.351500ms spentBudget: 24
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.351500ms spentBudget: 24
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 199
+spent budget total: 341640
+spent time total: 52.043330700s
+spent budget of generation: 1249
+spent time of generation: 252.222700ms
+best: id: 0 cost: 286059.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 25 cost: 561493.0
+mutation:
+spentTime: 241.764200ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 241.764200ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.532200ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.395700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.395700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 200
+spent budget total: 342889
+spent time total: 52.295858300s
+spent budget of generation: 1249
+spent time of generation: 252.527600ms
+best: id: 0 cost: 286059.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 25 cost: 561493.0
+mutation:
+spentTime: 241.648900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 241.648900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.779600ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.794800ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.794800ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 201
+spent budget total: 344137
+spent time total: 52.545647600s
+spent budget of generation: 1248
+spent time of generation: 249.789300ms
+best: id: 0 cost: 286059.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 238.740400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 238.740400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.443200ms spentBudget: 100
+improvement: count: 0 percentage: 6.798125711273339E-4
+boost:
+spentTime: 9.858400ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.858400ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 202
+spent budget total: 345387
+spent time total: 52.796715700s
+spent budget of generation: 1250
+spent time of generation: 251.068100ms
+best: id: 0 cost: 286059.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 240.183800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 240.183800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.525600ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.731400ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.731400ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 203
+spent budget total: 346635
+spent time total: 53.050698500s
+spent budget of generation: 1248
+spent time of generation: 253.982800ms
+best: id: 0 cost: 286059.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 243.599800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 243.599800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.545600ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.326600ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.326600ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 204
+spent budget total: 347886
+spent time total: 53.315095800s
+spent budget of generation: 1251
+spent time of generation: 264.397300ms
+best: id: 0 cost: 286059.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 253.526400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 253.526400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.797600ms spentBudget: 100
+improvement: count: 0 percentage: 4.469426819670219E-4
+boost:
+spentTime: 9.707300ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.707300ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 205
+spent budget total: 349136
+spent time total: 53.572152300s
+spent budget of generation: 1250
+spent time of generation: 257.056500ms
+best: id: 0 cost: 286059.0
+second: id: 14 cost: 428685.0
+third: id: 35 cost: 429705.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 245.887400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 245.887400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.429200ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 10.238ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 10.238ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 206
+spent budget total: 350383
+spent time total: 53.833357300s
+spent budget of generation: 1247
+spent time of generation: 261.205ms
+best: id: 0 cost: 286059.0
+second: id: 15 cost: 428198.0
+third: id: 14 cost: 428685.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 250.703300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 250.703300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.481200ms spentBudget: 100
+improvement: count: 0 percentage: 0.001480747338878714
+boost:
+spentTime: 9.491700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.491700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 207
+spent budget total: 351591
+spent time total: 54.083610400s
+spent budget of generation: 1208
+spent time of generation: 250.253100ms
+best: id: 0 cost: 284726.0
+second: id: 17 cost: 421087.0
+third: id: 15 cost: 428198.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 239.935700ms spentBudget: 1100
+improvement: count: 1 percentage: 1.6127222752005853E-6
+mutation on best:
+spentTime: 239.935700ms spentBudget: 1100
+improvement: count: 1 percentage: 1.6127222752005853E-6
+gene transfer:
+spentTime: 3.455700ms spentBudget: 100
+improvement: count: 0 percentage: 0.0028107938348675377
+boost:
+spentTime: 9.251600ms spentBudget: 9
+improvement: count: 1 percentage: 3.2122355489213234E-4
+boost on best:
+spentTime: 9.251600ms spentBudget: 9
+improvement: count: 1 percentage: 3.2122355489213234E-4
+generation: 208
+spent budget total: 352791
+spent time total: 54.323817700s
+spent budget of generation: 1200
+spent time of generation: 240.207300ms
+best: id: 0 cost: 284726.0
+second: id: 17 cost: 421087.0
+third: id: 15 cost: 428198.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 239.075400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 239.075400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.566300ms spentBudget: 100
+improvement: count: 0 percentage: 4.1828977069529704E-4
+boost:
+spentTime: 0s spentBudget: 0
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 0s spentBudget: 0
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 209
+spent budget total: 353994
+spent time total: 54.580598100s
+spent budget of generation: 1203
+spent time of generation: 256.780400ms
+best: id: 0 cost: 284300.0
+second: id: 17 cost: 421087.0
+third: id: 15 cost: 428198.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 245.516100ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 245.516100ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.369800ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 10.148800ms spentBudget: 6
+improvement: count: 1 percentage: 2.493625450433005E-4
+boost on best:
+spentTime: 10.148800ms spentBudget: 6
+improvement: count: 1 percentage: 2.493625450433005E-4
+BOOST
+generation: 210
+spent budget total: 355243
+spent time total: 54.837457800s
+spent budget of generation: 1249
+spent time of generation: 256.859700ms
+best: id: 0 cost: 284300.0
+second: id: 17 cost: 421087.0
+third: id: 15 cost: 428198.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 244.547400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 244.547400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.368300ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 11.237200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 11.237200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 211
+spent budget total: 356492
+spent time total: 55.110147300s
+spent budget of generation: 1249
+spent time of generation: 272.689500ms
+best: id: 0 cost: 284300.0
+second: id: 17 cost: 421087.0
+third: id: 15 cost: 428198.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 261.684500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 261.684500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.491500ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.888200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.888200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 212
+spent budget total: 357742
+spent time total: 55.359821300s
+spent budget of generation: 1250
+spent time of generation: 249.674ms
+best: id: 0 cost: 284300.0
+second: id: 17 cost: 421087.0
+third: id: 15 cost: 428198.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 239.145500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 239.145500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.602800ms spentBudget: 100
+improvement: count: 0 percentage: 8.263305866752724E-5
+boost:
+spentTime: 9.448300ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.448300ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 213
+spent budget total: 358993
+spent time total: 55.624897400s
+spent budget of generation: 1251
+spent time of generation: 265.076100ms
+best: id: 0 cost: 284300.0
+second: id: 17 cost: 421087.0
+third: id: 15 cost: 428198.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 254.639300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 254.639300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.438600ms spentBudget: 100
+improvement: count: 0 percentage: 3.3630511444397883E-4
+boost:
+spentTime: 9.414200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.414200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 214
+spent budget total: 360240
+spent time total: 55.882149700s
+spent budget of generation: 1247
+spent time of generation: 257.252300ms
+best: id: 0 cost: 284300.0
+second: id: 17 cost: 421087.0
+third: id: 15 cost: 428198.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 246.7ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 246.7ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.466200ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.508ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.508ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 215
+spent budget total: 361490
+spent time total: 56.137796s
+spent budget of generation: 1250
+spent time of generation: 255.646300ms
+best: id: 0 cost: 284300.0
+second: id: 17 cost: 421087.0
+third: id: 15 cost: 428198.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 245.066300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 245.066300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.583800ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.533400ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.533400ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 216
+spent budget total: 362741
+spent time total: 56.391031800s
+spent budget of generation: 1251
+spent time of generation: 253.235800ms
+best: id: 0 cost: 284300.0
+second: id: 17 cost: 421087.0
+third: id: 15 cost: 428198.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 242.623300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 242.623300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.572400ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.527500ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.527500ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 217
+spent budget total: 363991
+spent time total: 56.643635500s
+spent budget of generation: 1250
+spent time of generation: 252.603700ms
+best: id: 0 cost: 284300.0
+second: id: 17 cost: 421087.0
+third: id: 15 cost: 428198.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 242.166700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 242.166700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.459400ms spentBudget: 100
+improvement: count: 0 percentage: 7.937362033691042E-4
+boost:
+spentTime: 9.300100ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.300100ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 218
+spent budget total: 365242
+spent time total: 56.941950700s
+spent budget of generation: 1251
+spent time of generation: 298.315200ms
+best: id: 0 cost: 284300.0
+second: id: 17 cost: 421087.0
+third: id: 15 cost: 428198.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 287.692300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 287.692300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.664900ms spentBudget: 100
+improvement: count: 0 percentage: 4.7746764765045467E-4
+boost:
+spentTime: 9.465400ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.465400ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 219
+spent budget total: 366493
+spent time total: 57.193314600s
+spent budget of generation: 1251
+spent time of generation: 251.363900ms
+best: id: 0 cost: 284300.0
+second: id: 17 cost: 421087.0
+third: id: 15 cost: 428198.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 240.905600ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 240.905600ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.498800ms spentBudget: 100
+improvement: count: 0 percentage: 2.815437345097982E-4
+boost:
+spentTime: 9.300500ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.300500ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 220
+spent budget total: 367743
+spent time total: 57.445974s
+spent budget of generation: 1250
+spent time of generation: 252.659400ms
+best: id: 0 cost: 284300.0
+second: id: 17 cost: 421087.0
+third: id: 15 cost: 428198.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 242.435ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 242.435ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.377600ms spentBudget: 100
+improvement: count: 0 percentage: 5.375848903734226E-4
+boost:
+spentTime: 9.191900ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.191900ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 221
+spent budget total: 368994
+spent time total: 57.694541500s
+spent budget of generation: 1251
+spent time of generation: 248.567500ms
+best: id: 0 cost: 284300.0
+second: id: 17 cost: 421087.0
+third: id: 15 cost: 428198.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 238.078300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 238.078300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.431300ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.503700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.503700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 222
+spent budget total: 370244
+spent time total: 57.960052100s
+spent budget of generation: 1250
+spent time of generation: 265.510600ms
+best: id: 0 cost: 284300.0
+second: id: 17 cost: 421087.0
+third: id: 15 cost: 428198.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 255.269600ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 255.269600ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.477800ms spentBudget: 100
+improvement: count: 0 percentage: 0.001110645855027429
+boost:
+spentTime: 9.193200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.193200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 223
+spent budget total: 371482
+spent time total: 58.208999700s
+spent budget of generation: 1238
+spent time of generation: 248.947600ms
+best: id: 0 cost: 283973.0
+second: id: 17 cost: 421087.0
+third: id: 15 cost: 428198.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 238.280900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 238.280900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.344ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.581500ms spentBudget: 40
+improvement: count: 1 percentage: 2.8754836440381126E-5
+boost on best:
+spentTime: 9.581500ms spentBudget: 40
+improvement: count: 1 percentage: 2.8754836440381126E-5
+BOOST
+generation: 224
+spent budget total: 372731
+spent time total: 58.464395100s
+spent budget of generation: 1249
+spent time of generation: 255.395400ms
+best: id: 0 cost: 283973.0
+second: id: 17 cost: 421087.0
+third: id: 15 cost: 428198.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 244.969800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 244.969800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.308600ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.404900ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.404900ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 225
+spent budget total: 373982
+spent time total: 58.718028200s
+spent budget of generation: 1251
+spent time of generation: 253.633100ms
+best: id: 0 cost: 283973.0
+second: id: 17 cost: 421087.0
+third: id: 15 cost: 428198.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 242.828900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 242.828900ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.503800ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.585400ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.585400ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 226
+spent budget total: 375232
+spent time total: 58.972626600s
+spent budget of generation: 1250
+spent time of generation: 254.598400ms
+best: id: 0 cost: 283973.0
+second: id: 17 cost: 421087.0
+third: id: 15 cost: 428198.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 244.060500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 244.060500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.313200ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.493ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.493ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 227
+spent budget total: 376481
+spent time total: 59.223935800s
+spent budget of generation: 1249
+spent time of generation: 251.309200ms
+best: id: 0 cost: 283973.0
+second: id: 17 cost: 421087.0
+third: id: 15 cost: 428198.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 240.923300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 240.923300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.571600ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.333400ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.333400ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 228
+spent budget total: 377730
+spent time total: 59.481786400s
+spent budget of generation: 1249
+spent time of generation: 257.850600ms
+best: id: 0 cost: 283973.0
+second: id: 17 cost: 421087.0
+third: id: 15 cost: 428198.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 247.237300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 247.237300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.316600ms spentBudget: 100
+improvement: count: 0 percentage: 3.4019359082793076E-5
+boost:
+spentTime: 9.558400ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.558400ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 229
+spent budget total: 378980
+spent time total: 59.747758900s
+spent budget of generation: 1250
+spent time of generation: 265.972500ms
+best: id: 0 cost: 283973.0
+second: id: 17 cost: 421087.0
+third: id: 15 cost: 428198.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 255.674ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 255.674ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.474200ms spentBudget: 100
+improvement: count: 0 percentage: 4.869978067139036E-4
+boost:
+spentTime: 9.326400ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.326400ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 230
+spent budget total: 380231
+spent time total: 59.999481700s
+spent budget of generation: 1251
+spent time of generation: 251.722800ms
+best: id: 0 cost: 283973.0
+second: id: 17 cost: 421087.0
+third: id: 15 cost: 428198.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 241.016800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 241.016800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.492300ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.660800ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.660800ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 231
+spent budget total: 381482
+spent time total: 1m 0.249521500s
+spent budget of generation: 1251
+spent time of generation: 250.039800ms
+best: id: 0 cost: 283973.0
+second: id: 17 cost: 421087.0
+third: id: 15 cost: 428198.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 239.684700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 239.684700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.513800ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.357400ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.357400ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 232
+spent budget total: 382732
+spent time total: 1m 0.499542s
+spent budget of generation: 1250
+spent time of generation: 250.020500ms
+best: id: 0 cost: 283973.0
+second: id: 17 cost: 421087.0
+third: id: 15 cost: 428198.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 239.289800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 239.289800ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.768100ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.598500ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.598500ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 233
+spent budget total: 383983
+spent time total: 1m 0.778155100s
+spent budget of generation: 1251
+spent time of generation: 278.613100ms
+best: id: 0 cost: 283973.0
+second: id: 17 cost: 421087.0
+third: id: 15 cost: 428198.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 268.212300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 268.212300ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.597900ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.370700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.370700ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 234
+spent budget total: 385234
+spent time total: 1m 1.029685s
+spent budget of generation: 1251
+spent time of generation: 251.529900ms
+best: id: 0 cost: 283973.0
+second: id: 17 cost: 421087.0
+third: id: 15 cost: 428198.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 241.174500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 241.174500ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.404400ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.374200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.374200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 235
+spent budget total: 386482
+spent time total: 1m 1.280061700s
+spent budget of generation: 1248
+spent time of generation: 250.376700ms
+best: id: 0 cost: 283973.0
+second: id: 17 cost: 421087.0
+third: id: 15 cost: 428198.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 239.841400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 239.841400ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.596300ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.396800ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.396800ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 236
+spent budget total: 387731
+spent time total: 1m 1.573573s
+spent budget of generation: 1249
+spent time of generation: 293.511300ms
+best: id: 0 cost: 282294.0
+second: id: 17 cost: 421087.0
+third: id: 15 cost: 428198.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 282.732200ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 282.732200ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.513100ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.737200ms spentBudget: 50
+improvement: count: 1 percentage: 1.1825067876171325E-4
+boost on best:
+spentTime: 9.737200ms spentBudget: 50
+improvement: count: 1 percentage: 1.1825067876171325E-4
+BOOST
+generation: 237
+spent budget total: 388981
+spent time total: 1m 1.824138600s
+spent budget of generation: 1250
+spent time of generation: 250.565600ms
+best: id: 0 cost: 282294.0
+second: id: 17 cost: 421087.0
+third: id: 15 cost: 428198.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 240.238700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 240.238700ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.409900ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.331400ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.331400ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 238
+spent budget total: 390230
+spent time total: 1m 2.080278500s
+spent budget of generation: 1249
+spent time of generation: 256.139900ms
+best: id: 0 cost: 282294.0
+second: id: 17 cost: 421087.0
+third: id: 15 cost: 428198.0
+worst: id: 19 cost: 553634.0
+mutation:
+spentTime: 245.506100ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+mutation on best:
+spentTime: 245.506100ms spentBudget: 1100
+improvement: count: 0 percentage: 0.0
+gene transfer:
+spentTime: 3.459900ms spentBudget: 100
+improvement: count: 0 percentage: 0.0
+boost:
+spentTime: 9.580200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+boost on best:
+spentTime: 9.580200ms spentBudget: 51
+improvement: count: 0 percentage: 0.0
+BOOST
+generation: 239
+spent budget total: 391481
+spent time total: 1m 2.345218500s
+spent budget of generation: 1251
+spent time of generation: 264.94ms
