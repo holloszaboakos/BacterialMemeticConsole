@@ -55,7 +55,7 @@ class MutationOperatorWithContinuousSegmentAndHeuristicApproach<S : ISpecimenRep
             val sumWeightOfEdgesLost = calculateWeightsOfNeighbouringEdges(
                 currentElement,
                 remainingElements
-            )!!.value.toDouble()
+            ).value.toDouble()
 
             if (sumWeightOfEdgesLost != 0.0)
                 weights[weightIndex] = weight / sumWeightOfEdgesLost * remainingElements.size.toLong()
@@ -124,17 +124,17 @@ class MutationOperatorWithContinuousSegmentAndHeuristicApproach<S : ISpecimenRep
                 previousElement < objectiveCount && element < objectiveCount -> costGraph
                     .getEdgeBetween(previousElement, element)
                     .length
-                    .multiplicativeInverse()!!.value.toDouble()
+                    .multiplicativeInverse().value.toDouble()
 
                 element < objectiveCount -> costGraph
                     .edgesFromCenter[element]
                     .length
-                    .multiplicativeInverse()!!.value.toDouble()
+                    .multiplicativeInverse().value.toDouble()
 
                 previousElement < objectiveCount -> costGraph
                     .edgesToCenter[previousElement]
                     .length
-                    .multiplicativeInverse()!!.value.toDouble()
+                    .multiplicativeInverse().value.toDouble()
 
                 else -> 1.0
             }

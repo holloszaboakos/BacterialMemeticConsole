@@ -56,7 +56,7 @@ class MutationOnSpecimenWithRandomContinuousSegmentAndFullCoverAndSimulatedAnnea
             improvementCountPerRun = if (impruvement) 1 else 0,
             improvementPercentagePerBudget =
             if (impruvement)
-                (1 - (specimen.cost!!.value.toDouble() / oldSpecimenCost!!.value.toDouble())) / spentBudget
+                (1 - (specimen.costOrException().value.toDouble() / oldSpecimenCost!!.value.toDouble())) / spentBudget
             else
                 0.0
         )

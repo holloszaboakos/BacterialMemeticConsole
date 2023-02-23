@@ -23,7 +23,7 @@ class DistancePreservingCrossOver<S : ISpecimenRepresentation<C>, C : PhysicsUni
                 value
         }
         child.iteration = algorithmState.iteration
-        child.costCalculated = false
+        child.cost = null
         child.inUse = true
 
 

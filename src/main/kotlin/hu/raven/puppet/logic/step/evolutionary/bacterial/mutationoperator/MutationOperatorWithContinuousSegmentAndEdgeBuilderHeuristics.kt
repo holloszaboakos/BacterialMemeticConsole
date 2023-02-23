@@ -225,7 +225,7 @@ class MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics<S : ISpecime
             calculateWeightBetween(
                 selectedElements[fromIndex],
                 nextElement
-            )!!.value.toDouble()
+            ).value.toDouble()
         }
     }
 
@@ -245,7 +245,7 @@ class MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics<S : ISpecime
             calculateWeightBetween(
                 previousElement,
                 selectedElements[toIndex]
-            )!!.value.toDouble()
+            ).value.toDouble()
         }
     }
 
@@ -257,7 +257,7 @@ class MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics<S : ISpecime
                 calculateWeightBetween(
                     selectedElements[fromIndex],
                     selectedElements[toIndex]
-                )!!.value.toDouble()
+                ).value.toDouble()
             }
         }
     }

@@ -72,7 +72,7 @@ class GeneticEdgeRecombinationCrossOver<S : ISpecimenRepresentation<C>, C : Phys
             neighborsOfPrevious.clear()
         }
         child.iteration = algorithmState.iteration
-        child.costCalculated = false
+        child.cost = null
         child.inUse = true
 
 

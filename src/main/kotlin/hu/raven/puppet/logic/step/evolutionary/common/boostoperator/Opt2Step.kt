@@ -11,9 +11,9 @@ class Opt2Step<S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>> : BoostOperat
     @OptIn(ExperimentalTime::class)
     override fun invoke(specimen: S): StepEfficiencyData {
         var spentBudget = 0L
-        val oldCost = specimen.cost
+        val oldCost = specimen.costOrException()
         val spentTime = measureTime {
-            val bestCost = specimen.cost
+            val bestCost = specimen.costOrException()
 
             outer@ for (firstIndex in 0 until algorithmState.population.first().permutationSize - 1) {
                 for (secondIndex in firstIndex + 1 until algorithmState.population.first().permutationSize) {
@@ -21,7 +21,7 @@ class Opt2Step<S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>> : BoostOperat
                     calculateCostOf(specimen)
                     spentBudget++
 
-                    if (specimen.cost!! >= bestCost!!) {
+                    if (specimen.costOrException() >= bestCost) {
                         specimen.swapGenes(firstIndex, secondIndex)
                         specimen.cost = bestCost
                         continue
@@ -35,10 +35,10 @@ class Opt2Step<S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>> : BoostOperat
         return StepEfficiencyData(
             spentTime = spentTime,
             spentBudget = spentBudget,
-            improvementCountPerRun = if (specimen.cost!! < oldCost!!) 1 else 0,
+            improvementCountPerRun = if (specimen.costOrException() < oldCost) 1 else 0,
             improvementPercentagePerBudget =
-            if (specimen.cost!! < oldCost!!)
-                (1 - (specimen.cost!!.value.toDouble() / oldCost!!.value.toDouble())) / spentBudget
+            if (specimen.costOrException() < oldCost)
+                (1 - (specimen.costOrException().value.toDouble() / oldCost.value.toDouble())) / spentBudget
             else
                 0.0
         )

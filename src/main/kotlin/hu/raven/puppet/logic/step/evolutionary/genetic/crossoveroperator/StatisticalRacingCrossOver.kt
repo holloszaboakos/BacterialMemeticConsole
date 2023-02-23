@@ -80,13 +80,13 @@ class StatisticalRacingCrossOver<S : ISpecimenRepresentation<C>, C : PhysicsUnit
                             (algorithm.population.size - parents.first.orderInPopulation).toDouble().pow(2) *
                                     (algorithm.population.size - parents.second.orderInPopulation).toDouble().pow(2)
                     }
-                    else*/ if (parents.first.cost!! > child.cost!!) {
-                    actualStatistics.success += (algorithmState.iteration - parents.first.iteration) / child.cost!!.value.toDouble() /
+                    else*/ if (parents.first.costOrException() > child.costOrException()) {
+                    actualStatistics.success += (algorithmState.iteration - parents.first.iteration) / child.costOrException().value.toDouble() /
                             (parents.first.orderInPopulation + 1).toDouble().pow(2)
 
                 }
-                    /*else*/ if (parents.second.cost!! > child.cost!!) {
-                    actualStatistics.success += (algorithmState.iteration - parents.second.iteration) / child.cost!!.value.toDouble() /
+                    /*else*/ if (parents.second.costOrException() > child.costOrException()) {
+                    actualStatistics.success += (algorithmState.iteration - parents.second.iteration) / child.costOrException().value.toDouble() /
                             (parents.second.orderInPopulation + 1).toDouble().pow(2)
                 }
                 }

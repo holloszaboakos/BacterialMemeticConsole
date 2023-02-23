@@ -15,7 +15,7 @@ class Opt2Iteration<S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>> : LocalS
 
     override fun invoke() = algorithmState.run {
         val best = actualCandidate
-        var bestCost = best.cost!!
+        var bestCost = best.costOrException()
         var tempGene: Int
         if (sourceIndex == 0) {
             permutation = (0 until best.permutationIndices.count() - 1).shuffled()
@@ -28,9 +28,9 @@ class Opt2Iteration<S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>> : LocalS
             best[firstIndex] = best[secondIndex]
             best[secondIndex] = tempGene
             calculateCostOf(best)
-            if (best.cost!! < bestCost) {
+            if (best.costOrException() < bestCost) {
                 println(best.cost)
-                bestCost = best.cost!!
+                bestCost = best.costOrException()
             } else {
                 tempGene = best[firstIndex]
                 best[firstIndex] = best[secondIndex]

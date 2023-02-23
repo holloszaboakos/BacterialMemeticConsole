@@ -50,7 +50,7 @@ class InitializePopulationByRandom<S : ISpecimenRepresentation<C>, C : PhysicsUn
                 }
             }
             permutation.iteration = 0
-            permutation.costCalculated = false
+            permutation.cost = null
             permutation.inUse = true
         }
     }

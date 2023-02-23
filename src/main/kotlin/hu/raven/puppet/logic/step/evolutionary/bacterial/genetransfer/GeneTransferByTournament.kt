@@ -37,7 +37,7 @@ class GeneTransferByTournament<S : ISpecimenRepresentation<C>, C : PhysicsUnit<C
                 .map { injectionCount ->
                     async {
                         val specimen = populationInRandomPairs[injectionCount % populationInRandomPairs.size]
-                            .sortedBy { it.cost!!.value.toDouble() }
+                            .sortedBy { it.costOrException().value.toDouble() }
 
                         synchronized(populationInRandomPairs[injectionCount % populationInRandomPairs.size][0]) {
                             synchronized(populationInRandomPairs[injectionCount % populationInRandomPairs.size][1]) {

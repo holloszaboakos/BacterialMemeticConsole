@@ -20,7 +20,7 @@ class BoostOnFirstThatImproved<S : ISpecimenRepresentation<C>, C : PhysicsUnit<C
 
         algorithmState.population
             .firstOrNull {
-                costPerPermutation[it.id] != null && it.cost!! < costPerPermutation[it.id]!!
+                costPerPermutation[it.id] != null && it.costOrException() < costPerPermutation[it.id]!!
             }
             ?.let {
                 costPerPermutation[it.id] = it.cost

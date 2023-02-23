@@ -6,6 +6,7 @@ import hu.raven.puppet.model.task.DTask
 import hu.raven.puppet.modules.FilePathVariableNames
 import hu.raven.puppet.utility.inject
 import java.io.File
+import java.lang.Exception
 
 sealed class TaskLoader {
 
@@ -25,9 +26,10 @@ sealed class TaskLoader {
         argumentName: FilePathVariableNames
     ): T {
         val filePath: String by inject(argumentName)
-        val file = File("$folderPath\\$filePath")
+        val path = "/$folderPath/$filePath"
+        val resourceURL = this::class.java.getResource(path) ?: throw Exception("File not found")
         val gson = Gson()
-        return gson.fromJson(file.readText(), T::class.java)
+        return gson.fromJson(resourceURL.readText(), T::class.java)
     }
 
     abstract fun logEstimates(task: DTask)

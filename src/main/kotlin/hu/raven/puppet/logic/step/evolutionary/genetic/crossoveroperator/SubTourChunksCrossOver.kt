@@ -52,7 +52,7 @@ class SubTourChunksCrossOver<S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>>
             }
         }
         child.iteration = algorithmState.iteration
-        child.costCalculated = false
+        child.cost = null
         child.inUse = true
 
 

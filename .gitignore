@@ -12,7 +12,7 @@
 .idea/**/dictionaries
 .idea/**/shelf
 
-input/de-smet/belgium-road-time-n2750-k55.vrp
+src/main/resources/input/de-smet/belgium-road-time-n2750-k55.vrp
 # AWS User-specific
 .idea/**/aws.xml
 
@@ -168,6 +168,6 @@ gradle-app.setting
 *.hprof
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij,kotlin,gradle
-/input/hungarianExample/between.json
+/src/main/resources/input/hungarianExample/between.json
 /.idea/
 /gradle/

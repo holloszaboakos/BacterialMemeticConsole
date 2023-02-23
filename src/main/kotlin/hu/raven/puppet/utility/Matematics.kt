@@ -1,18 +1,5 @@
 package hu.raven.puppet.utility
 
-fun Int.biggestCommonDivider(other: Int): Int {
-    val numbers = intArrayOf(this, other).sorted()
-    return biggestCommonDivisorRecursion(numbers[0], numbers[1])
-}
-
-private fun biggestCommonDivisorRecursion(smaller: Int, bigger: Int): Int =
-    if (smaller == 0)
-        bigger
-    else
-        biggestCommonDivisorRecursion(bigger % smaller, smaller)
-
-
-fun smallestCommonMultiple(a: Int, b: Int) = a * b / a.biggestCommonDivider(b)
 
 fun IntArray.rotate(step: Int) {
     val stepModulo = step % size
@@ -26,3 +13,28 @@ fun IntArray.rotate(step: Int) {
         this[index] = save[index - size + stepModulo]
     }
 }
+fun Int.biggestCommonDivider(other: Int): Int {
+    val numbers = intArrayOf(this, other).sorted()
+    var smaller = numbers[0]
+    var bigger = numbers[0]
+    while (smaller != 0) {
+        val newSmaller = bigger % smaller
+        bigger = smaller
+        smaller = newSmaller
+    }
+    return bigger
+}
+fun Long.biggestCommonDivider(other: Long): Long {
+    val numbers = longArrayOf(this, other).sorted()
+    var smaller = numbers[0]
+    var bigger = numbers[0]
+    while (smaller != 0L) {
+        val newSmaller = bigger % smaller
+        bigger = smaller
+        smaller = newSmaller
+    }
+    return bigger
+}
+
+fun smallestCommonMultiple(a: Int, b: Int) = a * b / a.biggestCommonDivider(b)
+fun smallestCommonMultiple(a: Long, b: Long) = a * b / a.biggestCommonDivider(b)

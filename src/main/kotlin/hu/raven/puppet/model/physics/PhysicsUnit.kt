@@ -2,7 +2,7 @@ package hu.raven.puppet.model.physics
 
 import hu.raven.puppet.model.physics.math.Fraction
 
-interface PhysicsUnit<S : PhysicsUnit<S>> {
+sealed interface PhysicsUnit<S : PhysicsUnit<S>> {
     val value: Fraction
     operator fun plus(other: S): S
     operator fun minus(other: S): S

@@ -13,7 +13,6 @@ data class DOnePartRepresentation<C : PhysicsUnit<C>>(
     override val objectiveCount: Int,
     val permutation: IntArray,
     override var inUse: Boolean = true,
-    override var costCalculated: Boolean = false,
     override var cost: C? = null,
     override var iteration: Int = 0,
     override var orderInPopulation: Int = 0
@@ -21,10 +20,10 @@ data class DOnePartRepresentation<C : PhysicsUnit<C>>(
 
     private val lock = ReentrantReadWriteLock()
 
-    constructor(id: Int, data: Array<IntArray>) : this(
-        id,
-        data.sumOf { it.size },
-        data.let {
+    constructor(id: Int,  data: Array<IntArray>) : this(
+        id = id,
+        objectiveCount = data.sumOf { it.size },
+        permutation = data.let {
             val objectiveCount = data.sumOf { it.size }
             val salesmanCount = data.size
             val permutation = IntArray(objectiveCount + salesmanCount - 1) { -1 }
@@ -48,7 +47,6 @@ data class DOnePartRepresentation<C : PhysicsUnit<C>>(
         other.objectiveCount,
         other.permutation.clone(),
         other.inUse,
-        other.costCalculated,
         other.cost,
         other.iteration
     )
@@ -161,7 +159,6 @@ data class DOnePartRepresentation<C : PhysicsUnit<C>>(
         if (objectiveCount != other.objectiveCount) return false
         if (!permutation.contentEquals(other.permutation)) return false
         if (inUse != other.inUse) return false
-        if (costCalculated != other.costCalculated) return false
         if (cost != other.cost) return false
         if (iteration != other.iteration) return false
         if (orderInPopulation != other.orderInPopulation) return false
@@ -177,7 +174,6 @@ data class DOnePartRepresentation<C : PhysicsUnit<C>>(
         var result = objectiveCount
         result = 31 * result + permutation.contentHashCode()
         result = 31 * result + inUse.hashCode()
-        result = 31 * result + costCalculated.hashCode()
         result = 31 * result + cost.hashCode()
         result = 31 * result + iteration
         result = 31 * result + orderInPopulation

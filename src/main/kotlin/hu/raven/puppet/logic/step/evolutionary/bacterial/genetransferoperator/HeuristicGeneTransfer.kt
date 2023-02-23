@@ -25,7 +25,7 @@ class GeneTransferByCrossOver<S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>
 
         calculateCostOf(child)
 
-        if (child.cost!! < target.cost!!) {
+        if (child.costOrException() < target.costOrException()) {
             target.setData(child.getData())
             val oldCost = target.cost
             target.cost = child.cost
@@ -33,7 +33,7 @@ class GeneTransferByCrossOver<S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>
                 spentTime = spentTime,
                 spentBudget = 1,
                 improvementCountPerRun = 1,
-                improvementPercentagePerBudget = 1 - (target.cost!!.value.toDouble() / oldCost!!.value.toDouble())
+                improvementPercentagePerBudget = 1 - (target.costOrException().value.toDouble() / oldCost!!.value.toDouble())
             )
         }
 

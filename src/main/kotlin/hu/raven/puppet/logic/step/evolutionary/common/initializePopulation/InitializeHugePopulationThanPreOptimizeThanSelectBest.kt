@@ -58,7 +58,6 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest<S : ISpecimenReprese
                     newPermutation.slice((breakPoints[it] + 1) until breakPoints[it + 1]).toIntArray()
                 })
                 instance.iteration = 0
-                instance.costCalculated = false
                 instance.inUse = true
                 instance.cost = null
             }

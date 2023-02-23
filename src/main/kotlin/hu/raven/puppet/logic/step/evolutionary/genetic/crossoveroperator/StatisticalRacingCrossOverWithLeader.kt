@@ -58,17 +58,17 @@ class StatisticalRacingCrossOverWithLeader<S : ISpecimenRepresentation<C>, C : P
                 operator.invoke(parents, child)
                 calculateCostOf(child)
                 synchronized(statistics) {
-                    if (parents.first.cost!! > child.cost!!)
+                    if (parents.first.costOrException() > child.costOrException())
                         statistics.success += (algorithmState.iteration - parents.first.iteration) *
                                 (algorithmState.population.size - parents.first.orderInPopulation) *
-                                ((parents.first.cost!!.value.toDouble() - child.cost!!.value.toDouble()) / parents.first.cost!!.value.toDouble()).pow(
+                                ((parents.first.costOrException().value.toDouble() - child.costOrException().value.toDouble()) / parents.first.costOrException().value.toDouble()).pow(
                                     2
                                 ) * 1.5
 
-                    if (parents.second.cost!! > child.cost!!)
+                    if (parents.second.costOrException() > child.costOrException())
                         statistics.success += (algorithmState.iteration - parents.second.iteration) *
                                 (algorithmState.population.size - parents.second.orderInPopulation) *
-                                ((parents.second.cost!!.value.toDouble() - child.cost!!.value.toDouble()) / parents.second.cost!!.value.toDouble()).pow(
+                                ((parents.second.costOrException().value.toDouble() - child.costOrException().value.toDouble()) / parents.second.costOrException().value.toDouble()).pow(
                                     2
                                 )
                 }

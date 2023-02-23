@@ -37,7 +37,7 @@ class PositionBasedCrossOver<S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>>
                 value
         }
         child.iteration = algorithmState.iteration
-        child.costCalculated = false
+        child.cost = null
         child.inUse = true
 
 

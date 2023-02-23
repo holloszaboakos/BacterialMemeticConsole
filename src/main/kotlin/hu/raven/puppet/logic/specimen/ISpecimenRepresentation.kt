@@ -5,7 +5,6 @@ import hu.raven.puppet.model.physics.PhysicsUnit
 sealed interface ISpecimenRepresentation<C : PhysicsUnit<C>> {
     val id: Int
     var inUse: Boolean
-    var costCalculated: Boolean
     var cost: C?
     var iteration: Int
     var orderInPopulation: Int
@@ -13,6 +12,8 @@ sealed interface ISpecimenRepresentation<C : PhysicsUnit<C>> {
     val salesmanCount: Int
     val permutationIndices: IntRange
     val permutationSize: Int
+
+    fun costOrException() = cost ?: throw Exception("Cost of specimen should be already set!")
 
     operator fun get(index: Int): Int
     operator fun set(index: Int, value: Int)

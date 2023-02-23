@@ -20,12 +20,12 @@ class OrderPopulationByCost<S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>> 
     ) = withContext(Dispatchers.Default) {
         algorithmState.run {
             population.asFlow()
-                .filter { !it.costCalculated }
+                .filter { it.cost == null }
                 .map { specimen ->
                     calculateCostOf(specimen)
                 }.collect()
 
-            population.sortBy { it.cost!!.value.toDouble() }
+            population.sortBy { it.costOrException().value.toDouble() }
 
             population.forEachIndexed { index, it ->
                 it.orderInPopulation = index

@@ -16,7 +16,7 @@ class SegmentInjectionGeneTransfer<S : ISpecimenRepresentation<C>, C : PhysicsUn
         target: S
     ): StepEfficiencyData {
         algorithmState.run {
-            val oldCost = target.cost
+            val oldCost = target.costOrException()
 
             val spentTime = measureTime {
                 val startOfSegment =
@@ -48,10 +48,10 @@ class SegmentInjectionGeneTransfer<S : ISpecimenRepresentation<C>, C : PhysicsUn
             return StepEfficiencyData(
                 spentTime = spentTime,
                 spentBudget = 1,
-                improvementCountPerRun = if (target.cost!! < oldCost!!) 1 else 0,
+                improvementCountPerRun = if (target.costOrException() < oldCost) 1 else 0,
                 improvementPercentagePerBudget =
-                if (target.cost!! < oldCost!!)
-                    1 - (target.cost!!.value.toDouble() / oldCost!!.value.toDouble())
+                if (target.costOrException() < oldCost)
+                    1 - (target.costOrException().value.toDouble() / oldCost.value.toDouble())
                 else 0.0
             )
         }
@@ -110,7 +110,7 @@ class SegmentInjectionGeneTransfer<S : ISpecimenRepresentation<C>, C : PhysicsUn
 
     private fun <S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>> resetFlagsOf(specimen: S) {
         specimen.iteration = algorithmState.iteration
-        specimen.costCalculated = false
+        specimen.cost = null
     }
 
     private fun <S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>> checkFormatOf(specimen: S) {

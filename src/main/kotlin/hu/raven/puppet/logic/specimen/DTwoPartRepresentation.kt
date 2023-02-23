@@ -10,20 +10,19 @@ data class DTwoPartRepresentation<C : PhysicsUnit<C>>(
     val permutation: IntArray,
     val sliceLengths: IntArray,
     override var inUse: Boolean = true,
-    override var costCalculated: Boolean = false,
     override var cost: C? = null,
     override var iteration: Int = 0,
     override var orderInPopulation: Int = -1,
 ) : ISpecimenRepresentation<C> {
 
     constructor(id: Int, data: Array<IntArray>) : this(
-        id,
-        data.let {
+        id = id,
+        permutation = data.let {
             val sum = mutableListOf<Int>()
             data.forEach { sum.addAll(it.toList()) }
             sum.toIntArray()
         },
-        data.map { it.size }.toIntArray(),
+        sliceLengths = data.map { it.size }.toIntArray()
     )
 
     constructor(other: DTwoPartRepresentation<C>) : this(
@@ -31,7 +30,6 @@ data class DTwoPartRepresentation<C : PhysicsUnit<C>>(
         other.permutation.clone(),
         other.sliceLengths.clone(),
         other.inUse,
-        other.costCalculated,
         other.cost,
         other.iteration
     )
@@ -137,7 +135,6 @@ data class DTwoPartRepresentation<C : PhysicsUnit<C>>(
         if (!permutation.contentEquals(other.permutation)) return false
         if (!sliceLengths.contentEquals(other.sliceLengths)) return false
         if (inUse != other.inUse) return false
-        if (costCalculated != other.costCalculated) return false
         if (cost != other.cost) return false
         if (iteration != other.iteration) return false
         if (orderInPopulation != other.orderInPopulation) return false
@@ -153,7 +150,6 @@ data class DTwoPartRepresentation<C : PhysicsUnit<C>>(
         var result = permutation.contentHashCode()
         result = 31 * result + sliceLengths.contentHashCode()
         result = 31 * result + inUse.hashCode()
-        result = 31 * result + costCalculated.hashCode()
         result = 31 * result + cost.hashCode()
         result = 31 * result + iteration
         result = 31 * result + orderInPopulation

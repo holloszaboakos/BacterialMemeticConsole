@@ -40,7 +40,7 @@ class VotingRecombinationCrossOver<S : ISpecimenRepresentation<C>, C : PhysicsUn
 
 
         child.iteration = algorithmState.iteration
-        child.costCalculated = false
+        child.cost = null
         child.inUse = true
 
 
