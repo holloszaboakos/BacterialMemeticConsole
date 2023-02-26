@@ -13,10 +13,11 @@ fun IntArray.rotate(step: Int) {
         this[index] = save[index - size + stepModulo]
     }
 }
+
 fun Int.biggestCommonDivider(other: Int): Int {
     val numbers = intArrayOf(this, other).sorted()
     var smaller = numbers[0]
-    var bigger = numbers[0]
+    var bigger = numbers[1]
     while (smaller != 0) {
         val newSmaller = bigger % smaller
         bigger = smaller
@@ -24,10 +25,19 @@ fun Int.biggestCommonDivider(other: Int): Int {
     }
     return bigger
 }
+
 fun Long.biggestCommonDivider(other: Long): Long {
-    val numbers = longArrayOf(this, other).sorted()
-    var smaller = numbers[0]
-    var bigger = numbers[0]
+    var smaller: Long
+    var bigger: Long
+
+    if (this > other) {
+        bigger = this
+        smaller = other
+    } else {
+        bigger = other
+        smaller = this
+    }
+
     while (smaller != 0L) {
         val newSmaller = bigger % smaller
         bigger = smaller

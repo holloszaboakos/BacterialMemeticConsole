@@ -55,7 +55,6 @@ class CalculateCostOfACVRPWithMultipleCapacity<S : ISpecimenRepresentation<Euro>
                 sumCost += tripState.cost
             }
             specimen.cost = sumCost
-            specimen.costCalculated = true
             if (sumCost == Euro(0)) {
                 println("Impossible!")
             }

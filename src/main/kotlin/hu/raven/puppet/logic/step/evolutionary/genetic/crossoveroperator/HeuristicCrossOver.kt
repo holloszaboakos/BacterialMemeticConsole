@@ -7,6 +7,7 @@ import hu.raven.puppet.model.physics.math.Fraction
 import hu.raven.puppet.model.physics.sum
 import hu.raven.puppet.model.task.graph.DEdge
 import hu.raven.puppet.model.task.graph.DGraph
+import java.lang.IllegalArgumentException
 import kotlin.random.Random
 import kotlin.random.Random.Default.nextInt
 
@@ -165,7 +166,11 @@ class HeuristicCrossOver<S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>> : C
         childContains: BooleanArray
     ) {
         val sum = weights.sum()
-        var choice = Random.nextDouble(sum.value.toDouble())
+        var choice = try {
+            Random.nextDouble(sum.value.toDouble())
+        } catch (e: IllegalArgumentException){
+            throw e
+        }
 
         for (weightIndex in weights.indices) {
             choice -= weights[weightIndex].value.toDouble()

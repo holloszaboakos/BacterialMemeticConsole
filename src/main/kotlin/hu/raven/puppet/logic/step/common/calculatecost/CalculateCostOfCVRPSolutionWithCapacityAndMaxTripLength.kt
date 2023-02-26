@@ -80,7 +80,6 @@ class CalculateCostOfCVRPSolutionWithCapacityAndMaxTripLength<S : ISpecimenRepre
                 doubleLogger("startCount: $startCount endCount: $endCount")
             }
             specimen.cost = sumCost!!
-            specimen.costCalculated = true
             if (sumCost == Meter(0)) {
                 println("Impossible!")
             }

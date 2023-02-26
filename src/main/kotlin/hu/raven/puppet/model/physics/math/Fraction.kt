@@ -5,6 +5,12 @@ import hu.raven.puppet.utility.biggestCommonDivider
 @JvmInline
 value class Fraction private constructor(val value: Pair<Long, Long>) {
 
+    init {
+        if (value.second == 0L) {
+            throw ArithmeticException("Division by zero!")
+        }
+    }
+
     constructor() : this(Pair(0, 1))
     constructor(value: Long) : this(Pair(value, 1))
     constructor(first: Long, second: Long) : this(Pair(first, second))
@@ -37,7 +43,7 @@ value class Fraction private constructor(val value: Pair<Long, Long>) {
             result.simplify()
     }
 
-    operator fun times(other: Fraction) :Fraction {
+    operator fun times(other: Fraction): Fraction {
         val result = Fraction(
             Pair(
                 value.first * other.value.first,
@@ -50,7 +56,8 @@ value class Fraction private constructor(val value: Pair<Long, Long>) {
         else
             result.simplify()
     }
-    operator fun times(other: Long) :Fraction {
+
+    operator fun times(other: Long): Fraction {
         val result = Fraction(value.first * other, value.second)
 
         return if (result.value.first < Int.MAX_VALUE && result.value.second < Int.MAX_VALUE)
@@ -59,7 +66,11 @@ value class Fraction private constructor(val value: Pair<Long, Long>) {
             result.simplify()
     }
 
-    operator fun div(other: Fraction) :Fraction {
+    operator fun div(other: Fraction): Fraction {
+        if (other.value.first == 0L) {
+            throw ArithmeticException("Division by zero!")
+        }
+
         val result = Fraction(
             Pair(
                 value.first * other.value.second,
@@ -73,7 +84,7 @@ value class Fraction private constructor(val value: Pair<Long, Long>) {
             result.simplify()
     }
 
-    operator fun div(other: Long) :Fraction {
+    operator fun div(other: Long): Fraction {
         val result = Fraction(value.first, value.second * other)
 
         return if (result.value.first < Int.MAX_VALUE && result.value.second < Int.MAX_VALUE)
@@ -87,8 +98,18 @@ value class Fraction private constructor(val value: Pair<Long, Long>) {
 
     fun toDouble() = value.first / value.second.toDouble()
 
-    private fun simplify():Fraction{
+    private fun simplify(): Fraction {
+        if (value.first == 0L) {
+            return Fraction(0, 1)
+        }
+        if (value.second == 0L) {
+            return Fraction(0, 0)
+        }
+
         val biggestCommonDivider = value.first.biggestCommonDivider(value.second)
+        if (biggestCommonDivider == 1L) {
+            return Fraction(value.first / 2, value.second / 2)
+        }
         return Fraction(
             value.first / biggestCommonDivider,
             value.second / biggestCommonDivider

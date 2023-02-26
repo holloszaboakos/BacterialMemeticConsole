@@ -51,7 +51,6 @@ class CalculateCostOfCVRPSolutionWithCapacity<S : ISpecimenRepresentation<Meter>
                 }
             }
             specimen.cost = tripState.cost
-            specimen.costCalculated = true
             if (tripState.cost == Meter(0)) {
                 println("Impossible!")
             }

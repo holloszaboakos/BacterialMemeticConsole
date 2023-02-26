@@ -67,7 +67,6 @@ class CalculateCostOfVRPSolutionWithoutCapacity<S : ISpecimenRepresentation<Euro
 
             }
             specimen.cost = sumCost
-            specimen.costCalculated = true
             if (sumCost == Euro(0)) {
                 println("Impossible!")
             }

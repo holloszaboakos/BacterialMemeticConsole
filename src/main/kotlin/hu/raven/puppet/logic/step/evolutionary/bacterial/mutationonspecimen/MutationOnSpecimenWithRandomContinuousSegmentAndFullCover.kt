@@ -17,7 +17,10 @@ class MutationOnSpecimenWithRandomContinuousSegmentAndFullCover<S : ISpecimenRep
     @OptIn(ExperimentalTime::class)
     override fun invoke(specimen: S): StepEfficiencyData = algorithmState.run {
         var impruvement = false
-        val oldSpecimenCost = specimen.cost
+        if (specimen.cost == null) {
+            calcCostOfEachAndSort(mutableListOf(specimen))
+        }
+        val oldSpecimenCost = specimen.cost!!
         val duration = measureTime {
             repeat(cloneCycleCount) { cycleIndex ->
                 val selectedPosition = order[(iteration * cloneCycleCount + cycleIndex) % order.size]
@@ -50,7 +53,7 @@ class MutationOnSpecimenWithRandomContinuousSegmentAndFullCover<S : ISpecimenRep
             improvementCountPerRun = if (impruvement) 1 else 0,
             improvementPercentagePerBudget =
             if (impruvement)
-                (1 - (specimen.costOrException().value.toDouble() / oldSpecimenCost!!.value.toDouble())) / spentBudget
+                (1 - (specimen.costOrException().value.toDouble() / oldSpecimenCost.value.toDouble())) / spentBudget
             else
                 0.0
         )
