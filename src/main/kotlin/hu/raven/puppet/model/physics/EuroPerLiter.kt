@@ -5,6 +5,7 @@ import hu.raven.puppet.model.physics.math.Fraction
 @JvmInline
 value class EuroPerLiter(override val value: Fraction) : PhysicsUnit<EuroPerLiter> {
     constructor(value: Long) : this(Fraction(value))
+    constructor(first: Long, second: Long) : this(Fraction(first, second))
 
     override operator fun plus(other: EuroPerLiter) = EuroPerLiter(value + other.value)
     override operator fun minus(other: EuroPerLiter) = EuroPerLiter(value - other.value)
