@@ -1,10 +1,10 @@
 package hu.raven.puppet.logic.step.crossoveroperator
 
-import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.logic.statistics.GeneticAlgorithmStatistics
 import hu.raven.puppet.logic.statistics.OperatorStatistics
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.model.physics.PhysicsUnit
+import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.utility.inject
 import kotlin.math.pow
 import kotlin.random.Random.Default.nextDouble

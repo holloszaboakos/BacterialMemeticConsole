@@ -1,8 +1,8 @@
 package hu.raven.puppet.logic.step.mutationonspecimen
 
-import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.physics.PhysicsUnit
+import hu.raven.puppet.model.solution.SolutionRepresentation
 import kotlin.math.exp
 import kotlin.random.Random
 import kotlin.time.ExperimentalTime

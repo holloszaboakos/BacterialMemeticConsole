@@ -21,7 +21,6 @@ fun List<Fraction>.sumClever(): Fraction {
     val sortedByExponential = sortedBy { it.exponential }
     var actual = sortedByExponential
     while (actual.size > 1) {
-        println("array size: ${actual.size}")
         actual = (listOf(actual[0] + actual[1]) + actual.slice(2 until actual.size)).sortedBy { it.exponential }
     }
     return actual[0]

@@ -1,10 +1,9 @@
 package hu.raven.puppet.logic.step.mutationoperator
 
-import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.logic.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.model.physics.PhysicsUnit
+import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.utility.extention.asPermutation
-import hu.raven.puppet.utility.extention.shuffled
 import hu.raven.puppet.utility.inject
 
 

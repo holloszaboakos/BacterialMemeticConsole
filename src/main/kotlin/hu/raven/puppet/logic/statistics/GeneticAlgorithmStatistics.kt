@@ -1,8 +1,8 @@
 package hu.raven.puppet.logic.statistics
 
-import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.logic.step.crossoveroperator.*
 import hu.raven.puppet.model.physics.PhysicsUnit
+import hu.raven.puppet.model.solution.SolutionRepresentation
 
 class GeneticAlgorithmStatistics<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> : AlgorithmStatistics {
     override var diversity = Double.MAX_VALUE

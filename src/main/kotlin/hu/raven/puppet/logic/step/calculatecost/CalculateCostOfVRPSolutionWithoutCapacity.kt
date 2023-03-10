@@ -1,7 +1,7 @@
 package hu.raven.puppet.logic.step.calculatecost
 
-import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.model.physics.Euro
+import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.model.task.DSalesman
 import hu.raven.puppet.model.task.graph.DEdge
 import hu.raven.puppet.model.task.graph.DObjective

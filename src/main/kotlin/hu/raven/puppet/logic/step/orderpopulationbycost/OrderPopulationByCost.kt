@@ -1,9 +1,9 @@
 package hu.raven.puppet.logic.step.orderpopulationbycost
 
-import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.logic.step.EvolutionaryAlgorithmStep
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.model.physics.PhysicsUnit
+import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.utility.inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.asFlow

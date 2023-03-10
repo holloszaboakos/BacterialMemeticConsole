@@ -1,9 +1,8 @@
 package hu.raven.puppet.logic.step.crossoveroperator
 
-import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.model.physics.PhysicsUnit
+import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.utility.extention.min
-import hu.raven.puppet.utility.extention.sum
 import hu.raven.puppet.utility.extention.sumClever
 import kotlin.math.abs
 

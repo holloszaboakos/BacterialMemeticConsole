@@ -8,7 +8,6 @@ import hu.raven.puppet.model.task.graph.DGraph
 import hu.raven.puppet.model.task.graph.DObjective
 import hu.raven.puppet.modules.FilePathVariableNames
 import hu.raven.puppet.utility.extention.min
-import hu.raven.puppet.utility.extention.sum
 import hu.raven.puppet.utility.extention.sumClever
 
 class DefaultTaskLoader : TaskLoader() {
@@ -50,7 +49,7 @@ class DefaultTaskLoader : TaskLoader() {
         task.costGraph.apply {
             val salesman = task.salesmen.first()
 
-            if(edgesBetween.any { it.values.any { it.length.value.numerator < 0 || it.length.value.denominator < 0  } }){
+            if (edgesBetween.any { it.values.any { it.length.value.numerator < 0 || it.length.value.denominator < 0 } }) {
                 println("WTF")
             }
 

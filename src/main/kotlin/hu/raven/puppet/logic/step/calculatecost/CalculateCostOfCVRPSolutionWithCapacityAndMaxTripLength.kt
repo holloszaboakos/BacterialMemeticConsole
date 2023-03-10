@@ -1,10 +1,10 @@
 package hu.raven.puppet.logic.step.calculatecost
 
 import hu.raven.puppet.logic.logging.DoubleLogger
-import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.model.physics.Meter
 import hu.raven.puppet.model.physics.Stere
 import hu.raven.puppet.model.physics.sum
+import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.inject
 

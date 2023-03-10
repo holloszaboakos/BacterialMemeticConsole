@@ -1,7 +1,7 @@
 package hu.raven.puppet.logic.state
 
-import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.model.physics.PhysicsUnit
+import hu.raven.puppet.model.solution.SolutionRepresentation
 
 class IterativeAlgorithmStateWithSingleCandidate<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> :
     IterativeAlgorithmState {

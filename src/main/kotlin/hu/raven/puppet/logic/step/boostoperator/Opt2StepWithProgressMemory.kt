@@ -1,8 +1,8 @@
 package hu.raven.puppet.logic.step.boostoperator
 
-import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.physics.PhysicsUnit
+import hu.raven.puppet.model.solution.SolutionRepresentation
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 

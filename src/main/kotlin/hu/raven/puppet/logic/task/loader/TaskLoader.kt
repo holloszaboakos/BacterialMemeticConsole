@@ -5,8 +5,6 @@ import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.model.task.DTask
 import hu.raven.puppet.modules.FilePathVariableNames
 import hu.raven.puppet.utility.inject
-import java.io.File
-import java.lang.Exception
 
 sealed class TaskLoader {
 

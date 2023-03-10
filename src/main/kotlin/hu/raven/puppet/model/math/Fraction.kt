@@ -4,6 +4,7 @@ import hu.raven.puppet.utility.biggestCommonDivider
 import hu.raven.puppet.utility.extention.divByTwoToThePowerOf
 import hu.raven.puppet.utility.extention.log2
 import hu.raven.puppet.utility.extention.timesTwoToThePowerOf
+import java.lang.Integer.min
 import kotlin.math.pow
 
 class Fraction private constructor(
@@ -104,10 +105,11 @@ class Fraction private constructor(
 
             exponential > other.exponential -> {
                 val expDiff = exponential - other.exponential
-                println("expDiff: $expDiff")
-                val newNumerator = numerator.toLong().timesTwoToThePowerOf(expDiff)
+                val maxShift = min(numerator.countLeadingZeroBits() - 1, expDiff)
+                val newNumerator = numerator.toLong().timesTwoToThePowerOf(maxShift)
+                val newOtherNumerator = other.numerator.toLong().divByTwoToThePowerOf(expDiff - maxShift)
                 new(
-                    newNumerator * other.denominator + other.numerator.toLong() * denominator,
+                    newNumerator * other.denominator + newOtherNumerator * denominator,
                     denominator.toLong() * other.denominator,
                     other.exponential
                 )
@@ -115,10 +117,11 @@ class Fraction private constructor(
 
             else -> {
                 val expDiff = other.exponential - exponential
-                println("expDiff: $expDiff")
-                val otherNumerator = other.numerator.toLong().timesTwoToThePowerOf(expDiff)
+                val maxShift = min(other.numerator.countLeadingZeroBits() - 1, expDiff)
+                val newOtherNumerator = other.numerator.toLong().timesTwoToThePowerOf(maxShift)
+                val newNumerator = numerator.toLong().divByTwoToThePowerOf(expDiff - maxShift)
                 new(
-                    numerator.toLong() * other.denominator + otherNumerator * denominator,
+                    newNumerator * other.denominator + newOtherNumerator * denominator,
                     denominator.toLong() * other.denominator,
                     exponential
                 )
@@ -142,21 +145,25 @@ class Fraction private constructor(
 
             exponential > other.exponential -> {
                 val expDiff = exponential - other.exponential
-                val newNumerator = numerator.toLong().timesTwoToThePowerOf(expDiff)
+                val maxShift = min(numerator.countLeadingZeroBits() - 1, expDiff)
+                val newNumerator = numerator.toLong().timesTwoToThePowerOf(maxShift)
+                val newOtherNumerator = other.numerator.toLong().divByTwoToThePowerOf(expDiff - maxShift)
                 new(
-                    newNumerator * other.denominator - other.numerator.toLong() * denominator,
+                    newNumerator * other.denominator - newOtherNumerator * denominator,
                     denominator.toLong() * other.denominator,
-                    other.exponential
+                    exponential - maxShift
                 )
             }
 
             else -> {
                 val expDiff = other.exponential - exponential
-                val otherNumerator = other.numerator.toLong().timesTwoToThePowerOf(expDiff)
+                val maxShift = min(other.numerator.countLeadingZeroBits() - 1, expDiff)
+                val newOtherNumerator = other.numerator.toLong().timesTwoToThePowerOf(maxShift)
+                val newNumerator = numerator.toLong().divByTwoToThePowerOf(expDiff - maxShift)
                 new(
-                    numerator.toLong() * other.denominator - otherNumerator * denominator,
+                    newNumerator * other.denominator - newOtherNumerator * denominator,
                     denominator.toLong() * other.denominator,
-                    exponential
+                    other.exponential - maxShift
                 )
             }
         }
@@ -191,30 +198,34 @@ class Fraction private constructor(
     operator fun compareTo(other: Fraction): Int {
         return when {
             numerator == 0 && other.numerator == 0 -> 0
+            numerator == 0 -> -1
+            other.numerator == 0 -> -1
 
             exponential == other.exponential -> {
-                (numerator * other.denominator).compareTo(other.numerator * denominator)
+                (numerator.toLong() * other.denominator).compareTo(other.numerator.toLong() * denominator)
             }
 
-            exponential > other.exponential -> when {
-                numerator * other.denominator >= other.numerator * denominator -> 1
-                else -> {
-                    val exponentialDif = exponential - other.exponential
-                    val newNumerator = numerator.toLong().timesTwoToThePowerOf(exponentialDif)
-                    (newNumerator * other.denominator).compareTo(other.numerator.toLong() * denominator)
-                }
+            exponential > other.exponential && numerator.toLong() * other.denominator >= other.numerator.toLong() * denominator -> 1
+
+            exponential > other.exponential -> {
+                val exponentialDif = exponential - other.exponential
+                val newNumerator = numerator.toLong().timesTwoToThePowerOf(exponentialDif)
+                (newNumerator * other.denominator).compareTo(other.numerator.toLong() * denominator)
             }
 
-            else -> when {
-                numerator * other.denominator <= other.numerator * denominator -> -1
-                else -> {
-                    val exponentialDif = other.exponential - exponential
-                    val otherNumerator = other.numerator.toLong().timesTwoToThePowerOf(exponentialDif)
-                    (numerator.toLong() * other.denominator).compareTo(otherNumerator * denominator)
-                }
+            numerator * other.denominator <= other.numerator * denominator -> -1
+
+            else -> {
+                val exponentialDif = other.exponential - exponential
+                val otherNumerator = other.numerator.toLong().timesTwoToThePowerOf(exponentialDif)
+                (numerator.toLong() * other.denominator).compareTo(otherNumerator * denominator)
             }
+
         }
     }
 
     fun multiplicativeInverse() = new(denominator.toLong(), numerator.toLong(), -exponential)
+    override fun toString(): String {
+        return "($numerator / $denominator) * 2^$exponential"
+    }
 }

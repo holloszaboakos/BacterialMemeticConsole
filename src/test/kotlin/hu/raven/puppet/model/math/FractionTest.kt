@@ -59,4 +59,11 @@ class FractionTest {
         assertThat(a.denominator).isEqualTo(2)
         assertThat(a.exponential).isEqualTo(3)
     }
+
+    @Test
+    fun testFail() {
+        val a = Fraction.new(1991831131, 2015907500, 2)
+        val b = Fraction.new(1979183023, 1324315301, 3)
+        println( a + b)
+    }
 }

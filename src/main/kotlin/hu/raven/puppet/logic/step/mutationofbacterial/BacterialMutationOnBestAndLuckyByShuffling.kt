@@ -1,10 +1,10 @@
 package hu.raven.puppet.logic.step.mutationofbacterial
 
-import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.logic.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.logic.step.mutationonspecimen.MutationOnSpecimen
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.physics.PhysicsUnit
+import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.modules.AlgorithmParameters
 import hu.raven.puppet.utility.extention.sum
 import hu.raven.puppet.utility.inject

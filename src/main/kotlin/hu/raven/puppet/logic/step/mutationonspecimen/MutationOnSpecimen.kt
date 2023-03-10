@@ -1,11 +1,11 @@
 package hu.raven.puppet.logic.step.mutationonspecimen
 
-import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.logic.step.EvolutionaryAlgorithmStep
+import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.logic.step.mutationoperator.BacterialMutationOperator
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.physics.PhysicsUnit
+import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.modules.AlgorithmParameters
 import hu.raven.puppet.utility.inject
 

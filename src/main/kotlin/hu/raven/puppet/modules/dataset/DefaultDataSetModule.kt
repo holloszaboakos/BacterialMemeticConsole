@@ -1,11 +1,11 @@
 package hu.raven.puppet.modules.dataset
 
-import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.logic.step.calculatecost.CalculateCostOfACVRPWithMultipleCapacity
 import hu.raven.puppet.logic.task.loader.DefaultTaskLoader
 import hu.raven.puppet.logic.task.loader.TaskLoader
 import hu.raven.puppet.model.physics.Euro
+import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.modules.FilePathVariableNames.*
 import org.koin.core.qualifier.named
 import org.koin.dsl.module

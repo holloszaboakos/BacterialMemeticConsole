@@ -1,9 +1,9 @@
 package hu.raven.puppet.logic.step.initializePopulation
 
-import hu.raven.puppet.model.solution.OnePartRepresentation
-import hu.raven.puppet.model.solution.TwoPartRepresentation
-import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.model.physics.PhysicsUnit
+import hu.raven.puppet.model.solution.OnePartRepresentation
+import hu.raven.puppet.model.solution.SolutionRepresentation
+import hu.raven.puppet.model.solution.TwoPartRepresentation
 import kotlin.random.Random
 import kotlin.random.nextInt
 

@@ -6,7 +6,6 @@ import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.model.task.graph.DEdge
 import hu.raven.puppet.model.task.graph.DGraph
-import hu.raven.puppet.utility.extention.sum
 import hu.raven.puppet.utility.extention.sumClever
 import hu.raven.puppet.utility.inject
 import kotlin.random.Random
@@ -52,19 +51,19 @@ class MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics<S : Solution
                 val selectedEdge = selectEdgeBasedOnWeights(finalWeightMatrix)
                 sequentialRepresentationOfSequence[selectedEdge.first] = selectedEdge.second
 
-            val newSegment = createNewSegment(
-                segmentsOfEdges,
-                selectedEdge
-            )
+                val newSegment = createNewSegment(
+                    segmentsOfEdges,
+                    selectedEdge
+                )
 
-            nullOutWeightOfExclusionaryEdges(
-                finalWeightMatrix,
-                newSegment,
-                selectedEdge
-            )
-        } catch (e: IllegalArgumentException) {
-            e.printStackTrace()
-        }
+                nullOutWeightOfExclusionaryEdges(
+                    finalWeightMatrix,
+                    newSegment,
+                    selectedEdge
+                )
+            } catch (e: IllegalArgumentException) {
+                e.printStackTrace()
+            }
         }
 
         Pair(

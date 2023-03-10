@@ -1,11 +1,10 @@
 package hu.raven.puppet.logic.step.mutationoperator
 
-import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.logic.statistics.BacterialAlgorithmStatistics
-import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.math.Fraction
+import hu.raven.puppet.model.physics.PhysicsUnit
+import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.utility.extention.getEdgeBetween
-import hu.raven.puppet.utility.extention.sum
 import hu.raven.puppet.utility.extention.sumClever
 import hu.raven.puppet.utility.inject
 import kotlin.random.Random

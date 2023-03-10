@@ -1,7 +1,7 @@
 package hu.raven.puppet.logic.step.diversity
 
-import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.model.physics.PhysicsUnit
+import hu.raven.puppet.model.solution.SolutionRepresentation
 import kotlinx.coroutines.runBlocking
 
 

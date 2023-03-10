@@ -1,8 +1,8 @@
 package hu.raven.puppet.logic.step.initialize
 
-import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.logic.step.initializationofiterative.InitializeLocalSearch
 import hu.raven.puppet.model.physics.PhysicsUnit
+import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.utility.inject
 
 

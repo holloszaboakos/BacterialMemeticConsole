@@ -1,7 +1,7 @@
 package hu.raven.puppet.logic.step.initializePopulation
 
-import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.model.physics.PhysicsUnit
+import hu.raven.puppet.model.solution.SolutionRepresentation
 
 class InitializePopulationByModuloStepper<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> :
     InitializePopulation<S, C>() {
