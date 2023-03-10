@@ -18,7 +18,7 @@ fun DoubleLogger.logProgress(progressData: ProgressData) {
 }
 
 fun <C : PhysicsUnit<C>> DoubleLogger.logSpecimen(name: String, specimenData: SpecimenData<C>) {
-    invoke("$name: id: ${specimenData.id} cost: ${specimenData.cost}")
+    invoke("$name: id: ${specimenData.id} cost: ${specimenData.cost.value.toDouble()}")
 }
 
 fun DoubleLogger.logStepEfficiency(name: String, stepEfficiencyData: StepEfficiencyData) {

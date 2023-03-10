@@ -4,13 +4,16 @@ import hu.raven.puppet.model.task.DTask
 import hu.raven.puppet.modules.FilePathVariableNames
 import hu.raven.puppet.utility.dataset.desment.DesmetDatasetConverter
 import hu.raven.puppet.utility.dataset.desment.DesmetDatasetLoader
+import hu.raven.puppet.utility.extention.min
+import hu.raven.puppet.utility.extention.sum
+import hu.raven.puppet.utility.extention.sumClever
 import hu.raven.puppet.utility.inject
 import kotlin.math.min
 
 class DesmetTaskLoader : TaskLoader() {
     override fun loadTak(folderPath: String): DTask {
         val filePath: String by inject(FilePathVariableNames.SINGLE_FILE)
-        val desmetTask = DesmetDatasetLoader.loadDataFromFile("$folderPath\\$filePath")
+        val desmetTask = DesmetDatasetLoader.loadDataFromFile("/$folderPath/$filePath")
         val standardTask = DesmetDatasetConverter.toStandardTask(desmetTask)
         logEstimates(standardTask)
         return standardTask
@@ -18,20 +21,20 @@ class DesmetTaskLoader : TaskLoader() {
 
     override fun logEstimates(task: DTask) {
         task.costGraph.apply {
-            doubleLogger("OVERASTIMATE: ${
-                edgesFromCenter.sumOf { it.length.value.toDouble() }
-                        + edgesToCenter.sumOf { it.length.value.toDouble() }
-            }")
+            doubleLogger("OVERASTIMATE: ${(
+                edgesFromCenter.map { it.length.value }.sumClever()
+                        + edgesToCenter.map { it.length.value }.sumClever()
+                    ).toDouble()}")
 
-            doubleLogger("UNDERASTIMATE: ${
-                edgesFromCenter.minOf { it.length.value.toDouble() } +
-                        edgesBetween.sumOf { edge ->
-                            min(
-                                edge.values.minOf { it.length.value.toDouble() },
-                                edgesToCenter[edge.orderInOwner].length.value.toDouble()
-                            )
-                        }
-            }")
+            doubleLogger("UNDERASTIMATE: ${(
+                edgesFromCenter.map { it.length.value }.min() +
+                        edgesBetween.map { edge ->
+                            arrayOf(
+                                edge.values.map { it.length.value }.min(),
+                                edgesToCenter[edge.orderInOwner].length.value
+                            ).min()
+                        }.sumClever()
+                    ).toDouble()}")
         }
     }
 }

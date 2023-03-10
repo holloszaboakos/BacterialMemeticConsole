@@ -7,7 +7,6 @@ import hu.raven.puppet.model.dataset.desmet.graph.NodeCoordinate
 import hu.raven.puppet.model.dataset.desmet.graph.NodeDemand
 import hu.raven.puppet.utility.dataset.desment.DesmetFileHeader.*
 import hu.raven.puppet.utility.dataset.desment.DesmetFileSection.*
-import java.io.File
 
 object DesmetDatasetLoader {
 
@@ -20,7 +19,7 @@ object DesmetDatasetLoader {
         var currentSection: DesmetFileSection = HEADER
         val mutableTask = TaskMutable()
 
-        File(filePath).forEachLine { line ->
+        this.javaClass.getResource(filePath)!!.openStream().reader().forEachLine { line ->
             when (currentSection) {
                 HEADER -> {
                     if (line == NODE_COORDINATE_LIST_START) {

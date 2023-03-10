@@ -13,7 +13,7 @@ class CSVLogger : AlgorithmLogger() {
     fun printHeader() {
         val targetFile = File("$outputFolderPath\\$targetFileName.csv")
         val header = produceHeader()
-        targetFile.appendText(header)
+        targetFile.writeText(header)
     }
 
     private fun produceHeader(): String {

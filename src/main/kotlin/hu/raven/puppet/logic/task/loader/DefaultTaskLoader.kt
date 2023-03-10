@@ -7,7 +7,9 @@ import hu.raven.puppet.model.task.graph.DEdgeArray
 import hu.raven.puppet.model.task.graph.DGraph
 import hu.raven.puppet.model.task.graph.DObjective
 import hu.raven.puppet.modules.FilePathVariableNames
-import kotlin.math.min
+import hu.raven.puppet.utility.extention.min
+import hu.raven.puppet.utility.extention.sum
+import hu.raven.puppet.utility.extention.sumClever
 
 class DefaultTaskLoader : TaskLoader() {
     override fun loadTak(folderPath: String): DTask {
@@ -48,22 +50,30 @@ class DefaultTaskLoader : TaskLoader() {
         task.costGraph.apply {
             val salesman = task.salesmen.first()
 
-            doubleLogger("OVERASTIMATE: ${
-                edgesFromCenter.sumOf { calcCostOnEdge(salesman, it).value.toDouble() }
-                        + edgesToCenter.sumOf { calcCostOnEdge(salesman, it).value.toDouble() }
-                        + objectives.sumOf { calcCostOnNode(salesman, it).value.toDouble() }
-            }")
+            if(edgesBetween.any { it.values.any { it.length.value.numerator < 0 || it.length.value.denominator < 0  } }){
+                println("WTF")
+            }
 
-            doubleLogger("UNDERASTIMATE: ${
-                edgesFromCenter.minOf { calcCostOnEdge(salesman, it).value.toDouble() }
-                        + edgesBetween.sumOf { edgeArray ->
-                    min(
-                        edgeArray.values.minOf { calcCostOnEdge(salesman, it).value.toDouble() },
-                        calcCostOnEdge(salesman, edgesToCenter[edgeArray.orderInOwner]).value.toDouble()
-                    )
-                }
-                        + objectives.sumOf { calcCostOnNode(salesman, it).value.toDouble() }
-            }")
+            doubleLogger(
+                "OVERASTIMATE: ${
+                    (edgesFromCenter.map { calcCostOnEdge(salesman, it).value }.sumClever()
+                            + edgesToCenter.map { calcCostOnEdge(salesman, it).value }.sumClever()
+                            + objectives.map { calcCostOnNode(salesman, it).value }.sumClever()).toDouble()
+                }"
+            )
+
+            doubleLogger(
+                "UNDERASTIMATE: ${
+                    (edgesFromCenter.map { calcCostOnEdge(salesman, it).value }.min()
+                            + edgesBetween.map { edgeArray ->
+                        arrayOf(
+                            edgeArray.values.map { calcCostOnEdge(salesman, it).value }.sumClever(),
+                            calcCostOnEdge(salesman, edgesToCenter[edgeArray.orderInOwner]).value
+                        ).min()
+                    }.min()
+                            + objectives.map { calcCostOnNode(salesman, it).value }.sumClever()).toDouble()
+                }"
+            )
         }
     }
 

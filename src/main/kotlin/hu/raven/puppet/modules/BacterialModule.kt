@@ -1,27 +1,26 @@
 package hu.raven.puppet.modules
 
 import hu.raven.puppet.logic.logging.CSVLogger
-import hu.raven.puppet.logic.specimen.DOnePartRepresentation
-import hu.raven.puppet.logic.state.EvolutionaryAlgorithmState
+import hu.raven.puppet.model.solution.OnePartRepresentation
+import hu.raven.puppet.logic.state.IterativeAlgorithmStateWithMultipleCandidates
 import hu.raven.puppet.logic.statistics.BacterialAlgorithmStatistics
-import hu.raven.puppet.logic.step.common.initialize.InitializeAlgorithm
-import hu.raven.puppet.logic.step.common.initialize.InitializeBacterialAlgorithm
-import hu.raven.puppet.logic.step.evolutionary.bacterial.genetransfer.GeneTransfer
-import hu.raven.puppet.logic.step.evolutionary.bacterial.genetransfer.GeneTransferByTournament
-import hu.raven.puppet.logic.step.evolutionary.bacterial.genetransferoperator.GeneTransferByCrossOver
-import hu.raven.puppet.logic.step.evolutionary.bacterial.genetransferoperator.GeneTransferOperator
-import hu.raven.puppet.logic.step.evolutionary.bacterial.mutation.BacterialMutation
-import hu.raven.puppet.logic.step.evolutionary.bacterial.mutation.BacterialMutationOnBestAndLuckyByShuffling
-import hu.raven.puppet.logic.step.evolutionary.bacterial.mutationonspecimen.MutationOnSpecimen
-import hu.raven.puppet.logic.step.evolutionary.bacterial.mutationonspecimen.MutationOnSpecimenWithRandomContinuousSegmentAndFullCover
-import hu.raven.puppet.logic.step.evolutionary.bacterial.mutationoperator.BacterialMutationOperator
-import hu.raven.puppet.logic.step.evolutionary.bacterial.mutationoperator.MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics
-import hu.raven.puppet.logic.step.evolutionary.bacterial.selectsegment.SelectContinuesSegment
-import hu.raven.puppet.logic.step.evolutionary.bacterial.selectsegment.SelectSegment
-import hu.raven.puppet.logic.step.evolutionary.common.iteration.BacterialIteration
-import hu.raven.puppet.logic.step.evolutionary.common.iteration.EvolutionaryIteration
-import hu.raven.puppet.logic.step.evolutionary.genetic.crossoveroperator.CrossOverOperator
-import hu.raven.puppet.logic.step.evolutionary.genetic.crossoveroperator.HeuristicCrossOver
+import hu.raven.puppet.logic.step.initialize.InitializeAlgorithm
+import hu.raven.puppet.logic.step.initialize.InitializeBacterialAlgorithm
+import hu.raven.puppet.logic.step.crossoveroperator.CrossOverOperator
+import hu.raven.puppet.logic.step.crossoveroperator.HeuristicCrossOver
+import hu.raven.puppet.logic.step.genetransfer.GeneTransferByTournament
+import hu.raven.puppet.logic.step.genetransferoperator.GeneTransferByCrossOver
+import hu.raven.puppet.logic.step.genetransferoperator.GeneTransferOperator
+import hu.raven.puppet.logic.step.iterationofevolutionary.BacterialIteration
+import hu.raven.puppet.logic.step.iterationofevolutionary.EvolutionaryIteration
+import hu.raven.puppet.logic.step.mutationofbacterial.BacterialMutationOnBestAndLuckyByShuffling
+import hu.raven.puppet.logic.step.mutationofbacterial.BacterialMutation
+import hu.raven.puppet.logic.step.mutationonspecimen.MutationOnSpecimenWithRandomContinuousSegmentAndFullCover
+import hu.raven.puppet.logic.step.mutationonspecimen.MutationOnSpecimen
+import hu.raven.puppet.logic.step.mutationoperator.MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics
+import hu.raven.puppet.logic.step.mutationoperator.BacterialMutationOperator
+import hu.raven.puppet.logic.step.selectsegment.SelectContinuesSegment
+import hu.raven.puppet.logic.step.selectsegment.SelectSegment
 import hu.raven.puppet.model.physics.Meter
 import hu.raven.puppet.modules.AlgorithmParameters.*
 import org.koin.core.qualifier.named
@@ -41,38 +40,38 @@ val bacterialModule = module {
 
     single(named(OPTIMISATION_STEP_LIMIT)) { 1000 }
 
-    single<EvolutionaryAlgorithmState<DOnePartRepresentation<Meter>, *>> {
-        EvolutionaryAlgorithmState()
+    single<IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, *>> {
+        IterativeAlgorithmStateWithMultipleCandidates()
     }
 
     factory<InitializeAlgorithm<*, *>> {
-        InitializeBacterialAlgorithm<DOnePartRepresentation<Meter>, Meter>()
+        InitializeBacterialAlgorithm<OnePartRepresentation<Meter>, Meter>()
     }
 
     factory<EvolutionaryIteration<*, *>> {
-        BacterialIteration<DOnePartRepresentation<Meter>, Meter>()
+        BacterialIteration<OnePartRepresentation<Meter>, Meter>()
     }
 
     factory<BacterialMutation<*, *>> {
-        BacterialMutationOnBestAndLuckyByShuffling<DOnePartRepresentation<Meter>, Meter>()
+        BacterialMutationOnBestAndLuckyByShuffling<OnePartRepresentation<Meter>, Meter>()
     }
     factory<MutationOnSpecimen<*, *>> {
-        MutationOnSpecimenWithRandomContinuousSegmentAndFullCover<DOnePartRepresentation<Meter>, Meter>()
+        MutationOnSpecimenWithRandomContinuousSegmentAndFullCover<OnePartRepresentation<Meter>, Meter>()
     }
     factory<BacterialMutationOperator<*, *>> {
-        MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics<DOnePartRepresentation<Meter>, Meter>()
+        MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics<OnePartRepresentation<Meter>, Meter>()
     }
-    factory<GeneTransfer<*, *>> {
-        GeneTransferByTournament<DOnePartRepresentation<Meter>, Meter>()
+    factory<hu.raven.puppet.logic.step.genetransfer.GeneTransfer<*, *>> {
+        GeneTransferByTournament<OnePartRepresentation<Meter>, Meter>()
     }
     factory<GeneTransferOperator<*, *>> {
-        GeneTransferByCrossOver<DOnePartRepresentation<Meter>, Meter>()
+        GeneTransferByCrossOver<OnePartRepresentation<Meter>, Meter>()
     }
     factory<CrossOverOperator<*, *>> {
-        HeuristicCrossOver<DOnePartRepresentation<Meter>, Meter>()
+        HeuristicCrossOver<OnePartRepresentation<Meter>, Meter>()
     }
     factory<SelectSegment<*, *>> {
-        SelectContinuesSegment<DOnePartRepresentation<Meter>, Meter>()
+        SelectContinuesSegment<OnePartRepresentation<Meter>, Meter>()
     }
 
     single {

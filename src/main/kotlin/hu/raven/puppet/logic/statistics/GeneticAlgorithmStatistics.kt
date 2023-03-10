@@ -1,10 +1,10 @@
 package hu.raven.puppet.logic.statistics
 
-import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
-import hu.raven.puppet.logic.step.evolutionary.genetic.crossoveroperator.*
+import hu.raven.puppet.model.solution.SolutionRepresentation
+import hu.raven.puppet.logic.step.crossoveroperator.*
 import hu.raven.puppet.model.physics.PhysicsUnit
 
-class GeneticAlgorithmStatistics<S : ISpecimenRepresentation<C>, C : PhysicsUnit<C>> : AlgorithmStatistics {
+class GeneticAlgorithmStatistics<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> : AlgorithmStatistics {
     override var diversity = Double.MAX_VALUE
     val operatorsWithStatistics =
         listOf<CrossOverOperator<S, C>>(

@@ -2,45 +2,42 @@ package hu.raven.puppet
 
 import hu.raven.puppet.logic.logging.CSVLogger
 import hu.raven.puppet.logic.logging.DoubleLogger
-import hu.raven.puppet.logic.specimen.DOnePartRepresentation
-import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
-import hu.raven.puppet.logic.specimen.factory.OnePartRepresentationFactory
-import hu.raven.puppet.logic.specimen.factory.SSpecimenRepresentationFactory
-import hu.raven.puppet.logic.state.EvolutionaryAlgorithmState
+import hu.raven.puppet.model.solution.OnePartRepresentation
+import hu.raven.puppet.model.solution.SolutionRepresentation
+import hu.raven.puppet.model.solution.factory.OnePartRepresentationFactory
+import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
+import hu.raven.puppet.logic.state.IterativeAlgorithmStateWithMultipleCandidates
 import hu.raven.puppet.logic.statistics.BacterialAlgorithmStatistics
-import hu.raven.puppet.logic.step.common.calculatecost.CalculateCost
-import hu.raven.puppet.logic.step.common.calculatecost.CalculateCostOfCVRPSolutionWithCapacity
-import hu.raven.puppet.logic.step.common.calculatecostofedge.CalculateCostOfEdge
-import hu.raven.puppet.logic.step.common.calculatecostofobjective.CalculateCostOfObjective
-import hu.raven.puppet.logic.step.common.initialize.InitializeAlgorithm
-import hu.raven.puppet.logic.step.common.initialize.InitializeBacterialAlgorithm
-import hu.raven.puppet.logic.step.evolutionary.bacterial.genetransfer.GeneTransfer
-import hu.raven.puppet.logic.step.evolutionary.bacterial.genetransfer.GeneTransferByTournament
-import hu.raven.puppet.logic.step.evolutionary.bacterial.genetransferoperator.GeneTransferByCrossOver
-import hu.raven.puppet.logic.step.evolutionary.bacterial.genetransferoperator.GeneTransferOperator
-import hu.raven.puppet.logic.step.evolutionary.bacterial.mutation.BacterialMutation
-import hu.raven.puppet.logic.step.evolutionary.bacterial.mutation.BacterialMutationOnBestAndLuckyByShuffling
-import hu.raven.puppet.logic.step.evolutionary.bacterial.mutationonspecimen.MutationOnSpecimen
-import hu.raven.puppet.logic.step.evolutionary.bacterial.mutationonspecimen.MutationOnSpecimenWithRandomContinuousSegmentAndFullCoverAndCloneWithInvertion
-import hu.raven.puppet.logic.step.evolutionary.bacterial.mutationoperator.BacterialMutationOperator
-import hu.raven.puppet.logic.step.evolutionary.bacterial.mutationoperator.MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics
-import hu.raven.puppet.logic.step.evolutionary.bacterial.selectsegment.SelectContinuesSegment
-import hu.raven.puppet.logic.step.evolutionary.bacterial.selectsegment.SelectSegment
-import hu.raven.puppet.logic.step.evolutionary.common.OrderPopulationByCost
-import hu.raven.puppet.logic.step.evolutionary.common.boost.Boost
-import hu.raven.puppet.logic.step.evolutionary.common.boost.BoostOnBest
-import hu.raven.puppet.logic.step.evolutionary.common.boost.BoostOnBestLazy
-import hu.raven.puppet.logic.step.evolutionary.common.boost.NoBoost
-import hu.raven.puppet.logic.step.evolutionary.common.boostoperator.BoostOperator
-import hu.raven.puppet.logic.step.evolutionary.common.boostoperator.Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit
-import hu.raven.puppet.logic.step.evolutionary.common.diversity.Diversity
-import hu.raven.puppet.logic.step.evolutionary.common.diversity.DiversityByInnerDistanceAndSequence
-import hu.raven.puppet.logic.step.evolutionary.common.initializePopulation.InitializePopulation
-import hu.raven.puppet.logic.step.evolutionary.common.initializePopulation.InitializePopulationByModuloStepper
-import hu.raven.puppet.logic.step.evolutionary.common.iteration.BacterialIteration
-import hu.raven.puppet.logic.step.evolutionary.common.iteration.EvolutionaryIteration
-import hu.raven.puppet.logic.step.evolutionary.genetic.crossoveroperator.CrossOverOperator
-import hu.raven.puppet.logic.step.evolutionary.genetic.crossoveroperator.HeuristicCrossOver
+import hu.raven.puppet.logic.step.calculatecost.CalculateCost
+import hu.raven.puppet.logic.step.calculatecost.CalculateCostOfCVRPSolutionWithCapacity
+import hu.raven.puppet.logic.step.calculatecostofedge.CalculateCostOfEdge
+import hu.raven.puppet.logic.step.calculatecostofobjective.CalculateCostOfObjective
+import hu.raven.puppet.logic.step.initialize.InitializeAlgorithm
+import hu.raven.puppet.logic.step.initialize.InitializeBacterialAlgorithm
+import hu.raven.puppet.logic.step.genetransfer.GeneTransferByTournament
+import hu.raven.puppet.logic.step.genetransferoperator.GeneTransferByCrossOver
+import hu.raven.puppet.logic.step.genetransferoperator.GeneTransferOperator
+import hu.raven.puppet.logic.step.mutationofbacterial.BacterialMutation
+import hu.raven.puppet.logic.step.mutationofbacterial.BacterialMutationOnBestAndLuckyByShuffling
+import hu.raven.puppet.logic.step.mutationonspecimen.MutationOnSpecimen
+import hu.raven.puppet.logic.step.mutationonspecimen.MutationOnSpecimenWithRandomContinuousSegmentAndFullCoverAndCloneWithInvertion
+import hu.raven.puppet.logic.step.mutationoperator.BacterialMutationOperator
+import hu.raven.puppet.logic.step.mutationoperator.MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics
+import hu.raven.puppet.logic.step.selectsegment.SelectContinuesSegment
+import hu.raven.puppet.logic.step.selectsegment.SelectSegment
+import hu.raven.puppet.logic.step.orderpopulationbycost.OrderPopulationByCost
+import hu.raven.puppet.logic.step.boost.BoostOnBestLazy
+import hu.raven.puppet.logic.step.boost.NoBoost
+import hu.raven.puppet.logic.step.boostoperator.BoostOperator
+import hu.raven.puppet.logic.step.boostoperator.Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit
+import hu.raven.puppet.logic.step.diversity.Diversity
+import hu.raven.puppet.logic.step.diversity.DiversityByInnerDistanceAndSequence
+import hu.raven.puppet.logic.step.initializePopulation.InitializePopulation
+import hu.raven.puppet.logic.step.initializePopulation.InitializePopulationByModuloStepper
+import hu.raven.puppet.logic.step.iterationofevolutionary.BacterialIteration
+import hu.raven.puppet.logic.step.iterationofevolutionary.EvolutionaryIteration
+import hu.raven.puppet.logic.step.crossoveroperator.CrossOverOperator
+import hu.raven.puppet.logic.step.crossoveroperator.HeuristicCrossOver
 import hu.raven.puppet.logic.task.VRPTaskHolder
 import hu.raven.puppet.logic.task.loader.AugeratTaskLoader
 import hu.raven.puppet.logic.task.loader.TaskLoader
@@ -71,7 +68,7 @@ private val taskCommonModule = module {
     }
     single<TaskLoader> { AugeratTaskLoader() }
     factory<CalculateCost<*, *>> {
-        CalculateCostOfCVRPSolutionWithCapacity<DOnePartRepresentation<Meter>>()
+        CalculateCostOfCVRPSolutionWithCapacity<OnePartRepresentation<Meter>>()
     }
 }
 
@@ -115,38 +112,38 @@ private val taskModules = arrayOf(
 )
 
 private val bacterialCommonModule = module {
-    single<EvolutionaryAlgorithmState<DOnePartRepresentation<Meter>, Meter>> {
-        EvolutionaryAlgorithmState()
+    single<IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>> {
+        IterativeAlgorithmStateWithMultipleCandidates()
     }
 
     factory<InitializeAlgorithm<*, *>> {
-        InitializeBacterialAlgorithm<DOnePartRepresentation<Meter>, Meter>()
+        InitializeBacterialAlgorithm<OnePartRepresentation<Meter>, Meter>()
     }
 
     factory<EvolutionaryIteration<*, *>> {
-        BacterialIteration<DOnePartRepresentation<Meter>, Meter>()
+        BacterialIteration<OnePartRepresentation<Meter>, Meter>()
     }
 
     factory<BacterialMutation<*, *>> {
-        BacterialMutationOnBestAndLuckyByShuffling<DOnePartRepresentation<Meter>, Meter>()
+        BacterialMutationOnBestAndLuckyByShuffling<OnePartRepresentation<Meter>, Meter>()
     }
     factory<MutationOnSpecimen<*, *>> {
-        MutationOnSpecimenWithRandomContinuousSegmentAndFullCoverAndCloneWithInvertion<DOnePartRepresentation<Meter>, Meter>()
+        MutationOnSpecimenWithRandomContinuousSegmentAndFullCoverAndCloneWithInvertion<OnePartRepresentation<Meter>, Meter>()
     }
     factory<BacterialMutationOperator<*, *>> {
-        MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics<DOnePartRepresentation<Meter>, Meter>()
+        MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics<OnePartRepresentation<Meter>, Meter>()
     }
-    factory<GeneTransfer<*, *>> {
-        GeneTransferByTournament<DOnePartRepresentation<Meter>, Meter>()
+    factory<hu.raven.puppet.logic.step.genetransfer.GeneTransfer<*, *>> {
+        GeneTransferByTournament<OnePartRepresentation<Meter>, Meter>()
     }
     factory<GeneTransferOperator<*, *>> {
-        GeneTransferByCrossOver<DOnePartRepresentation<Meter>, Meter>()
+        GeneTransferByCrossOver<OnePartRepresentation<Meter>, Meter>()
     }
     factory<CrossOverOperator<*, *>> {
-        HeuristicCrossOver<DOnePartRepresentation<Meter>, Meter>()
+        HeuristicCrossOver<OnePartRepresentation<Meter>, Meter>()
     }
     factory<SelectSegment<*, *>> {
-        SelectContinuesSegment<DOnePartRepresentation<Meter>, Meter>()
+        SelectContinuesSegment<OnePartRepresentation<Meter>, Meter>()
     }
 
     single {
@@ -234,19 +231,19 @@ private val commonModule = module {
     }
 
     factory<Diversity<*, *>> {
-        DiversityByInnerDistanceAndSequence<DOnePartRepresentation<Meter>, Meter>()
+        DiversityByInnerDistanceAndSequence<OnePartRepresentation<Meter>, Meter>()
     }
 
-    factory<SSpecimenRepresentationFactory<*, *>> {
+    factory<SolutionRepresentationFactory<*, *>> {
         OnePartRepresentationFactory()
     }
 
     factory<InitializePopulation<*, *>> {
-        InitializePopulationByModuloStepper<DOnePartRepresentation<Meter>, Meter>()
+        InitializePopulationByModuloStepper<OnePartRepresentation<Meter>, Meter>()
     }
 
     factory {
-        OrderPopulationByCost<DOnePartRepresentation<Meter>, Meter>()
+        OrderPopulationByCost<OnePartRepresentation<Meter>, Meter>()
     }
     factory { CalculateCostOfEdge() }
     factory { CalculateCostOfObjective() }
@@ -255,35 +252,35 @@ private val commonModule = module {
 
 private val boostModules = arrayOf(
     module {
-        factory<Boost<*, *>> {
-            NoBoost<DOnePartRepresentation<Meter>, Meter>()
+        factory<hu.raven.puppet.logic.step.boost.Boost<*, *>> {
+            NoBoost<OnePartRepresentation<Meter>, Meter>()
         }
         factory<BoostOperator<*, *>> {
-            Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit<DOnePartRepresentation<Meter>, Meter>()
+            Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit<OnePartRepresentation<Meter>, Meter>()
         }
     },
     module {
-        factory<Boost<*, *>> {
-            BoostOnBest<DOnePartRepresentation<Meter>, Meter>()
+        factory<hu.raven.puppet.logic.step.boost.Boost<*, *>> {
+            hu.raven.puppet.logic.step.boost.BoostOnBest<OnePartRepresentation<Meter>, Meter>()
         }
         factory<BoostOperator<*, *>> {
-            Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit<DOnePartRepresentation<Meter>, Meter>()
+            Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit<OnePartRepresentation<Meter>, Meter>()
         }
     },
     module {
-        factory<Boost<*, *>> {
-            BoostOnBest<DOnePartRepresentation<Meter>, Meter>()
+        factory<hu.raven.puppet.logic.step.boost.Boost<*, *>> {
+            hu.raven.puppet.logic.step.boost.BoostOnBest<OnePartRepresentation<Meter>, Meter>()
         }
         factory<BoostOperator<*, *>> {
-            Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit<DOnePartRepresentation<Meter>, Meter>()
+            Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit<OnePartRepresentation<Meter>, Meter>()
         }
     },
     module {
-        factory<Boost<*, *>> {
-            BoostOnBestLazy<DOnePartRepresentation<Meter>, Meter>()
+        factory<hu.raven.puppet.logic.step.boost.Boost<*, *>> {
+            BoostOnBestLazy<OnePartRepresentation<Meter>, Meter>()
         }
         factory<BoostOperator<*, *>> {
-            Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit<DOnePartRepresentation<Meter>, Meter>()
+            Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit<OnePartRepresentation<Meter>, Meter>()
         }
     },
 )
@@ -403,7 +400,7 @@ private fun <C : PhysicsUnit<C>> calculateLogData(
     timeElapsed: Duration,
     timeElapsedTotal: Duration
 ): BacterialMemeticAlgorithmLogLine<C> {
-    val algorithmState: EvolutionaryAlgorithmState<ISpecimenRepresentation<C>, C> by inject()
+    val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<SolutionRepresentation<C>, C> by inject()
 
     val best = algorithmState.copyOfBest!!
     val second =
@@ -448,4 +445,4 @@ private fun <C : PhysicsUnit<C>> calculateLogData(
     )
 }
 
-private fun <C : PhysicsUnit<C>> ISpecimenRepresentation<C>.toLog() = SpecimenData<C>(id, cost!!)
+private fun <C : PhysicsUnit<C>> SolutionRepresentation<C>.toLog() = SpecimenData<C>(id, cost!!)

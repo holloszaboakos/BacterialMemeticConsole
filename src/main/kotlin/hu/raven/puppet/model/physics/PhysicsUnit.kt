@@ -1,6 +1,6 @@
 package hu.raven.puppet.model.physics
 
-import hu.raven.puppet.model.physics.math.Fraction
+import hu.raven.puppet.model.math.Fraction
 
 sealed interface PhysicsUnit<S : PhysicsUnit<S>> {
     val value: Fraction

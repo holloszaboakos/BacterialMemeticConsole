@@ -7,7 +7,6 @@ import java.io.File
 object AugeratDatasetLoader {
     fun loadDataFromFile(filePath: String): InstanceBean {
         val xmlMapper = XmlMapper()
-        val file = File(filePath)
-        return xmlMapper.readValue(file, InstanceBean::class.java)
+        return xmlMapper.readValue(this.javaClass.getResource(filePath)!!.openStream(), InstanceBean::class.java)
     }
 }

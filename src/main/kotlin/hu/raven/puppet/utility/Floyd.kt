@@ -26,7 +26,7 @@ fun DGraph.optimizeGraphByFloyd(objectivesIndices: IntRange) {
                         edgesBetween[fromIndex].values[toIndex - if (fromIndex > toIndex) 0 else 1] =
                             edgesBetween[fromIndex].values[toIndex - if (fromIndex > toIndex) 0 else 1]
                                 .copy(length = routFromCost + routToCost)
-                        if (routFromCost + routToCost < Meter(0))
+                        if (routFromCost + routToCost < Meter(0L))
                             println(routFromCost + routToCost)
                         improvement = true
                     }

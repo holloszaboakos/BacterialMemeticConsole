@@ -1,19 +1,19 @@
 package hu.raven.puppet.modules
 
-import hu.raven.puppet.logic.specimen.DOnePartRepresentation
-import hu.raven.puppet.logic.state.EvolutionaryAlgorithmState
+import hu.raven.puppet.model.solution.OnePartRepresentation
+import hu.raven.puppet.logic.state.IterativeAlgorithmStateWithMultipleCandidates
 import hu.raven.puppet.logic.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.logic.statistics.GeneticAlgorithmStatistics
-import hu.raven.puppet.logic.step.common.initialize.InitializeAlgorithm
-import hu.raven.puppet.logic.step.common.initialize.InitializeGeneticAlgorithm
-import hu.raven.puppet.logic.step.evolutionary.common.iteration.EvolutionaryIteration
-import hu.raven.puppet.logic.step.evolutionary.common.iteration.GeneticIteration
-import hu.raven.puppet.logic.step.evolutionary.genetic.CrossOvers
-import hu.raven.puppet.logic.step.evolutionary.genetic.SelectSurvivors
-import hu.raven.puppet.logic.step.evolutionary.genetic.crossoveroperator.CrossOverOperator
-import hu.raven.puppet.logic.step.evolutionary.genetic.crossoveroperator.HeuristicCrossOver
-import hu.raven.puppet.logic.step.evolutionary.genetic.mutatechildren.MutateChildren
-import hu.raven.puppet.logic.step.evolutionary.genetic.mutatechildren.MutateChildrenBySwap
+import hu.raven.puppet.logic.step.initialize.InitializeAlgorithm
+import hu.raven.puppet.logic.step.initialize.InitializeGeneticAlgorithm
+import hu.raven.puppet.logic.step.iterationofevolutionary.EvolutionaryIteration
+import hu.raven.puppet.logic.step.iterationofevolutionary.GeneticIteration
+import hu.raven.puppet.logic.step.crossover.CrossOvers
+import hu.raven.puppet.logic.step.selectsurvivers.SelectSurvivors
+import hu.raven.puppet.logic.step.crossoveroperator.CrossOverOperator
+import hu.raven.puppet.logic.step.crossoveroperator.HeuristicCrossOver
+import hu.raven.puppet.logic.step.mutatechildren.MutateChildren
+import hu.raven.puppet.logic.step.mutatechildren.MutateChildrenBySwap
 import hu.raven.puppet.model.physics.Meter
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -23,31 +23,31 @@ val geneticModule = module {
     single(named(AlgorithmParameters.SIZE_OF_POPULATION)) { 10_000 }
 
     factory<InitializeAlgorithm<*, *>> {
-        InitializeGeneticAlgorithm<DOnePartRepresentation<Meter>, Meter>()
+        InitializeGeneticAlgorithm<OnePartRepresentation<Meter>, Meter>()
     }
 
     factory<EvolutionaryIteration<*, *>> {
-        GeneticIteration<DOnePartRepresentation<Meter>, Meter>()
+        GeneticIteration<OnePartRepresentation<Meter>, Meter>()
     }
     factory {
-        SelectSurvivors<DOnePartRepresentation<Meter>, Meter>()
+        SelectSurvivors<OnePartRepresentation<Meter>, Meter>()
     }
     factory {
-        CrossOvers<DOnePartRepresentation<Meter>, Meter>()
+        CrossOvers<OnePartRepresentation<Meter>, Meter>()
     }
     factory<CrossOverOperator<*, *>> {
-        HeuristicCrossOver<DOnePartRepresentation<Meter>, Meter>()
+        HeuristicCrossOver<OnePartRepresentation<Meter>, Meter>()
     }
     factory<MutateChildren<*, *>> {
-        MutateChildrenBySwap<DOnePartRepresentation<Meter>, Meter>()
+        MutateChildrenBySwap<OnePartRepresentation<Meter>, Meter>()
     }
 
-    single<EvolutionaryAlgorithmState<DOnePartRepresentation<Meter>, *>> {
-        EvolutionaryAlgorithmState()
+    single<IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, *>> {
+        IterativeAlgorithmStateWithMultipleCandidates()
     }
 
     single {
-        GeneticAlgorithmStatistics<DOnePartRepresentation<Meter>, Meter>()
+        GeneticAlgorithmStatistics<OnePartRepresentation<Meter>, Meter>()
     }
 
     single {

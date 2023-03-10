@@ -2,20 +2,19 @@ package hu.raven.puppet.modules
 
 import hu.raven.puppet.logic.logging.CSVLogger
 import hu.raven.puppet.logic.logging.DoubleLogger
-import hu.raven.puppet.logic.specimen.DOnePartRepresentation
-import hu.raven.puppet.logic.specimen.factory.OnePartRepresentationFactory
-import hu.raven.puppet.logic.specimen.factory.SSpecimenRepresentationFactory
-import hu.raven.puppet.logic.step.common.calculatecostofedge.CalculateCostOfEdge
-import hu.raven.puppet.logic.step.common.calculatecostofobjective.CalculateCostOfObjective
-import hu.raven.puppet.logic.step.evolutionary.common.OrderPopulationByCost
-import hu.raven.puppet.logic.step.evolutionary.common.boost.Boost
-import hu.raven.puppet.logic.step.evolutionary.common.boost.BoostOnBestLazy
-import hu.raven.puppet.logic.step.evolutionary.common.boostoperator.BoostOperator
-import hu.raven.puppet.logic.step.evolutionary.common.boostoperator.Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit
-import hu.raven.puppet.logic.step.evolutionary.common.diversity.Diversity
-import hu.raven.puppet.logic.step.evolutionary.common.diversity.DiversityByInnerDistanceAndSequence
-import hu.raven.puppet.logic.step.evolutionary.common.initializePopulation.InitializeHugePopulationThanPreOptimizeThanSelectBest
-import hu.raven.puppet.logic.step.evolutionary.common.initializePopulation.InitializePopulation
+import hu.raven.puppet.model.solution.OnePartRepresentation
+import hu.raven.puppet.model.solution.factory.OnePartRepresentationFactory
+import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
+import hu.raven.puppet.logic.step.calculatecostofedge.CalculateCostOfEdge
+import hu.raven.puppet.logic.step.calculatecostofobjective.CalculateCostOfObjective
+import hu.raven.puppet.logic.step.orderpopulationbycost.OrderPopulationByCost
+import hu.raven.puppet.logic.step.boost.BoostOnBestLazy
+import hu.raven.puppet.logic.step.boostoperator.BoostOperator
+import hu.raven.puppet.logic.step.boostoperator.Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit
+import hu.raven.puppet.logic.step.diversity.Diversity
+import hu.raven.puppet.logic.step.diversity.DiversityByInnerDistanceAndSequence
+import hu.raven.puppet.logic.step.initializePopulation.InitializeHugePopulationThanPreOptimizeThanSelectBest
+import hu.raven.puppet.logic.step.initializePopulation.InitializePopulation
 import hu.raven.puppet.logic.task.VRPTaskHolder
 import hu.raven.puppet.model.physics.Meter
 import hu.raven.puppet.modules.FilePathVariableNames.OUTPUT_FOLDER
@@ -23,7 +22,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val commonModule = module {
-    single(named(OUTPUT_FOLDER)) { "D:\\Git\\GitHub\\SourceCodes\\Kotlin\\JVM\\BacterialMemeticConsole\\output\\default" }
+    single(named(OUTPUT_FOLDER)) { "output/default" }
 
     single {
         DoubleLogger()
@@ -38,29 +37,29 @@ val commonModule = module {
     }
 
     factory<Diversity<*, *>> {
-        DiversityByInnerDistanceAndSequence<DOnePartRepresentation<Meter>, Meter>()
+        DiversityByInnerDistanceAndSequence<OnePartRepresentation<Meter>, Meter>()
     }
 
-    factory<SSpecimenRepresentationFactory<*, *>> {
+    factory<SolutionRepresentationFactory<*, *>> {
         OnePartRepresentationFactory()
     }
 
     factory<InitializePopulation<*, *>> {
-        InitializeHugePopulationThanPreOptimizeThanSelectBest<DOnePartRepresentation<Meter>, Meter>()
+        InitializeHugePopulationThanPreOptimizeThanSelectBest<OnePartRepresentation<Meter>, Meter>()
         //InitializePopulationByModuloStepper<DOnePartRepresentation>()
     }
 
     factory {
-        OrderPopulationByCost<DOnePartRepresentation<Meter>, Meter>()
+        OrderPopulationByCost<OnePartRepresentation<Meter>, Meter>()
     }
     factory { CalculateCostOfEdge() }
     factory { CalculateCostOfObjective() }
 
-    factory<Boost<*, *>> {
-        BoostOnBestLazy<DOnePartRepresentation<Meter>, Meter>()
+    factory<hu.raven.puppet.logic.step.boost.Boost<*, *>> {
+        BoostOnBestLazy<OnePartRepresentation<Meter>, Meter>()
     }
     factory<BoostOperator<*, *>> {
-        Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit<DOnePartRepresentation<Meter>, Meter>()
+        Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit<OnePartRepresentation<Meter>, Meter>()
     }
 
 

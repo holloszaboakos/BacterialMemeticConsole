@@ -2,11 +2,11 @@ package hu.raven.puppet
 
 import hu.raven.puppet.logic.logging.CSVLogger
 import hu.raven.puppet.logic.logging.DoubleLogger
-import hu.raven.puppet.logic.specimen.ISpecimenRepresentation
-import hu.raven.puppet.logic.state.EvolutionaryAlgorithmState
+import hu.raven.puppet.model.solution.SolutionRepresentation
+import hu.raven.puppet.logic.state.IterativeAlgorithmStateWithMultipleCandidates
 import hu.raven.puppet.logic.statistics.BacterialAlgorithmStatistics
-import hu.raven.puppet.logic.step.common.initialize.InitializeAlgorithm
-import hu.raven.puppet.logic.step.evolutionary.common.iteration.EvolutionaryIteration
+import hu.raven.puppet.logic.step.initialize.InitializeAlgorithm
+import hu.raven.puppet.logic.step.iterationofevolutionary.EvolutionaryIteration
 import hu.raven.puppet.model.logging.BacterialMemeticAlgorithmLogLine
 import hu.raven.puppet.model.logging.PopulationData
 import hu.raven.puppet.model.logging.ProgressData
@@ -111,7 +111,7 @@ private fun <C : PhysicsUnit<C>> calculateLogData(
     timeElapsed: Duration,
     timeElapsedTotal: Duration
 ): BacterialMemeticAlgorithmLogLine<C> {
-    val algorithmState: EvolutionaryAlgorithmState<ISpecimenRepresentation<C>, C> by inject()
+    val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<SolutionRepresentation<C>, C> by inject()
 
     val best = algorithmState.copyOfBest!!
     val second =
@@ -156,5 +156,5 @@ private fun <C : PhysicsUnit<C>> calculateLogData(
     )
 }
 
-private fun <C : PhysicsUnit<C>> ISpecimenRepresentation<C>.toLog() = SpecimenData(id, cost!!)
+private fun <C : PhysicsUnit<C>> SolutionRepresentation<C>.toLog() = SpecimenData(id, cost!!)
 
