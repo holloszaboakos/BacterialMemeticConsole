@@ -38,7 +38,7 @@ class AugeratTaskLoader : TaskLoader() {
                     (
                             edgesFromCenter.map { it.length.value }.sumClever()
                                     + edgesToCenter.map { it.length.value }.sumClever()
-                            ).toDouble()
+                            )
                 }"
             )
 
@@ -52,7 +52,7 @@ class AugeratTaskLoader : TaskLoader() {
                                             edgesToCenter[edge.orderInOwner].length.value
                                         ).min()
                                     }.sumClever()
-                            ) / vehicleCount.toLong()).toDouble()
+                            ) / vehicleCount.toLong())
                 }"
             )
         }

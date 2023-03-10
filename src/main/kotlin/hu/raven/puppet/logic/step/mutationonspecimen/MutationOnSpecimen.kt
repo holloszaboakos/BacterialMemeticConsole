@@ -23,7 +23,7 @@ sealed class MutationOnSpecimen<S : SolutionRepresentation<C>, C : PhysicsUnit<C
 
         clones
             .onEach { calculateCostOf(it) }
-            .sortBy { it.costOrException().value.toDouble() }
+            .sortBy { it.costOrException().value }
     }
 
     abstract operator fun invoke(specimen: S): StepEfficiencyData

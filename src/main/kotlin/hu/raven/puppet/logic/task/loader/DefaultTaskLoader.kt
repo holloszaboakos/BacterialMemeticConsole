@@ -57,7 +57,7 @@ class DefaultTaskLoader : TaskLoader() {
                 "OVERASTIMATE: ${
                     (edgesFromCenter.map { calcCostOnEdge(salesman, it).value }.sumClever()
                             + edgesToCenter.map { calcCostOnEdge(salesman, it).value }.sumClever()
-                            + objectives.map { calcCostOnNode(salesman, it).value }.sumClever()).toDouble()
+                            + objectives.map { calcCostOnNode(salesman, it).value }.sumClever())
                 }"
             )
 
@@ -70,7 +70,7 @@ class DefaultTaskLoader : TaskLoader() {
                             calcCostOnEdge(salesman, edgesToCenter[edgeArray.orderInOwner]).value
                         ).min()
                     }.min()
-                            + objectives.map { calcCostOnNode(salesman, it).value }.sumClever()).toDouble()
+                            + objectives.map { calcCostOnNode(salesman, it).value }.sumClever())
                 }"
             )
         }

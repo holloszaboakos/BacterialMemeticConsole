@@ -1,6 +1,7 @@
 package hu.raven.puppet.logic.step.mutationonspecimen
 
 import hu.raven.puppet.model.logging.StepEfficiencyData
+import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
 import kotlin.math.exp
@@ -56,9 +57,9 @@ class MutationOnSpecimenWithRandomContinuousSegmentAndFullCoverAndSimulatedAnnea
             improvementCountPerRun = if (impruvement) 1 else 0,
             improvementPercentagePerBudget =
             if (impruvement)
-                (1 - (specimen.costOrException().value / oldSpecimenCost!!.value).toDouble()) / spentBudget
+                (Fraction.new(1) - (specimen.costOrException().value / oldSpecimenCost!!.value)) / spentBudget
             else
-                0.0
+                Fraction.new(0)
         )
     }
 

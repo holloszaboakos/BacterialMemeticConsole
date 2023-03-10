@@ -24,7 +24,7 @@ class DesmetTaskLoader : TaskLoader() {
                     (
                             edgesFromCenter.map { it.length.value }.sumClever()
                                     + edgesToCenter.map { it.length.value }.sumClever()
-                            ).toDouble()
+                            )
                 }"
             )
 
@@ -38,7 +38,7 @@ class DesmetTaskLoader : TaskLoader() {
                                             edgesToCenter[edge.orderInOwner].length.value
                                         ).min()
                                     }.sumClever()
-                            ).toDouble()
+                            )
                 }"
             )
         }

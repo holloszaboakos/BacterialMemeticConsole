@@ -25,7 +25,7 @@ class OrderPopulationByCost<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> :
                     calculateCostOf(specimen)
                 }.collect()
 
-            population.sortBy { it.costOrException().value.toDouble() }
+            population.sortBy { it.costOrException().value }
 
             population.forEachIndexed { index, it ->
                 it.orderInPopulation = index

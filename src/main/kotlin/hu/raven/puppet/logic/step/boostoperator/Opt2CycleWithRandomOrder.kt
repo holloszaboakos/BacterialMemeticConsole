@@ -1,6 +1,7 @@
 package hu.raven.puppet.logic.step.boostoperator
 
 import hu.raven.puppet.model.logging.StepEfficiencyData
+import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
 import kotlin.time.ExperimentalTime
@@ -50,9 +51,9 @@ class Opt2CycleWithRandomOrder<S : SolutionRepresentation<C>, C : PhysicsUnit<C>
             improvementCountPerRun = if (specimen.costOrException() < oldCost) 1 else 0,
             improvementPercentagePerBudget =
             if (specimen.costOrException() < oldCost)
-                (1 - (specimen.costOrException().value / oldCost.value).toDouble()) / spentBudget
+                (Fraction.new(1) - (specimen.costOrException().value / oldCost.value)) / spentBudget
             else
-                0.0
+                Fraction.new(0)
         )
     }
 }

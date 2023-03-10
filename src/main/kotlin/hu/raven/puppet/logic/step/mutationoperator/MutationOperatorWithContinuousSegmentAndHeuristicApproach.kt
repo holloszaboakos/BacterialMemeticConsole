@@ -71,14 +71,15 @@ class MutationOperatorWithContinuousSegmentAndHeuristicApproach<S : SolutionRepr
         remainingElements: MutableList<Int>,
         weights: Array<Fraction>
     ): Int {
-        val sumOfWeights = weights.sumClever().toDouble()
-        var randomPoint = Random.nextDouble(sumOfWeights)
+        val sumOfWeights = weights.sumClever()
+        //TODO stabilize
+        var randomPoint = Fraction.randomUntil(sumOfWeights)
         for (elementIndex in weights.indices) {
             val weight = weights[elementIndex]
-            randomPoint -= weight.toDouble()
-            if (randomPoint <= 0) {
+            if (randomPoint <= weight) {
                 return remainingElements[elementIndex]
             }
+            randomPoint -= weight
         }
         throw Exception("No element selected!")
     }

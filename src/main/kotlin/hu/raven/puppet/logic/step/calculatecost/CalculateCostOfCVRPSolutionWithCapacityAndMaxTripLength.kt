@@ -17,7 +17,7 @@ class CalculateCostOfCVRPSolutionWithCapacityAndMaxTripLength<S : SolutionRepres
             var sumCost: Meter? = Meter(0L)
             var startCount = 0
             var endCount = 0
-            specimen.forEachSliceIndexed { sliceIndex, slice ->
+            specimen.forEachSliceIndexed { _, slice ->
                 //val salesman = task.salesmen[sliceIndex]
                 var takenCapacity = Stere(0L)
                 sumCost = max(

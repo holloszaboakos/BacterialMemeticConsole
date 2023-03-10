@@ -164,20 +164,17 @@ class HeuristicCrossOver<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> : Cr
         neighbours: List<Int>,
         childContains: BooleanArray
     ) {
-        val sum = weights.sumClever().toDouble()
-        var choice = try {
-            Random.nextDouble(sum)
-        } catch (e: IllegalArgumentException) {
-            throw e
-        }
+        val sum = weights.sumClever()
+        //TODO stabilize
+        var choice = Fraction.randomUntil(sum)
 
         for (weightIndex in weights.indices) {
-            choice -= weights[weightIndex].toDouble()
-            if (choice <= 0) {
+            if (choice <= weights[weightIndex]) {
                 child[geneIndex] = neighbours[weightIndex]
                 childContains[child[geneIndex]] = true
                 break
             }
+            choice -= weights[weightIndex]
         }
     }
 }

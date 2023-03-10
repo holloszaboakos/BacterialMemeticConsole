@@ -3,11 +3,11 @@ package hu.raven.puppet.logic.step.crossoveroperator
 import hu.raven.puppet.logic.statistics.GeneticAlgorithmStatistics
 import hu.raven.puppet.logic.statistics.OperatorStatistics
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
+import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
+import hu.raven.puppet.utility.extention.sumClever
 import hu.raven.puppet.utility.inject
-import kotlin.math.pow
-import kotlin.random.Random.Default.nextDouble
 
 //tegyünk bele fuzzy logikát vagy szimulált lehülést
 //pár iterációnként teljesen véletlent válasszunk
@@ -42,7 +42,7 @@ class StatisticalRacingCrossOver<S : SolutionRepresentation<C>, C : PhysicsUnit<
                     //statistics.improvement = statistics.improvement * 9 / 10
                     statistics.success = statistics.success * 8 / 10
                     //statistics.successRatio = statistics.improvement / statistics.run.toDouble()
-                    statistics.successRatio = statistics.success / statistics.run
+                    statistics.successRatio = statistics.success / statistics.run.toLong()
                 }
             }
             if (iteration < 10 * statistics.operatorsWithStatistics.size) {
@@ -51,12 +51,14 @@ class StatisticalRacingCrossOver<S : SolutionRepresentation<C>, C : PhysicsUnit<
                 logger(operator!!::class.java.simpleName)
                 actualStatistics = statistics.operatorsWithStatistics[operator]
             } else {
-                val sumOfSuccessRatio = statistics.operatorsWithStatistics.values.sumOf { it.successRatio.pow(2) }
-                val choice = nextDouble()
-                var fill = 0.0
+                val sumOfSuccessRatio =
+                    statistics.operatorsWithStatistics.values.map { it.successRatio.let { it * it } }.sumClever()
+                //TODO stabilize
+                val choice = Fraction.randomUntil(Fraction.new(1))
+                var fill = Fraction.new(0)
                 var found = false
                 statistics.operatorsWithStatistics.forEach { (type, value) ->
-                    fill += value.successRatio.pow(2) / sumOfSuccessRatio
+                    fill += value.successRatio.let { it * it } / sumOfSuccessRatio
                     if (!found && fill >= choice) {
                         found = true
                         operator = type
@@ -81,13 +83,13 @@ class StatisticalRacingCrossOver<S : SolutionRepresentation<C>, C : PhysicsUnit<
                                     (algorithm.population.size - parents.second.orderInPopulation).toDouble().pow(2)
                     }
                     else*/ if (parents.first.costOrException() > child.costOrException()) {
-                    actualStatistics.success += (algorithmState.iteration - parents.first.iteration) / child.costOrException().value.toDouble() /
-                            (parents.first.orderInPopulation + 1).toDouble().pow(2)
+                    actualStatistics.success += Fraction.new(algorithmState.iteration.toLong() - parents.first.iteration) / child.costOrException().value /
+                            Fraction.new(parents.first.orderInPopulation.toLong() + 1).let { it * it }
 
                 }
                     /*else*/ if (parents.second.costOrException() > child.costOrException()) {
-                    actualStatistics.success += (algorithmState.iteration - parents.second.iteration) / child.costOrException().value.toDouble() /
-                            (parents.second.orderInPopulation + 1).toDouble().pow(2)
+                    actualStatistics.success += Fraction.new(algorithmState.iteration.toLong() - parents.second.iteration) / child.costOrException().value /
+                            Fraction.new(parents.second.orderInPopulation.toLong() + 1).let { it * it }
                 }
                 }
             }

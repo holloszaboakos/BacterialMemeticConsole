@@ -8,7 +8,6 @@ import hu.raven.puppet.model.task.graph.DEdge
 import hu.raven.puppet.model.task.graph.DGraph
 import hu.raven.puppet.utility.extention.sumClever
 import hu.raven.puppet.utility.inject
-import kotlin.random.Random
 
 class MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> :
     BacterialMutationOperator<S, C>() {
@@ -156,15 +155,16 @@ class MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics<S : Solution
     ): Pair<Int, Int> {
         val sumOfWeights = finalWeightMatrix.map { it.sumClever() }.sumClever()
 
-        var randomPoint = Random.nextDouble(sumOfWeights.toDouble())
+        //TODO stabilize
+        var randomPoint = Fraction.randomUntil(sumOfWeights)
 
         for (columnIndex in finalWeightMatrix.indices) {
             for (rowIndex in finalWeightMatrix.indices) {
-                randomPoint -= finalWeightMatrix[columnIndex][rowIndex].toDouble()
-
-                if (randomPoint <= 0) {
+                if (randomPoint <= finalWeightMatrix[columnIndex][rowIndex]) {
                     return Pair(columnIndex, rowIndex)
                 }
+
+                randomPoint -= finalWeightMatrix[columnIndex][rowIndex]
             }
         }
 

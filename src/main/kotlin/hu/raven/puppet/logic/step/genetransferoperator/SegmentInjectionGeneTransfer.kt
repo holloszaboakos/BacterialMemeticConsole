@@ -1,6 +1,7 @@
 package hu.raven.puppet.logic.step.genetransferoperator
 
 import hu.raven.puppet.model.logging.StepEfficiencyData
+import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.utility.extention.nextSegmentStartPosition
@@ -51,8 +52,9 @@ class SegmentInjectionGeneTransfer<S : SolutionRepresentation<C>, C : PhysicsUni
                 improvementCountPerRun = if (target.costOrException() < oldCost) 1 else 0,
                 improvementPercentagePerBudget =
                 if (target.costOrException() < oldCost)
-                    1 - (target.costOrException().value / oldCost.value).toDouble()
-                else 0.0
+                    Fraction.new(1) - (target.costOrException().value / oldCost.value)
+                else
+                    Fraction.new(0)
             )
         }
     }

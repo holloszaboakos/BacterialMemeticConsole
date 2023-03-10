@@ -66,4 +66,11 @@ class FractionTest {
         val b = Fraction.new(1979183023, 1324315301, 3)
         println( a + b)
     }
+
+    @Test
+    fun testFail2() {
+        val a = Fraction.new(1222916589, 1582320250, -4)
+        val b = Fraction.new(1356194409, 2129368393, -1)
+        println( a - b)
+    }
 }

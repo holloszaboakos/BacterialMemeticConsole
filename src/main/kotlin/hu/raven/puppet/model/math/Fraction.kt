@@ -5,13 +5,13 @@ import hu.raven.puppet.utility.extention.divByTwoToThePowerOf
 import hu.raven.puppet.utility.extention.log2
 import hu.raven.puppet.utility.extention.timesTwoToThePowerOf
 import java.lang.Integer.min
-import kotlin.math.pow
+import kotlin.random.Random
 
 class Fraction private constructor(
     val numerator: Int,
     val denominator: Int,
     val exponential: Int
-) {
+) : Comparable<Fraction> {
 
     companion object {
         private const val MAX_LOG = Int.SIZE_BITS - 1
@@ -87,6 +87,16 @@ class Fraction private constructor(
             0
         )
 
+        fun randomUntil(fraction: Fraction): Fraction {
+            val maxShift = fraction.numerator.countLeadingZeroBits() - 1
+            val numeratorLimit = fraction.numerator.toLong().timesTwoToThePowerOf(maxShift)
+            val randomNumerator = Random.nextLong(numeratorLimit)
+            return new(
+                randomNumerator,
+                fraction.denominator.toLong(),
+                fraction.exponential - maxShift
+            )
+        }
     }
 
     operator fun plus(other: Fraction): Fraction {
@@ -105,7 +115,8 @@ class Fraction private constructor(
 
             exponential > other.exponential -> {
                 val expDiff = exponential - other.exponential
-                val maxShift = min(numerator.countLeadingZeroBits() - 1, expDiff)
+                val maxShift =
+                    min(numerator.countLeadingZeroBits() + other.denominator.countLeadingZeroBits() - 1, expDiff)
                 val newNumerator = numerator.toLong().timesTwoToThePowerOf(maxShift)
                 val newOtherNumerator = other.numerator.toLong().divByTwoToThePowerOf(expDiff - maxShift)
                 new(
@@ -117,7 +128,8 @@ class Fraction private constructor(
 
             else -> {
                 val expDiff = other.exponential - exponential
-                val maxShift = min(other.numerator.countLeadingZeroBits() - 1, expDiff)
+                val maxShift =
+                    min(other.numerator.countLeadingZeroBits() + denominator.countLeadingZeroBits() - 1, expDiff)
                 val newOtherNumerator = other.numerator.toLong().timesTwoToThePowerOf(maxShift)
                 val newNumerator = numerator.toLong().divByTwoToThePowerOf(expDiff - maxShift)
                 new(
@@ -193,9 +205,7 @@ class Fraction private constructor(
         return new(numerator.toLong(), denominator * other, exponential)
     }
 
-    fun toDouble() = 2.0.pow(exponential) * numerator / denominator
-
-    operator fun compareTo(other: Fraction): Int {
+    override operator fun compareTo(other: Fraction): Int {
         return when {
             numerator == 0 && other.numerator == 0 -> 0
             numerator == 0 -> -1
