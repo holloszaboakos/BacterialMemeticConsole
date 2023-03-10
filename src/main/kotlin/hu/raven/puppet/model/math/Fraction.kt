@@ -111,7 +111,7 @@ class Fraction private constructor(
                 new(
                     newNumerator * other.denominator + newOtherNumerator * denominator,
                     denominator.toLong() * other.denominator,
-                    other.exponential
+                    exponential - maxShift
                 )
             }
 
@@ -123,7 +123,7 @@ class Fraction private constructor(
                 new(
                     newNumerator * other.denominator + newOtherNumerator * denominator,
                     denominator.toLong() * other.denominator,
-                    exponential
+                    other.exponential - maxShift
                 )
             }
         }
@@ -199,7 +199,7 @@ class Fraction private constructor(
         return when {
             numerator == 0 && other.numerator == 0 -> 0
             numerator == 0 -> -1
-            other.numerator == 0 -> -1
+            other.numerator == 0 -> 1
 
             exponential == other.exponential -> {
                 (numerator.toLong() * other.denominator).compareTo(other.numerator.toLong() * denominator)
