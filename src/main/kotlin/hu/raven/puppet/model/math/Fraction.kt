@@ -116,7 +116,7 @@ class Fraction private constructor(
             exponential > other.exponential -> {
                 val expDiff = exponential - other.exponential
                 val maxShift =
-                    min(numerator.countLeadingZeroBits() + other.denominator.countLeadingZeroBits() - 1, expDiff)
+                    min(numerator.countLeadingZeroBits() + other.denominator.countLeadingZeroBits() - 2, expDiff)
                 val newNumerator = numerator.toLong().timesTwoToThePowerOf(maxShift)
                 val newOtherNumerator = other.numerator.toLong().divByTwoToThePowerOf(expDiff - maxShift)
                 new(
@@ -129,7 +129,7 @@ class Fraction private constructor(
             else -> {
                 val expDiff = other.exponential - exponential
                 val maxShift =
-                    min(other.numerator.countLeadingZeroBits() + denominator.countLeadingZeroBits() - 1, expDiff)
+                    min(other.numerator.countLeadingZeroBits() + denominator.countLeadingZeroBits() - 2, expDiff)
                 val newOtherNumerator = other.numerator.toLong().timesTwoToThePowerOf(maxShift)
                 val newNumerator = numerator.toLong().divByTwoToThePowerOf(expDiff - maxShift)
                 new(
@@ -157,7 +157,8 @@ class Fraction private constructor(
 
             exponential > other.exponential -> {
                 val expDiff = exponential - other.exponential
-                val maxShift = min(numerator.countLeadingZeroBits() - 1, expDiff)
+                val maxShift =
+                    min(numerator.countLeadingZeroBits() + other.denominator.countLeadingZeroBits() - 2, expDiff)
                 val newNumerator = numerator.toLong().timesTwoToThePowerOf(maxShift)
                 val newOtherNumerator = other.numerator.toLong().divByTwoToThePowerOf(expDiff - maxShift)
                 new(
@@ -169,7 +170,8 @@ class Fraction private constructor(
 
             else -> {
                 val expDiff = other.exponential - exponential
-                val maxShift = min(other.numerator.countLeadingZeroBits() - 1, expDiff)
+                val maxShift =
+                    min(other.numerator.countLeadingZeroBits() + denominator.countLeadingZeroBits() - 2, expDiff)
                 val newOtherNumerator = other.numerator.toLong().timesTwoToThePowerOf(maxShift)
                 val newNumerator = numerator.toLong().divByTwoToThePowerOf(expDiff - maxShift)
                 new(
@@ -211,26 +213,47 @@ class Fraction private constructor(
             numerator == 0 -> -1
             other.numerator == 0 -> 1
 
-            exponential == other.exponential -> {
-                (numerator.toLong() * other.denominator).compareTo(other.numerator.toLong() * denominator)
-            }
-
-            exponential > other.exponential && numerator.toLong() * other.denominator >= other.numerator.toLong() * denominator -> 1
-
-            exponential > other.exponential -> {
-                val exponentialDif = exponential - other.exponential
-                val newNumerator = numerator.toLong().timesTwoToThePowerOf(exponentialDif)
-                (newNumerator * other.denominator).compareTo(other.numerator.toLong() * denominator)
-            }
-
-            numerator * other.denominator <= other.numerator * denominator -> -1
-
             else -> {
-                val exponentialDif = other.exponential - exponential
-                val otherNumerator = other.numerator.toLong().timesTwoToThePowerOf(exponentialDif)
-                (numerator.toLong() * other.denominator).compareTo(otherNumerator * denominator)
-            }
+                when {
+                    exponential == other.exponential -> {
+                        (numerator.toLong() * other.denominator).compareTo(other.numerator.toLong() * denominator)
+                    }
 
+                    exponential > other.exponential && numerator.toLong() * other.denominator >= other.numerator.toLong() * denominator -> {
+                        1
+                    }
+
+                    exponential > other.exponential -> {
+                        //TODO div denominator if trailing zeros
+                        val expDiff = exponential - other.exponential
+                        val maxShift =
+                            min(
+                                numerator.countLeadingZeroBits() + other.denominator.countLeadingZeroBits() - 2,
+                                expDiff
+                            )
+                        val newNumerator = numerator.toLong().timesTwoToThePowerOf(maxShift)
+                        val newOtherNumerator = other.numerator.toLong().divByTwoToThePowerOf(expDiff - maxShift)
+                        (newNumerator * other.denominator).compareTo(newOtherNumerator * denominator)
+                    }
+
+                    numerator * other.denominator <= other.numerator * denominator -> {
+                        -1
+                    }
+
+                    else -> {
+                        //TODO div other denominator if trailing zeros
+                        val expDiff = other.exponential - exponential
+                        val maxShift =
+                            min(
+                                other.numerator.countLeadingZeroBits() + denominator.countLeadingZeroBits() - 2,
+                                expDiff
+                            )
+                        val newOtherNumerator = other.numerator.toLong().timesTwoToThePowerOf(maxShift)
+                        val newNumerator = numerator.toLong().divByTwoToThePowerOf(expDiff - maxShift)
+                        (newNumerator * other.denominator).compareTo(newOtherNumerator * denominator)
+                    }
+                }
+            }
         }
     }
 
