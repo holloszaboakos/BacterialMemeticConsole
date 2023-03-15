@@ -1,16 +1,18 @@
-package hu.raven.puppet.logic.step.mutationonspecimen
+package hu.raven.puppet.logic.step.bacterialmutationonspecimen
 
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
+import kotlin.math.exp
+import kotlin.random.Random
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
-class MutationOnSpecimenWithRandomContinuousSegmentAndFullCoverAndCloneWithInvertion<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> :
+class MutationOnSpecimenWithRandomContinuousSegmentAndFullCoverAndSimulatedAnnealing<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> :
     MutationOnSpecimen<S, C>() {
-    private val order by lazy {
-        (0 until algorithmState.population.first().permutationSize - cloneSegmentLength)
+    private val randomizer: IntArray by lazy {
+        (0 until cloneSegmentLength)
             .shuffled()
             .toIntArray()
     }
@@ -20,14 +22,14 @@ class MutationOnSpecimenWithRandomContinuousSegmentAndFullCoverAndCloneWithInver
         var impruvement = false
         val oldSpecimenCost = specimen.cost
         val duration = measureTime {
-            repeat(cloneCycleCount) { cycleIndex ->
-                val selectedPosition = order[(iteration * cloneCycleCount + cycleIndex) % order.size]
-                val selectedPositions =
-                    (selectedPosition until selectedPosition + cloneSegmentLength).toList().toIntArray()
+            val doSimulatedAnnealing = specimen != population.first()
+            repeat(cloneCycleCount) { cycleCount ->
+                val randomStartPosition = randomizer[iteration % randomizer.size]
+                val segmentPosition = randomStartPosition + cycleCount * cloneSegmentLength
+                val selectedPositions = IntArray(cloneSegmentLength) { segmentPosition + it }
                 val selectedElements = selectedPositions
                     .map { specimen[it] }
                     .toIntArray()
-
 
                 val clones = generateClones(
                     specimen,
@@ -36,10 +38,14 @@ class MutationOnSpecimenWithRandomContinuousSegmentAndFullCoverAndCloneWithInver
                 )
                 calcCostOfEachAndSort(clones)
 
-                if (clones.first().cost != specimen.cost) {
+                loadDataToSpecimen(
+                    specimen,
+                    clones,
+                    doSimulatedAnnealing
+                )
+
+                if (clones.first().cost != oldSpecimenCost) {
                     impruvement = true
-                    specimen.setData(clones.first().getData())
-                    specimen.cost = clones.first().cost
                 }
             }
         }
@@ -63,15 +69,8 @@ class MutationOnSpecimenWithRandomContinuousSegmentAndFullCoverAndCloneWithInver
         selectedElements: IntArray
     ): MutableList<S> {
         val clones = MutableList(cloneCount + 1) { subSolutionFactory.copy(specimen) }
-
-        invertSegment(
-            clones[1],
-            selectedPositions,
-            selectedElements
-        )
-
         clones
-            .slice(2 until clones.size)
+            .slice(1 until clones.size)
             .forEach { clone ->
                 mutationOperator(
                     clone,
@@ -82,13 +81,27 @@ class MutationOnSpecimenWithRandomContinuousSegmentAndFullCoverAndCloneWithInver
         return clones
     }
 
-    private fun invertSegment(
+    private fun <S : SolutionRepresentation<C>, C : PhysicsUnit<C>> loadDataToSpecimen(
         specimen: S,
-        selectedPositions: IntArray,
-        selectedElements: IntArray
+        clones: MutableList<S>,
+        doSimulatedAnnealing: Boolean
     ) {
-        selectedPositions.forEachIndexed { readIndex, writeIndex ->
-            specimen[writeIndex] = selectedElements[selectedElements.size - 1 - readIndex]
+        if (!doSimulatedAnnealing ||
+            Random.nextFloat() > simulatedAnnealingHeat(
+                algorithmState.iteration,
+                iterationLimit
+            )
+        ) {
+            specimen.setData(clones.first().getData())
+            specimen.cost = clones.first().cost
+            return
         }
+
+        specimen.setData(clones[1].getData())
+        specimen.cost = clones[1].cost
+    }
+
+    private fun simulatedAnnealingHeat(iteration: Int, divider: Int): Float {
+        return 1 / (1 + exp(iteration.toFloat() / divider))
     }
 }

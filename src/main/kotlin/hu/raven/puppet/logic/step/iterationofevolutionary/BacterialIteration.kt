@@ -1,7 +1,7 @@
 package hu.raven.puppet.logic.step.iterationofevolutionary
 
 import hu.raven.puppet.logic.step.boost.Boost
-import hu.raven.puppet.logic.step.mutationofbacterial.BacterialMutation
+import hu.raven.puppet.logic.step.bacterialmutation.BacterialMutation
 import hu.raven.puppet.logic.step.orderpopulationbycost.OrderPopulationByCost
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation

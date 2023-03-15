@@ -1,4 +1,4 @@
-package hu.raven.puppet.logic.step.mutationoperator
+package hu.raven.puppet.logic.step.bacterialmutationoperator
 
 import hu.raven.puppet.logic.step.EvolutionaryAlgorithmStep
 import hu.raven.puppet.model.physics.PhysicsUnit

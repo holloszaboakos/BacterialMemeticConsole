@@ -1,4 +1,4 @@
-package hu.raven.puppet.logic.step.mutationoperator
+package hu.raven.puppet.logic.step.bacterialmutationoperator
 
 import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.model.math.Fraction

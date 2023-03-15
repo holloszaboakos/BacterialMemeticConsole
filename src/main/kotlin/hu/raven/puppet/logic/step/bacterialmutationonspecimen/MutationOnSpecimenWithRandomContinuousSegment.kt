@@ -1,4 +1,4 @@
-package hu.raven.puppet.logic.step.mutationonspecimen
+package hu.raven.puppet.logic.step.bacterialmutationonspecimen
 
 import hu.raven.puppet.logic.step.selectsegment.SelectSegment
 import hu.raven.puppet.model.logging.StepEfficiencyData

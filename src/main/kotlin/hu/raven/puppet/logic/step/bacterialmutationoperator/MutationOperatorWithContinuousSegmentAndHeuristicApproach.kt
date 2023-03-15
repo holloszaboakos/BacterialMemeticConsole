@@ -1,4 +1,4 @@
-package hu.raven.puppet.logic.step.mutationoperator
+package hu.raven.puppet.logic.step.bacterialmutationoperator
 
 import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.model.math.Fraction
@@ -7,7 +7,6 @@ import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.extention.sumClever
 import hu.raven.puppet.utility.inject
-import kotlin.random.Random
 
 class MutationOperatorWithContinuousSegmentAndHeuristicApproach<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> :
     BacterialMutationOperator<S, C>() {

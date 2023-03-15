@@ -1,7 +1,7 @@
-package hu.raven.puppet.logic.step.mutationofbacterial
+package hu.raven.puppet.logic.step.bacterialmutation
 
 import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
-import hu.raven.puppet.logic.step.mutationonspecimen.MutationOnSpecimen
+import hu.raven.puppet.logic.step.bacterialmutationonspecimen.MutationOnSpecimen
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
@@ -43,7 +43,7 @@ class BacterialMutationOnBestAndLuckyByCoinFlip<S : SolutionRepresentation<C>, C
                         }
                     }
 
-                    return@async improvement
+                    improvement
                 }
             }
                 .mapNotNull { it.await() }

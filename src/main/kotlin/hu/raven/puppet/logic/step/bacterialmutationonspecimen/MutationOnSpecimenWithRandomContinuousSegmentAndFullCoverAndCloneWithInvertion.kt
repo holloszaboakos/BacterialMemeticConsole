@@ -1,4 +1,4 @@
-package hu.raven.puppet.logic.step.mutationonspecimen
+package hu.raven.puppet.logic.step.bacterialmutationonspecimen
 
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.math.Fraction
@@ -7,11 +7,12 @@ import hu.raven.puppet.model.solution.SolutionRepresentation
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
-class MutationOnSpecimenWithSpreadSegmentAndFullCover<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> :
+class MutationOnSpecimenWithRandomContinuousSegmentAndFullCoverAndCloneWithInvertion<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> :
     MutationOnSpecimen<S, C>() {
-    private val randomPermutation: IntArray by lazy {
-        IntArray(geneCount) { it }
-            .apply { shuffle() }
+    private val order by lazy {
+        (0 until algorithmState.population.first().permutationSize - cloneSegmentLength)
+            .shuffled()
+            .toIntArray()
     }
 
     @OptIn(ExperimentalTime::class)
@@ -19,16 +20,14 @@ class MutationOnSpecimenWithSpreadSegmentAndFullCover<S : SolutionRepresentation
         var impruvement = false
         val oldSpecimenCost = specimen.cost
         val duration = measureTime {
-            repeat(cloneCycleCount) { cycleCount ->
-                val segmentStart = cycleCount * cloneSegmentLength
-                val segmentEnd = (cycleCount + 1) * cloneSegmentLength
-                val selectedPositions = randomPermutation
-                    .slice(segmentStart until segmentEnd)
-                    .sortedBy { it }
-                    .toIntArray()
+            repeat(cloneCycleCount) { cycleIndex ->
+                val selectedPosition = order[(iteration * cloneCycleCount + cycleIndex) % order.size]
+                val selectedPositions =
+                    (selectedPosition until selectedPosition + cloneSegmentLength).toList().toIntArray()
                 val selectedElements = selectedPositions
                     .map { specimen[it] }
                     .toIntArray()
+
 
                 val clones = generateClones(
                     specimen,
@@ -64,8 +63,15 @@ class MutationOnSpecimenWithSpreadSegmentAndFullCover<S : SolutionRepresentation
         selectedElements: IntArray
     ): MutableList<S> {
         val clones = MutableList(cloneCount + 1) { subSolutionFactory.copy(specimen) }
+
+        invertSegment(
+            clones[1],
+            selectedPositions,
+            selectedElements
+        )
+
         clones
-            .slice(1 until clones.size)
+            .slice(2 until clones.size)
             .forEach { clone ->
                 mutationOperator(
                     clone,
@@ -74,5 +80,15 @@ class MutationOnSpecimenWithSpreadSegmentAndFullCover<S : SolutionRepresentation
                 )
             }
         return clones
+    }
+
+    private fun invertSegment(
+        specimen: S,
+        selectedPositions: IntArray,
+        selectedElements: IntArray
+    ) {
+        selectedPositions.forEachIndexed { readIndex, writeIndex ->
+            specimen[writeIndex] = selectedElements[selectedElements.size - 1 - readIndex]
+        }
     }
 }
