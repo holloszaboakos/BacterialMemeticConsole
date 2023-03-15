@@ -1,33 +1,29 @@
 package hu.raven.puppet.logic.step.bacterialmutationoperator
 
-import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
+import hu.raven.puppet.logic.step.selectsegment.Segment
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.extention.sumClever
-import hu.raven.puppet.utility.inject
 
-class MutationOperatorWithContinuousSegmentAndHeuristicApproach<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> :
+class SequentialSelectionHeuristicOnContinuousSegment<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> :
     BacterialMutationOperator<S, C>() {
-
-    val statistics: BacterialAlgorithmStatistics by inject()
 
     override fun invoke(
         clone: S,
-        selectedPositions: IntArray,
-        selectedElements: IntArray
+        selectedSegment: Segment
     ) {
 
-        val remainingElements = selectedElements.toMutableList()
+        val remainingElements = selectedSegment.values.toMutableList()
         val objectiveCount = taskHolder.task.costGraph.objectives.size
-        var previousElement = if (selectedPositions.first() == 0) {
+        var previousElement = if (selectedSegment.positions.first() == 0) {
             objectiveCount
         } else {
-            clone[selectedPositions.first() - 1]
+            clone[selectedSegment.positions.first() - 1]
         }
 
-        selectedPositions.forEach { writeIndex ->
+        selectedSegment.positions.forEach { writeIndex ->
             val selectedElement = selectNextElement(
                 previousElement,
                 remainingElements
@@ -64,6 +60,36 @@ class MutationOperatorWithContinuousSegmentAndHeuristicApproach<S : SolutionRepr
             weights
         )
 
+    }
+
+    private fun calculateWeightsOfRemainingElements(
+        previousElement: Int,
+        remainingElements: MutableList<Int>
+    ): Array<Fraction> = taskHolder.task.run {
+        val objectiveCount = costGraph.objectives.size
+        remainingElements.map { element ->
+            when {
+                previousElement < objectiveCount && element < objectiveCount -> costGraph
+                    .getEdgeBetween(previousElement, element)
+                    .length
+                    .value
+                    .multiplicativeInverse()
+
+                element < objectiveCount -> costGraph
+                    .edgesFromCenter[element]
+                    .length
+                    .value
+                    .multiplicativeInverse()
+
+                previousElement < objectiveCount -> costGraph
+                    .edgesToCenter[previousElement]
+                    .length
+                    .value
+                    .multiplicativeInverse()
+
+                else -> Fraction.new(1L)
+            }
+        }.toTypedArray()
     }
 
     private fun selectElementByWeightedRandom(
@@ -114,36 +140,6 @@ class MutationOperatorWithContinuousSegmentAndHeuristicApproach<S : SolutionRepr
                     else -> Fraction.new(1L)
                 }
             }.toTypedArray().sumClever()
-    }
-
-    private fun calculateWeightsOfRemainingElements(
-        previousElement: Int,
-        remainingElements: MutableList<Int>
-    ): Array<Fraction> = taskHolder.task.run {
-        val objectiveCount = costGraph.objectives.size
-        remainingElements.map { element ->
-            when {
-                previousElement < objectiveCount && element < objectiveCount -> costGraph
-                    .getEdgeBetween(previousElement, element)
-                    .length
-                    .value
-                    .multiplicativeInverse()
-
-                element < objectiveCount -> costGraph
-                    .edgesFromCenter[element]
-                    .length
-                    .value
-                    .multiplicativeInverse()
-
-                previousElement < objectiveCount -> costGraph
-                    .edgesToCenter[previousElement]
-                    .length
-                    .value
-                    .multiplicativeInverse()
-
-                else -> Fraction.new(1L)
-            }
-        }.toTypedArray()
     }
 
 }

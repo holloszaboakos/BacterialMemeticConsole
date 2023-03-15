@@ -1,5 +1,6 @@
 package hu.raven.puppet.logic.step.bacterialmutationonspecimen
 
+import hu.raven.puppet.logic.step.selectsegment.Segment
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.PhysicsUnit
@@ -9,7 +10,7 @@ import kotlin.random.Random
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
-class MutationOnSpecimenWithRandomContinuousSegmentAndFullCoverAndSimulatedAnnealing<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> :
+class MutationWithSimulatedAnnealingBasedSelection<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> :
     MutationOnSpecimen<S, C>() {
     private val randomizer: IntArray by lazy {
         (0 until cloneSegmentLength)
@@ -23,19 +24,13 @@ class MutationOnSpecimenWithRandomContinuousSegmentAndFullCoverAndSimulatedAnnea
         val oldSpecimenCost = specimen.cost
         val duration = measureTime {
             val doSimulatedAnnealing = specimen != population.first()
-            repeat(cloneCycleCount) { cycleCount ->
-                val randomStartPosition = randomizer[iteration % randomizer.size]
-                val segmentPosition = randomStartPosition + cycleCount * cloneSegmentLength
-                val selectedPositions = IntArray(cloneSegmentLength) { segmentPosition + it }
-                val selectedElements = selectedPositions
-                    .map { specimen[it] }
-                    .toIntArray()
+            repeat(cloneCycleCount) { cycleIndex ->
 
                 val clones = generateClones(
                     specimen,
-                    selectedPositions,
-                    selectedElements
+                    selectSegment(specimen, cycleIndex, cloneCycleCount)
                 )
+
                 calcCostOfEachAndSort(clones)
 
                 loadDataToSpecimen(
@@ -65,18 +60,13 @@ class MutationOnSpecimenWithRandomContinuousSegmentAndFullCoverAndSimulatedAnnea
 
     private fun generateClones(
         specimen: S,
-        selectedPositions: IntArray,
-        selectedElements: IntArray
+        selectedSegment: Segment
     ): MutableList<S> {
         val clones = MutableList(cloneCount + 1) { subSolutionFactory.copy(specimen) }
         clones
             .slice(1 until clones.size)
             .forEach { clone ->
-                mutationOperator(
-                    clone,
-                    selectedPositions,
-                    selectedElements
-                )
+                mutationOperator(clone, selectedSegment)
             }
         return clones
     }

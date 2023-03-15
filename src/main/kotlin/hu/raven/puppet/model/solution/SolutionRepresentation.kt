@@ -1,5 +1,6 @@
 package hu.raven.puppet.model.solution
 
+import hu.raven.puppet.model.math.Permutation
 import hu.raven.puppet.model.physics.PhysicsUnit
 
 sealed interface SolutionRepresentation<C : PhysicsUnit<C>> {
@@ -40,7 +41,7 @@ sealed interface SolutionRepresentation<C : PhysicsUnit<C>> {
 
     fun checkFormat(): Boolean
 
-    fun inverseOfPermutation(): IntArray
+    fun inverseOfPermutation(): Permutation
     fun sequentialOfPermutation(): IntArray
     fun copyOfPermutation(): IntArray
     fun <T : (Int, (Int) -> Int) -> Collection<Int>> copyOfPermutationBy(initializer: T): Collection<Int>

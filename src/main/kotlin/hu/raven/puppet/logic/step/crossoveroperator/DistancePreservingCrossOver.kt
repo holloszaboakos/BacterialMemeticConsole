@@ -18,7 +18,7 @@ class DistancePreservingCrossOver<S : SolutionRepresentation<C>, C : PhysicsUnit
         }
         child.setEach { index, value ->
             if (value == -1)
-                parents.second[primaryInverse[parents.second[index]]]
+                parents.second[primaryInverse.value[parents.second[index]]]
             else
                 value
         }

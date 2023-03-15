@@ -19,7 +19,7 @@ class OrderBasedCrossOver<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> : C
         //copy parent middle to child
         child.setEach { valueIndex, _ ->
             if (Random.nextBoolean()) {
-                seconderCopy[seconderInverse[primerParent[valueIndex]]] = child.permutationSize
+                seconderCopy[seconderInverse.value[primerParent[valueIndex]]] = child.permutationSize
                 primerParent[valueIndex]
             } else
                 child.permutationSize

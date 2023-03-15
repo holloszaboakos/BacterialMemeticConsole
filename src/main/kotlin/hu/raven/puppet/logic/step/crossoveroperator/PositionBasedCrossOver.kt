@@ -20,7 +20,7 @@ class PositionBasedCrossOver<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> 
         //copy parent middle to child
         child.setEach { valueIndex, _ ->
             if (selected[valueIndex]) {
-                seconderCopy[seconderInverse[primerParent[valueIndex]]] = child.permutationSize
+                seconderCopy[seconderInverse.value[primerParent[valueIndex]]] = child.permutationSize
                 primerParent[valueIndex]
             } else
                 child.permutationSize

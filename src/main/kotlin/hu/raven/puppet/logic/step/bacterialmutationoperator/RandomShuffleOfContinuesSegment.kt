@@ -1,27 +1,22 @@
 package hu.raven.puppet.logic.step.bacterialmutationoperator
 
-import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
+import hu.raven.puppet.logic.step.selectsegment.Segment
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.utility.extention.asPermutation
-import hu.raven.puppet.utility.inject
 
 
-class MutationOperatorWithContinuesSegment<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> :
+class RandomShuffleOfContinuesSegment<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> :
     BacterialMutationOperator<S, C>() {
-
-    val statistics: BacterialAlgorithmStatistics by inject()
     override fun invoke(
         clone: S,
-        selectedPositions: IntArray,
-        selectedElements: IntArray
+        selectSegment: Segment
     ) {
-
-        selectedPositions
+        selectSegment.positions
             .asPermutation()
             .shuffled()
             .forEachIndexed { readIndex, writeIndex ->
-                clone[writeIndex] = selectedElements[readIndex]
+                clone[writeIndex] = selectSegment.values[readIndex]
             }
     }
 }

@@ -17,7 +17,7 @@ class MaximalPreservationCrossOver<S : SolutionRepresentation<C>, C : PhysicsUni
 
         child.setEach { index, _ ->
             if (index < size) {
-                seconderCopy[seconderInverse[parents.first[index + start]]] = child.permutationSize
+                seconderCopy[seconderInverse.value[parents.first[index + start]]] = child.permutationSize
                 parents.first[index + start]
             } else
                 child.permutationSize

@@ -3,7 +3,7 @@ package hu.raven.puppet.model.math
 @JvmInline
 value class Permutation(val value: IntArray) {
     fun clone() = Permutation(value.clone())
-    fun isPermutation(): Boolean = value.run {
+    fun isNotMalformed(): Boolean = value.run {
         val contains = BooleanArray(size) { false }
         var result = true
         forEach {
@@ -15,12 +15,12 @@ value class Permutation(val value: IntArray) {
         return result
     }
 
-    fun inverse(): IntArray = value.run {
+    fun inverse(): Permutation = value.run {
         val result = IntArray(size) { it }
         forEachIndexed { index, value ->
             result[value] = index
         }
-        return result
+        return Permutation(result)
     }
 
     fun sequential(): IntArray = value.run {

@@ -8,7 +8,7 @@ import hu.raven.puppet.model.solution.SolutionRepresentation
 class GeneticAlgorithmStatistics<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> : AlgorithmStatistics {
     override var diversity = Double.MAX_VALUE
     val operatorsWithStatistics =
-        CrossOverOperator.getVariants<S,C>().associateWith {
+        CrossOverOperator.getVariants<S, C>().associateWith {
             OperatorStatistics(Fraction.new(0), 1, Fraction.new(Int.MAX_VALUE.toLong()))
         }.toMutableMap()
 

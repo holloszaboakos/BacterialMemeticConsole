@@ -1,37 +1,32 @@
 package hu.raven.puppet.logic.step.bacterialmutationoperator
 
-import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
+import hu.raven.puppet.logic.step.selectsegment.Segment
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.model.task.graph.DEdge
 import hu.raven.puppet.model.task.graph.DGraph
 import hu.raven.puppet.utility.extention.sumClever
-import hu.raven.puppet.utility.inject
 
-class MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> :
+class EdgeBuilderHeuristicOnContinuousSegment<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> :
     BacterialMutationOperator<S, C>() {
-    val statistics: BacterialAlgorithmStatistics by inject()
     override fun invoke(
         clone: S,
-        selectedPositions: IntArray,
-        selectedElements: IntArray
+        selectedSegment: Segment
     ) {
 
         val weightsOfInnerEdges = calculateWeightsOfInnerEdges(
-            selectedElements
+            selectedSegment.values
         )
 
         val weightsOfEdgesFromPrevious = calculateWeightsOfEdgesFromPrevious(
             clone,
-            selectedPositions,
-            selectedElements
+            selectedSegment
         )
 
         val weightsOfEdgesToNext = calculateWeightsOfEdgesToNext(
             clone,
-            selectedPositions,
-            selectedElements
+            selectedSegment
         )
 
         val unitedWeightMatrix = uniteWeightMatrices(
@@ -45,7 +40,7 @@ class MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics<S : Solution
         val sequentialRepresentationOfSequence = IntArray(finalWeightMatrix.size) { -1 }
         val segmentsOfEdges: MutableList<Pair<Int, Int>> = mutableListOf()
 
-        repeat(selectedPositions.size) {
+        repeat(selectedSegment.positions.size) {
             try {
                 val selectedEdge = selectEdgeBasedOnWeights(finalWeightMatrix)
                 sequentialRepresentationOfSequence[selectedEdge.first] = selectedEdge.second
@@ -72,15 +67,15 @@ class MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics<S : Solution
             sequentialRepresentationOfSequence[it.first] = it.second
         }
 
-        val elementIndexes = IntArray(selectedElements.size) { -1 }
-        var lastElement = selectedElements.size
+        val elementIndexes = IntArray(selectedSegment.values.size) { -1 }
+        var lastElement = selectedSegment.values.size
         repeat(elementIndexes.size) { index ->
             elementIndexes[index] = sequentialRepresentationOfSequence[lastElement]
             lastElement = elementIndexes[index]
         }
 
         elementIndexes.forEachIndexed { index, elementIndex ->
-            clone[selectedPositions[index]] = selectedElements[elementIndex]
+            clone[selectedSegment.positions[index]] = selectedSegment.values[elementIndex]
         }
 
         if (!clone.checkFormat()) {
@@ -219,18 +214,17 @@ class MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics<S : Solution
 
     private fun <S : SolutionRepresentation<C>> calculateWeightsOfEdgesToNext(
         clone: S,
-        selectedPositions: IntArray,
-        selectedElements: IntArray
+        selectedSegment: Segment
     ): Array<Fraction> = algorithmState.run {
         val objectiveCount = taskHolder.task.costGraph.objectives.size
-        val nextElement = if (selectedPositions.last() == 0) {
+        val nextElement = if (selectedSegment.positions.last() == 0) {
             objectiveCount
         } else {
-            clone[selectedPositions.last() + 1]
+            clone[selectedSegment.positions.last() + 1]
         }
-        Array(selectedElements.size) { fromIndex ->
+        Array(selectedSegment.values.size) { fromIndex ->
             calculateWeightBetween(
-                selectedElements[fromIndex],
+                selectedSegment.values[fromIndex],
                 nextElement
             )
         }
@@ -238,20 +232,19 @@ class MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics<S : Solution
 
     private fun <S : SolutionRepresentation<C>> calculateWeightsOfEdgesFromPrevious(
         clone: S,
-        selectedPositions: IntArray,
-        selectedElements: IntArray
+        selectedSegment: Segment
     ): Array<Fraction> = algorithmState.run {
         val objectiveCount = taskHolder.task.costGraph.objectives.size
-        val previousElement = if (selectedPositions.first() == 0) {
+        val previousElement = if (selectedSegment.positions.first() == 0) {
             objectiveCount
         } else {
-            clone[selectedPositions.first() - 1]
+            clone[selectedSegment.positions.first() - 1]
         }
 
-        Array(selectedElements.size) { toIndex ->
+        Array(selectedSegment.values.size) { toIndex ->
             calculateWeightBetween(
                 previousElement,
-                selectedElements[toIndex]
+                selectedSegment.values[toIndex]
             )
         }
     }

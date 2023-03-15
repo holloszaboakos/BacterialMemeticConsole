@@ -1,5 +1,7 @@
 package hu.raven.puppet.logic.step.bacterialmutationonspecimen
 
+import hu.raven.puppet.logic.step.bacterialmutationoperator.OppositionOperator
+import hu.raven.puppet.logic.step.selectsegment.Segment
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.PhysicsUnit
@@ -7,37 +9,26 @@ import hu.raven.puppet.model.solution.SolutionRepresentation
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
-class MutationOnSpecimenWithContinuousSegmentAndFullCoverAndRandomStart<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> :
+class MutationWithElitistSelectionAndOneOposition<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> :
     MutationOnSpecimen<S, C>() {
-    private val randomizer: IntArray by lazy {
-        (0 until cloneSegmentLength)
-            .shuffled()
-            .toIntArray()
-    }
+
+    private val oppositionOperator = OppositionOperator<S, C>()
 
     @OptIn(ExperimentalTime::class)
     override fun invoke(specimen: S): StepEfficiencyData = algorithmState.run {
-        var impruvement = false
+        var improvement = false
         val oldSpecimenCost = specimen.cost
         val duration = measureTime {
-            repeat(cloneCycleCount) { cycleCount ->
-                val randomStartPosition = randomizer[iteration % randomizer.size]
-                val segmentPosition =
-                    (randomStartPosition + cycleCount * cloneSegmentLength)
-                val selectedPositions = IntArray(cloneSegmentLength) { segmentPosition + it }
-                val selectedElements = selectedPositions
-                    .map { specimen[it] }
-                    .toIntArray()
-
+            repeat(cloneCycleCount) { cycleIndex ->
                 val clones = generateClones(
                     specimen,
-                    selectedPositions,
-                    selectedElements
+                    selectSegment(specimen, cycleIndex, cloneCycleCount)
                 )
+
                 calcCostOfEachAndSort(clones)
 
                 if (clones.first().cost != specimen.cost) {
-                    impruvement = true
+                    improvement = true
                     specimen.setData(clones.first().getData())
                     specimen.cost = clones.first().cost
                 }
@@ -48,9 +39,9 @@ class MutationOnSpecimenWithContinuousSegmentAndFullCoverAndRandomStart<S : Solu
         StepEfficiencyData(
             spentTime = duration,
             spentBudget = spentBudget,
-            improvementCountPerRun = if (impruvement) 1 else 0,
+            improvementCountPerRun = if (improvement) 1 else 0,
             improvementPercentagePerBudget =
-            if (impruvement)
+            if (improvement)
                 (Fraction.new(1) - (specimen.costOrException().value / oldSpecimenCost!!.value)) / spentBudget
             else
                 Fraction.new(0)
@@ -59,18 +50,16 @@ class MutationOnSpecimenWithContinuousSegmentAndFullCoverAndRandomStart<S : Solu
 
     private fun generateClones(
         specimen: S,
-        selectedPositions: IntArray,
-        selectedElements: IntArray
+        selectedSegment: Segment
     ): MutableList<S> {
         val clones = MutableList(cloneCount + 1) { subSolutionFactory.copy(specimen) }
+
+        oppositionOperator(clones[1], selectedSegment)
+
         clones
-            .slice(1 until clones.size)
+            .slice(2 until clones.size)
             .forEach { clone ->
-                mutationOperator(
-                    clone,
-                    selectedPositions,
-                    selectedElements
-                )
+                mutationOperator(clone, selectedSegment)
             }
         return clones
     }

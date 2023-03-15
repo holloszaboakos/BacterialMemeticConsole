@@ -18,13 +18,13 @@ class CycleCrossOver<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> : CrossO
         child.setEach { _, _ -> child.permutationSize }
 
         child[0] = primerParent[0]
-        var actualIndex = seconderInverse[child[0]]
+        var actualIndex = seconderInverse.value[child[0]]
         seconderCopy[actualIndex] = child.permutationSize
         //fill missing places of child
         if (actualIndex != 0)
             while (actualIndex != 0) {
                 child[actualIndex] = primerParent[actualIndex]
-                actualIndex = seconderInverse[primerParent[actualIndex]]
+                actualIndex = seconderInverse.value[primerParent[actualIndex]]
                 seconderCopy[actualIndex] = child.permutationSize
             }
         seconderCopy.removeIf { it == child.permutationSize }

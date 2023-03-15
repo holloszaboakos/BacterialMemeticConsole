@@ -147,7 +147,7 @@ data class OnePartRepresentation<C : PhysicsUnit<C>>(
     }
 
     override fun checkFormat(): Boolean {
-        val result = permutation.isPermutation()
+        val result = permutation.isNotMalformed()
         return if (permutation.value.filter { it >= objectiveCount }.size != salesmanCount - 1)
             false
         else result

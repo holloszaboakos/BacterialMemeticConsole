@@ -48,9 +48,9 @@ class DiversityByMatrixDistanceFromBest<S : SolutionRepresentation<C>, C : Physi
         specimen: S
     ): Array<IntArray> {
         val inverse = specimen.inverseOfPermutation()
-        return Array(inverse.size) { fromIndex ->
-            IntArray(inverse.size) { toIndex ->
-                inverse[fromIndex] - inverse[toIndex]
+        return Array(inverse.value.size) { fromIndex ->
+            IntArray(inverse.value.size) { toIndex ->
+                inverse.value[fromIndex] - inverse.value[toIndex]
             }
         }
     }

@@ -7,9 +7,15 @@ import hu.raven.puppet.utility.extention.selectRandomPositions
 class SelectSpreadSegment<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> : SelectSegment<S, C>() {
 
     override fun invoke(
-        specimen: S
-    ): IntArray {
-        return specimen.permutationIndices
+        specimen: S,
+        cycleIndex: Int,
+        cycleCount: Int
+    ): Segment {
+        val positions = specimen.permutationIndices
             .selectRandomPositions(cloneSegmentLength)
+        return Segment(
+            positions = positions,
+            values = positions.map { specimen[it] }.toIntArray()
+        )
     }
 }

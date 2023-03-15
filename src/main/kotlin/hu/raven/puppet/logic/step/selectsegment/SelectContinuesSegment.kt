@@ -7,13 +7,19 @@ import kotlin.random.Random
 
 class SelectContinuesSegment<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> : SelectSegment<S, C>() {
     override fun invoke(
-        specimen: S
-    ): IntArray {
+        specimen: S,
+        cycleIndex: Int,
+        cycleCount: Int
+    ): Segment {
         val randomPosition =
             Random.nextSegmentStartPosition(
                 specimen.permutationIndices.count(),
                 cloneSegmentLength
             )
-        return IntArray(cloneSegmentLength) { randomPosition + it }
+        val positions = IntArray(cloneSegmentLength) { randomPosition + it }
+        return Segment(
+            positions = positions,
+            values = positions.map { specimen[it] }.toIntArray()
+        )
     }
 }

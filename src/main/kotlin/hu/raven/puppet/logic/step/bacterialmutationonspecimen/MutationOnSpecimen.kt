@@ -1,8 +1,9 @@
 package hu.raven.puppet.logic.step.bacterialmutationonspecimen
 
 import hu.raven.puppet.logic.step.EvolutionaryAlgorithmStep
-import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.logic.step.bacterialmutationoperator.BacterialMutationOperator
+import hu.raven.puppet.logic.step.calculatecost.CalculateCost
+import hu.raven.puppet.logic.step.selectsegment.SelectSegment
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
@@ -18,9 +19,9 @@ sealed class MutationOnSpecimen<S : SolutionRepresentation<C>, C : PhysicsUnit<C
 
     protected val mutationOperator: BacterialMutationOperator<S, C> by inject()
     protected val calculateCostOf: CalculateCost<S, C> by inject()
+    protected val selectSegment: SelectSegment<S, C> by inject()
 
     fun calcCostOfEachAndSort(clones: MutableList<S>) {
-
         clones
             .onEach { calculateCostOf(it) }
             .sortBy { it.costOrException().value }

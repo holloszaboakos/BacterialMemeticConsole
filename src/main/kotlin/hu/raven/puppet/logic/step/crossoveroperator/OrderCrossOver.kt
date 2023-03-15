@@ -25,7 +25,7 @@ class OrderCrossOver<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> : CrossO
         //copy parent middle to child
         child.setEach { index, _ ->
             if (index in cut[0]..cut[1]) {
-                seconderCopy[seconderInverse[primerParent[index]]] = child.permutationSize
+                seconderCopy[seconderInverse.value[primerParent[index]]] = child.permutationSize
                 primerParent[index]
             } else
                 child.permutationSize

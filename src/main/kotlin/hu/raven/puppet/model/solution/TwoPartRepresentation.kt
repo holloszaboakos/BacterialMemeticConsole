@@ -125,7 +125,7 @@ data class TwoPartRepresentation<C : PhysicsUnit<C>>(
     }
 
     override fun checkFormat(): Boolean {
-        val result = permutation.isPermutation()
+        val result = permutation.isNotMalformed()
         return if (sliceLengths.sum() != salesmanCount)
             false
         else result

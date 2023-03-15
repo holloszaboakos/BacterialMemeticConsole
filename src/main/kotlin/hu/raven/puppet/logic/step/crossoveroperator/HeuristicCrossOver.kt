@@ -1,12 +1,12 @@
 package hu.raven.puppet.logic.step.crossoveroperator
 
 import hu.raven.puppet.model.math.Fraction
+import hu.raven.puppet.model.math.Permutation
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.model.task.graph.DEdge
 import hu.raven.puppet.model.task.graph.DGraph
 import hu.raven.puppet.utility.extention.sumClever
-import kotlin.random.Random
 import kotlin.random.Random.Default.nextInt
 
 class HeuristicCrossOver<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> : CrossOverOperator<S, C>() {
@@ -88,16 +88,16 @@ class HeuristicCrossOver<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> : Cr
 
     private fun <S : SolutionRepresentation<C>> gatherNeighbouringValues(
         parentsL: List<S>,
-        parentsInverse: Array<IntArray>,
+        parentsInverse: Array<Permutation>,
         previousValue: Int,
         child: S,
         childContains: BooleanArray
     ): List<Int> {
         return listOf(
-            parentsL[0][(parentsInverse[0][previousValue] + child.permutationSize - 1) % child.permutationSize],
-            parentsL[0][(parentsInverse[0][previousValue] + 1) % child.permutationSize],
-            parentsL[1][(parentsInverse[1][previousValue] + child.permutationSize - 1) % child.permutationSize],
-            parentsL[1][(parentsInverse[1][previousValue] + 1) % child.permutationSize]
+            parentsL[0][(parentsInverse[0].value[previousValue] + child.permutationSize - 1) % child.permutationSize],
+            parentsL[0][(parentsInverse[0].value[previousValue] + 1) % child.permutationSize],
+            parentsL[1][(parentsInverse[1].value[previousValue] + child.permutationSize - 1) % child.permutationSize],
+            parentsL[1][(parentsInverse[1].value[previousValue] + 1) % child.permutationSize]
         ).filter { !childContains[it] }
     }
 

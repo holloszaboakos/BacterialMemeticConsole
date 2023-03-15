@@ -1,9 +1,9 @@
 package hu.raven.puppet.logic.step.genetransfer
 
-import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.logic.step.genetransferoperator.GeneTransferOperator
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
+import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.utility.extention.sum
 import hu.raven.puppet.utility.inject
 import kotlinx.coroutines.Dispatchers
@@ -38,7 +38,7 @@ class GeneTransferByTournament<S : SolutionRepresentation<C>, C : PhysicsUnit<C>
                 .map { injectionCount ->
                     async {
                         val specimen = populationInRandomPairs[injectionCount % populationInRandomPairs.size]
-                            .sortedBy { it.costOrException().value}
+                            .sortedBy { it.costOrException().value }
 
                         synchronized(populationInRandomPairs[injectionCount % populationInRandomPairs.size][0]) {
                             synchronized(populationInRandomPairs[injectionCount % populationInRandomPairs.size][1]) {

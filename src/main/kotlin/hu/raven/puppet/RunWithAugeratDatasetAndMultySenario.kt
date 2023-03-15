@@ -3,7 +3,12 @@ package hu.raven.puppet
 import hu.raven.puppet.logic.logging.CSVLogger
 import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.logic.state.IterativeAlgorithmStateWithMultipleCandidates
-import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
+import hu.raven.puppet.logic.step.bacterialmutation.BacterialMutation
+import hu.raven.puppet.logic.step.bacterialmutation.BacterialMutationOnBestAndLuckyByShuffling
+import hu.raven.puppet.logic.step.bacterialmutationonspecimen.MutationOnSpecimen
+import hu.raven.puppet.logic.step.bacterialmutationonspecimen.MutationWithElitistSelectionAndOneOposition
+import hu.raven.puppet.logic.step.bacterialmutationoperator.BacterialMutationOperator
+import hu.raven.puppet.logic.step.bacterialmutationoperator.EdgeBuilderHeuristicOnContinuousSegment
 import hu.raven.puppet.logic.step.boost.Boost
 import hu.raven.puppet.logic.step.boost.BoostOnBest
 import hu.raven.puppet.logic.step.boost.BoostOnBestLazy
@@ -27,12 +32,6 @@ import hu.raven.puppet.logic.step.initializePopulation.InitializePopulation
 import hu.raven.puppet.logic.step.initializePopulation.InitializePopulationByModuloStepper
 import hu.raven.puppet.logic.step.iterationofevolutionary.BacterialIteration
 import hu.raven.puppet.logic.step.iterationofevolutionary.EvolutionaryIteration
-import hu.raven.puppet.logic.step.bacterialmutation.BacterialMutation
-import hu.raven.puppet.logic.step.bacterialmutation.BacterialMutationOnBestAndLuckyByShuffling
-import hu.raven.puppet.logic.step.bacterialmutationonspecimen.MutationOnSpecimen
-import hu.raven.puppet.logic.step.bacterialmutationonspecimen.MutationOnSpecimenWithRandomContinuousSegmentAndFullCoverAndCloneWithInvertion
-import hu.raven.puppet.logic.step.bacterialmutationoperator.BacterialMutationOperator
-import hu.raven.puppet.logic.step.bacterialmutationoperator.MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics
 import hu.raven.puppet.logic.step.orderpopulationbycost.OrderPopulationByCost
 import hu.raven.puppet.logic.step.selectsegment.SelectContinuesSegment
 import hu.raven.puppet.logic.step.selectsegment.SelectSegment
@@ -49,6 +48,7 @@ import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.model.solution.factory.OnePartRepresentationFactory
 import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
+import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.modules.AlgorithmParameters
 import hu.raven.puppet.modules.FilePathVariableNames
 import hu.raven.puppet.utility.extention.logProgress
@@ -130,10 +130,10 @@ private val bacterialCommonModule = module {
         BacterialMutationOnBestAndLuckyByShuffling<OnePartRepresentation<Meter>, Meter>()
     }
     factory<MutationOnSpecimen<*, *>> {
-        MutationOnSpecimenWithRandomContinuousSegmentAndFullCoverAndCloneWithInvertion<OnePartRepresentation<Meter>, Meter>()
+        MutationWithElitistSelectionAndOneOposition<OnePartRepresentation<Meter>, Meter>()
     }
     factory<BacterialMutationOperator<*, *>> {
-        MutationOperatorWithContinuousSegmentAndEdgeBuilderHeuristics<OnePartRepresentation<Meter>, Meter>()
+        EdgeBuilderHeuristicOnContinuousSegment<OnePartRepresentation<Meter>, Meter>()
     }
     factory<hu.raven.puppet.logic.step.genetransfer.GeneTransfer<*, *>> {
         GeneTransferByTournament<OnePartRepresentation<Meter>, Meter>()

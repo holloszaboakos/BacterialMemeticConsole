@@ -24,10 +24,10 @@ class GeneticEdgeRecombinationCrossOver<S : SolutionRepresentation<C>, C : Physi
             val neighbours = mutableSetOf<Int>()
 
             parentsL.forEachIndexed { parentIndex, parent ->
-                if (parentsInverses[parentIndex][valueIndex] != 0)
-                    neighbours += parent[parentsInverses[parentIndex][valueIndex] - 1]
-                if (parentsInverses[parentIndex][valueIndex] != child.permutationSize - 1)
-                    neighbours += parent[parentsInverses[parentIndex][valueIndex] + 1]
+                if (parentsInverses[parentIndex].value[valueIndex] != 0)
+                    neighbours += parent[parentsInverses[parentIndex].value[valueIndex] - 1]
+                if (parentsInverses[parentIndex].value[valueIndex] != child.permutationSize - 1)
+                    neighbours += parent[parentsInverses[parentIndex].value[valueIndex] + 1]
             }
             neighbours
         }

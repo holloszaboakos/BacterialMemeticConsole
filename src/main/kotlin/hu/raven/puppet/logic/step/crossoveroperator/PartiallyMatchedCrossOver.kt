@@ -28,7 +28,7 @@ class PartiallyMatchedCrossOver<S : SolutionRepresentation<C>, C : PhysicsUnit<C
             if (index in cut[0]..cut[1])
                 child.permutationSize
             else {
-                seconderCopy[seconderInverse[primerParent[index]]] = child.permutationSize
+                seconderCopy[seconderInverse.value[primerParent[index]]] = child.permutationSize
                 primerParent[index]
             }
         }
