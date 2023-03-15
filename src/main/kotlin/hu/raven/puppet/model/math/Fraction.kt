@@ -209,56 +209,34 @@ class Fraction private constructor(
 
     override operator fun compareTo(other: Fraction): Int {
         return when {
-            numerator == 0 && other.numerator == 0 -> 0
-            numerator == 0 -> -1
-            other.numerator == 0 -> 1
+            exponential == other.exponential -> (numerator.toLong() * other.denominator).compareTo(other.numerator.toLong() * denominator)
+
+            numerator == 0 -> other.numerator
+
+            other.numerator == 0 -> numerator
+
+            exponential > other.exponential -> {
+                val expDiff = exponential - other.exponential
+                val maxShift =
+                    min(numerator.countLeadingZeroBits() + other.denominator.countLeadingZeroBits() - 2, expDiff)
+                val newNumerator = numerator.toLong().timesTwoToThePowerOf(maxShift)
+                val newOtherNumerator = other.numerator.toLong().divByTwoToThePowerOf(expDiff - maxShift)
+                (newNumerator * other.denominator).compareTo(newOtherNumerator * denominator)
+            }
 
             else -> {
-                when {
-                    exponential == other.exponential -> {
-                        (numerator.toLong() * other.denominator).compareTo(other.numerator.toLong() * denominator)
-                    }
-
-                    exponential > other.exponential && numerator.toLong() * other.denominator >= other.numerator.toLong() * denominator -> {
-                        1
-                    }
-
-                    exponential > other.exponential -> {
-                        //TODO div denominator if trailing zeros
-                        val expDiff = exponential - other.exponential
-                        val maxShift =
-                            min(
-                                numerator.countLeadingZeroBits() + other.denominator.countLeadingZeroBits() - 2,
-                                expDiff
-                            )
-                        val newNumerator = numerator.toLong().timesTwoToThePowerOf(maxShift)
-                        val newOtherNumerator = other.numerator.toLong().divByTwoToThePowerOf(expDiff - maxShift)
-                        (newNumerator * other.denominator).compareTo(newOtherNumerator * denominator)
-                    }
-
-                    numerator * other.denominator <= other.numerator * denominator -> {
-                        -1
-                    }
-
-                    else -> {
-                        //TODO div other denominator if trailing zeros
-                        val expDiff = other.exponential - exponential
-                        val maxShift =
-                            min(
-                                other.numerator.countLeadingZeroBits() + denominator.countLeadingZeroBits() - 2,
-                                expDiff
-                            )
-                        val newOtherNumerator = other.numerator.toLong().timesTwoToThePowerOf(maxShift)
-                        val newNumerator = numerator.toLong().divByTwoToThePowerOf(expDiff - maxShift)
-                        (newNumerator * other.denominator).compareTo(newOtherNumerator * denominator)
-                    }
-                }
+                val expDiff = other.exponential - exponential
+                val maxShift =
+                    min(other.numerator.countLeadingZeroBits() + denominator.countLeadingZeroBits() - 2, expDiff)
+                val newOtherNumerator = other.numerator.toLong().timesTwoToThePowerOf(maxShift)
+                val newNumerator = numerator.toLong().divByTwoToThePowerOf(expDiff - maxShift)
+                (newNumerator * other.denominator).compareTo(newOtherNumerator * denominator)
             }
         }
     }
 
     fun multiplicativeInverse() = new(denominator.toLong(), numerator.toLong(), -exponential)
     override fun toString(): String {
-        return "($numerator / $denominator) * 2^$exponential"
+        return "${numerator.toDouble() / denominator} * 2^$exponential"
     }
 }

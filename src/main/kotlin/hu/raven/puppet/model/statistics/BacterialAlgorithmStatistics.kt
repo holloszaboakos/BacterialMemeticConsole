@@ -1,4 +1,4 @@
-package hu.raven.puppet.logic.statistics
+package hu.raven.puppet.model.statistics
 
 import hu.raven.puppet.model.logging.StepEfficiencyData
 

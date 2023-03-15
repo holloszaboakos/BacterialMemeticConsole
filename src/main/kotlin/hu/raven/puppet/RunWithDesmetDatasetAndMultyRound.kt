@@ -3,7 +3,7 @@ package hu.raven.puppet
 import hu.raven.puppet.logic.logging.CSVLogger
 import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.logic.state.IterativeAlgorithmStateWithMultipleCandidates
-import hu.raven.puppet.logic.statistics.BacterialAlgorithmStatistics
+import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.logic.step.initialize.InitializeAlgorithm
 import hu.raven.puppet.logic.step.iterationofevolutionary.EvolutionaryIteration
 import hu.raven.puppet.model.logging.BacterialMemeticAlgorithmLogLine

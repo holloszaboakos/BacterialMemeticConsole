@@ -1,6 +1,6 @@
 package hu.raven.puppet.logic.step.calculatecost
 
-import hu.raven.puppet.logic.statistics.BacterialAlgorithmStatistics
+import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.logic.step.AlgorithmStep
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation

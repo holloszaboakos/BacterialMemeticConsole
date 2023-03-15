@@ -2,7 +2,7 @@ package hu.raven.puppet.modules
 
 import hu.raven.puppet.logic.logging.CSVLogger
 import hu.raven.puppet.logic.state.IterativeAlgorithmStateWithMultipleCandidates
-import hu.raven.puppet.logic.statistics.BacterialAlgorithmStatistics
+import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.logic.step.crossoveroperator.CrossOverOperator
 import hu.raven.puppet.logic.step.crossoveroperator.HeuristicCrossOver
 import hu.raven.puppet.logic.step.genetransfer.GeneTransferByTournament
