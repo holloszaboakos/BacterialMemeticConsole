@@ -2,6 +2,7 @@ package hu.raven.puppet.logic.step.selectsegment
 
 import hu.raven.puppet.logic.step.EvolutionaryAlgorithmStep
 import hu.raven.puppet.model.physics.PhysicsUnit
+import hu.raven.puppet.model.solution.Segment
 import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.modules.AlgorithmParameters
 import org.koin.core.qualifier.named

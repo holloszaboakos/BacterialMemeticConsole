@@ -1,6 +1,6 @@
 package hu.raven.puppet.logic.step.bacterialmutationoperator
 
-import hu.raven.puppet.logic.step.selectsegment.Segment
+import hu.raven.puppet.model.solution.Segment
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
 

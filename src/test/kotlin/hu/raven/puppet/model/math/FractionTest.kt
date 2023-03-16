@@ -46,7 +46,7 @@ class FractionTest {
 
     @Test
     fun testCreationOfZero() {
-        val a = Fraction.new(0, 12345,12345)
+        val a = Fraction.new(0, 12345, 12345)
         assertThat(a.numerator).isEqualTo(0)
         assertThat(a.denominator).isEqualTo(1)
         assertThat(a.exponential).isEqualTo(0)
@@ -64,13 +64,13 @@ class FractionTest {
     fun testFail() {
         val a = Fraction.new(1991831131, 2015907500, 2)
         val b = Fraction.new(1979183023, 1324315301, 3)
-        println( a + b)
+        println(a + b)
     }
 
     @Test
     fun testFail2() {
         val a = Fraction.new(1222916589, 1582320250, -4)
         val b = Fraction.new(1356194409, 2129368393, -1)
-        println( a - b)
+        println(a - b)
     }
 }

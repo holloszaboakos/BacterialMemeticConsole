@@ -1,6 +1,6 @@
 package hu.raven.puppet.logic.step.bacterialmutationonspecimen
 
-import hu.raven.puppet.logic.step.selectsegment.Segment
+import hu.raven.puppet.model.solution.Segment
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.PhysicsUnit

@@ -1,6 +1,7 @@
 package hu.raven.puppet.logic.step.selectsegment
 
 import hu.raven.puppet.model.physics.PhysicsUnit
+import hu.raven.puppet.model.solution.Segment
 import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.utility.extention.nextSegmentStartPosition
 import kotlin.random.Random
