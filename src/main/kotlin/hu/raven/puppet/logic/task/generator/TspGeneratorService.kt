@@ -3,17 +3,24 @@ package hu.raven.puppet.logic.task.generator
 import hu.raven.puppet.model.physics.Meter
 import hu.raven.puppet.model.task.CostGraph
 import hu.raven.puppet.model.task.CostGraphEdge
+import hu.raven.puppet.model.task.Task
 import kotlin.random.Random
 import kotlin.random.nextInt
 
 class TspGeneratorService {
-    fun generateDistanceMatrix(size: Int, range: IntRange) = Array(size) { indexFrom ->
+    fun generateTspTask(size: Int, range: IntRange): Task {
+        val distanceMatrix = generateDistanceMatrix(size, range)
+        distanceMatrix.optimizeDistanceMatrixByFloyd()
+        return distanceMatrix.toGraph().toTask()
+    }
+
+    private fun generateDistanceMatrix(size: Int, range: IntRange) = Array(size) { indexFrom ->
         IntArray(size) { indexTo ->
             if (indexFrom == indexTo) 0 else Random.nextInt(range)
         }
     }
 
-    fun Array<IntArray>.optimizeDistanceMatrix() {
+    private fun Array<IntArray>.optimizeDistanceMatrixByFloyd() {
         var improved = true
         while (improved) {
             improved = false
@@ -37,9 +44,21 @@ class TspGeneratorService {
         }
     }
 
-    fun Array<IntArray>.toGraph(): CostGraph {
+    private fun Array<IntArray>.toGraph(): CostGraph {
         return CostGraph(
-            edgesBetween = arrayOf(),
+            edgesBetween = this
+                .slice(1 until this.size)
+                .mapIndexed { rowIndex, row ->
+                    row
+                        .slice(1 until this.size)
+                        .mapIndexed { distanceIndex, distance ->
+                            if (rowIndex == distanceIndex) null
+                            else distance.toCostGraphEdge()
+                        }
+                        .filterNotNull()
+                        .toTypedArray()
+                }
+                .toTypedArray(),
             edgesFromCenter = this[0]
                 .slice(1 until this[0].size)
                 .map { CostGraphEdge(Meter(it.toLong())) }
@@ -50,4 +69,8 @@ class TspGeneratorService {
                 .toTypedArray()
         )
     }
+
+    private fun CostGraph.toTask() = Task(costGraph = this)
+
+    private fun Int.toCostGraphEdge() = CostGraphEdge(Meter(toLong()))
 }

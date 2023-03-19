@@ -4,7 +4,7 @@ import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.logic.step.calculatecost.CalculateCostOfTspSolution
 import hu.raven.puppet.logic.task.VRPTaskHolder
-import hu.raven.puppet.logic.task.loader.RandomTspTaskLoader
+import hu.raven.puppet.logic.task.loader.TspTaskLoader
 import hu.raven.puppet.logic.task.loader.TaskLoader
 import hu.raven.puppet.model.physics.Meter
 import hu.raven.puppet.model.solution.OnePartRepresentation
@@ -36,7 +36,7 @@ fun main() {
                 single(named(AlgorithmParameters.CLONE_SEGMENT_LENGTH)) { Int.MAX_VALUE }
                 single(named(AlgorithmParameters.SIZE_OF_POPULATION)) { Int.MAX_VALUE }
                 single(named(AlgorithmParameters.ITERATION_LIMIT)) { Int.MAX_VALUE }
-                single<TaskLoader> { RandomTspTaskLoader() }
+                single<TaskLoader> { TspTaskLoader() }
                 single<IterativeAlgorithmState> { IterativeAlgorithmStateWithSingleCandidate() }
             }
         )
