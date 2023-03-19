@@ -4,8 +4,8 @@ import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.model.physics.Meter
 import hu.raven.puppet.model.physics.Stere
 import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.model.task.DSalesman
-import hu.raven.puppet.model.task.graph.DGraph
+import hu.raven.puppet.model.task.CostGraph
+import hu.raven.puppet.model.task.TransportUnit
 import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.inject
 
@@ -21,7 +21,7 @@ class CalculateCostOfCVRPSolutionWithCapacity<S : SolutionRepresentation<Meter>>
         taskHolder.run {
             var tripState = TripState(Stere(0L), Meter(0L))
             specimen.forEachSliceIndexed { sliceIndex, slice ->
-                val salesman = task.salesmen[sliceIndex]
+                val salesman = task.transportUnits[sliceIndex]
                 slice.forEachIndexed { sliceValueIndex, sliceValue ->
                     tripState = when (sliceValueIndex) {
                         0 -> onFirstValueOfSlice(
@@ -58,7 +58,7 @@ class CalculateCostOfCVRPSolutionWithCapacity<S : SolutionRepresentation<Meter>>
     }
 
     private fun onFirstValueOfSlice(
-        costGraph: DGraph,
+        costGraph: CostGraph,
         sliceValue: Int,
         tripState: TripState,
         isLastValueOfSlice: Boolean
@@ -83,10 +83,10 @@ class CalculateCostOfCVRPSolutionWithCapacity<S : SolutionRepresentation<Meter>>
     }
 
     private fun onLastValueOfSlice(
-        costGraph: DGraph,
+        costGraph: CostGraph,
         sliceValue: Int,
         tripState: TripState,
-        salesman: DSalesman,
+        salesman: TransportUnit,
         previousSliceValue: Int,
     ): TripState {
         if (tripState.takenCapacity + costGraph.objectives[sliceValue].volume < salesman.volumeCapacity) {
@@ -115,10 +115,10 @@ class CalculateCostOfCVRPSolutionWithCapacity<S : SolutionRepresentation<Meter>>
     }
 
     private fun onOtherValuesOfSlice(
-        costGraph: DGraph,
+        costGraph: CostGraph,
         sliceValue: Int,
         tripState: TripState,
-        salesman: DSalesman,
+        salesman: TransportUnit,
         previousSliceValue: Int
     ): TripState {
         if (tripState.takenCapacity + costGraph.objectives[sliceValue].volume < salesman.volumeCapacity) {

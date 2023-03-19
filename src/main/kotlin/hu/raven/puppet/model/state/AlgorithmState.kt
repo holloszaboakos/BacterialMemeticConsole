@@ -1,3 +1,3 @@
-package hu.raven.puppet.logic.state
+package hu.raven.puppet.model.state
 
 sealed interface AlgorithmState

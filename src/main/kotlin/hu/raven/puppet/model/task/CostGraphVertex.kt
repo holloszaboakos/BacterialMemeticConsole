@@ -9,18 +9,14 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-package hu.raven.puppet.model.task.graph
+package hu.raven.puppet.model.task
 
 import hu.raven.puppet.model.physics.Gramm
 import hu.raven.puppet.model.physics.Second
 import hu.raven.puppet.model.physics.Stere
-import java.util.*
 
-data class DObjective(
-    var id: String = UUID.randomUUID().toString(),
-    val name: String = "",
-    var orderInOwner: Int = 0,
-    val location: DGps = DGps(),
+data class CostGraphVertex(
+    val location: Gps = Gps(),
     val time: Second = Second(0L),
     val volume: Stere = Stere(0L),
     val weight: Gramm = Gramm(0L)

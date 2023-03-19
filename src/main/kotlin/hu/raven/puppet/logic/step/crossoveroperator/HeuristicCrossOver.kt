@@ -4,8 +4,7 @@ import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.math.Permutation
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.model.task.graph.DEdge
-import hu.raven.puppet.model.task.graph.DGraph
+import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.extention.sumClever
 import kotlin.random.Random.Default.nextInt
 
@@ -152,10 +151,6 @@ class HeuristicCrossOver<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> : Cr
         }
     }
 
-    private fun DGraph.getEdgeBetween(from: Int, to: Int): DEdge {
-        return edgesBetween[from]
-            .values[if (to > from) to - 1 else to]
-    }
 
     private fun <S : SolutionRepresentation<C>> chooseNextValueBasedOnWeight(
         weights: Array<Fraction>,

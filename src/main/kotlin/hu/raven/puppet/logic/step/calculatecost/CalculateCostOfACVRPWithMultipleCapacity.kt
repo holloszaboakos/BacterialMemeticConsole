@@ -4,10 +4,10 @@ import hu.raven.puppet.model.TakenCapacity
 import hu.raven.puppet.model.physics.Euro
 import hu.raven.puppet.model.physics.Second
 import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.model.task.DSalesman
-import hu.raven.puppet.model.task.graph.DEdge
-import hu.raven.puppet.model.task.graph.DGraph
-import hu.raven.puppet.model.task.graph.DObjective
+import hu.raven.puppet.model.task.CostGraph
+import hu.raven.puppet.model.task.CostGraphEdge
+import hu.raven.puppet.model.task.CostGraphVertex
+import hu.raven.puppet.model.task.TransportUnit
 import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.extention.sumClever
 
@@ -18,7 +18,7 @@ class CalculateCostOfACVRPWithMultipleCapacity<S : SolutionRepresentation<Euro>>
         statistics.fitnessCallCount++
         specimen.cost = taskHolder.run {
             specimen.mapSliceIndexed { sliceIndex, slice ->
-                val salesman = task.salesmen[sliceIndex]
+                val salesman = task.transportUnits[sliceIndex]
                 var takenCapacity = TakenCapacity()
 
                 slice.mapIndexed { sliceValueIndex, sliceValue ->
@@ -62,9 +62,9 @@ class CalculateCostOfACVRPWithMultipleCapacity<S : SolutionRepresentation<Euro>>
     }
 
     private fun onFirstValueOfSlice(
-        costGraph: DGraph,
+        costGraph: CostGraph,
         sliceValue: Int,
-        salesman: DSalesman,
+        salesman: TransportUnit,
         takenCapacity: TakenCapacity,
         isLast: Boolean,
     ): Pair<Euro, TakenCapacity> {
@@ -110,9 +110,9 @@ class CalculateCostOfACVRPWithMultipleCapacity<S : SolutionRepresentation<Euro>>
     }
 
     private fun onLastValueOfSlice(
-        costGraph: DGraph,
+        costGraph: CostGraph,
         sliceValue: Int,
-        salesman: DSalesman,
+        salesman: TransportUnit,
         takenCapacity: TakenCapacity,
         previousSliceValue: Int,
     ): Euro {
@@ -138,9 +138,9 @@ class CalculateCostOfACVRPWithMultipleCapacity<S : SolutionRepresentation<Euro>>
     }
 
     private fun onOtherValuesOfSlice(
-        costGraph: DGraph,
+        costGraph: CostGraph,
         sliceValue: Int,
-        salesman: DSalesman,
+        salesman: TransportUnit,
         takenCapacity: TakenCapacity,
         previousSliceValue: Int,
     ): Pair<Euro, TakenCapacity> {
@@ -210,9 +210,9 @@ class CalculateCostOfACVRPWithMultipleCapacity<S : SolutionRepresentation<Euro>>
 
     private fun canSalesmanTakeObjective(
         takenCapacity: TakenCapacity,
-        objective: DObjective,
+        objective: CostGraphVertex,
         additionalTime: Second,
-        salesman: DSalesman
+        salesman: TransportUnit
     ): Boolean {
         return takenCapacity.volume + objective.volume < salesman.volumeCapacity &&
                 takenCapacity.weight + objective.weight < salesman.weightCapacity &&
@@ -221,17 +221,17 @@ class CalculateCostOfACVRPWithMultipleCapacity<S : SolutionRepresentation<Euro>>
 
     private fun couldSalesmanTakePreviousObjective(
         takenCapacity: TakenCapacity,
-        salesman: DSalesman
+        salesman: TransportUnit
     ): Boolean {
         return takenCapacity.volume < salesman.volumeCapacity &&
                 takenCapacity.weight < salesman.weightCapacity &&
                 takenCapacity.time < salesman.workTimePerDay
     }
 
-    private fun calcCostOnEdge(salesman: DSalesman, edge: DEdge) =
+    private fun calcCostOnEdge(salesman: TransportUnit, edge: CostGraphEdge) =
         salesman.fuelPrice * salesman.fuelConsumption * edge.length +
                 salesman.salary * (edge.length / salesman.vehicleSpeed)
 
-    private fun calcCostOnNode(salesman: DSalesman, objective: DObjective) =
+    private fun calcCostOnNode(salesman: TransportUnit, objective: CostGraphVertex) =
         salesman.salary * objective.time
 }

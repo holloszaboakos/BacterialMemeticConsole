@@ -1,4 +1,4 @@
-package hu.raven.puppet.logic.state
+package hu.raven.puppet.model.state
 
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation

@@ -1,11 +1,10 @@
 package hu.raven.puppet.logic.step.bacterialmutationoperator
 
-import hu.raven.puppet.model.solution.Segment
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.PhysicsUnit
+import hu.raven.puppet.model.solution.Segment
 import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.model.task.graph.DEdge
-import hu.raven.puppet.model.task.graph.DGraph
+import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.extention.sumClever
 
 class EdgeBuilderHeuristicOnContinuousSegment<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> :
@@ -291,11 +290,6 @@ class EdgeBuilderHeuristicOnContinuousSegment<S : SolutionRepresentation<C>, C :
                 else -> Fraction.new(1L)
             }
         }
-    }
-
-    private fun DGraph.getEdgeBetween(from: Int, to: Int): DEdge {
-        return edgesBetween[from]
-            .values[if (to > from) to - 1 else to]
     }
 
 }

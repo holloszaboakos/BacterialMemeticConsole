@@ -1,4 +1,4 @@
-package hu.raven.puppet.logic.state
+package hu.raven.puppet.model.state
 
 sealed interface IterativeAlgorithmState : AlgorithmState {
     var iteration: Int

@@ -1,9 +1,12 @@
 package hu.raven.puppet.utility.extention
 
-import hu.raven.puppet.model.task.graph.DEdge
-import hu.raven.puppet.model.task.graph.DGraph
+import hu.raven.puppet.model.task.CostGraph
+import hu.raven.puppet.model.task.CostGraphEdge
 
-fun DGraph.getEdgeBetween(from: Int, to: Int): DEdge {
-    return edgesBetween[from]
-        .values[if (to > from) to - 1 else to]
+fun CostGraph.getEdgeBetween(from: Int, to: Int): CostGraphEdge {
+    return edgesBetween[from][if (to > from) to - 1 else to]
+}
+
+fun CostGraph.setEdgeBetween(from: Int, to: Int, edge: CostGraphEdge) {
+    edgesBetween[from][if (to > from) to - 1 else to] = edge
 }

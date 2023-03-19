@@ -14,7 +14,7 @@ class InitializePopulationByRandom<S : SolutionRepresentation<C>, C : PhysicsUni
             ArrayList(List(sizeOfPopulation) { specimenIndex ->
                 subSolutionFactory.produce(
                     specimenIndex,
-                    Array(taskHolder.task.salesmen.size) { index ->
+                    Array(taskHolder.task.transportUnits.size) { index ->
                         if (index == 0)
                             IntArray(taskHolder.task.costGraph.objectives.size) { it }
                         else
@@ -45,9 +45,7 @@ class InitializePopulationByRandom<S : SolutionRepresentation<C>, C : PhysicsUni
                         }
                     }
 
-                is OnePartRepresentation<*> -> {
-
-                }
+                is OnePartRepresentation<*> -> throw Exception("OnePartRepresentation not supported")
             }
             permutation.iteration = 0
             permutation.cost = null

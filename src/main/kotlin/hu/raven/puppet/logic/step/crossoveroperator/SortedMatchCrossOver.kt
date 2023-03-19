@@ -2,6 +2,7 @@ package hu.raven.puppet.logic.step.crossoveroperator
 
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
+import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.extention.min
 import hu.raven.puppet.utility.extention.sumClever
 import kotlin.math.abs
@@ -51,13 +52,7 @@ class SortedMatchCrossOver<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> : 
                 (1 until foundSlices[sliceIndex].size)
                     .map { geneIndex ->
                         taskHolder.task.costGraph
-                            .edgesBetween[foundSlices[sliceIndex][geneIndex - 1]]
-                            .values[
-                            if (foundSlices[sliceIndex][geneIndex] > foundSlices[sliceIndex][geneIndex - 1])
-                                foundSlices[sliceIndex][geneIndex] - 1
-                            else
-                                foundSlices[sliceIndex][geneIndex]
-                        ]
+                            .getEdgeBetween(foundSlices[sliceIndex][geneIndex - 1], foundSlices[sliceIndex][geneIndex])
                             .length
                             .value
                     }

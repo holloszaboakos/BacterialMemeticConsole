@@ -1,7 +1,7 @@
 package hu.raven.puppet.logic.task.loader
 
 import hu.raven.puppet.model.physics.Meter
-import hu.raven.puppet.model.task.DTask
+import hu.raven.puppet.model.task.Task
 import hu.raven.puppet.modules.AlgorithmParameters
 import hu.raven.puppet.modules.FilePathVariableNames
 import hu.raven.puppet.utility.dataset.augerat.AugeratDatasetConverter
@@ -13,13 +13,13 @@ import hu.raven.puppet.utility.inject
 class AugeratTaskLoader : TaskLoader() {
     private val vehicleCount: Int by inject(AlgorithmParameters.VEHICLE_COUNT)
 
-    override fun loadTak(folderPath: String): DTask {
+    override fun loadTask(folderPath: String): Task {
         val filePath: String by inject(FilePathVariableNames.SINGLE_FILE)
         val augeratTask = AugeratDatasetLoader.loadDataFromFile("/$folderPath/$filePath")
         val standardTask = AugeratDatasetConverter.toStandardTask(augeratTask)
         standardTask.costGraph.edgesBetween
             .map {
-                it.values.firstOrNull { edge -> edge.length == Meter(0) }
+                it.firstOrNull { edge -> edge.length == Meter(0) }
             }
             .firstOrNull {
                 it?.length == Meter(0)
@@ -31,7 +31,7 @@ class AugeratTaskLoader : TaskLoader() {
         return standardTask
     }
 
-    override fun logEstimates(task: DTask) {
+    override fun logEstimates(task: Task) {
         task.costGraph.apply {
             doubleLogger(
                 "OVERASTIMATE: ${
@@ -46,10 +46,10 @@ class AugeratTaskLoader : TaskLoader() {
                 "UNDERASTIMATE: ${
                     ((
                             edgesFromCenter.map { it.length.value }.sumClever() +
-                                    edgesBetween.map { edge ->
+                                    edgesBetween.mapIndexed { index, edge ->
                                         arrayOf(
-                                            edge.values.map { it.length.value }.min(),
-                                            edgesToCenter[edge.orderInOwner].length.value
+                                            edge.map { it.length.value }.min(),
+                                            edgesToCenter[index].length.value
                                         ).min()
                                     }.sumClever()
                             ) / vehicleCount.toLong())

@@ -2,9 +2,9 @@ package hu.raven.puppet.logic.step.calculatecost
 
 import hu.raven.puppet.model.physics.Euro
 import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.model.task.DSalesman
-import hu.raven.puppet.model.task.graph.DEdge
-import hu.raven.puppet.model.task.graph.DObjective
+import hu.raven.puppet.model.task.CostGraphEdge
+import hu.raven.puppet.model.task.CostGraphVertex
+import hu.raven.puppet.model.task.TransportUnit
 import hu.raven.puppet.utility.extention.getEdgeBetween
 
 
@@ -19,7 +19,7 @@ class CalculateCostOfVRPSolutionWithoutCapacity<S : SolutionRepresentation<Euro>
             var sumCost = Euro(0L)
             var geneIndex = 0
             specimen.forEachSliceIndexed { sliceIndex, slice ->
-                val salesman = task.salesmen[sliceIndex]
+                val salesman = task.transportUnits[sliceIndex]
                 var cost = salesman.basePrice
                 slice.map { it }.forEachIndexed { index, value ->
                     cost += when (index) {
@@ -73,10 +73,10 @@ class CalculateCostOfVRPSolutionWithoutCapacity<S : SolutionRepresentation<Euro>
         }
     }
 
-    private fun calcCostOnEdge(salesman: DSalesman, edge: DEdge) =
+    private fun calcCostOnEdge(salesman: TransportUnit, edge: CostGraphEdge) =
         salesman.fuelPrice * salesman.fuelConsumption * edge.length +
                 salesman.salary * (edge.length / salesman.vehicleSpeed)
 
-    private fun calcCostOnNode(salesman: DSalesman, objective: DObjective) =
+    private fun calcCostOnNode(salesman: TransportUnit, objective: CostGraphVertex) =
         salesman.salary * objective.time
 }

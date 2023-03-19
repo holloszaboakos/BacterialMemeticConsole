@@ -9,22 +9,12 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-package hu.raven.puppet.model.task.graph
+package hu.raven.puppet.model.task
 
 import hu.raven.puppet.model.physics.Meter
-import java.util.*
 
-data class DEdge(
-    var id: String = UUID.randomUUID().toString(),
-    val name: String = "",
-    var orderInOwner: Int = 0,
-    val length: Meter = Meter(0L),
-    val route: Array<DGps> = arrayOf()
-) {
-    init {
-        route.forEachIndexed { index, gps -> gps.orderInOwner = index }
-    }
-
-}
+data class CostGraphEdge(
+    val length: Meter = Meter(0L)
+)
 
 

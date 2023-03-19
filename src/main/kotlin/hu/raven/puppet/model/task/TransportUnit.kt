@@ -12,12 +12,8 @@
 package hu.raven.puppet.model.task
 
 import hu.raven.puppet.model.physics.*
-import java.util.*
 
-data class DSalesman(
-    var id: String = UUID.randomUUID().toString(),
-    val name: String = "",
-    var orderInOwner: Int = 0,
+data class TransportUnit(
     val workTimePerDay: Second = Second(0),
     val volumeCapacity: Stere = Stere(0),
     val weightCapacity: Gramm = Gramm(0),

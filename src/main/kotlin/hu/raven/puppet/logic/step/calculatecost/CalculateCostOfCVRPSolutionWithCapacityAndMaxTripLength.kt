@@ -1,11 +1,12 @@
 package hu.raven.puppet.logic.step.calculatecost
 
 import hu.raven.puppet.logic.logging.DoubleLogger
+import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.Meter
 import hu.raven.puppet.model.physics.Stere
-import hu.raven.puppet.model.physics.sum
 import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.utility.extention.getEdgeBetween
+import hu.raven.puppet.utility.extention.sumClever
 import hu.raven.puppet.utility.inject
 
 class CalculateCostOfCVRPSolutionWithCapacityAndMaxTripLength<S : SolutionRepresentation<Meter>> :
@@ -14,7 +15,7 @@ class CalculateCostOfCVRPSolutionWithCapacityAndMaxTripLength<S : SolutionRepres
     override fun invoke(specimen: SolutionRepresentation<Meter>) {
         statistics.fitnessCallCount++
         taskHolder.run {
-            var sumCost: Meter? = Meter(0L)
+            var sumCost: Fraction? = Fraction.new(0L)
             var startCount = 0
             var endCount = 0
             specimen.forEachSliceIndexed { _, slice ->
@@ -73,24 +74,27 @@ class CalculateCostOfCVRPSolutionWithCapacityAndMaxTripLength<S : SolutionRepres
                             }
                         }
 
-                    }.toTypedArray().sum()
+                    }
+                        .map { it.value }
+                        .toTypedArray()
+                        .sumClever()
                 )
             }
             if (endCount != startCount) {
                 doubleLogger("startCount: $startCount endCount: $endCount")
             }
-            specimen.cost = sumCost!!
-            if (sumCost == Meter(0L)) {
+            specimen.cost = Meter(sumCost!!)
+            if (sumCost == Fraction.new(0L)) {
                 println("Impossible!")
             }
         }
     }
 
-    fun max(left: Meter?, right: Meter?) =
+    private fun max(left: Fraction?, right: Fraction?) =
         when {
             left == null || right == null -> null
-            left.value > right.value -> left
-            left.value < right.value -> right
+            left > right -> left
+            left < right -> right
             else -> null
         }
 }

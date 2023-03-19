@@ -2,7 +2,7 @@ package hu.raven.puppet.logic.task.loader
 
 import com.google.gson.Gson
 import hu.raven.puppet.logic.logging.DoubleLogger
-import hu.raven.puppet.model.task.DTask
+import hu.raven.puppet.model.task.Task
 import hu.raven.puppet.modules.FilePathVariableNames
 import hu.raven.puppet.utility.inject
 
@@ -10,11 +10,11 @@ sealed class TaskLoader {
 
     protected val doubleLogger: DoubleLogger by inject()
 
-    abstract fun loadTak(folderPath: String): DTask
+    abstract fun loadTask(folderPath: String): Task
 
-    protected fun DTask.isWellFormatted(): Boolean {
+    protected fun Task.isWellFormatted(): Boolean {
         return costGraph.edgesBetween.size == costGraph.objectives.size
-                && costGraph.edgesBetween.all { it.values.size == costGraph.objectives.size - 1 }
+                && costGraph.edgesBetween.all { it.size == costGraph.objectives.size - 1 }
                 && costGraph.edgesFromCenter.size == costGraph.objectives.size
                 && costGraph.edgesToCenter.size == costGraph.objectives.size
     }
@@ -30,5 +30,5 @@ sealed class TaskLoader {
         return gson.fromJson(resourceURL.readText(), T::class.java)
     }
 
-    abstract fun logEstimates(task: DTask)
+    abstract fun logEstimates(task: Task)
 }

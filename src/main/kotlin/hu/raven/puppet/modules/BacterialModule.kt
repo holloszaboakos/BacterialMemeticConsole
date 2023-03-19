@@ -1,7 +1,6 @@
 package hu.raven.puppet.modules
 
 import hu.raven.puppet.logic.logging.CSVLogger
-import hu.raven.puppet.logic.state.IterativeAlgorithmStateWithMultipleCandidates
 import hu.raven.puppet.logic.step.bacterialmutation.BacterialMutation
 import hu.raven.puppet.logic.step.bacterialmutation.BacterialMutationOnBestAndLuckyByShuffling
 import hu.raven.puppet.logic.step.bacterialmutationonspecimen.MutationOnSpecimen
@@ -21,6 +20,7 @@ import hu.raven.puppet.logic.step.selectsegment.SelectContinuesSegmentWithFullCo
 import hu.raven.puppet.logic.step.selectsegment.SelectSegment
 import hu.raven.puppet.model.physics.Meter
 import hu.raven.puppet.model.solution.OnePartRepresentation
+import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.modules.AlgorithmParameters.*
 import org.koin.core.qualifier.named

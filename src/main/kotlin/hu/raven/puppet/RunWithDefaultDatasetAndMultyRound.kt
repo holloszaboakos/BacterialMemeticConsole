@@ -2,7 +2,6 @@ package hu.raven.puppet
 
 import hu.raven.puppet.logic.logging.CSVLogger
 import hu.raven.puppet.logic.logging.DoubleLogger
-import hu.raven.puppet.logic.state.IterativeAlgorithmStateWithMultipleCandidates
 import hu.raven.puppet.logic.step.initialize.InitializeAlgorithm
 import hu.raven.puppet.logic.step.iterationofevolutionary.EvolutionaryIteration
 import hu.raven.puppet.model.logging.BacterialMemeticAlgorithmLogLine
@@ -11,6 +10,7 @@ import hu.raven.puppet.model.logging.ProgressData
 import hu.raven.puppet.model.logging.SpecimenData
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
+import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.modules.AlgorithmParameters
 import hu.raven.puppet.modules.bacterialModule

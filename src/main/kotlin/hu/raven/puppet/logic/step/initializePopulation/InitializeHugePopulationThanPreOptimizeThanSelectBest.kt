@@ -20,7 +20,7 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest<S : SolutionRepresen
 
     override fun invoke() {
         algorithmState.run {
-            val sizeOfPermutation = taskHolder.task.costGraph.objectives.size + taskHolder.task.salesmen.size - 1
+            val sizeOfPermutation = taskHolder.task.costGraph.objectives.size + taskHolder.task.transportUnits.size - 1
             val basePermutation = IntArray(sizeOfPermutation) { it }
 
             population = createPopulation()
@@ -109,10 +109,10 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest<S : SolutionRepresen
 
     private fun createPopulation(): MutableList<S> {
         return if (taskHolder.task.costGraph.objectives.size != 1)
-            ArrayList(List((taskHolder.task.costGraph.objectives.size + taskHolder.task.salesmen.size - 1)) { specimenIndex ->
+            ArrayList(List((taskHolder.task.costGraph.objectives.size + taskHolder.task.transportUnits.size - 1)) { specimenIndex ->
                 subSolutionFactory.produce(
                     specimenIndex,
-                    Array(taskHolder.task.salesmen.size) { index ->
+                    Array(taskHolder.task.transportUnits.size) { index ->
                         if (index == 0)
                             IntArray(taskHolder.task.costGraph.objectives.size) { it }
                         else
