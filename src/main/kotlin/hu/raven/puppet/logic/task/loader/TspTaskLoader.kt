@@ -1,15 +1,21 @@
 package hu.raven.puppet.logic.task.loader
 
+import hu.raven.puppet.model.task.CostGraphVertex
 import hu.raven.puppet.model.task.Task
+import hu.raven.puppet.modules.FilePathVariableNames
 import hu.raven.puppet.utility.extention.min
 import hu.raven.puppet.utility.extention.sumClever
 
-class TspTaskLoader(
-    val taskSize: Int,
-    val versionIndex: Int
-) : TaskLoader() {
+class TspTaskLoader : TaskLoader() {
     override fun loadTask(folderPath: String): Task {
-        TODO("RANDOM GENERATION AND STABILIZATION")
+        val standardTask: Task = loadFromResourceFile(folderPath, FilePathVariableNames.SINGLE_FILE)
+        val taskWithObjectives = standardTask.copy(costGraph = standardTask.costGraph.copy(
+            objectives = Array(standardTask.costGraph.edgesFromCenter.size) {
+                CostGraphVertex()
+            }
+        ))
+        logEstimates(taskWithObjectives)
+        return taskWithObjectives
     }
 
     override fun logEstimates(task: Task) {

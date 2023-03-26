@@ -211,7 +211,7 @@ class Fraction private constructor(
         return when {
             exponential == other.exponential -> (numerator.toLong() * other.denominator).compareTo(other.numerator.toLong() * denominator)
 
-            numerator == 0 -> other.numerator
+            numerator == 0 -> -other.numerator
 
             other.numerator == 0 -> numerator
 
@@ -219,24 +219,37 @@ class Fraction private constructor(
                 val expDiff = exponential - other.exponential
                 val maxShift =
                     min(numerator.countLeadingZeroBits() + other.denominator.countLeadingZeroBits() - 2, expDiff)
+                val dataLoss = maxShift + other.numerator.countTrailingZeroBits() < expDiff
                 val newNumerator = numerator.toLong().timesTwoToThePowerOf(maxShift)
                 val newOtherNumerator = other.numerator.toLong().divByTwoToThePowerOf(expDiff - maxShift)
-                (newNumerator * other.denominator).compareTo(newOtherNumerator * denominator)
+                val result = (newNumerator * other.denominator).compareTo(newOtherNumerator * denominator)
+                if (result == 0 && dataLoss) -1 else result
             }
 
             else -> {
                 val expDiff = other.exponential - exponential
                 val maxShift =
                     min(other.numerator.countLeadingZeroBits() + denominator.countLeadingZeroBits() - 2, expDiff)
+                val dataLoss = maxShift + numerator.countTrailingZeroBits() < expDiff
                 val newOtherNumerator = other.numerator.toLong().timesTwoToThePowerOf(maxShift)
                 val newNumerator = numerator.toLong().divByTwoToThePowerOf(expDiff - maxShift)
-                (newNumerator * other.denominator).compareTo(newOtherNumerator * denominator)
+                val result = (newNumerator * other.denominator).compareTo(newOtherNumerator * denominator)
+                if (result == 0 && dataLoss) 1 else result
             }
         }
     }
 
     fun multiplicativeInverse() = new(denominator.toLong(), numerator.toLong(), -exponential)
+
     override fun toString(): String {
         return "${numerator.toDouble() / denominator} * 2^$exponential"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        return other is Fraction && compareTo(other) == 0
+    }
+
+    override fun hashCode(): Int {
+        throw Exception("Should not be used")
     }
 }

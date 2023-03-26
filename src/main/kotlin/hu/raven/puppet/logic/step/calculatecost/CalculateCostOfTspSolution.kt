@@ -9,9 +9,9 @@ import hu.raven.puppet.utility.extention.sumClever
 class CalculateCostOfTspSolution<S : SolutionRepresentation<Meter>> : CalculateCost<S, Meter>() {
     override operator fun invoke(specimen: SolutionRepresentation<Meter>) {
         taskHolder.task.run {
-            arrayOf(
+            specimen.cost = arrayOf(
                 costGraph.edgesFromCenter[specimen[0]].length,
-                costGraph.edgesToCenter[specimen[specimen.permutationSize - 1]].length,
+                costGraph.edgesToCenter[specimen[specimen.permutationIndices.last]].length,
                 *specimen
                     .map { it }
                     .mapIndexed { index, value ->
@@ -19,11 +19,14 @@ class CalculateCostOfTspSolution<S : SolutionRepresentation<Meter>> : CalculateC
                             return@mapIndexed Meter(Fraction.new(0))
                         }
 
-                        costGraph.getEdgeBetween(value, specimen[index - 1]).length
-                    }.toList().toTypedArray()
+                        costGraph.getEdgeBetween(specimen[index - 1], value).length
+                    }
+                    .toList()
+                    .toTypedArray()
             )
-                .map { it.value }
+                .map(Meter::value)
                 .sumClever()
+                .let(::Meter)
         }
     }
 }

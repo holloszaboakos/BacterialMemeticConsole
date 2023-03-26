@@ -7,6 +7,7 @@ import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.extention.sumClever
 
+//TODO repair
 class SequentialSelectionHeuristicOnContinuousSegment<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> :
     BacterialMutationOperator<S, C>() {
 
@@ -52,7 +53,11 @@ class SequentialSelectionHeuristicOnContinuousSegment<S : SolutionRepresentation
             )
 
             if (sumWeightOfEdgesLost != Fraction.new(0L))
-                weights[weightIndex] = weight / (sumWeightOfEdgesLost * remainingElements.size.toLong())
+                try {
+                    weights[weightIndex] = weight / (sumWeightOfEdgesLost * remainingElements.size.toLong())
+                } catch (e: ArithmeticException) {
+                    throw e
+                }
         }
 
         return selectElementByWeightedRandom(
