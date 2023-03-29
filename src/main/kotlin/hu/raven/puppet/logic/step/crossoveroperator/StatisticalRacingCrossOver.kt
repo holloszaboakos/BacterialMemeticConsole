@@ -1,9 +1,13 @@
 package hu.raven.puppet.logic.step.crossoveroperator
 
+import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
+import hu.raven.puppet.logic.task.VRPTaskHolder
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
+import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
+import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 import hu.raven.puppet.model.statistics.GeneticAlgorithmStatistics
 import hu.raven.puppet.model.statistics.OperatorStatistics
 import hu.raven.puppet.utility.extention.sumClever
@@ -14,7 +18,15 @@ import hu.raven.puppet.utility.inject
 //a mostani a méh kolónia algoritmus scout fázis menjen bele
 //abc: artificial bee colony
 //cinti
-class StatisticalRacingCrossOver<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> : CrossOverOperator<S, C>() {
+class StatisticalRacingCrossOver<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
+    override val logger: DoubleLogger,
+    override val taskHolder: VRPTaskHolder,
+    override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
+    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
+    override val sizeOfPopulation: Int,
+    override val iterationLimit: Int,
+    override val geneCount: Int
+) : CrossOverOperator<S, C>() {
     val calculateCostOf: CalculateCost<S, C> by inject()
 
     private val statistics: GeneticAlgorithmStatistics<S, C> by inject()

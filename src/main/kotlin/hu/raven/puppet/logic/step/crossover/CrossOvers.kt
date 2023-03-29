@@ -1,15 +1,26 @@
 package hu.raven.puppet.logic.step.crossover
 
+import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.logic.step.EvolutionaryAlgorithmStep
 import hu.raven.puppet.logic.step.crossoveroperator.CrossOverOperator
+import hu.raven.puppet.logic.task.VRPTaskHolder
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.utility.inject
+import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
+import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 import kotlinx.coroutines.runBlocking
 
 
-class CrossOvers<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> : EvolutionaryAlgorithmStep<S, C>() {
-    val crossoverOperator: CrossOverOperator<S, C> by inject()
+class CrossOvers<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
+    override val logger: DoubleLogger,
+    override val taskHolder: VRPTaskHolder,
+    override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
+    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
+    override val sizeOfPopulation: Int,
+    override val iterationLimit: Int,
+    override val geneCount: Int,
+    val crossoverOperator: CrossOverOperator<S, C>
+) : EvolutionaryAlgorithmStep<S, C>() {
 
     operator fun invoke() = runBlocking {
         val children = algorithmState.population

@@ -1,24 +1,34 @@
 package hu.raven.puppet.logic.step.bacterialmutation
 
+import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.logic.step.bacterialmutationonspecimen.MutationOnSpecimen
+import hu.raven.puppet.logic.task.VRPTaskHolder
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
+import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
+import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
-import hu.raven.puppet.modules.AlgorithmParameters
 import hu.raven.puppet.utility.extention.sum
-import hu.raven.puppet.utility.inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import kotlin.random.Random
 
-class BacterialMutationOnBestAndLuckyByShuffling<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> :
+class BacterialMutationOnBestAndLuckyByShuffling<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
+    override val logger: DoubleLogger,
+    override val taskHolder: VRPTaskHolder,
+    override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
+    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
+    override val sizeOfPopulation: Int,
+    override val iterationLimit: Int,
+    override val geneCount: Int,
+    override val mutationPercentage: Float,
+    override val statistics: BacterialAlgorithmStatistics,
+    override val mutationOnSpecimen: MutationOnSpecimen<S, C>
+) :
     BacterialMutation<S, C>() {
 
-    private val mutationPercentage: Float by inject(AlgorithmParameters.MUTATION_PERCENTAGE)
-    private val statistics: BacterialAlgorithmStatistics by inject()
-    private val mutationOnSpecimen: MutationOnSpecimen<S, C> by inject()
 
     override suspend fun invoke(
     ): Unit = withContext(Dispatchers.Default) {

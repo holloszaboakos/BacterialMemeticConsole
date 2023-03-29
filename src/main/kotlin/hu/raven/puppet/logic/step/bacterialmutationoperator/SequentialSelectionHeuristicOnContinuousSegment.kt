@@ -1,14 +1,29 @@
 package hu.raven.puppet.logic.step.bacterialmutationoperator
 
+import hu.raven.puppet.logic.logging.DoubleLogger
+import hu.raven.puppet.logic.task.VRPTaskHolder
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.Segment
 import hu.raven.puppet.model.solution.SolutionRepresentation
+import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
+import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
+import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.extention.sumClever
 
 //TODO repair
-class SequentialSelectionHeuristicOnContinuousSegment<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> :
+class SequentialSelectionHeuristicOnContinuousSegment<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
+    override val logger: DoubleLogger,
+    override val taskHolder: VRPTaskHolder,
+    override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
+    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
+    override val sizeOfPopulation: Int,
+    override val iterationLimit: Int,
+    override val geneCount: Int,
+    override val cloneSegmentLength: Int,
+    override val statistics: BacterialAlgorithmStatistics
+) :
     BacterialMutationOperator<S, C>() {
 
     override fun invoke(
@@ -53,11 +68,7 @@ class SequentialSelectionHeuristicOnContinuousSegment<S : SolutionRepresentation
             )
 
             if (sumWeightOfEdgesLost != Fraction.new(0L))
-                try {
-                    weights[weightIndex] = weight / (sumWeightOfEdgesLost * remainingElements.size.toLong())
-                } catch (e: ArithmeticException) {
-                    throw e
-                }
+                weights[weightIndex] = weight / (sumWeightOfEdgesLost * remainingElements.size.toLong())
         }
 
         return selectElementByWeightedRandom(

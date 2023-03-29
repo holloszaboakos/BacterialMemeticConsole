@@ -1,22 +1,33 @@
 package hu.raven.puppet.logic.step.initializePopulation
 
+import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.logic.step.bacterialmutationonspecimen.MutationOnSpecimen
+import hu.raven.puppet.logic.task.VRPTaskHolder
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
+import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
+import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.utility.extention.sum
-import hu.raven.puppet.utility.inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
-class InitializeHugePopulationThanPreOptimizeThanSelectBest<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> :
+class InitializeHugePopulationThanPreOptimizeThanSelectBest<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
+    override val logger: DoubleLogger,
+    override val taskHolder: VRPTaskHolder,
+    override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
+    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
+    override val sizeOfPopulation: Int,
+    override val iterationLimit: Int,
+    override val geneCount: Int,
+    private val mutationOperator: MutationOnSpecimen<S, C>,
+    private val statistics: BacterialAlgorithmStatistics,
+) :
     InitializePopulation<S, C>() {
 
-    private val mutationOperator: MutationOnSpecimen<S, C> by inject()
-    private val statistics: BacterialAlgorithmStatistics by inject()
 
     override fun invoke() {
         algorithmState.run {

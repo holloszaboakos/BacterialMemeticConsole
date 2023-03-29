@@ -7,19 +7,17 @@ import hu.raven.puppet.logic.step.selectsegment.SelectSegment
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.modules.AlgorithmParameters
-import hu.raven.puppet.utility.inject
 
 sealed class MutationOnSpecimen<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> :
     EvolutionaryAlgorithmStep<S, C>() {
 
-    protected val cloneCount: Int by inject(AlgorithmParameters.CLONE_COUNT)
-    protected val cloneSegmentLength: Int by inject(AlgorithmParameters.CLONE_SEGMENT_LENGTH)
-    protected val cloneCycleCount: Int by inject(AlgorithmParameters.CLONE_CYCLE_COUNT)
+    protected abstract val cloneCount: Int
+    protected abstract val cloneSegmentLength: Int
+    protected abstract val cloneCycleCount: Int
 
-    protected val mutationOperator: BacterialMutationOperator<S, C> by inject()
-    protected val calculateCostOf: CalculateCost<S, C> by inject()
-    protected val selectSegment: SelectSegment<S, C> by inject()
+    protected abstract val mutationOperator: BacterialMutationOperator<S, C>
+    protected abstract val calculateCostOf: CalculateCost<S, C>
+    protected abstract val selectSegment: SelectSegment<S, C>
 
     fun calcCostOfEachAndSort(clones: MutableList<S>) {
         clones

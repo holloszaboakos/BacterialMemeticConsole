@@ -1,20 +1,26 @@
 package hu.raven.puppet.logic.step.initialize
 
+import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.logic.step.boost.Boost
 import hu.raven.puppet.logic.step.initializePopulation.InitializePopulation
 import hu.raven.puppet.logic.step.orderpopulationbycost.OrderPopulationByCost
+import hu.raven.puppet.logic.task.VRPTaskHolder
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
+import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
 import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
-import hu.raven.puppet.utility.inject
 import kotlinx.coroutines.runBlocking
 
 
-class InitializeGeneticAlgorithm<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> : InitializeAlgorithm<S, C>() {
-    val algorithm: IterativeAlgorithmStateWithMultipleCandidates<S, C> by inject()
-    val initializePopulation: InitializePopulation<S, C> by inject()
-    val orderPopulationByCost: OrderPopulationByCost<S, C> by inject()
-    val boost: Boost<S, C> by inject()
+class InitializeGeneticAlgorithm<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
+    override val logger: DoubleLogger,
+    override val taskHolder: VRPTaskHolder,
+    override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
+    val algorithm: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
+    val initializePopulation: InitializePopulation<S, C>,
+    val orderPopulationByCost: OrderPopulationByCost<S, C>,
+    val boost: Boost<S, C>,
+) : InitializeAlgorithm<S, C>() {
 
     override fun invoke() {
         initializePopulation()

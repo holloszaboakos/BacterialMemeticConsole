@@ -1,17 +1,37 @@
 package hu.raven.puppet.logic.step.bacterialmutationonspecimen
 
+import hu.raven.puppet.logic.logging.DoubleLogger
+import hu.raven.puppet.logic.step.bacterialmutationoperator.BacterialMutationOperator
+import hu.raven.puppet.logic.step.calculatecost.CalculateCost
+import hu.raven.puppet.logic.step.selectsegment.SelectSegment
+import hu.raven.puppet.logic.task.VRPTaskHolder
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.Segment
 import hu.raven.puppet.model.solution.SolutionRepresentation
+import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
+import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 import kotlin.math.exp
 import kotlin.random.Random
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
-class MutationWithSimulatedAnnealingBasedSelection<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> :
-    MutationOnSpecimen<S, C>() {
+class MutationWithSimulatedAnnealingBasedSelection<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
+    override val logger: DoubleLogger,
+    override val taskHolder: VRPTaskHolder,
+    override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
+    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
+    override val sizeOfPopulation: Int,
+    override val iterationLimit: Int,
+    override val geneCount: Int,
+    override val cloneCount: Int,
+    override val cloneSegmentLength: Int,
+    override val cloneCycleCount: Int,
+    override val mutationOperator: BacterialMutationOperator<S, C>,
+    override val calculateCostOf: CalculateCost<S, C>,
+    override val selectSegment: SelectSegment<S, C>
+) : MutationOnSpecimen<S, C>() {
     private val randomizer: IntArray by lazy {
         (0 until cloneSegmentLength)
             .shuffled()

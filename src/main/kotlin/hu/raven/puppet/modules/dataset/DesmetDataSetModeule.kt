@@ -19,6 +19,8 @@ val desmetDataSetModule = module {
 
     single<TaskLoader> { DesmetTaskLoader() }
     factory<CalculateCost<*, *>> {
-        CalculateCostOfCVRPSolutionWithCapacity<OnePartRepresentation<Meter>>()
+        CalculateCostOfCVRPSolutionWithCapacity<OnePartRepresentation<Meter>>(
+            get(), get(), get(), get()
+        )
     }
 }

@@ -20,6 +20,8 @@ val augeratDataSetModule = module {
 
     single<TaskLoader> { AugeratTaskLoader() }
     factory<CalculateCost<*, *>> {
-        CalculateCostOfCVRPSolutionWithCapacity<OnePartRepresentation<Meter>>()
+        CalculateCostOfCVRPSolutionWithCapacity<OnePartRepresentation<Meter>>(
+            get(), get(), get(), get()
+        )
     }
 }

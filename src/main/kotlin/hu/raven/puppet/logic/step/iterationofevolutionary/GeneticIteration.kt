@@ -1,24 +1,34 @@
 package hu.raven.puppet.logic.step.iterationofevolutionary
 
+import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.logic.step.boost.Boost
 import hu.raven.puppet.logic.step.crossover.CrossOvers
 import hu.raven.puppet.logic.step.mutatechildren.MutateChildren
 import hu.raven.puppet.logic.step.orderpopulationbycost.OrderPopulationByCost
 import hu.raven.puppet.logic.step.selectsurvivers.SelectSurvivors
+import hu.raven.puppet.logic.task.VRPTaskHolder
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.utility.inject
+import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
+import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 import kotlinx.coroutines.runBlocking
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
-class GeneticIteration<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> : EvolutionaryIteration<S, C>() {
-
-    val orderPopulationByCost: OrderPopulationByCost<S, C> by inject()
-    val boost: Boost<S, C> by inject()
-    val selection: SelectSurvivors<S, C> by inject()
-    val crossover: CrossOvers<S, C> by inject()
-    val mutate: MutateChildren<S, C> by inject()
+class GeneticIteration<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
+    override val logger: DoubleLogger,
+    override val taskHolder: VRPTaskHolder,
+    override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
+    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
+    override val sizeOfPopulation: Int,
+    override val iterationLimit: Int,
+    override val geneCount: Int,
+    val orderPopulationByCost: OrderPopulationByCost<S, C>,
+    val boost: Boost<S, C>,
+    val selection: SelectSurvivors<S, C>,
+    val crossover: CrossOvers<S, C>,
+    val mutate: MutateChildren<S, C>
+) : EvolutionaryIteration<S, C>() {
 
 
     override fun invoke(): Unit = runBlocking {

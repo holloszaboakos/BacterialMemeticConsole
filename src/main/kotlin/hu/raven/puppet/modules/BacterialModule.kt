@@ -45,33 +45,51 @@ val bacterialModule = module {
     }
 
     factory<InitializeAlgorithm<*, *>> {
-        InitializeBacterialAlgorithm<OnePartRepresentation<Meter>, Meter>()
+        InitializeBacterialAlgorithm<OnePartRepresentation<Meter>, Meter>(
+            get(), get(), get(), get(), get(), get()
+        )
     }
 
     factory<EvolutionaryIteration<*, *>> {
-        BacterialIteration<OnePartRepresentation<Meter>, Meter>()
+        BacterialIteration<OnePartRepresentation<Meter>, Meter>(
+            get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(),
+        )
     }
 
     factory<BacterialMutation<*, *>> {
-        BacterialMutationOnBestAndLuckyByShuffling<OnePartRepresentation<Meter>, Meter>()
+        BacterialMutationOnBestAndLuckyByShuffling<OnePartRepresentation<Meter>, Meter>(
+            get(), get(), get(), get(), get(), get(), get(), get(), get(), get(),
+        )
     }
     factory<MutationOnSpecimen<*, *>> {
-        MutationWithElitistSelection<OnePartRepresentation<Meter>, Meter>()
+        MutationWithElitistSelection<OnePartRepresentation<Meter>, Meter>(
+            get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(),
+        )
     }
     factory<SelectSegment<*, *>> {
-        SelectContinuesSegmentWithFullCoverage<OnePartRepresentation<Meter>, Meter>()
+        SelectContinuesSegmentWithFullCoverage<OnePartRepresentation<Meter>, Meter>(
+            get(), get(), get(), get(), get(), get(), get(), get(),
+        )
     }
     factory<BacterialMutationOperator<*, *>> {
-        EdgeBuilderHeuristicOnContinuousSegment<OnePartRepresentation<Meter>, Meter>()
+        EdgeBuilderHeuristicOnContinuousSegment<OnePartRepresentation<Meter>, Meter>(
+            get(), get(), get(), get(), get(), get(), get(), get(), get(),
+        )
     }
     factory<hu.raven.puppet.logic.step.genetransfer.GeneTransfer<*, *>> {
-        GeneTransferByTournament<OnePartRepresentation<Meter>, Meter>()
+        GeneTransferByTournament<OnePartRepresentation<Meter>, Meter>(
+            get(), get(), get(), get(), get(), get(), get(), get(), get(), get(),
+        )
     }
     factory<GeneTransferOperator<*, *>> {
-        GeneTransferByCrossOver<OnePartRepresentation<Meter>, Meter>()
+        GeneTransferByCrossOver<OnePartRepresentation<Meter>, Meter>(
+            get(), get(), get(), get(), get(), get(), get(), get(), get(), get(),
+        )
     }
     factory<CrossOverOperator<*, *>> {
-        HeuristicCrossOver<OnePartRepresentation<Meter>, Meter>()
+        HeuristicCrossOver<OnePartRepresentation<Meter>, Meter>(
+            get(), get(), get(), get(), get(), get(), get(),
+        )
     }
 
     single {

@@ -1,17 +1,31 @@
 package hu.raven.puppet.logic.step.genetransferoperator
 
+import hu.raven.puppet.logic.logging.DoubleLogger
+import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.logic.step.crossoveroperator.CrossOverOperator
+import hu.raven.puppet.logic.task.VRPTaskHolder
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.utility.inject
+import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
+import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
-class GeneTransferByCrossOver<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> : GeneTransferOperator<S, C>() {
+class GeneTransferByCrossOver<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
+    override val logger: DoubleLogger,
+    override val taskHolder: VRPTaskHolder,
+    override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
+    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
+    override val sizeOfPopulation: Int,
+    override val iterationLimit: Int,
+    override val geneCount: Int,
+    override val calculateCostOf: CalculateCost<S, C>,
+    override val geneTransferSegmentLength: Int,
+    val crossOverOperator: CrossOverOperator<S, C>,
+) : GeneTransferOperator<S, C>() {
 
-    val crossOverOperator: CrossOverOperator<S, C> by inject()
 
     @OptIn(ExperimentalTime::class)
     override fun invoke(source: S, target: S): StepEfficiencyData {

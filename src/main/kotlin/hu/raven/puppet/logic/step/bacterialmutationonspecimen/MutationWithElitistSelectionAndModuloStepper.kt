@@ -15,7 +15,7 @@ import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
-class MutationWithElitistSelection<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
+class MutationWithElitistSelectionAndModuloStepper<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
     override val logger: DoubleLogger,
     override val taskHolder: VRPTaskHolder,
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
@@ -29,16 +29,13 @@ class MutationWithElitistSelection<S : SolutionRepresentation<C>, C : PhysicsUni
     override val mutationOperator: BacterialMutationOperator<S, C>,
     override val calculateCostOf: CalculateCost<S, C>,
     override val selectSegment: SelectSegment<S, C>
-) :
-    MutationOnSpecimen<S, C>() {
+) : MutationOnSpecimen<S, C>() {
 
     @OptIn(ExperimentalTime::class)
     override fun invoke(specimen: S): StepEfficiencyData = algorithmState.run {
         var improvement = false
-        if (specimen.cost == null) {
-            calculateCostOf(specimen)
-        }
-        val oldSpecimenCost = specimen.cost
+        calculateCostOf(specimen)
+        val oldSpecimenCost = specimen.cost!!
         val duration = measureTime {
             repeat(cloneCycleCount) { cloneCycleIndex ->
                 val clones = generateClones(
@@ -62,7 +59,10 @@ class MutationWithElitistSelection<S : SolutionRepresentation<C>, C : PhysicsUni
             improvementCountPerRun = if (improvement) 1 else 0,
             improvementPercentagePerBudget =
             if (improvement)
-                (Fraction.new(1) - (specimen.costOrException().value / oldSpecimenCost!!.value)) / spentBudget
+                if ((specimen.costOrException().value <= oldSpecimenCost.value))
+                    (Fraction.new(1) - (specimen.costOrException().value / oldSpecimenCost.value)) / spentBudget
+                else
+                    (Fraction.new(1) - (specimen.costOrException().value / oldSpecimenCost.value)) / spentBudget
             else
                 Fraction.new(0)
         )
@@ -73,8 +73,19 @@ class MutationWithElitistSelection<S : SolutionRepresentation<C>, C : PhysicsUni
         selectedSegment: Segment
     ): MutableList<S> {
         val clones = MutableList(cloneCount + 1) { subSolutionFactory.copy(specimen) }
+        val moduloStepperSegments = generateModuloStepperSegments(selectedSegment.values)
+
         clones
-            .slice(1 until clones.size)
+            .slice(1..moduloStepperSegments.size)
+            .forEachIndexed { cloneIndex, clone ->
+                moduloStepperSegments[cloneIndex]
+                    .forEachIndexed { index, value ->
+                        clone[selectedSegment.positions[index]] = value
+                    }
+            }
+
+        clones
+            .slice((moduloStepperSegments.size + 1) until clones.size)
             .forEach { clone ->
                 mutationOperator(
                     clone,
@@ -82,5 +93,26 @@ class MutationWithElitistSelection<S : SolutionRepresentation<C>, C : PhysicsUni
                 )
             }
         return clones
+    }
+
+    private fun generateModuloStepperSegments(values: IntArray): Array<IntArray> {
+        val baseOrder = values.clone()
+        baseOrder.shuffle()
+
+        return (1 until values.size)
+            .map { shiftSize ->
+                val newSegment = IntArray(baseOrder.size) { -1 }
+                val contains = BooleanArray(baseOrder.size) { false }
+                var shift = shiftSize - 1
+                for (writeIndex in newSegment.indices) {
+                    newSegment[writeIndex] = baseOrder[shift]
+                    contains[shift] = true
+                    shift = (shift + shiftSize) % baseOrder.size
+                    while (writeIndex != newSegment.size - 1 && contains[shift]) {
+                        shift = (shift + 1) % baseOrder.size
+                    }
+                }
+                newSegment
+            }.toTypedArray()
     }
 }

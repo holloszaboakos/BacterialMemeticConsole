@@ -1,46 +1,367 @@
 package hu.raven.puppet
 
 import hu.raven.puppet.logic.logging.DoubleLogger
+import hu.raven.puppet.logic.step.bacterialmutationonspecimen.MutationOnSpecimen
+import hu.raven.puppet.logic.step.bacterialmutationonspecimen.MutationWithElitistSelection
+import hu.raven.puppet.logic.step.bacterialmutationonspecimen.MutationWithElitistSelectionAndModuloStepper
+import hu.raven.puppet.logic.step.bacterialmutationonspecimen.MutationWithElitistSelectionAndOneOposition
 import hu.raven.puppet.logic.step.bacterialmutationoperator.*
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.logic.step.calculatecost.CalculateCostOfTspSolution
+import hu.raven.puppet.logic.step.selectsegment.SelectContinuesSegment
+import hu.raven.puppet.logic.step.selectsegment.SelectSegment
 import hu.raven.puppet.logic.task.VRPTaskHolder
 import hu.raven.puppet.logic.task.loader.TaskLoader
 import hu.raven.puppet.logic.task.loader.TspTaskLoader
 import hu.raven.puppet.model.math.Permutation
 import hu.raven.puppet.model.physics.Meter
 import hu.raven.puppet.model.solution.OnePartRepresentation
-import hu.raven.puppet.model.solution.Segment
 import hu.raven.puppet.model.solution.factory.OnePartRepresentationFactory
 import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
 import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.modules.AlgorithmParameters
+import hu.raven.puppet.modules.AlgorithmParameters.*
 import hu.raven.puppet.modules.FilePathVariableNames
+import hu.raven.puppet.modules.FilePathVariableNames.*
+import hu.raven.puppet.utility.get
 import hu.raven.puppet.utility.inject
 import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
+import java.io.File
+
+//max 13 oldal
+private data class Scenario(
+    val fileName: String,
+    val objectiveCount: Int,
+    val mutationStrategy: (
+        logger: DoubleLogger,
+        taskHolder: VRPTaskHolder,
+        subSolutionFactory: SolutionRepresentationFactory<OnePartRepresentation<Meter>, Meter>,
+        algorithmState: IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>,
+        sizeOfPopulation: Int,
+        iterationLimit: Int,
+        geneCount: Int,
+        cloneCount: Int,
+        cloneSegmentLength: Int,
+        cloneCycleCount: Int,
+        mutationOperator: BacterialMutationOperator<OnePartRepresentation<Meter>, Meter>,
+        calculateCostOf: CalculateCost<OnePartRepresentation<Meter>, Meter>,
+        selectSegment: SelectSegment<OnePartRepresentation<Meter>, Meter>,
+        statistics: BacterialAlgorithmStatistics
+    ) -> MutationOnSpecimen<OnePartRepresentation<Meter>, Meter>,
+    val mutationOperator: (
+        logger: DoubleLogger,
+        taskHolder: VRPTaskHolder,
+        subSolutionFactory: SolutionRepresentationFactory<OnePartRepresentation<Meter>, Meter>,
+        algorithmState: IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>,
+        sizeOfPopulation: Int,
+        iterationLimit: Int,
+        geneCount: Int,
+        cloneSegmentLength: Int,
+        statistics: BacterialAlgorithmStatistics
+    ) -> BacterialMutationOperator<OnePartRepresentation<Meter>, Meter>,
+)
+
+private val TASK_SIZES = arrayOf(4, 8, 16, 32, 64, 128, 256, 512, 1024)
+private val STRATEGIES: Array<(
+    logger: DoubleLogger,
+    taskHolder: VRPTaskHolder,
+    subSolutionFactory: SolutionRepresentationFactory<OnePartRepresentation<Meter>, Meter>,
+    algorithmState: IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>,
+    sizeOfPopulation: Int,
+    iterationLimit: Int,
+    geneCount: Int,
+    cloneCount: Int,
+    cloneSegmentLength: Int,
+    cloneCycleCount: Int,
+    mutationOperator: BacterialMutationOperator<OnePartRepresentation<Meter>, Meter>,
+    calculateCostOf: CalculateCost<OnePartRepresentation<Meter>, Meter>,
+    selectSegment: SelectSegment<OnePartRepresentation<Meter>, Meter>,
+    statistics: BacterialAlgorithmStatistics
+) -> MutationOnSpecimen<OnePartRepresentation<Meter>, Meter>> = arrayOf(
+    { logger: DoubleLogger,
+      taskHolder: VRPTaskHolder,
+      subSolutionFactory: SolutionRepresentationFactory<OnePartRepresentation<Meter>, Meter>,
+      algorithmState: IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>,
+      sizeOfPopulation: Int,
+      iterationLimit: Int,
+      geneCount: Int,
+      cloneCount: Int,
+      cloneSegmentLength: Int,
+      cloneCycleCount: Int,
+      mutationOperator: BacterialMutationOperator<OnePartRepresentation<Meter>, Meter>,
+      calculateCostOf: CalculateCost<OnePartRepresentation<Meter>, Meter>,
+      selectSegment: SelectSegment<OnePartRepresentation<Meter>, Meter>,
+      _: BacterialAlgorithmStatistics ->
+
+        MutationWithElitistSelection(
+            logger,
+            taskHolder,
+            subSolutionFactory,
+            algorithmState,
+            sizeOfPopulation,
+            iterationLimit,
+            geneCount,
+            cloneCount,
+            cloneSegmentLength,
+            cloneCycleCount,
+            mutationOperator,
+            calculateCostOf,
+            selectSegment
+        )
+    },
+    { logger: DoubleLogger,
+      taskHolder: VRPTaskHolder,
+      subSolutionFactory: SolutionRepresentationFactory<OnePartRepresentation<Meter>, Meter>,
+      algorithmState: IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>,
+      sizeOfPopulation: Int,
+      iterationLimit: Int,
+      geneCount: Int,
+      cloneCount: Int,
+      cloneSegmentLength: Int,
+      cloneCycleCount: Int,
+      mutationOperator: BacterialMutationOperator<OnePartRepresentation<Meter>, Meter>,
+      calculateCostOf: CalculateCost<OnePartRepresentation<Meter>, Meter>,
+      selectSegment: SelectSegment<OnePartRepresentation<Meter>, Meter>,
+      statistics: BacterialAlgorithmStatistics ->
+
+        MutationWithElitistSelectionAndOneOposition(
+            logger,
+            taskHolder,
+            subSolutionFactory,
+            algorithmState,
+            sizeOfPopulation,
+            iterationLimit,
+            geneCount,
+            cloneCount,
+            cloneSegmentLength,
+            cloneCycleCount,
+            mutationOperator,
+            calculateCostOf,
+            selectSegment,
+            statistics
+        )
+    },
+    { logger: DoubleLogger,
+      taskHolder: VRPTaskHolder,
+      subSolutionFactory: SolutionRepresentationFactory<OnePartRepresentation<Meter>, Meter>,
+      algorithmState: IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>,
+      sizeOfPopulation: Int,
+      iterationLimit: Int,
+      geneCount: Int,
+      cloneCount: Int,
+      cloneSegmentLength: Int,
+      cloneCycleCount: Int,
+      mutationOperator: BacterialMutationOperator<OnePartRepresentation<Meter>, Meter>,
+      calculateCostOf: CalculateCost<OnePartRepresentation<Meter>, Meter>,
+      selectSegment: SelectSegment<OnePartRepresentation<Meter>, Meter>,
+      _: BacterialAlgorithmStatistics ->
+
+        MutationWithElitistSelectionAndModuloStepper(
+            logger,
+            taskHolder,
+            subSolutionFactory,
+            algorithmState,
+            sizeOfPopulation,
+            iterationLimit,
+            geneCount,
+            cloneCount,
+            cloneSegmentLength,
+            cloneCycleCount,
+            mutationOperator,
+            calculateCostOf,
+            selectSegment
+        )
+    },
+    //other operator for each or more complex
+    //random + modulo stepper
+)
+private val OPERATORS: Array<(
+    logger: DoubleLogger,
+    taskHolder: VRPTaskHolder,
+    subSolutionFactory: SolutionRepresentationFactory<OnePartRepresentation<Meter>, Meter>,
+    algorithmState: IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>,
+    sizeOfPopulation: Int,
+    iterationLimit: Int,
+    geneCount: Int,
+    cloneSegmentLength: Int,
+    statistics: BacterialAlgorithmStatistics
+) -> BacterialMutationOperator<OnePartRepresentation<Meter>, Meter>> = arrayOf(
+    { logger: DoubleLogger,
+      taskHolder: VRPTaskHolder,
+      subSolutionFactory: SolutionRepresentationFactory<OnePartRepresentation<Meter>, Meter>,
+      algorithmState: IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>,
+      sizeOfPopulation: Int,
+      iterationLimit: Int,
+      geneCount: Int,
+      cloneSegmentLength: Int,
+      statistics: BacterialAlgorithmStatistics ->
+        EdgeBuilderHeuristicOnContinuousSegment(
+            logger,
+            taskHolder,
+            subSolutionFactory,
+            algorithmState,
+            sizeOfPopulation,
+            iterationLimit,
+            geneCount,
+            cloneSegmentLength,
+            statistics
+        )
+    },
+    { logger: DoubleLogger,
+      taskHolder: VRPTaskHolder,
+      subSolutionFactory: SolutionRepresentationFactory<OnePartRepresentation<Meter>, Meter>,
+      algorithmState: IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>,
+      sizeOfPopulation: Int,
+      iterationLimit: Int,
+      geneCount: Int,
+      cloneSegmentLength: Int,
+      statistics: BacterialAlgorithmStatistics ->
+        EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation(
+            logger,
+            taskHolder,
+            subSolutionFactory,
+            algorithmState,
+            sizeOfPopulation,
+            iterationLimit,
+            geneCount,
+            cloneSegmentLength,
+            statistics
+        )
+    },
+    { logger: DoubleLogger,
+      taskHolder: VRPTaskHolder,
+      subSolutionFactory: SolutionRepresentationFactory<OnePartRepresentation<Meter>, Meter>,
+      algorithmState: IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>,
+      sizeOfPopulation: Int,
+      iterationLimit: Int,
+      geneCount: Int,
+      cloneSegmentLength: Int,
+      statistics: BacterialAlgorithmStatistics ->
+        OppositionOperator(
+            logger,
+            taskHolder,
+            subSolutionFactory,
+            algorithmState,
+            sizeOfPopulation,
+            iterationLimit,
+            geneCount,
+            cloneSegmentLength,
+            statistics
+        )
+    },
+    { logger: DoubleLogger,
+      taskHolder: VRPTaskHolder,
+      subSolutionFactory: SolutionRepresentationFactory<OnePartRepresentation<Meter>, Meter>,
+      algorithmState: IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>,
+      sizeOfPopulation: Int,
+      iterationLimit: Int,
+      geneCount: Int,
+      cloneSegmentLength: Int,
+      statistics: BacterialAlgorithmStatistics ->
+        RandomShuffleOfContinuesSegment(
+            logger,
+            taskHolder,
+            subSolutionFactory,
+            algorithmState,
+            sizeOfPopulation,
+            iterationLimit,
+            geneCount,
+            cloneSegmentLength,
+            statistics
+        )
+    },
+    { logger: DoubleLogger,
+      taskHolder: VRPTaskHolder,
+      subSolutionFactory: SolutionRepresentationFactory<OnePartRepresentation<Meter>, Meter>,
+      algorithmState: IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>,
+      sizeOfPopulation: Int,
+      iterationLimit: Int,
+      geneCount: Int,
+      cloneSegmentLength: Int,
+      statistics: BacterialAlgorithmStatistics ->
+        SequentialSelectionHeuristicOnContinuousSegment(
+            logger,
+            taskHolder,
+            subSolutionFactory,
+            algorithmState,
+            sizeOfPopulation,
+            iterationLimit,
+            geneCount,
+            cloneSegmentLength,
+            statistics
+        )
+    }
+)
+
+private val output by lazy { File("output/tspStat.txt") }
 
 fun main() {
-    val objectiveCount = 15
+    output.writeText("")
+    TASK_SIZES.forEach { taskSize ->
+        repeat(10) { instanceIndex ->
+            STRATEGIES.forEach { strategySupplier ->
+                OPERATORS.forEach { operatorSupplier ->
+                    runScenario(
+                        Scenario(
+                            "size${taskSize}instance${instanceIndex}.json",
+                            taskSize - 1,
+                            strategySupplier,
+                            operatorSupplier
+                        )
+                    )
+                }
+            }
+        }
+    }
+
+}
+
+private fun runScenario(scenario: Scenario) {
+    output.appendText("scenario: $scenario\n")
     startKoin {
         modules(
             module {
-                single(named(FilePathVariableNames.INPUT_FOLDER)) { "input/tsp" }
-                single(named(FilePathVariableNames.OUTPUT_FOLDER)) { "output" }
-                single(named(FilePathVariableNames.SINGLE_FILE)) { "size16instance9.json" }
-                single(named(AlgorithmParameters.CLONE_SEGMENT_LENGTH)) { objectiveCount }
-                single(named(AlgorithmParameters.SIZE_OF_POPULATION)) { 1 }
-                single(named(AlgorithmParameters.ITERATION_LIMIT)) { Int.MAX_VALUE }
+                single(named(CLONE_COUNT)) { 40 }
+                single(named(CLONE_SEGMENT_LENGTH)) { scenario.objectiveCount }
+                single(named(CLONE_CYCLE_COUNT)) { 5 }
+                single(named(INPUT_FOLDER)) { "input/tsp" }
+                single(named(OUTPUT_FOLDER)) { "output" }
+                single(named(SINGLE_FILE)) { scenario.fileName }
+                single(named(SIZE_OF_POPULATION)) { 1 }
+                single(named(ITERATION_LIMIT)) { Int.MAX_VALUE }
                 single<CalculateCost<*, *>> {
-                    CalculateCostOfTspSolution<OnePartRepresentation<Meter>>()
+                    CalculateCostOfTspSolution<OnePartRepresentation<Meter>>(
+                        get(), get(), get(), get()
+                    )
                 }
                 single { BacterialAlgorithmStatistics() }
                 single { DoubleLogger() }
                 single { VRPTaskHolder() }
                 single<SolutionRepresentationFactory<*, *>> {
                     OnePartRepresentationFactory<Meter>()
+                }
+                single<BacterialMutationOperator<*, *>> {
+                    scenario.mutationOperator(
+                        get(), get(), get(), get(),
+                        get(SIZE_OF_POPULATION),
+                        get(ITERATION_LIMIT),
+                        scenario.objectiveCount,
+                        get(CLONE_SEGMENT_LENGTH),
+                        get()
+                    )
+                }
+                single<SelectSegment<*, *>> {
+                    SelectContinuesSegment<OnePartRepresentation<Meter>, Meter>(
+                        get(), get(), get(), get(),
+                        get(SIZE_OF_POPULATION),
+                        get(ITERATION_LIMIT),
+                        scenario.objectiveCount,
+                        get(CLONE_SEGMENT_LENGTH),
+                    )
                 }
                 single<TaskLoader> { TspTaskLoader() }
                 single<IterativeAlgorithmStateWithMultipleCandidates<*, *>> { IterativeAlgorithmStateWithMultipleCandidates() }
@@ -54,31 +375,43 @@ fun main() {
     task.costGraph.edgesFromCenter.forEach { println(it.length) }
     task.costGraph.edgesToCenter.forEach { println(it.length) }
     task.costGraph.edgesBetween.flatten().forEach { println(it.length) }
-    val operator : BacterialMutationOperator<OnePartRepresentation<Meter>,Meter> = EdgeBuilderHeuristicOnContinuousSegment()
-    (0 until 1000).map {
+    val strategy: MutationOnSpecimen<OnePartRepresentation<Meter>, Meter> = scenario.mutationStrategy(
+        get(),
+        get(),
+        get(),
+        get(),
+        get(SIZE_OF_POPULATION),
+        get(ITERATION_LIMIT),
+        scenario.objectiveCount,
+        get(CLONE_COUNT),
+        get(CLONE_SEGMENT_LENGTH),
+        get(CLONE_CYCLE_COUNT),
+        get(),
+        get(),
+        get(),
+        get(),
+    )
+
+    (0 until 25).map {
         val specimen =
             OnePartRepresentation<Meter>(
                 0,
-                objectiveCount,
-                Permutation((0 until objectiveCount).toList().toIntArray()),
+                scenario.objectiveCount,
+                Permutation((0 until scenario.objectiveCount).toList().toIntArray()),
                 true,
                 null,
                 0,
                 0
             )
-        operator(
-            specimen,
-            Segment(
-                (0 until objectiveCount).toList().toIntArray(),
-                (0 until objectiveCount).toList().toIntArray()
-            )
-        )
+        strategy(specimen)
         calculateCost(specimen)
         specimen.costOrException()
     }
         .sortedBy { it.value }
-        .groupBy { it.value.numerator / 100 }
+        .groupBy { it.value.numerator }
         .forEach { (value, values) ->
-            println(value.toString() + " : " + values.size.toString())
+            output.appendText("value: $value  count: ${values.size}\n")
         }
+
+    stopKoin()
 }

@@ -1,15 +1,29 @@
 package hu.raven.puppet.logic.step.boostoperator
 
+import hu.raven.puppet.logic.logging.DoubleLogger
+import hu.raven.puppet.logic.step.calculatecost.CalculateCost
+import hu.raven.puppet.logic.task.VRPTaskHolder
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
+import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
+import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 import hu.raven.puppet.modules.AlgorithmParameters
 import hu.raven.puppet.utility.inject
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
-class Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> :
+class Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
+    override val logger: DoubleLogger,
+    override val taskHolder: VRPTaskHolder,
+    override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
+    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
+    override val sizeOfPopulation: Int,
+    override val iterationLimit: Int,
+    override val geneCount: Int,
+    override val calculateCostOf: CalculateCost<S, C>
+) :
     BoostOperator<S, C>() {
     private val stepLimit: Int by inject(AlgorithmParameters.OPTIMISATION_STEP_LIMIT)
     private var lastPositionPerSpecimen = arrayOf<Pair<Int, Int>>()

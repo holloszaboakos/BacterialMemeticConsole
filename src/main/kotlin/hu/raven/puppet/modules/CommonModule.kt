@@ -38,7 +38,9 @@ val commonModule = module {
     }
 
     factory<Diversity<*, *>> {
-        DiversityByInnerDistanceAndSequence<OnePartRepresentation<Meter>, Meter>()
+        DiversityByInnerDistanceAndSequence<OnePartRepresentation<Meter>, Meter>(
+            get(), get(), get(), get(), get(), get(), get(), get(),
+        )
     }
 
     factory<SolutionRepresentationFactory<*, *>> {
@@ -46,21 +48,29 @@ val commonModule = module {
     }
 
     factory<InitializePopulation<*, *>> {
-        InitializeHugePopulationThanPreOptimizeThanSelectBest<OnePartRepresentation<Meter>, Meter>()
+        InitializeHugePopulationThanPreOptimizeThanSelectBest<OnePartRepresentation<Meter>, Meter>(
+            get(), get(), get(), get(), get(), get(), get(), get(), get(),
+        )
         //InitializePopulationByModuloStepper<DOnePartRepresentation>()
     }
 
     factory {
-        OrderPopulationByCost<OnePartRepresentation<Meter>, Meter>()
+        OrderPopulationByCost<OnePartRepresentation<Meter>, Meter>(
+            get(), get(), get(), get(), get(), get(), get(),
+        )
     }
     factory { CalculateCostOfEdge() }
     factory { CalculateCostOfObjective() }
 
     factory<Boost<*, *>> {
-        BoostOnBestLazy<OnePartRepresentation<Meter>, Meter>()
+        BoostOnBestLazy<OnePartRepresentation<Meter>, Meter>(
+            get(), get(), get(), get(), get(), get(), get(), get(), get(),
+        )
     }
     factory<BoostOperator<*, *>> {
-        Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit<OnePartRepresentation<Meter>, Meter>()
+        Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit<OnePartRepresentation<Meter>, Meter>(
+            get(), get(), get(), get(), get(), get(), get(), get(),
+        )
     }
 
 

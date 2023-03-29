@@ -1,17 +1,24 @@
 package hu.raven.puppet.logic.step.calculatecost
 
 import hu.raven.puppet.logic.logging.DoubleLogger
+import hu.raven.puppet.logic.task.VRPTaskHolder
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.Meter
 import hu.raven.puppet.model.physics.Stere
 import hu.raven.puppet.model.solution.SolutionRepresentation
+import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
+import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.extention.sumClever
-import hu.raven.puppet.utility.inject
 
-class CalculateCostOfCVRPSolutionWithCapacityAndMaxTripLength<S : SolutionRepresentation<Meter>> :
+class CalculateCostOfCVRPSolutionWithCapacityAndMaxTripLength<S : SolutionRepresentation<Meter>>(
+    override val logger: DoubleLogger,
+    override val taskHolder: VRPTaskHolder,
+    override val subSolutionFactory: SolutionRepresentationFactory<S, Meter>,
+    override val statistics: BacterialAlgorithmStatistics,
+    val doubleLogger: DoubleLogger
+) :
     CalculateCost<S, Meter>() {
-    val doubleLogger: DoubleLogger by inject()
     override fun invoke(specimen: SolutionRepresentation<Meter>) {
         statistics.fitnessCallCount++
         taskHolder.run {

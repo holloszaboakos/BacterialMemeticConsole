@@ -20,6 +20,8 @@ val defaultDataSetModule = module {
     single(named(SALESMAN_FILE)) { "hungarianExample/salesman.json" }
     single<TaskLoader> { DefaultTaskLoader() }
     factory<CalculateCost<*, *>> {
-        CalculateCostOfACVRPWithMultipleCapacity<OnePartRepresentation<Euro>>()
+        CalculateCostOfACVRPWithMultipleCapacity<OnePartRepresentation<Euro>>(
+            get(), get(), get(), get()
+        )
     }
 }
