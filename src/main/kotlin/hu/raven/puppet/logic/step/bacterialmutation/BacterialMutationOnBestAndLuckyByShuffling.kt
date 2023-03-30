@@ -2,7 +2,7 @@ package hu.raven.puppet.logic.step.bacterialmutation
 
 import hu.raven.puppet.logic.step.bacterialmutationonspecimen.MutationOnSpecimen
 import hu.raven.puppet.model.logging.StepEfficiencyData
-import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
+import hu.raven.puppet.model.parameters.BacterialMutationParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
@@ -17,8 +17,7 @@ import kotlin.random.Random
 class BacterialMutationOnBestAndLuckyByShuffling<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
-    override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,
-    override val mutationPercentage: Float,
+    override val parameters: BacterialMutationParameterProvider<S, C>,
     override val statistics: BacterialAlgorithmStatistics,
     override val mutationOnSpecimen: MutationOnSpecimen<S, C>
 ) : BacterialMutation<S, C>() {
@@ -26,7 +25,7 @@ class BacterialMutationOnBestAndLuckyByShuffling<S : SolutionRepresentation<C>, 
 
     override suspend fun invoke(): Unit = withContext(Dispatchers.Default) {
         algorithmState.run {
-            val selectedCount = ((population.size - 1) * mutationPercentage).toInt()
+            val selectedCount = ((population.size - 1) * parameters.mutationPercentage).toInt()
 
             val populationRandomized = population.slice(1 until population.size)
                 .shuffled()
@@ -36,7 +35,7 @@ class BacterialMutationOnBestAndLuckyByShuffling<S : SolutionRepresentation<C>, 
 
             populationRandomized.mapIndexed { index, specimen ->
                 async {
-                    if (index != 0 && Random.nextFloat() > mutationPercentage) {
+                    if (index != 0 && Random.nextFloat() > parameters.mutationPercentage) {
                         return@async null
                     }
 

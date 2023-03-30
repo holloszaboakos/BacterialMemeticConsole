@@ -8,5 +8,5 @@ open class EvolutionaryAlgorithmParameterProvider<S : SolutionRepresentation<C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
     iterationLimit: Int,
     val sizeOfPopulation: Int,
-    val geneCount: Int
+    val geneCount: Int,
 ) : IterativeAlgorithmParameterProvider(algorithmState, iterationLimit)

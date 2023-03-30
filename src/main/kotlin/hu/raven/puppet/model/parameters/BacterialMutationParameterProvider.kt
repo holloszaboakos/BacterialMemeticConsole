@@ -12,6 +12,7 @@ class BacterialMutationParameterProvider<S : SolutionRepresentation<C>, C : Phys
     val cloneCount: Int,
     val cloneSegmentLength: Int,
     val cloneCycleCount: Int,
+    val mutationPercentage: Float,
 ) : EvolutionaryAlgorithmParameterProvider<S, C>(
     algorithmState, iterationLimit, sizeOfPopulation, geneCount
 )
