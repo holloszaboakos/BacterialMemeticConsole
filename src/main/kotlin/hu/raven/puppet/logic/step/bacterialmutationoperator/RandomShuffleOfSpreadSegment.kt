@@ -1,6 +1,7 @@
 package hu.raven.puppet.logic.step.bacterialmutationoperator
 
 import hu.raven.puppet.logic.logging.DoubleLogger
+import hu.raven.puppet.model.parameters.BacterialMutationParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.Segment
 import hu.raven.puppet.model.solution.SolutionRepresentation
@@ -10,13 +11,9 @@ import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 
 class RandomShuffleOfSpreadSegment<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
     override val logger: DoubleLogger,
-
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
-    override val sizeOfPopulation: Int,
-    override val iterationLimit: Int,
-    override val geneCount: Int,
-    override val cloneSegmentLength: Int,
+    override val parameters: BacterialMutationParameterProvider<S, C>,
     override val statistics: BacterialAlgorithmStatistics
 ) : BacterialMutationOperator<S, C>() {
 
@@ -25,7 +22,7 @@ class RandomShuffleOfSpreadSegment<S : SolutionRepresentation<C>, C : PhysicsUni
         selectedSegment: Segment
     ) {
 
-        val shuffler = (0 until cloneSegmentLength).shuffled()
+        val shuffler = (0 until parameters.cloneSegmentLength).shuffled()
         selectedSegment.positions.forEachIndexed { index, position ->
             clone[position] = selectedSegment.values[shuffler[index]]
         }

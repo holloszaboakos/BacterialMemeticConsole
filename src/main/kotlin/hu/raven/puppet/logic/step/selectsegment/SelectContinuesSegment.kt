@@ -1,6 +1,7 @@
 package hu.raven.puppet.logic.step.selectsegment
 
 import hu.raven.puppet.logic.logging.DoubleLogger
+import hu.raven.puppet.model.parameters.BacterialMutationParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.Segment
 import hu.raven.puppet.model.solution.SolutionRepresentation
@@ -11,12 +12,9 @@ import kotlin.random.Random
 
 class SelectContinuesSegment<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
     override val logger: DoubleLogger,
-
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
-    override val sizeOfPopulation: Int,
-    override val iterationLimit: Int,
-    override val geneCount: Int, override val cloneSegmentLength: Int
+    override val parameters: BacterialMutationParameterProvider<S, C>,
 ) : SelectSegment<S, C>() {
     override fun invoke(
         specimen: S,
@@ -26,9 +24,9 @@ class SelectContinuesSegment<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
         val randomPosition =
             Random.nextSegmentStartPosition(
                 specimen.permutationIndices.count(),
-                cloneSegmentLength
+                parameters.cloneSegmentLength
             )
-        val positions = IntArray(cloneSegmentLength) { randomPosition + it }
+        val positions = IntArray(parameters.cloneSegmentLength) { randomPosition + it }
         return Segment(
             positions = positions,
             values = positions.map { specimen[it] }.toIntArray()

@@ -4,6 +4,7 @@ import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.logic.step.bacterialmutation.BacterialMutation
 import hu.raven.puppet.logic.step.boost.Boost
 import hu.raven.puppet.logic.step.orderpopulationbycost.OrderPopulationByCost
+import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
@@ -14,12 +15,9 @@ import kotlin.time.measureTime
 
 class BacterialIteration<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
     override val logger: DoubleLogger,
-
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
-    override val sizeOfPopulation: Int,
-    override val iterationLimit: Int,
-    override val geneCount: Int,
+    override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,
     val boost: Boost<S, C>,
     val geneTransfer: hu.raven.puppet.logic.step.genetransfer.GeneTransfer<S, C>,
     val mutate: BacterialMutation<S, C>,

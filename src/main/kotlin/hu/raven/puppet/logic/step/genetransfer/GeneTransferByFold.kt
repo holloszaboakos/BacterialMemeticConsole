@@ -2,6 +2,7 @@ package hu.raven.puppet.logic.step.genetransfer
 
 import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.logic.step.genetransferoperator.GeneTransferOperator
+import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
@@ -14,12 +15,9 @@ import kotlinx.coroutines.withContext
 
 class GeneTransferByFold<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
     override val logger: DoubleLogger,
-
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
-    override val sizeOfPopulation: Int,
-    override val iterationLimit: Int,
-    override val geneCount: Int,
+    override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,
     override val injectionCount: Int,
     override val geneTransferOperator: GeneTransferOperator<S, C>,
     override val statistics: BacterialAlgorithmStatistics
@@ -31,7 +29,7 @@ class GeneTransferByFold<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
             (0 until injectionCount)
                 .map { injectionIndex ->
                     async {
-                        val specimenIndex = injectionIndex % (sizeOfPopulation / 2)
+                        val specimenIndex = injectionIndex % (parameters.sizeOfPopulation / 2)
 
                         val donor =
                             population[specimenIndex]

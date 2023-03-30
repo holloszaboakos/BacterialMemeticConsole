@@ -1,29 +1,5 @@
 package hu.raven.puppet.modules
 
-import hu.raven.puppet.logic.logging.CSVLogger
-import hu.raven.puppet.logic.step.bacterialmutation.BacterialMutation
-import hu.raven.puppet.logic.step.bacterialmutation.BacterialMutationOnBestAndLuckyByShuffling
-import hu.raven.puppet.logic.step.bacterialmutationonspecimen.MutationOnSpecimen
-import hu.raven.puppet.logic.step.bacterialmutationonspecimen.MutationWithElitistSelection
-import hu.raven.puppet.logic.step.bacterialmutationoperator.BacterialMutationOperator
-import hu.raven.puppet.logic.step.bacterialmutationoperator.EdgeBuilderHeuristicOnContinuousSegment
-import hu.raven.puppet.logic.step.crossoveroperator.CrossOverOperator
-import hu.raven.puppet.logic.step.crossoveroperator.HeuristicCrossOver
-import hu.raven.puppet.logic.step.genetransfer.GeneTransferByTournament
-import hu.raven.puppet.logic.step.genetransferoperator.GeneTransferByCrossOver
-import hu.raven.puppet.logic.step.genetransferoperator.GeneTransferOperator
-import hu.raven.puppet.logic.step.initialize.InitializeAlgorithm
-import hu.raven.puppet.logic.step.initialize.InitializeBacterialAlgorithm
-import hu.raven.puppet.logic.step.iterationofevolutionary.BacterialIteration
-import hu.raven.puppet.logic.step.iterationofevolutionary.EvolutionaryIteration
-import hu.raven.puppet.logic.step.selectsegment.SelectContinuesSegmentWithFullCoverage
-import hu.raven.puppet.logic.step.selectsegment.SelectSegment
-import hu.raven.puppet.model.physics.Meter
-import hu.raven.puppet.model.solution.OnePartRepresentation
-import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
-import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
-import hu.raven.puppet.modules.AlgorithmParameters.*
-import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val bacterialModule = module {

@@ -1,31 +1,5 @@
 package hu.raven.puppet.runScenario
 
-import hu.raven.puppet.logic.logging.CSVLogger
-import hu.raven.puppet.logic.logging.DoubleLogger
-import hu.raven.puppet.logic.step.initialize.InitializeAlgorithm
-import hu.raven.puppet.logic.step.iterationofevolutionary.EvolutionaryIteration
-import hu.raven.puppet.model.logging.BacterialMemeticAlgorithmLogLine
-import hu.raven.puppet.model.logging.PopulationData
-import hu.raven.puppet.model.logging.ProgressData
-import hu.raven.puppet.model.logging.SpecimenData
-import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
-import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
-import hu.raven.puppet.modules.AlgorithmParameters
-import hu.raven.puppet.modules.bacterialModule
-import hu.raven.puppet.modules.commonModule
-import hu.raven.puppet.modules.dataset.defaultDataSetModule
-import hu.raven.puppet.utility.extention.logProgress
-import hu.raven.puppet.utility.extention.logSpecimen
-import hu.raven.puppet.utility.extention.logStepEfficiency
-import hu.raven.puppet.utility.extention.median
-import hu.raven.puppet.utility.inject
-import org.koin.core.context.startKoin
-import kotlin.time.Duration
-import kotlin.time.ExperimentalTime
-import kotlin.time.measureTime
-
 /*
 @ExperimentalTime
 fun main() {

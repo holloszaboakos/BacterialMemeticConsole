@@ -1,21 +1,5 @@
 package hu.raven.puppet.modules
 
-import hu.raven.puppet.logic.step.crossover.CrossOvers
-import hu.raven.puppet.logic.step.crossoveroperator.CrossOverOperator
-import hu.raven.puppet.logic.step.crossoveroperator.HeuristicCrossOver
-import hu.raven.puppet.logic.step.initialize.InitializeAlgorithm
-import hu.raven.puppet.logic.step.initialize.InitializeGeneticAlgorithm
-import hu.raven.puppet.logic.step.iterationofevolutionary.EvolutionaryIteration
-import hu.raven.puppet.logic.step.iterationofevolutionary.GeneticIteration
-import hu.raven.puppet.logic.step.mutatechildren.MutateChildren
-import hu.raven.puppet.logic.step.mutatechildren.MutateChildrenBySwap
-import hu.raven.puppet.logic.step.selectsurvivers.SelectSurvivors
-import hu.raven.puppet.model.physics.Meter
-import hu.raven.puppet.model.solution.OnePartRepresentation
-import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
-import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
-import hu.raven.puppet.model.statistics.GeneticAlgorithmStatistics
-import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val geneticModule = module {

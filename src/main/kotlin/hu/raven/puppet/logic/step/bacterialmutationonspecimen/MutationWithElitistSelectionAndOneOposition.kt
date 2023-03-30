@@ -7,6 +7,7 @@ import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.logic.step.selectsegment.SelectSegment
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.math.Fraction
+import hu.raven.puppet.model.parameters.BacterialMutationParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.Segment
 import hu.raven.puppet.model.solution.SolutionRepresentation
@@ -18,15 +19,9 @@ import kotlin.time.measureTime
 
 class MutationWithElitistSelectionAndOneOposition<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
     override val logger: DoubleLogger,
-
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
-    override val sizeOfPopulation: Int,
-    override val iterationLimit: Int,
-    override val geneCount: Int,
-    override val cloneCount: Int,
-    override val cloneSegmentLength: Int,
-    override val cloneCycleCount: Int,
+    override val parameters: BacterialMutationParameterProvider<S, C>,
     override val mutationOperator: BacterialMutationOperator<S, C>,
     override val calculateCostOf: CalculateCost<S, C>,
     override val selectSegment: SelectSegment<S, C>,
@@ -37,10 +32,7 @@ class MutationWithElitistSelectionAndOneOposition<S : SolutionRepresentation<C>,
         logger,
         subSolutionFactory,
         algorithmState,
-        sizeOfPopulation,
-        iterationLimit,
-        geneCount,
-        cloneSegmentLength,
+        parameters,
         statistics
     )
 
@@ -52,10 +44,10 @@ class MutationWithElitistSelectionAndOneOposition<S : SolutionRepresentation<C>,
         var improvement = false
         val oldSpecimenCost = specimen.cost!!
         val duration = measureTime {
-            repeat(cloneCycleCount) { cycleIndex ->
+            repeat(parameters.cloneCycleCount) { cycleIndex ->
                 val clones = generateClones(
                     specimen,
-                    selectSegment(specimen, cycleIndex, cloneCycleCount)
+                    selectSegment(specimen, cycleIndex, parameters.cloneCycleCount)
                 )
 
                 calcCostOfEachAndSort(clones)
@@ -68,7 +60,7 @@ class MutationWithElitistSelectionAndOneOposition<S : SolutionRepresentation<C>,
             }
         }
 
-        val spentBudget = (cloneCount + 1) * cloneCycleCount.toLong()
+        val spentBudget = (parameters.cloneCount + 1) * parameters.cloneCycleCount.toLong()
         StepEfficiencyData(
             spentTime = duration,
             spentBudget = spentBudget,
@@ -85,7 +77,7 @@ class MutationWithElitistSelectionAndOneOposition<S : SolutionRepresentation<C>,
         specimen: S,
         selectedSegment: Segment
     ): MutableList<S> {
-        val clones = MutableList(cloneCount + 1) { subSolutionFactory.copy(specimen) }
+        val clones = MutableList(parameters.cloneCount + 1) { subSolutionFactory.copy(specimen) }
 
         oppositionOperator(clones[1], selectedSegment)
 

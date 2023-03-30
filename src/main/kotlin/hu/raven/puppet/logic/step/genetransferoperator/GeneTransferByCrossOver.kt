@@ -5,6 +5,7 @@ import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.logic.step.crossoveroperator.CrossOverOperator
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.math.Fraction
+import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
@@ -14,12 +15,9 @@ import kotlin.time.measureTime
 
 class GeneTransferByCrossOver<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
     override val logger: DoubleLogger,
-
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
-    override val sizeOfPopulation: Int,
-    override val iterationLimit: Int,
-    override val geneCount: Int,
+    override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,
     override val calculateCostOf: CalculateCost<S, C>,
     override val geneTransferSegmentLength: Int,
     val crossOverOperator: CrossOverOperator<S, C>,

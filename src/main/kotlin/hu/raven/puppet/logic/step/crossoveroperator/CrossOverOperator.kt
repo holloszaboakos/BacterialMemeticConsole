@@ -2,6 +2,7 @@ package hu.raven.puppet.logic.step.crossoveroperator
 
 import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.logic.step.EvolutionaryAlgorithmStep
+import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
@@ -14,114 +15,86 @@ sealed class CrossOverOperator<S : SolutionRepresentation<C>, C : PhysicsUnit<C>
             logger: DoubleLogger,
             subSolutionFactory: SolutionRepresentationFactory<S, C>,
             algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
-            sizeOfPopulation: Int,
-            iterationLimit: Int,
-            geneCount: Int
+            parameters: EvolutionaryAlgorithmParameterProvider<S, C>,
         ) = listOf<CrossOverOperator<S, C>>(
             AlternatingEdgeCrossOver(
                 logger,
                 subSolutionFactory,
                 algorithmState,
-                sizeOfPopulation,
-                iterationLimit,
-                geneCount
+                parameters,
             ),
             AlternatingPositionCrossOver(
                 logger,
                 subSolutionFactory,
                 algorithmState,
-                sizeOfPopulation,
-                iterationLimit,
-                geneCount
+                parameters
             ),
             CycleCrossOver(
                 logger,
                 subSolutionFactory,
                 algorithmState,
-                sizeOfPopulation,
-                iterationLimit,
-                geneCount
+                parameters
             ),
             DistancePreservingCrossOver(
                 logger,
                 subSolutionFactory,
                 algorithmState,
-                sizeOfPopulation,
-                iterationLimit,
-                geneCount
+                parameters
             ),
             GeneticEdgeRecombinationCrossOver(
                 logger,
                 subSolutionFactory,
                 algorithmState,
-                sizeOfPopulation,
-                iterationLimit,
-                geneCount
+                parameters,
             ),
             HeuristicCrossOver(
                 logger,
                 subSolutionFactory,
                 algorithmState,
-                sizeOfPopulation,
-                iterationLimit,
-                geneCount
+                parameters,
             ),
             MaximalPreservationCrossOver(
                 logger,
                 subSolutionFactory,
                 algorithmState,
-                sizeOfPopulation,
-                iterationLimit,
-                geneCount
+                parameters,
             ),
             OrderBasedCrossOver(
                 logger,
                 subSolutionFactory,
                 algorithmState,
-                sizeOfPopulation,
-                iterationLimit,
-                geneCount
+                parameters,
             ),
             OrderCrossOver(
                 logger,
                 subSolutionFactory,
                 algorithmState,
-                sizeOfPopulation,
-                iterationLimit,
-                geneCount
+                parameters,
             ),
             PartiallyMatchedCrossOver(
                 logger,
                 subSolutionFactory,
                 algorithmState,
-                sizeOfPopulation,
-                iterationLimit,
-                geneCount
+                parameters,
             ),
             PositionBasedCrossOver(
                 logger,
                 subSolutionFactory,
                 algorithmState,
-                sizeOfPopulation,
-                iterationLimit,
-                geneCount
+                parameters,
             ),
             //broken SortedMatchCrossOver,
             SubTourChunksCrossOver(
                 logger,
                 subSolutionFactory,
                 algorithmState,
-                sizeOfPopulation,
-                iterationLimit,
-                geneCount
+                parameters,
             ),
             VotingRecombinationCrossOver(
                 logger,
                 subSolutionFactory,
                 algorithmState,
-                sizeOfPopulation,
-                iterationLimit,
-                geneCount
+                parameters,
             ),
         )
     }

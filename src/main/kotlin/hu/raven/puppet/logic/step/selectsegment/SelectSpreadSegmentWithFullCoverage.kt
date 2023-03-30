@@ -1,6 +1,7 @@
 package hu.raven.puppet.logic.step.selectsegment
 
 import hu.raven.puppet.logic.logging.DoubleLogger
+import hu.raven.puppet.model.parameters.BacterialMutationParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.Segment
 import hu.raven.puppet.model.solution.SolutionRepresentation
@@ -9,17 +10,13 @@ import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 
 class SelectSpreadSegmentWithFullCoverage<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
     override val logger: DoubleLogger,
-
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
-    override val sizeOfPopulation: Int,
-    override val iterationLimit: Int,
-    override val geneCount: Int,
-    override val cloneSegmentLength: Int
+    override val parameters: BacterialMutationParameterProvider<S, C>,
 ) : SelectSegment<S, C>() {
 
     private val randomPermutation: IntArray by lazy {
-        IntArray(geneCount) { it }
+        IntArray(parameters.geneCount) { it }
             .apply { shuffle() }
     }
 
@@ -28,8 +25,8 @@ class SelectSpreadSegmentWithFullCoverage<S : SolutionRepresentation<C>, C : Phy
         cycleIndex: Int,
         cycleCount: Int
     ): Segment {
-        val segmentStart = cycleIndex * cloneSegmentLength
-        val segmentEnd = (cycleIndex + 1) * cloneSegmentLength
+        val segmentStart = cycleIndex * parameters.cloneSegmentLength
+        val segmentEnd = (cycleIndex + 1) * parameters.cloneSegmentLength
         val selectedPositions = randomPermutation
             .slice(segmentStart until segmentEnd)
             .sortedBy { it }

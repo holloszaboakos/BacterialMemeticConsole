@@ -6,6 +6,7 @@ import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.logic.step.selectsegment.SelectSegment
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.math.Fraction
+import hu.raven.puppet.model.parameters.BacterialMutationParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.Segment
 import hu.raven.puppet.model.solution.SolutionRepresentation
@@ -21,18 +22,13 @@ class MutationWithSimulatedAnnealingBasedSelection<S : SolutionRepresentation<C>
 
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
-    override val sizeOfPopulation: Int,
-    override val iterationLimit: Int,
-    override val geneCount: Int,
-    override val cloneCount: Int,
-    override val cloneSegmentLength: Int,
-    override val cloneCycleCount: Int,
+    override val parameters: BacterialMutationParameterProvider<S, C>,
     override val mutationOperator: BacterialMutationOperator<S, C>,
     override val calculateCostOf: CalculateCost<S, C>,
     override val selectSegment: SelectSegment<S, C>
 ) : MutationOnSpecimen<S, C>() {
     private val randomizer: IntArray by lazy {
-        (0 until cloneSegmentLength)
+        (0 until parameters.cloneSegmentLength)
             .shuffled()
             .toIntArray()
     }
@@ -43,11 +39,11 @@ class MutationWithSimulatedAnnealingBasedSelection<S : SolutionRepresentation<C>
         val oldSpecimenCost = specimen.cost
         val duration = measureTime {
             val doSimulatedAnnealing = specimen != population.first()
-            repeat(cloneCycleCount) { cycleIndex ->
+            repeat(parameters.cloneCycleCount) { cycleIndex ->
 
                 val clones = generateClones(
                     specimen,
-                    selectSegment(specimen, cycleIndex, cloneCycleCount)
+                    selectSegment(specimen, cycleIndex, parameters.cloneCycleCount)
                 )
 
                 calcCostOfEachAndSort(clones)
@@ -64,7 +60,7 @@ class MutationWithSimulatedAnnealingBasedSelection<S : SolutionRepresentation<C>
             }
         }
 
-        val spentBudget = (cloneCount + 1) * cloneCycleCount.toLong()
+        val spentBudget = (parameters.cloneCount + 1) * parameters.cloneCycleCount.toLong()
         StepEfficiencyData(
             spentTime = duration,
             spentBudget = spentBudget,
@@ -81,7 +77,7 @@ class MutationWithSimulatedAnnealingBasedSelection<S : SolutionRepresentation<C>
         specimen: S,
         selectedSegment: Segment
     ): MutableList<S> {
-        val clones = MutableList(cloneCount + 1) { subSolutionFactory.copy(specimen) }
+        val clones = MutableList(parameters.cloneCount + 1) { subSolutionFactory.copy(specimen) }
         clones
             .slice(1 until clones.size)
             .forEach { clone ->
@@ -98,7 +94,7 @@ class MutationWithSimulatedAnnealingBasedSelection<S : SolutionRepresentation<C>
         if (!doSimulatedAnnealing ||
             Random.nextFloat() > simulatedAnnealingHeat(
                 algorithmState.iteration,
-                iterationLimit
+                parameters.iterationLimit
             )
         ) {
             specimen.setData(clones.first().getData())

@@ -2,6 +2,7 @@ package hu.raven.puppet.logic.step.bacterialmutationoperator
 
 import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.model.math.Fraction
+import hu.raven.puppet.model.parameters.BacterialMutationParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.Segment
 import hu.raven.puppet.model.solution.SolutionRepresentation
@@ -14,13 +15,9 @@ import hu.raven.puppet.utility.extention.sumClever
 //TODO repair
 class SequentialSelectionHeuristicOnContinuousSegment<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
     override val logger: DoubleLogger,
-
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
-    override val sizeOfPopulation: Int,
-    override val iterationLimit: Int,
-    override val geneCount: Int,
-    override val cloneSegmentLength: Int,
+    override val parameters: BacterialMutationParameterProvider<S, C>,
     override val statistics: BacterialAlgorithmStatistics
 ) :
     BacterialMutationOperator<S, C>() {

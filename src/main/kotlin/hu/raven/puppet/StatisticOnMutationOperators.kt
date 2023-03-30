@@ -13,6 +13,9 @@ import hu.raven.puppet.logic.step.selectsegment.SelectSegment
 import hu.raven.puppet.logic.task.loader.TaskLoader
 import hu.raven.puppet.logic.task.loader.TspTaskLoader
 import hu.raven.puppet.model.math.Permutation
+import hu.raven.puppet.model.parameters.BacterialMutationParameterProvider
+import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
+import hu.raven.puppet.model.parameters.IterativeAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.Meter
 import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.solution.factory.OnePartRepresentationFactory
@@ -39,12 +42,7 @@ private data class Scenario(
         logger: DoubleLogger,
         subSolutionFactory: SolutionRepresentationFactory<OnePartRepresentation<Meter>, Meter>,
         algorithmState: IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>,
-        sizeOfPopulation: Int,
-        iterationLimit: Int,
-        geneCount: Int,
-        cloneCount: Int,
-        cloneSegmentLength: Int,
-        cloneCycleCount: Int,
+        parameters: BacterialMutationParameterProvider<OnePartRepresentation<Meter>, Meter>,
         mutationOperator: BacterialMutationOperator<OnePartRepresentation<Meter>, Meter>,
         calculateCostOf: CalculateCost<OnePartRepresentation<Meter>, Meter>,
         selectSegment: SelectSegment<OnePartRepresentation<Meter>, Meter>,
@@ -54,10 +52,7 @@ private data class Scenario(
         logger: DoubleLogger,
         subSolutionFactory: SolutionRepresentationFactory<OnePartRepresentation<Meter>, Meter>,
         algorithmState: IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>,
-        sizeOfPopulation: Int,
-        iterationLimit: Int,
-        geneCount: Int,
-        cloneSegmentLength: Int,
+        parameters: BacterialMutationParameterProvider<OnePartRepresentation<Meter>, Meter>,
         statistics: BacterialAlgorithmStatistics
     ) -> BacterialMutationOperator<OnePartRepresentation<Meter>, Meter>,
 )
@@ -67,12 +62,7 @@ private val STRATEGIES: Array<(
     logger: DoubleLogger,
     subSolutionFactory: SolutionRepresentationFactory<OnePartRepresentation<Meter>, Meter>,
     algorithmState: IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>,
-    sizeOfPopulation: Int,
-    iterationLimit: Int,
-    geneCount: Int,
-    cloneCount: Int,
-    cloneSegmentLength: Int,
-    cloneCycleCount: Int,
+    parameters: BacterialMutationParameterProvider<OnePartRepresentation<Meter>, Meter>,
     mutationOperator: BacterialMutationOperator<OnePartRepresentation<Meter>, Meter>,
     calculateCostOf: CalculateCost<OnePartRepresentation<Meter>, Meter>,
     selectSegment: SelectSegment<OnePartRepresentation<Meter>, Meter>,
@@ -81,12 +71,7 @@ private val STRATEGIES: Array<(
     { logger: DoubleLogger,
       subSolutionFactory: SolutionRepresentationFactory<OnePartRepresentation<Meter>, Meter>,
       algorithmState: IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>,
-      sizeOfPopulation: Int,
-      iterationLimit: Int,
-      geneCount: Int,
-      cloneCount: Int,
-      cloneSegmentLength: Int,
-      cloneCycleCount: Int,
+      parameters: BacterialMutationParameterProvider<OnePartRepresentation<Meter>, Meter>,
       mutationOperator: BacterialMutationOperator<OnePartRepresentation<Meter>, Meter>,
       calculateCostOf: CalculateCost<OnePartRepresentation<Meter>, Meter>,
       selectSegment: SelectSegment<OnePartRepresentation<Meter>, Meter>,
@@ -96,12 +81,7 @@ private val STRATEGIES: Array<(
             logger,
             subSolutionFactory,
             algorithmState,
-            sizeOfPopulation,
-            iterationLimit,
-            geneCount,
-            cloneCount,
-            cloneSegmentLength,
-            cloneCycleCount,
+            parameters,
             mutationOperator,
             calculateCostOf,
             selectSegment
@@ -110,12 +90,7 @@ private val STRATEGIES: Array<(
     { logger: DoubleLogger,
       subSolutionFactory: SolutionRepresentationFactory<OnePartRepresentation<Meter>, Meter>,
       algorithmState: IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>,
-      sizeOfPopulation: Int,
-      iterationLimit: Int,
-      geneCount: Int,
-      cloneCount: Int,
-      cloneSegmentLength: Int,
-      cloneCycleCount: Int,
+      parameters: BacterialMutationParameterProvider<OnePartRepresentation<Meter>, Meter>,
       mutationOperator: BacterialMutationOperator<OnePartRepresentation<Meter>, Meter>,
       calculateCostOf: CalculateCost<OnePartRepresentation<Meter>, Meter>,
       selectSegment: SelectSegment<OnePartRepresentation<Meter>, Meter>,
@@ -123,15 +98,9 @@ private val STRATEGIES: Array<(
 
         MutationWithElitistSelectionAndOneOposition(
             logger,
-
             subSolutionFactory,
             algorithmState,
-            sizeOfPopulation,
-            iterationLimit,
-            geneCount,
-            cloneCount,
-            cloneSegmentLength,
-            cloneCycleCount,
+            parameters,
             mutationOperator,
             calculateCostOf,
             selectSegment,
@@ -141,12 +110,7 @@ private val STRATEGIES: Array<(
     { logger: DoubleLogger,
       subSolutionFactory: SolutionRepresentationFactory<OnePartRepresentation<Meter>, Meter>,
       algorithmState: IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>,
-      sizeOfPopulation: Int,
-      iterationLimit: Int,
-      geneCount: Int,
-      cloneCount: Int,
-      cloneSegmentLength: Int,
-      cloneCycleCount: Int,
+      parameters: BacterialMutationParameterProvider<OnePartRepresentation<Meter>, Meter>,
       mutationOperator: BacterialMutationOperator<OnePartRepresentation<Meter>, Meter>,
       calculateCostOf: CalculateCost<OnePartRepresentation<Meter>, Meter>,
       selectSegment: SelectSegment<OnePartRepresentation<Meter>, Meter>,
@@ -154,15 +118,9 @@ private val STRATEGIES: Array<(
 
         MutationWithElitistSelectionAndModuloStepper(
             logger,
-
             subSolutionFactory,
             algorithmState,
-            sizeOfPopulation,
-            iterationLimit,
-            geneCount,
-            cloneCount,
-            cloneSegmentLength,
-            cloneCycleCount,
+            parameters,
             mutationOperator,
             calculateCostOf,
             selectSegment
@@ -175,109 +133,71 @@ private val OPERATORS: Array<(
     logger: DoubleLogger,
     subSolutionFactory: SolutionRepresentationFactory<OnePartRepresentation<Meter>, Meter>,
     algorithmState: IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>,
-    sizeOfPopulation: Int,
-    iterationLimit: Int,
-    geneCount: Int,
-    cloneSegmentLength: Int,
+    parameters: BacterialMutationParameterProvider<OnePartRepresentation<Meter>, Meter>,
     statistics: BacterialAlgorithmStatistics
 ) -> BacterialMutationOperator<OnePartRepresentation<Meter>, Meter>> = arrayOf(
     { logger: DoubleLogger,
       subSolutionFactory: SolutionRepresentationFactory<OnePartRepresentation<Meter>, Meter>,
       algorithmState: IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>,
-      sizeOfPopulation: Int,
-      iterationLimit: Int,
-      geneCount: Int,
-      cloneSegmentLength: Int,
+      parameters: BacterialMutationParameterProvider<OnePartRepresentation<Meter>, Meter>,
       statistics: BacterialAlgorithmStatistics ->
         EdgeBuilderHeuristicOnContinuousSegment(
             logger,
-
             subSolutionFactory,
             algorithmState,
-            sizeOfPopulation,
-            iterationLimit,
-            geneCount,
-            cloneSegmentLength,
+            parameters,
             statistics
         )
     },
     { logger: DoubleLogger,
       subSolutionFactory: SolutionRepresentationFactory<OnePartRepresentation<Meter>, Meter>,
       algorithmState: IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>,
-      sizeOfPopulation: Int,
-      iterationLimit: Int,
-      geneCount: Int,
-      cloneSegmentLength: Int,
+      parameters: BacterialMutationParameterProvider<OnePartRepresentation<Meter>, Meter>,
       statistics: BacterialAlgorithmStatistics ->
         EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation(
             logger,
-
             subSolutionFactory,
             algorithmState,
-            sizeOfPopulation,
-            iterationLimit,
-            geneCount,
-            cloneSegmentLength,
+            parameters,
             statistics
         )
     },
     { logger: DoubleLogger,
       subSolutionFactory: SolutionRepresentationFactory<OnePartRepresentation<Meter>, Meter>,
       algorithmState: IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>,
-      sizeOfPopulation: Int,
-      iterationLimit: Int,
-      geneCount: Int,
-      cloneSegmentLength: Int,
+      parameters: BacterialMutationParameterProvider<OnePartRepresentation<Meter>, Meter>,
       statistics: BacterialAlgorithmStatistics ->
         OppositionOperator(
             logger,
-
             subSolutionFactory,
             algorithmState,
-            sizeOfPopulation,
-            iterationLimit,
-            geneCount,
-            cloneSegmentLength,
+            parameters,
             statistics
         )
     },
     { logger: DoubleLogger,
       subSolutionFactory: SolutionRepresentationFactory<OnePartRepresentation<Meter>, Meter>,
       algorithmState: IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>,
-      sizeOfPopulation: Int,
-      iterationLimit: Int,
-      geneCount: Int,
-      cloneSegmentLength: Int,
+      parameters: BacterialMutationParameterProvider<OnePartRepresentation<Meter>, Meter>,
       statistics: BacterialAlgorithmStatistics ->
         RandomShuffleOfContinuesSegment(
             logger,
-
             subSolutionFactory,
             algorithmState,
-            sizeOfPopulation,
-            iterationLimit,
-            geneCount,
-            cloneSegmentLength,
+            parameters,
             statistics
         )
     },
     { logger: DoubleLogger,
       subSolutionFactory: SolutionRepresentationFactory<OnePartRepresentation<Meter>, Meter>,
       algorithmState: IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>,
-      sizeOfPopulation: Int,
-      iterationLimit: Int,
-      geneCount: Int,
-      cloneSegmentLength: Int,
+      parameters: BacterialMutationParameterProvider<OnePartRepresentation<Meter>, Meter>,
       statistics: BacterialAlgorithmStatistics ->
         SequentialSelectionHeuristicOnContinuousSegment(
             logger,
-
             subSolutionFactory,
             algorithmState,
-            sizeOfPopulation,
-            iterationLimit,
-            geneCount,
-            cloneSegmentLength,
+            parameters,
             statistics
         )
     }
@@ -314,11 +234,28 @@ private fun runScenario(scenario: Scenario) {
                 single(named(CLONE_COUNT)) { 40 }
                 single(named(CLONE_SEGMENT_LENGTH)) { scenario.objectiveCount }
                 single(named(CLONE_CYCLE_COUNT)) { 5 }
+                single(named(SIZE_OF_POPULATION)) { 1 }
+                single(named(ITERATION_LIMIT)) { Int.MAX_VALUE }
+                single<BacterialMutationParameterProvider<*, *>> {
+                    BacterialMutationParameterProvider<OnePartRepresentation<Meter>, Meter>(
+                        cloneCount = 40,
+                        cloneSegmentLength = scenario.objectiveCount,
+                        cloneCycleCount = 5,
+                        algorithmState = get(),
+                        sizeOfPopulation = 1,
+                        geneCount = scenario.objectiveCount,
+                        iterationLimit = Int.MAX_VALUE
+                    )
+                }
+                single<EvolutionaryAlgorithmParameterProvider<*, *>> {
+                    get<BacterialMutationParameterProvider<OnePartRepresentation<Meter>, Meter>>()
+                }
+                single<IterativeAlgorithmParameterProvider> {
+                    get<BacterialMutationParameterProvider<OnePartRepresentation<Meter>, Meter>>()
+                }
                 single(named(INPUT_FOLDER)) { "input/tsp" }
                 single(named(OUTPUT_FOLDER)) { "output" }
                 single(named(SINGLE_FILE)) { scenario.fileName }
-                single(named(SIZE_OF_POPULATION)) { 1 }
-                single(named(ITERATION_LIMIT)) { Int.MAX_VALUE }
                 single<CalculateCost<*, *>> {
                     CalculateCostOfTspSolution<OnePartRepresentation<Meter>>(
                         get(), get(), get(), get()
@@ -333,21 +270,12 @@ private fun runScenario(scenario: Scenario) {
                 }
                 single<BacterialMutationOperator<*, *>> {
                     scenario.mutationOperator(
-                        get(), get(), get(),
-                        get(SIZE_OF_POPULATION),
-                        get(ITERATION_LIMIT),
-                        scenario.objectiveCount,
-                        get(CLONE_SEGMENT_LENGTH),
-                        get()
+                        get(), get(), get(), get(), get()
                     )
                 }
                 single<SelectSegment<*, *>> {
                     SelectContinuesSegment<OnePartRepresentation<Meter>, Meter>(
-                        get(), get(), get(),
-                        get(SIZE_OF_POPULATION),
-                        get(ITERATION_LIMIT),
-                        scenario.objectiveCount,
-                        get(CLONE_SEGMENT_LENGTH),
+                        get(), get(), get(), get()
                     )
                 }
                 single<IterativeAlgorithmStateWithMultipleCandidates<*, *>> {
@@ -371,12 +299,7 @@ private fun runScenario(scenario: Scenario) {
         get(),
         get(),
         get(),
-        get(SIZE_OF_POPULATION),
-        get(ITERATION_LIMIT),
-        scenario.objectiveCount,
-        get(CLONE_COUNT),
-        get(CLONE_SEGMENT_LENGTH),
-        get(CLONE_CYCLE_COUNT),
+        get(),
         get(),
         get(),
         get(),

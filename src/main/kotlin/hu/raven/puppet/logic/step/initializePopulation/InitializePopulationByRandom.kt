@@ -1,6 +1,7 @@
 package hu.raven.puppet.logic.step.initializePopulation
 
 import hu.raven.puppet.logic.logging.DoubleLogger
+import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.solution.SolutionRepresentation
@@ -12,17 +13,14 @@ import kotlin.random.nextInt
 
 class InitializePopulationByRandom<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
     override val logger: DoubleLogger,
-
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
-    override val sizeOfPopulation: Int,
-    override val iterationLimit: Int,
-    override val geneCount: Int
+    override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,
 ) : InitializePopulation<S, C>() {
 
     override fun invoke() {
         algorithmState.population = if (algorithmState.task.costGraph.objectives.size != 1)
-            ArrayList(List(sizeOfPopulation) { specimenIndex ->
+            ArrayList(List(parameters.sizeOfPopulation) { specimenIndex ->
                 subSolutionFactory.produce(
                     specimenIndex,
                     Array(algorithmState.task.transportUnits.size) { index ->

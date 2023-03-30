@@ -9,7 +9,6 @@ import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
 
 class InitializeByRandom<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
     override val logger: DoubleLogger,
-
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
     val calculateCostOf: CalculateCost<S, C>
 ) : InitializeLocalSearch<S, C>() {
