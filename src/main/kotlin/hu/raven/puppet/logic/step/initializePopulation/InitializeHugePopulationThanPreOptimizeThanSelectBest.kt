@@ -22,8 +22,7 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest<S : SolutionRepresen
     override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,
     private val mutationOperator: MutationOnSpecimen<S, C>,
     private val statistics: BacterialAlgorithmStatistics,
-) :
-    InitializePopulation<S, C>() {
+) : InitializePopulation<S, C>() {
 
 
     override fun invoke() {

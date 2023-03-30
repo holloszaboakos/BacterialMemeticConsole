@@ -17,7 +17,6 @@ class EdgeBuilderHeuristicOnContinuousSegment<S : SolutionRepresentation<C>, C :
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
     override val parameters: BacterialMutationParameterProvider<S, C>,
-    override val statistics: BacterialAlgorithmStatistics
 ) :
     BacterialMutationOperator<S, C>() {
     override fun invoke(

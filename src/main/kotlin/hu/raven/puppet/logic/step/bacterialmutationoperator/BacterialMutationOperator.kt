@@ -10,7 +10,6 @@ import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 sealed class BacterialMutationOperator<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> :
     EvolutionaryAlgorithmStep<S, C>() {
     abstract override val parameters: BacterialMutationParameterProvider<S, C>
-    abstract val statistics: BacterialAlgorithmStatistics
 
     abstract operator fun invoke(
         clone: S,

@@ -24,16 +24,14 @@ class MutationWithElitistSelectionAndOneOposition<S : SolutionRepresentation<C>,
     override val parameters: BacterialMutationParameterProvider<S, C>,
     override val mutationOperator: BacterialMutationOperator<S, C>,
     override val calculateCostOf: CalculateCost<S, C>,
-    override val selectSegment: SelectSegment<S, C>,
-    val statistics: BacterialAlgorithmStatistics
+    override val selectSegment: SelectSegment<S, C>
 ) : MutationOnSpecimen<S, C>() {
 
     private val oppositionOperator = OppositionOperator(
         logger,
         subSolutionFactory,
         algorithmState,
-        parameters,
-        statistics
+        parameters
     )
 
     @OptIn(ExperimentalTime::class)

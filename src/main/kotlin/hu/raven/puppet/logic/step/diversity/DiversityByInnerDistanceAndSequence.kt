@@ -6,7 +6,6 @@ import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
 import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
-import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 import kotlinx.coroutines.runBlocking
 
 
@@ -15,25 +14,21 @@ class DiversityByInnerDistanceAndSequence<S : SolutionRepresentation<C>, C : Phy
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
     override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,
-    override val statistics: BacterialAlgorithmStatistics
 ) : Diversity<S, C>() {
 
-    override fun invoke(): Unit = runBlocking {
-        statistics.diversity = 0.0
-
+    override fun invoke(): Double = runBlocking {
+        var diversity = 0.0
         val sequentials = algorithmState.population.map { it.sequentialOfPermutation() }
-
 
         sequentials.forEach { firstSequential ->
             sequentials.forEach { secondSequential ->
                 val distance = distanceOfSpecimen(firstSequential, secondSequential)
-                synchronized(statistics) {
-                    statistics.diversity += distance
-                }
+                diversity += distance
             }
         }
 
-        statistics.diversity /= (parameters.sizeOfPopulation * parameters.sizeOfPopulation)
+        diversity /= (parameters.sizeOfPopulation * parameters.sizeOfPopulation)
+        diversity
     }
 
     private fun distanceOfSpecimen(

@@ -6,7 +6,6 @@ import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
 import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
-import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,26 +16,25 @@ class DiversityBySequenceBreak<S : SolutionRepresentation<C>, C : PhysicsUnit<C>
     override val logger: DoubleLogger,
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
-    override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,
-    override val statistics: BacterialAlgorithmStatistics
+    override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>
 ) : Diversity<S, C>() {
 
-    override fun invoke(): Unit = runBlocking {
+    override fun invoke(): Double = runBlocking {
         val best = algorithmState.copyOfBest!!
         val sequentialOfBest = best.sequentialOfPermutation()
-        statistics.diversity = 0.0
+        var diversity = 0.0
 
         algorithmState.population
             .map {
                 CoroutineScope(Dispatchers.Default).launch {
                     val sequential = it.sequentialOfPermutation()
                     val distance = distanceOfSpecimen(sequentialOfBest, sequential)
-                    synchronized(statistics) {
-                        statistics.diversity += distance
-                    }
+                    diversity += distance
                 }
             }
             .forEach { it.join() }
+
+        diversity
     }
 
     private fun distanceOfSpecimen(
