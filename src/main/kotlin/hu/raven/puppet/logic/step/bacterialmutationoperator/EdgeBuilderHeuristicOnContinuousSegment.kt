@@ -1,7 +1,6 @@
 package hu.raven.puppet.logic.step.bacterialmutationoperator
 
 import hu.raven.puppet.logic.logging.DoubleLogger
-import hu.raven.puppet.logic.task.VRPTaskHolder
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.Segment
@@ -14,7 +13,7 @@ import hu.raven.puppet.utility.extention.sumClever
 
 class EdgeBuilderHeuristicOnContinuousSegment<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
     override val logger: DoubleLogger,
-    override val taskHolder: VRPTaskHolder,
+
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
     override val sizeOfPopulation: Int,
@@ -228,7 +227,7 @@ class EdgeBuilderHeuristicOnContinuousSegment<S : SolutionRepresentation<C>, C :
         clone: S,
         selectedSegment: Segment
     ): Array<Fraction> = algorithmState.run {
-        val objectiveCount = taskHolder.task.costGraph.objectives.size
+        val objectiveCount = task.costGraph.objectives.size
         val nextElement = if (selectedSegment.positions.last() == clone.permutationIndices.last) {
             objectiveCount
         } else {
@@ -246,7 +245,7 @@ class EdgeBuilderHeuristicOnContinuousSegment<S : SolutionRepresentation<C>, C :
         clone: S,
         selectedSegment: Segment
     ): Array<Fraction> = algorithmState.run {
-        val objectiveCount = taskHolder.task.costGraph.objectives.size
+        val objectiveCount = task.costGraph.objectives.size
         val previousElement = if (selectedSegment.positions.first() == 0) {
             objectiveCount
         } else {
@@ -278,7 +277,7 @@ class EdgeBuilderHeuristicOnContinuousSegment<S : SolutionRepresentation<C>, C :
         fromElement: Int,
         toElement: Int
     ): Fraction {
-        taskHolder.task.apply {
+        algorithmState.task.apply {
             val objectiveCount = costGraph.objectives.size
             return when {
                 fromElement == toElement -> Fraction.new(0L)

@@ -1,10 +1,10 @@
 package hu.raven.puppet.logic.step.calculatecost
 
 import hu.raven.puppet.logic.logging.DoubleLogger
-import hu.raven.puppet.logic.task.VRPTaskHolder
 import hu.raven.puppet.model.physics.Euro
 import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
+import hu.raven.puppet.model.state.AlgorithmState
 import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.model.task.CostGraphEdge
 import hu.raven.puppet.model.task.CostGraphVertex
@@ -14,9 +14,9 @@ import hu.raven.puppet.utility.extention.getEdgeBetween
 
 class CalculateCostOfVRPSolutionWithoutCapacity<S : SolutionRepresentation<Euro>>(
     override val logger: DoubleLogger,
-    override val taskHolder: VRPTaskHolder,
     override val subSolutionFactory: SolutionRepresentationFactory<S, Euro>,
-    override val statistics: BacterialAlgorithmStatistics
+    override val statistics: BacterialAlgorithmStatistics,
+    override val algorithmState: AlgorithmState
 ) :
     CalculateCost<S, Euro>() {
 
@@ -24,7 +24,7 @@ class CalculateCostOfVRPSolutionWithoutCapacity<S : SolutionRepresentation<Euro>
         specimen: SolutionRepresentation<Euro>
     ) {
         statistics.fitnessCallCount++
-        taskHolder.run {
+        algorithmState.run {
             var sumCost = Euro(0L)
             var geneIndex = 0
             specimen.forEachSliceIndexed { sliceIndex, slice ->

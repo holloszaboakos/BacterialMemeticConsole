@@ -1,7 +1,6 @@
 package hu.raven.puppet.logic.step.mutatechildren
 
 import hu.raven.puppet.logic.logging.DoubleLogger
-import hu.raven.puppet.logic.task.VRPTaskHolder
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
@@ -11,7 +10,7 @@ import kotlin.random.Random
 
 class MutateChildrenBySwap<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
     override val logger: DoubleLogger,
-    override val taskHolder: VRPTaskHolder,
+
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
     override val sizeOfPopulation: Int,
@@ -19,18 +18,18 @@ class MutateChildrenBySwap<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
     override val geneCount: Int
 ) : MutateChildren<S, C>() {
 
-    override fun invoke() {
-        if (taskHolder.task.costGraph.objectives.size > 1)
+    override fun invoke(): Unit = algorithmState.run {
+        if (task.costGraph.objectives.size > 1)
             algorithmState.population.asSequence()
                 .filter { it.iteration == algorithmState.iteration }
                 .shuffled()
                 .slice(0 until algorithmState.population.size / 4)
                 .forEach { child ->
-                    val firstCutIndex = Random.nextInt(taskHolder.task.costGraph.objectives.size)
-                    val secondCutIndex = Random.nextInt(taskHolder.task.costGraph.objectives.size)
+                    val firstCutIndex = Random.nextInt(task.costGraph.objectives.size)
+                    val secondCutIndex = Random.nextInt(task.costGraph.objectives.size)
                         .let {
                             if (it == firstCutIndex)
-                                (it + 1) % taskHolder.task.costGraph.objectives.size
+                                (it + 1) % task.costGraph.objectives.size
                             else
                                 it
                         }

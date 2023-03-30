@@ -1,7 +1,6 @@
 package hu.raven.puppet.logic.step.crossoveroperator
 
 import hu.raven.puppet.logic.logging.DoubleLogger
-import hu.raven.puppet.logic.task.VRPTaskHolder
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
@@ -14,7 +13,7 @@ import kotlin.math.abs
 //broken
 class SortedMatchCrossOver<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
     override val logger: DoubleLogger,
-    override val taskHolder: VRPTaskHolder,
+
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
     override val sizeOfPopulation: Int,
@@ -63,7 +62,7 @@ class SortedMatchCrossOver<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
             val cheaperIndex = Array(2) { sliceIndex ->
                 (1 until foundSlices[sliceIndex].size)
                     .map { geneIndex ->
-                        taskHolder.task.costGraph
+                        algorithmState.task.costGraph
                             .getEdgeBetween(foundSlices[sliceIndex][geneIndex - 1], foundSlices[sliceIndex][geneIndex])
                             .length
                             .value

@@ -24,38 +24,38 @@ val geneticModule = module {
 
     factory<InitializeAlgorithm<*, *>> {
         InitializeGeneticAlgorithm<OnePartRepresentation<Meter>, Meter>(
-            get(), get(), get(), get(), get(), get(), get(),
+            get(), get(), get(), get(), get(), get(),
         )
     }
 
     factory<EvolutionaryIteration<*, *>> {
         GeneticIteration<OnePartRepresentation<Meter>, Meter>(
-            get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(),
+            get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(),
         )
     }
     factory {
         SelectSurvivors<OnePartRepresentation<Meter>, Meter>(
-            get(), get(), get(), get(), get(), get(), get(),
+            get(), get(), get(), get(), get(), get(),
         )
     }
     factory {
         CrossOvers<OnePartRepresentation<Meter>, Meter>(
-            get(), get(), get(), get(), get(), get(), get(), get(),
+            get(), get(), get(), get(), get(), get(), get(),
         )
     }
     factory<CrossOverOperator<*, *>> {
         HeuristicCrossOver<OnePartRepresentation<Meter>, Meter>(
-            get(), get(), get(), get(), get(), get(), get(),
+            get(), get(), get(), get(), get(), get(),
         )
     }
     factory<MutateChildren<*, *>> {
         MutateChildrenBySwap<OnePartRepresentation<Meter>, Meter>(
-            get(), get(), get(), get(), get(), get(), get(),
+            get(), get(), get(), get(), get(), get(),
         )
     }
 
     single<IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, *>> {
-        IterativeAlgorithmStateWithMultipleCandidates()
+        IterativeAlgorithmStateWithMultipleCandidates(get())
     }
 
     single {

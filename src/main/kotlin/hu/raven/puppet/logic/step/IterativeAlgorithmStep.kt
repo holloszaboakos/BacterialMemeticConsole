@@ -6,5 +6,5 @@ import hu.raven.puppet.model.state.IterativeAlgorithmStateWithSingleCandidate
 import hu.raven.puppet.utility.inject
 
 abstract class IterativeAlgorithmStep<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> : AlgorithmStep<S, C>() {
-    protected val algorithmState: IterativeAlgorithmStateWithSingleCandidate<S, C> by inject()
+    override val algorithmState: IterativeAlgorithmStateWithSingleCandidate<S, C> by inject()
 }

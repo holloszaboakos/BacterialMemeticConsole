@@ -1,7 +1,6 @@
 package hu.raven.puppet.logic.step.crossoveroperator
 
 import hu.raven.puppet.logic.logging.DoubleLogger
-import hu.raven.puppet.logic.task.VRPTaskHolder
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.math.Permutation
 import hu.raven.puppet.model.physics.PhysicsUnit
@@ -14,7 +13,7 @@ import kotlin.random.Random.Default.nextInt
 
 class HeuristicCrossOver<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
     override val logger: DoubleLogger,
-    override val taskHolder: VRPTaskHolder,
+
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
     override val sizeOfPopulation: Int,
@@ -134,7 +133,7 @@ class HeuristicCrossOver<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
     private fun calculateWeightForNeighbours(
         neighbours: List<Int>,
         previousValue: Int
-    ): Array<Fraction> = taskHolder.task.costGraph.run {
+    ): Array<Fraction> = algorithmState.task.costGraph.run {
         Array(neighbours.size) { neighbourIndex ->
             when {
                 previousValue < objectives.size && neighbours[neighbourIndex] < objectives.size -> {

@@ -2,7 +2,7 @@ package hu.raven.puppet.logic.step.crossoveroperator
 
 import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.logic.step.EvolutionaryAlgorithmStep
-import hu.raven.puppet.logic.task.VRPTaskHolder
+
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
@@ -12,7 +12,6 @@ sealed class CrossOverOperator<S : SolutionRepresentation<C>, C : PhysicsUnit<C>
     companion object {
         fun <S : SolutionRepresentation<C>, C : PhysicsUnit<C>> getVariants(
             logger: DoubleLogger,
-            taskHolder: VRPTaskHolder,
             subSolutionFactory: SolutionRepresentationFactory<S, C>,
             algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
             sizeOfPopulation: Int,
@@ -21,7 +20,6 @@ sealed class CrossOverOperator<S : SolutionRepresentation<C>, C : PhysicsUnit<C>
         ) = listOf<CrossOverOperator<S, C>>(
             AlternatingEdgeCrossOver(
                 logger,
-                taskHolder,
                 subSolutionFactory,
                 algorithmState,
                 sizeOfPopulation,
@@ -30,7 +28,6 @@ sealed class CrossOverOperator<S : SolutionRepresentation<C>, C : PhysicsUnit<C>
             ),
             AlternatingPositionCrossOver(
                 logger,
-                taskHolder,
                 subSolutionFactory,
                 algorithmState,
                 sizeOfPopulation,
@@ -39,7 +36,6 @@ sealed class CrossOverOperator<S : SolutionRepresentation<C>, C : PhysicsUnit<C>
             ),
             CycleCrossOver(
                 logger,
-                taskHolder,
                 subSolutionFactory,
                 algorithmState,
                 sizeOfPopulation,
@@ -48,7 +44,6 @@ sealed class CrossOverOperator<S : SolutionRepresentation<C>, C : PhysicsUnit<C>
             ),
             DistancePreservingCrossOver(
                 logger,
-                taskHolder,
                 subSolutionFactory,
                 algorithmState,
                 sizeOfPopulation,
@@ -57,7 +52,6 @@ sealed class CrossOverOperator<S : SolutionRepresentation<C>, C : PhysicsUnit<C>
             ),
             GeneticEdgeRecombinationCrossOver(
                 logger,
-                taskHolder,
                 subSolutionFactory,
                 algorithmState,
                 sizeOfPopulation,
@@ -66,7 +60,6 @@ sealed class CrossOverOperator<S : SolutionRepresentation<C>, C : PhysicsUnit<C>
             ),
             HeuristicCrossOver(
                 logger,
-                taskHolder,
                 subSolutionFactory,
                 algorithmState,
                 sizeOfPopulation,
@@ -75,7 +68,6 @@ sealed class CrossOverOperator<S : SolutionRepresentation<C>, C : PhysicsUnit<C>
             ),
             MaximalPreservationCrossOver(
                 logger,
-                taskHolder,
                 subSolutionFactory,
                 algorithmState,
                 sizeOfPopulation,
@@ -84,7 +76,6 @@ sealed class CrossOverOperator<S : SolutionRepresentation<C>, C : PhysicsUnit<C>
             ),
             OrderBasedCrossOver(
                 logger,
-                taskHolder,
                 subSolutionFactory,
                 algorithmState,
                 sizeOfPopulation,
@@ -93,7 +84,6 @@ sealed class CrossOverOperator<S : SolutionRepresentation<C>, C : PhysicsUnit<C>
             ),
             OrderCrossOver(
                 logger,
-                taskHolder,
                 subSolutionFactory,
                 algorithmState,
                 sizeOfPopulation,
@@ -102,7 +92,6 @@ sealed class CrossOverOperator<S : SolutionRepresentation<C>, C : PhysicsUnit<C>
             ),
             PartiallyMatchedCrossOver(
                 logger,
-                taskHolder,
                 subSolutionFactory,
                 algorithmState,
                 sizeOfPopulation,
@@ -111,7 +100,6 @@ sealed class CrossOverOperator<S : SolutionRepresentation<C>, C : PhysicsUnit<C>
             ),
             PositionBasedCrossOver(
                 logger,
-                taskHolder,
                 subSolutionFactory,
                 algorithmState,
                 sizeOfPopulation,
@@ -121,7 +109,6 @@ sealed class CrossOverOperator<S : SolutionRepresentation<C>, C : PhysicsUnit<C>
             //broken SortedMatchCrossOver,
             SubTourChunksCrossOver(
                 logger,
-                taskHolder,
                 subSolutionFactory,
                 algorithmState,
                 sizeOfPopulation,
@@ -130,7 +117,6 @@ sealed class CrossOverOperator<S : SolutionRepresentation<C>, C : PhysicsUnit<C>
             ),
             VotingRecombinationCrossOver(
                 logger,
-                taskHolder,
                 subSolutionFactory,
                 algorithmState,
                 sizeOfPopulation,

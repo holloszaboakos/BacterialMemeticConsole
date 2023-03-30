@@ -7,7 +7,7 @@ import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 
 abstract class EvolutionaryAlgorithmStep<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> : AlgorithmStep<S, C>() {
 
-    protected abstract val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>
+    abstract override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>
     protected abstract val sizeOfPopulation: Int
     protected abstract val iterationLimit: Int
     protected abstract val geneCount: Int

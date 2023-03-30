@@ -1,7 +1,6 @@
 package hu.raven.puppet.logic.step.mutatechildren
 
 import hu.raven.puppet.logic.logging.DoubleLogger
-import hu.raven.puppet.logic.task.VRPTaskHolder
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
@@ -10,7 +9,7 @@ import hu.raven.puppet.utility.extention.slice
 
 class MutateChildrenByReset<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
     override val logger: DoubleLogger,
-    override val taskHolder: VRPTaskHolder,
+
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
     override val sizeOfPopulation: Int,
@@ -21,7 +20,7 @@ class MutateChildrenByReset<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
     override fun invoke() {
         val basePermutation =
             List(algorithmState.copyOfBest?.permutationIndices?.count() ?: 0) { it }.shuffled().toIntArray()
-        if (taskHolder.task.costGraph.objectives.size > 1)
+        if (algorithmState.task.costGraph.objectives.size > 1)
             algorithmState.population.asSequence()
                 .filter { it.iteration == algorithmState.iteration }
                 .shuffled()

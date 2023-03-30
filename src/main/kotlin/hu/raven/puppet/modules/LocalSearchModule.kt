@@ -22,15 +22,15 @@ val localSearchModule = module {
 
     factory<InitializeLocalSearch<*, *>> {
         InitializeByRandom<TwoPartRepresentation<Meter>, Meter>(
-            get(), get(), get(), get(),
+            get(), get(), get(),
         )
     }
 
     factory<LocalSearchIteration<*, *>> {
-        Opt2Iteration<TwoPartRepresentation<Meter>, Meter>(get(), get(), get(), get())
+        Opt2Iteration<TwoPartRepresentation<Meter>, Meter>(get(), get(), get())
     }
 
     single<IterativeAlgorithmStateWithSingleCandidate<OnePartRepresentation<Meter>, Meter>> {
-        IterativeAlgorithmStateWithSingleCandidate()
+        IterativeAlgorithmStateWithSingleCandidate(get())
     }
 }

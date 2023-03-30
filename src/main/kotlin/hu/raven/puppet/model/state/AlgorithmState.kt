@@ -1,3 +1,7 @@
 package hu.raven.puppet.model.state
 
-sealed interface AlgorithmState
+import hu.raven.puppet.model.task.Task
+
+sealed interface AlgorithmState {
+    val task: Task
+}

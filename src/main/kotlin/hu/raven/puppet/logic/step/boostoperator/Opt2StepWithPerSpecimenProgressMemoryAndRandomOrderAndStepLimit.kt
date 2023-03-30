@@ -2,7 +2,6 @@ package hu.raven.puppet.logic.step.boostoperator
 
 import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
-import hu.raven.puppet.logic.task.VRPTaskHolder
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.PhysicsUnit
@@ -16,7 +15,7 @@ import kotlin.time.measureTime
 
 class Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
     override val logger: DoubleLogger,
-    override val taskHolder: VRPTaskHolder,
+
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
     override val sizeOfPopulation: Int,
@@ -51,7 +50,7 @@ class Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit<S : Soluti
             var lastPosition = lastPositionPerSpecimen[specimen.id]
             var stepCount = 0
 
-            outer@ for (firstIndexIndex in lastPosition.first until taskHolder.task.costGraph.objectives.size - 1) {
+            outer@ for (firstIndexIndex in lastPosition.first until algorithmState.task.costGraph.objectives.size - 1) {
                 val firstIndex = shuffler[firstIndexIndex]
                 val secondIndexStart =
                     if (firstIndexIndex == lastPosition.first) lastPosition.second

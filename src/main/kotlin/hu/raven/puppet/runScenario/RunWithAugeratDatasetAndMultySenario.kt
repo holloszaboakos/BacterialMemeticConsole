@@ -34,7 +34,7 @@ import hu.raven.puppet.logic.step.iterationofevolutionary.EvolutionaryIteration
 import hu.raven.puppet.logic.step.orderpopulationbycost.OrderPopulationByCost
 import hu.raven.puppet.logic.step.selectsegment.SelectContinuesSegment
 import hu.raven.puppet.logic.step.selectsegment.SelectSegment
-import hu.raven.puppet.logic.task.VRPTaskHolder
+
 import hu.raven.puppet.logic.task.loader.AugeratTaskLoader
 import hu.raven.puppet.logic.task.loader.TaskLoader
 import hu.raven.puppet.model.logging.BacterialMemeticAlgorithmLogLine
@@ -117,16 +117,15 @@ private val taskModules = arrayOf(
 
 private val bacterialCommonModule = module {
     single<IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>> {
-        IterativeAlgorithmStateWithMultipleCandidates()
+        IterativeAlgorithmStateWithMultipleCandidates(get())
     }
 
     factory<InitializeAlgorithm<*, *>> {
-        InitializeBacterialAlgorithm<OnePartRepresentation<Meter>, Meter>(get(), get(), get(), get(), get(), get())
+        InitializeBacterialAlgorithm<OnePartRepresentation<Meter>, Meter>(get(), get(), get(), get(), get())
     }
 
     factory<EvolutionaryIteration<*, *>> {
         BacterialIteration<OnePartRepresentation<Meter>, Meter>(
-            get(),
             get(),
             get(),
             get(),
@@ -142,7 +141,6 @@ private val bacterialCommonModule = module {
 
     factory<BacterialMutation<*, *>> {
         BacterialMutationOnBestAndLuckyByShuffling<OnePartRepresentation<Meter>, Meter>(
-            get(),
             get(),
             get(),
             get(),
@@ -169,7 +167,6 @@ private val bacterialCommonModule = module {
             get(),
             get(),
             get(),
-            get(),
         )
     }
     factory<BacterialMutationOperator<*, *>> {
@@ -182,12 +179,10 @@ private val bacterialCommonModule = module {
             get(),
             get(),
             get(),
-            get(),
         )
     }
     factory<hu.raven.puppet.logic.step.genetransfer.GeneTransfer<*, *>> {
         GeneTransferByTournament<OnePartRepresentation<Meter>, Meter>(
-            get(),
             get(),
             get(),
             get(),
@@ -210,15 +205,13 @@ private val bacterialCommonModule = module {
             get(),
             get(),
             get(),
-            get(),
         )
     }
     factory<CrossOverOperator<*, *>> {
-        HeuristicCrossOver<OnePartRepresentation<Meter>, Meter>(get(), get(), get(), get(), get(), get(), get())
+        HeuristicCrossOver<OnePartRepresentation<Meter>, Meter>(get(), get(), get(), get(), get(), get())
     }
     factory<SelectSegment<*, *>> {
         SelectContinuesSegment<OnePartRepresentation<Meter>, Meter>(
-            get(),
             get(),
             get(),
             get(),
@@ -309,13 +302,8 @@ private val commonModule = module {
         CSVLogger()
     }
 
-    single {
-        VRPTaskHolder()
-    }
-
     factory<Diversity<*, *>> {
         DiversityByInnerDistanceAndSequence<OnePartRepresentation<Meter>, Meter>(
-            get(),
             get(),
             get(),
             get(),
@@ -338,12 +326,11 @@ private val commonModule = module {
             get(),
             get(),
             get(),
-            get(),
         )
     }
 
     factory {
-        OrderPopulationByCost<OnePartRepresentation<Meter>, Meter>(get(), get(), get(), get(), get(), get(), get())
+        OrderPopulationByCost<OnePartRepresentation<Meter>, Meter>(get(), get(), get(), get(), get(), get())
     }
     factory { CalculateCostOfEdge() }
     factory { CalculateCostOfObjective() }
@@ -353,11 +340,10 @@ private val commonModule = module {
 private val boostModules = arrayOf(
     module {
         factory<Boost<*, *>> {
-            NoBoost<OnePartRepresentation<Meter>, Meter>(get(), get(), get(), get(), get(), get(), get(), get(), get())
+            NoBoost<OnePartRepresentation<Meter>, Meter>(get(), get(), get(), get(), get(), get(), get(), get())
         }
         factory<BoostOperator<*, *>> {
             Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit<OnePartRepresentation<Meter>, Meter>(
-                get(),
                 get(),
                 get(),
                 get(),
@@ -379,12 +365,10 @@ private val boostModules = arrayOf(
                 get(),
                 get(),
                 get(),
-                get(),
             )
         }
         factory<BoostOperator<*, *>> {
             Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit<OnePartRepresentation<Meter>, Meter>(
-                get(),
                 get(),
                 get(),
                 get(),
@@ -406,12 +390,10 @@ private val boostModules = arrayOf(
                 get(),
                 get(),
                 get(),
-                get(),
             )
         }
         factory<BoostOperator<*, *>> {
             Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit<OnePartRepresentation<Meter>, Meter>(
-                get(),
                 get(),
                 get(),
                 get(),
@@ -433,12 +415,10 @@ private val boostModules = arrayOf(
                 get(),
                 get(),
                 get(),
-                get(),
             )
         }
         factory<BoostOperator<*, *>> {
             Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit<OnePartRepresentation<Meter>, Meter>(
-                get(),
                 get(),
                 get(),
                 get(),

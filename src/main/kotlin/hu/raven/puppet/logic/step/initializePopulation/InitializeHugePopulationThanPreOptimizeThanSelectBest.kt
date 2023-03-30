@@ -2,7 +2,6 @@ package hu.raven.puppet.logic.step.initializePopulation
 
 import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.logic.step.bacterialmutationonspecimen.MutationOnSpecimen
-import hu.raven.puppet.logic.task.VRPTaskHolder
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
@@ -17,7 +16,7 @@ import kotlinx.coroutines.withContext
 
 class InitializeHugePopulationThanPreOptimizeThanSelectBest<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
     override val logger: DoubleLogger,
-    override val taskHolder: VRPTaskHolder,
+
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
     override val sizeOfPopulation: Int,
@@ -31,7 +30,7 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest<S : SolutionRepresen
 
     override fun invoke() {
         algorithmState.run {
-            val sizeOfPermutation = taskHolder.task.costGraph.objectives.size + taskHolder.task.transportUnits.size - 1
+            val sizeOfPermutation = task.costGraph.objectives.size + task.transportUnits.size - 1
             val basePermutation = IntArray(sizeOfPermutation) { it }
 
             population = createPopulation()
@@ -55,7 +54,7 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest<S : SolutionRepresen
 
                 val breakPoints = newPermutation
                     .mapIndexed { index, value ->
-                        if (value < taskHolder.task.costGraph.objectives.size)
+                        if (value < task.costGraph.objectives.size)
                             -1
                         else
                             index
@@ -119,13 +118,13 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest<S : SolutionRepresen
 
 
     private fun createPopulation(): MutableList<S> {
-        return if (taskHolder.task.costGraph.objectives.size != 1)
-            ArrayList(List((taskHolder.task.costGraph.objectives.size + taskHolder.task.transportUnits.size - 1)) { specimenIndex ->
+        return if (algorithmState.task.costGraph.objectives.size != 1)
+            ArrayList(List((algorithmState.task.costGraph.objectives.size + algorithmState.task.transportUnits.size - 1)) { specimenIndex ->
                 subSolutionFactory.produce(
                     specimenIndex,
-                    Array(taskHolder.task.transportUnits.size) { index ->
+                    Array(algorithmState.task.transportUnits.size) { index ->
                         if (index == 0)
-                            IntArray(taskHolder.task.costGraph.objectives.size) { it }
+                            IntArray(algorithmState.task.costGraph.objectives.size) { it }
                         else
                             intArrayOf()
                     }
@@ -135,7 +134,7 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest<S : SolutionRepresen
             arrayListOf(
                 subSolutionFactory.produce(
                     0,
-                    arrayOf(IntArray(taskHolder.task.costGraph.objectives.size) { it })
+                    arrayOf(IntArray(algorithmState.task.costGraph.objectives.size) { it })
                 )
             )
     }

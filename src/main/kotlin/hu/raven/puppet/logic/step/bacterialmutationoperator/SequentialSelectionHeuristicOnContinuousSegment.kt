@@ -1,7 +1,6 @@
 package hu.raven.puppet.logic.step.bacterialmutationoperator
 
 import hu.raven.puppet.logic.logging.DoubleLogger
-import hu.raven.puppet.logic.task.VRPTaskHolder
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.Segment
@@ -15,7 +14,7 @@ import hu.raven.puppet.utility.extention.sumClever
 //TODO repair
 class SequentialSelectionHeuristicOnContinuousSegment<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
     override val logger: DoubleLogger,
-    override val taskHolder: VRPTaskHolder,
+
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
     override val sizeOfPopulation: Int,
@@ -32,7 +31,7 @@ class SequentialSelectionHeuristicOnContinuousSegment<S : SolutionRepresentation
     ) {
 
         val remainingElements = selectedSegment.values.toMutableList()
-        val objectiveCount = taskHolder.task.costGraph.objectives.size
+        val objectiveCount = algorithmState.task.costGraph.objectives.size
         var previousElement = if (selectedSegment.positions.first() == 0) {
             objectiveCount
         } else {
@@ -81,7 +80,7 @@ class SequentialSelectionHeuristicOnContinuousSegment<S : SolutionRepresentation
     private fun calculateWeightsOfRemainingElements(
         previousElement: Int,
         remainingElements: MutableList<Int>
-    ): Array<Fraction> = taskHolder.task.run {
+    ): Array<Fraction> = algorithmState.task.run {
         val objectiveCount = costGraph.objectives.size
         remainingElements.map { element ->
             when {
@@ -128,7 +127,7 @@ class SequentialSelectionHeuristicOnContinuousSegment<S : SolutionRepresentation
     private fun calculateWeightsOfNeighbouringEdges(
         currentElement: Int,
         remainingElements: MutableList<Int>
-    ): Fraction = taskHolder.task.run {
+    ): Fraction = algorithmState.task.run {
         val objectiveCount = costGraph.objectives.size
         remainingElements
             .map { element ->

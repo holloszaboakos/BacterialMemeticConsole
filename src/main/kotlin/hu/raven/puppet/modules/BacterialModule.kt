@@ -41,54 +41,54 @@ val bacterialModule = module {
     single(named(OPTIMISATION_STEP_LIMIT)) { 1000 }
 
     single<IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, *>> {
-        IterativeAlgorithmStateWithMultipleCandidates()
+        IterativeAlgorithmStateWithMultipleCandidates(get())
     }
 
     factory<InitializeAlgorithm<*, *>> {
         InitializeBacterialAlgorithm<OnePartRepresentation<Meter>, Meter>(
-            get(), get(), get(), get(), get(), get()
+            get(), get(), get(), get(), get()
         )
     }
 
     factory<EvolutionaryIteration<*, *>> {
         BacterialIteration<OnePartRepresentation<Meter>, Meter>(
-            get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(),
+            get(), get(), get(), get(), get(), get(), get(), get(), get(), get(),
         )
     }
 
     factory<BacterialMutation<*, *>> {
         BacterialMutationOnBestAndLuckyByShuffling<OnePartRepresentation<Meter>, Meter>(
-            get(), get(), get(), get(), get(), get(), get(), get(), get(), get(),
+            get(), get(), get(), get(), get(), get(), get(), get(), get(),
         )
     }
     factory<MutationOnSpecimen<*, *>> {
         MutationWithElitistSelection<OnePartRepresentation<Meter>, Meter>(
-            get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(),
+            get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(),
         )
     }
     factory<SelectSegment<*, *>> {
         SelectContinuesSegmentWithFullCoverage<OnePartRepresentation<Meter>, Meter>(
-            get(), get(), get(), get(), get(), get(), get(), get(),
+            get(), get(), get(), get(), get(), get(), get(),
         )
     }
     factory<BacterialMutationOperator<*, *>> {
         EdgeBuilderHeuristicOnContinuousSegment<OnePartRepresentation<Meter>, Meter>(
-            get(), get(), get(), get(), get(), get(), get(), get(), get(),
+            get(), get(), get(), get(), get(), get(), get(), get(),
         )
     }
     factory<hu.raven.puppet.logic.step.genetransfer.GeneTransfer<*, *>> {
         GeneTransferByTournament<OnePartRepresentation<Meter>, Meter>(
-            get(), get(), get(), get(), get(), get(), get(), get(), get(), get(),
+            get(), get(), get(), get(), get(), get(), get(), get(), get(),
         )
     }
     factory<GeneTransferOperator<*, *>> {
         GeneTransferByCrossOver<OnePartRepresentation<Meter>, Meter>(
-            get(), get(), get(), get(), get(), get(), get(), get(), get(), get(),
+            get(), get(), get(), get(), get(), get(), get(), get(), get(),
         )
     }
     factory<CrossOverOperator<*, *>> {
         HeuristicCrossOver<OnePartRepresentation<Meter>, Meter>(
-            get(), get(), get(), get(), get(), get(), get(),
+            get(), get(), get(), get(), get(), get(),
         )
     }
 

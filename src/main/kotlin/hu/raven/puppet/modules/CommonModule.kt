@@ -13,7 +13,7 @@ import hu.raven.puppet.logic.step.diversity.DiversityByInnerDistanceAndSequence
 import hu.raven.puppet.logic.step.initializePopulation.InitializeHugePopulationThanPreOptimizeThanSelectBest
 import hu.raven.puppet.logic.step.initializePopulation.InitializePopulation
 import hu.raven.puppet.logic.step.orderpopulationbycost.OrderPopulationByCost
-import hu.raven.puppet.logic.task.VRPTaskHolder
+
 import hu.raven.puppet.model.physics.Meter
 import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.solution.factory.OnePartRepresentationFactory
@@ -33,13 +33,9 @@ val commonModule = module {
         CSVLogger()
     }
 
-    single {
-        VRPTaskHolder()
-    }
-
     factory<Diversity<*, *>> {
         DiversityByInnerDistanceAndSequence<OnePartRepresentation<Meter>, Meter>(
-            get(), get(), get(), get(), get(), get(), get(), get(),
+            get(), get(), get(), get(), get(), get(), get(),
         )
     }
 
@@ -49,14 +45,14 @@ val commonModule = module {
 
     factory<InitializePopulation<*, *>> {
         InitializeHugePopulationThanPreOptimizeThanSelectBest<OnePartRepresentation<Meter>, Meter>(
-            get(), get(), get(), get(), get(), get(), get(), get(), get(),
+            get(), get(), get(), get(), get(), get(), get(), get(),
         )
         //InitializePopulationByModuloStepper<DOnePartRepresentation>()
     }
 
     factory {
         OrderPopulationByCost<OnePartRepresentation<Meter>, Meter>(
-            get(), get(), get(), get(), get(), get(), get(),
+            get(), get(), get(), get(), get(), get(),
         )
     }
     factory { CalculateCostOfEdge() }
@@ -64,12 +60,12 @@ val commonModule = module {
 
     factory<Boost<*, *>> {
         BoostOnBestLazy<OnePartRepresentation<Meter>, Meter>(
-            get(), get(), get(), get(), get(), get(), get(), get(), get(),
+            get(), get(), get(), get(), get(), get(), get(), get(),
         )
     }
     factory<BoostOperator<*, *>> {
         Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit<OnePartRepresentation<Meter>, Meter>(
-            get(), get(), get(), get(), get(), get(), get(), get(),
+            get(), get(), get(), get(), get(), get(), get(),
         )
     }
 

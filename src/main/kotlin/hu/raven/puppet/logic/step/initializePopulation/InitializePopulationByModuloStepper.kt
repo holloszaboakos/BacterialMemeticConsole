@@ -1,7 +1,6 @@
 package hu.raven.puppet.logic.step.initializePopulation
 
 import hu.raven.puppet.logic.logging.DoubleLogger
-import hu.raven.puppet.logic.task.VRPTaskHolder
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
@@ -9,7 +8,7 @@ import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 
 class InitializePopulationByModuloStepper<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
     override val logger: DoubleLogger,
-    override val taskHolder: VRPTaskHolder,
+
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
     override val sizeOfPopulation: Int,
@@ -21,15 +20,15 @@ class InitializePopulationByModuloStepper<S : SolutionRepresentation<C>, C : Phy
     override fun invoke() {
         algorithmState.run {
             val sizeOfPermutation =
-                (taskHolder.task.costGraph.objectives.size + taskHolder.task.transportUnits.size - 1)
+                (task.costGraph.objectives.size + task.transportUnits.size - 1)
             val basePermutation = IntArray(sizeOfPermutation) { it }
-            population = if (taskHolder.task.costGraph.objectives.size != 1)
+            population = if (task.costGraph.objectives.size != 1)
                 ArrayList(List(sizeOfPopulation) { specimenIndex ->
                     subSolutionFactory.produce(
                         specimenIndex,
-                        Array(taskHolder.task.transportUnits.size) { index ->
+                        Array(task.transportUnits.size) { index ->
                             if (index == 0)
-                                IntArray(taskHolder.task.costGraph.objectives.size) { it }
+                                IntArray(task.costGraph.objectives.size) { it }
                             else
                                 intArrayOf()
                         }
@@ -38,7 +37,7 @@ class InitializePopulationByModuloStepper<S : SolutionRepresentation<C>, C : Phy
             else arrayListOf(
                 subSolutionFactory.produce(
                     0,
-                    arrayOf(IntArray(taskHolder.task.costGraph.objectives.size) { it })
+                    arrayOf(IntArray(task.costGraph.objectives.size) { it })
                 )
             )
 
@@ -77,7 +76,7 @@ class InitializePopulationByModuloStepper<S : SolutionRepresentation<C>, C : Phy
 
         val breakPoints = newPermutation
             .mapIndexed { index, value ->
-                if (value < taskHolder.task.costGraph.objectives.size)
+                if (value < algorithmState.task.costGraph.objectives.size)
                     -1
                 else
                     index
