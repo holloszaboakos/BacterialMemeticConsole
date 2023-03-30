@@ -15,11 +15,11 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
 class Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val logger: DoubleLogger,
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
     override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,
-    override val calculateCostOf: CalculateCost<S, C>
+    override val calculateCostOf: CalculateCost<S, C>,
+    val logger: DoubleLogger
 ) :
     BoostOperator<S, C>() {
     private val stepLimit: Int by inject(AlgorithmParameters.OPTIMISATION_STEP_LIMIT)

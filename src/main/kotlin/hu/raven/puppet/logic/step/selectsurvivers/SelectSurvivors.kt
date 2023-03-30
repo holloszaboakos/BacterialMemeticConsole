@@ -1,6 +1,5 @@
 package hu.raven.puppet.logic.step.selectsurvivers
 
-import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.logic.step.EvolutionaryAlgorithmStep
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
@@ -10,7 +9,6 @@ import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 import hu.raven.puppet.utility.extention.slice
 
 class SelectSurvivors<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val logger: DoubleLogger,
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
     override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,

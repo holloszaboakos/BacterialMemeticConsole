@@ -15,12 +15,12 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
 class SegmentInjectionGeneTransfer<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val logger: DoubleLogger,
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
     override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,
     override val calculateCostOf: CalculateCost<S, C>,
-    override val geneTransferSegmentLength: Int
+    override val geneTransferSegmentLength: Int,
+    val logger: DoubleLogger,
 ) : GeneTransferOperator<S, C>() {
 
     @OptIn(ExperimentalTime::class)

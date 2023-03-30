@@ -6,7 +6,7 @@ import java.io.File
 
 private val SIZES_TO_GENERATE = intArrayOf(4, 8, 16, 32, 64, 128, 256, 512, 1024)
 private const val REPEAT_PER_SIZE = 10
-private val DISTANCE_RANGE = 1 until 10000
+private val DISTANCE_RANGE = 1 until 10_000
 private const val OUTPUT_FOLDER = "output/default"
 
 fun main() {

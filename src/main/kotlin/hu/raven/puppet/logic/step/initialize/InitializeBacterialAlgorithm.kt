@@ -11,11 +11,11 @@ import kotlinx.coroutines.runBlocking
 
 
 class InitializeBacterialAlgorithm<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val logger: DoubleLogger,
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
     val initializePopulation: InitializePopulation<S, C>,
     val orderPopulationByCost: OrderPopulationByCost<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
+    val logger: DoubleLogger,
 ) : InitializeAlgorithm<S, C>() {
 
     override fun invoke() {

@@ -18,80 +18,68 @@ sealed class CrossOverOperator<S : SolutionRepresentation<C>, C : PhysicsUnit<C>
             parameters: EvolutionaryAlgorithmParameterProvider<S, C>,
         ) = listOf<CrossOverOperator<S, C>>(
             AlternatingEdgeCrossOver(
-                logger,
                 subSolutionFactory,
                 algorithmState,
                 parameters,
             ),
             AlternatingPositionCrossOver(
-                logger,
                 subSolutionFactory,
                 algorithmState,
                 parameters
             ),
             CycleCrossOver(
-                logger,
                 subSolutionFactory,
                 algorithmState,
                 parameters
             ),
             DistancePreservingCrossOver(
-                logger,
                 subSolutionFactory,
                 algorithmState,
                 parameters
             ),
             GeneticEdgeRecombinationCrossOver(
-                logger,
                 subSolutionFactory,
                 algorithmState,
                 parameters,
             ),
             HeuristicCrossOver(
-                logger,
                 subSolutionFactory,
                 algorithmState,
                 parameters,
+                logger
             ),
             MaximalPreservationCrossOver(
-                logger,
                 subSolutionFactory,
                 algorithmState,
                 parameters,
             ),
             OrderBasedCrossOver(
-                logger,
                 subSolutionFactory,
                 algorithmState,
                 parameters,
             ),
             OrderCrossOver(
-                logger,
                 subSolutionFactory,
                 algorithmState,
                 parameters,
             ),
             PartiallyMatchedCrossOver(
-                logger,
                 subSolutionFactory,
                 algorithmState,
                 parameters,
             ),
             PositionBasedCrossOver(
-                logger,
                 subSolutionFactory,
                 algorithmState,
                 parameters,
             ),
             //broken SortedMatchCrossOver,
             SubTourChunksCrossOver(
-                logger,
                 subSolutionFactory,
                 algorithmState,
                 parameters,
             ),
             VotingRecombinationCrossOver(
-                logger,
                 subSolutionFactory,
                 algorithmState,
                 parameters,

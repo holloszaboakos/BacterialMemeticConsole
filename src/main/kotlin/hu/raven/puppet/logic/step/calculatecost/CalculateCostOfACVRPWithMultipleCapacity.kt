@@ -1,6 +1,5 @@
 package hu.raven.puppet.logic.step.calculatecost
 
-import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.model.TakenCapacity
 import hu.raven.puppet.model.physics.Euro
 import hu.raven.puppet.model.physics.Second
@@ -16,7 +15,6 @@ import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.extention.sumClever
 
 class CalculateCostOfACVRPWithMultipleCapacity<S : SolutionRepresentation<Euro>>(
-    override val logger: DoubleLogger,
     override val subSolutionFactory: SolutionRepresentationFactory<S, Euro>,
     override val statistics: BacterialAlgorithmStatistics,
     override val algorithmState: AlgorithmState

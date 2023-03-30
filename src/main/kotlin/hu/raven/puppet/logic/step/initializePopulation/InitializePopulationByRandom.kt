@@ -1,6 +1,5 @@
 package hu.raven.puppet.logic.step.initializePopulation
 
-import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentation
@@ -12,7 +11,6 @@ import kotlin.random.Random
 import kotlin.random.nextInt
 
 class InitializePopulationByRandom<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val logger: DoubleLogger,
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
     override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,

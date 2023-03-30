@@ -1,6 +1,5 @@
 package hu.raven.puppet.logic.step.bacterialmutation
 
-import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.logic.step.bacterialmutationonspecimen.MutationOnSpecimen
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
@@ -16,19 +15,16 @@ import kotlinx.coroutines.withContext
 import kotlin.random.Random
 
 class BacterialMutationOnBestAndLuckyByShuffling<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val logger: DoubleLogger,
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
     override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,
     override val mutationPercentage: Float,
     override val statistics: BacterialAlgorithmStatistics,
     override val mutationOnSpecimen: MutationOnSpecimen<S, C>
-) :
-    BacterialMutation<S, C>() {
+) : BacterialMutation<S, C>() {
 
 
-    override suspend fun invoke(
-    ): Unit = withContext(Dispatchers.Default) {
+    override suspend fun invoke(): Unit = withContext(Dispatchers.Default) {
         algorithmState.run {
             val selectedCount = ((population.size - 1) * mutationPercentage).toInt()
 

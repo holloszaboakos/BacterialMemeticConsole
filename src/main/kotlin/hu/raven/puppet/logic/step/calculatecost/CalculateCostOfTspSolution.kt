@@ -1,6 +1,5 @@
 package hu.raven.puppet.logic.step.calculatecost
 
-import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.Meter
 import hu.raven.puppet.model.solution.SolutionRepresentation
@@ -11,7 +10,6 @@ import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.extention.sumClever
 
 class CalculateCostOfTspSolution<S : SolutionRepresentation<Meter>>(
-    override val logger: DoubleLogger,
     override val subSolutionFactory: SolutionRepresentationFactory<S, Meter>,
     override val statistics: BacterialAlgorithmStatistics,
     override val algorithmState: AlgorithmState

@@ -1,6 +1,5 @@
 package hu.raven.puppet.logic.step.boostoperator
 
-import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.math.Fraction
@@ -13,7 +12,6 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
 class Opt2StepWithProgressMemory<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val logger: DoubleLogger,
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
     override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,

@@ -1,6 +1,5 @@
 package hu.raven.puppet.logic.step.bacterialmutationonspecimen
 
-import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.logic.step.bacterialmutationoperator.BacterialMutationOperator
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.logic.step.selectsegment.SelectSegment
@@ -18,7 +17,6 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
 class MutationWithSimulatedAnnealingBasedSelection<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val logger: DoubleLogger,
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
     override val parameters: BacterialMutationParameterProvider<S, C>,

@@ -1,6 +1,5 @@
 package hu.raven.puppet.logic.step.boost
 
-import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.logic.step.boostoperator.BoostOperator
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
@@ -13,7 +12,6 @@ import hu.raven.puppet.utility.extention.sum
 
 class BoostOnBestAndLucky<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
     val luckyCount: Int,
-    override val logger: DoubleLogger,
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
     override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,

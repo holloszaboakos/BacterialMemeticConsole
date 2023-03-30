@@ -1,6 +1,5 @@
 package hu.raven.puppet.logic.step.localsearchiteration
 
-import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.SolutionRepresentation
@@ -8,7 +7,6 @@ import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
 
 
 class Opt2Iteration<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val logger: DoubleLogger,
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
     val calculateCostOf: CalculateCost<S, C>
 ) : LocalSearchIteration<S, C>() {

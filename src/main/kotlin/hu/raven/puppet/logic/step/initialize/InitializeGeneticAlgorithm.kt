@@ -1,6 +1,5 @@
 package hu.raven.puppet.logic.step.initialize
 
-import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.logic.step.boost.Boost
 import hu.raven.puppet.logic.step.initializePopulation.InitializePopulation
 import hu.raven.puppet.logic.step.orderpopulationbycost.OrderPopulationByCost
@@ -12,7 +11,6 @@ import kotlinx.coroutines.runBlocking
 
 
 class InitializeGeneticAlgorithm<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val logger: DoubleLogger,
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
     val initializePopulation: InitializePopulation<S, C>,

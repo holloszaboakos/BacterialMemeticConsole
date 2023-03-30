@@ -1,6 +1,5 @@
 package hu.raven.puppet.logic.step.genetransferoperator
 
-import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.logic.step.crossoveroperator.CrossOverOperator
 import hu.raven.puppet.model.logging.StepEfficiencyData
@@ -14,7 +13,6 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
 class GeneTransferByCrossOver<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val logger: DoubleLogger,
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
     override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,

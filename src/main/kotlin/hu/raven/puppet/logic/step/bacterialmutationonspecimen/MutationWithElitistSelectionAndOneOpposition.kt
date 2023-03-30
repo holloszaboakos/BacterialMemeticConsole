@@ -1,6 +1,5 @@
 package hu.raven.puppet.logic.step.bacterialmutationonspecimen
 
-import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.logic.step.bacterialmutationoperator.BacterialMutationOperator
 import hu.raven.puppet.logic.step.bacterialmutationoperator.OppositionOperator
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
@@ -13,12 +12,10 @@ import hu.raven.puppet.model.solution.Segment
 import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
 import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
-import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
-class MutationWithElitistSelectionAndOneOposition<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val logger: DoubleLogger,
+class MutationWithElitistSelectionAndOneOpposition<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
     override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
     override val parameters: BacterialMutationParameterProvider<S, C>,
@@ -28,7 +25,6 @@ class MutationWithElitistSelectionAndOneOposition<S : SolutionRepresentation<C>,
 ) : MutationOnSpecimen<S, C>() {
 
     private val oppositionOperator = OppositionOperator(
-        logger,
         subSolutionFactory,
         algorithmState,
         parameters
