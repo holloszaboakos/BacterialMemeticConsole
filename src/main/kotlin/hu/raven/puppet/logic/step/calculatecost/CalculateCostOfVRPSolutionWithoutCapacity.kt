@@ -12,7 +12,7 @@ import hu.raven.puppet.utility.extention.getEdgeBetween
 
 
 class CalculateCostOfVRPSolutionWithoutCapacity<S : SolutionRepresentation<Euro>>(
-    override val subSolutionFactory: SolutionRepresentationFactory<S, Euro>,
+    override val solutionFactory: SolutionRepresentationFactory<S, Euro>,
     override val statistics: BacterialAlgorithmStatistics,
     override val algorithmState: AlgorithmState
 ) :

@@ -15,7 +15,7 @@ import kotlin.time.measureTime
 
 class BacterialIteration<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
     override val logger: DoubleLogger,
-    override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
+    override val solutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
     override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,
     val boost: Boost<S, C>,
@@ -31,8 +31,8 @@ class BacterialIteration<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
         orderPopulationByCost()
 
         algorithmState.apply {
-            copyOfBest = subSolutionFactory.copy(population.first())
-            copyOfWorst = subSolutionFactory.copy(population.last())
+            copyOfBest = solutionFactory.copy(population.first())
+            copyOfWorst = solutionFactory.copy(population.last())
             iteration++
         }
     }

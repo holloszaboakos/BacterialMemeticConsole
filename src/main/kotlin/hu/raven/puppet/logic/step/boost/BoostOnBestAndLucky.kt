@@ -12,7 +12,7 @@ import hu.raven.puppet.utility.extention.sum
 
 class BoostOnBestAndLucky<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
     val luckyCount: Int,
-    override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
+    override val solutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
     override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,
     override val boostOperator: BoostOperator<S, C>,

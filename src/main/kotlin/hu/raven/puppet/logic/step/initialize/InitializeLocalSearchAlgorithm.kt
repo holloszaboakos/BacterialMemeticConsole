@@ -8,7 +8,7 @@ import hu.raven.puppet.model.state.AlgorithmState
 
 
 class InitializeLocalSearchAlgorithm<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
+    override val solutionFactory: SolutionRepresentationFactory<S, C>,
     val initializeLocalSearch: InitializeLocalSearch<S, C>,
     override val algorithmState: AlgorithmState
 ) : InitializeAlgorithm<S, C>() {

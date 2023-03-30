@@ -7,12 +7,12 @@ import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
 
 
 class InitializeByRandom<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
+    override val solutionFactory: SolutionRepresentationFactory<S, C>,
     val calculateCostOf: CalculateCost<S, C>
 ) : InitializeLocalSearch<S, C>() {
 
     override operator fun invoke() = algorithmState.run {
-        actualCandidate = subSolutionFactory.produce(0, Array(task.transportUnits.size) { index ->
+        actualCandidate = solutionFactory.produce(0, Array(task.transportUnits.size) { index ->
             if (index == 0)
                 IntArray(task.costGraph.objectives.size) { it }
             else

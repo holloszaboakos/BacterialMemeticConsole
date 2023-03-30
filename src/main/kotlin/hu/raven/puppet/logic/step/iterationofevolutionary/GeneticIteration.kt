@@ -17,7 +17,7 @@ import kotlin.time.measureTime
 
 class GeneticIteration<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
     override val logger: DoubleLogger,
-    override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
+    override val solutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
     override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,
     val orderPopulationByCost: OrderPopulationByCost<S, C>,
@@ -36,8 +36,8 @@ class GeneticIteration<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
         orderPopulationByCost()
         boost()
         algorithmState.apply {
-            copyOfBest = subSolutionFactory.copy(population.first())
-            copyOfWorst = subSolutionFactory.copy(population.last())
+            copyOfBest = solutionFactory.copy(population.first())
+            copyOfWorst = solutionFactory.copy(population.last())
             iteration++
         }
     }

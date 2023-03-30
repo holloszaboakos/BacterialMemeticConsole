@@ -15,13 +15,12 @@ import kotlinx.coroutines.withContext
 import kotlin.random.Random
 
 class BacterialMutationOnBestAndLuckyByCoinFlip<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
+    override val solutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
     override val parameters: BacterialMutationParameterProvider<S, C>,
     override val statistics: BacterialAlgorithmStatistics,
     override val mutationOnSpecimen: MutationOnSpecimen<S, C>
 ) : BacterialMutation<S, C>() {
-
 
     override suspend fun invoke(): Unit = withContext(Dispatchers.Default) {
         algorithmState.run {

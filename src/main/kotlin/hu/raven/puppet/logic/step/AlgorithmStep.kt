@@ -7,5 +7,5 @@ import hu.raven.puppet.model.state.AlgorithmState
 
 abstract class AlgorithmStep<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> {
     protected abstract val algorithmState: AlgorithmState
-    protected abstract val subSolutionFactory: SolutionRepresentationFactory<S, C>
+    protected abstract val solutionFactory: SolutionRepresentationFactory<S, C>
 }

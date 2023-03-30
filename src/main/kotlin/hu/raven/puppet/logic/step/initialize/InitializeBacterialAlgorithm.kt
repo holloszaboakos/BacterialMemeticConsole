@@ -11,7 +11,7 @@ import kotlinx.coroutines.runBlocking
 
 
 class InitializeBacterialAlgorithm<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
+    override val solutionFactory: SolutionRepresentationFactory<S, C>,
     val initializePopulation: InitializePopulation<S, C>,
     val orderPopulationByCost: OrderPopulationByCost<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
@@ -25,8 +25,8 @@ class InitializeBacterialAlgorithm<S : SolutionRepresentation<C>, C : PhysicsUni
         runBlocking { orderPopulationByCost() }
         logger("orderedByCost")
         algorithmState.apply {
-            copyOfBest = subSolutionFactory.copy(population.first())
-            copyOfWorst = subSolutionFactory.copy(population.last())
+            copyOfBest = solutionFactory.copy(population.first())
+            copyOfWorst = solutionFactory.copy(population.last())
         }
     }
 }

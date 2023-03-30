@@ -11,7 +11,7 @@ import kotlin.random.Random
 import kotlin.random.nextInt
 
 class InitializePopulationByRandom<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
+    override val solutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
     override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,
 ) : InitializePopulation<S, C>() {
@@ -19,7 +19,7 @@ class InitializePopulationByRandom<S : SolutionRepresentation<C>, C : PhysicsUni
     override fun invoke() {
         algorithmState.population = if (algorithmState.task.costGraph.objectives.size != 1)
             ArrayList(List(parameters.sizeOfPopulation) { specimenIndex ->
-                subSolutionFactory.produce(
+                solutionFactory.produce(
                     specimenIndex,
                     Array(algorithmState.task.transportUnits.size) { index ->
                         if (index == 0)
@@ -30,7 +30,7 @@ class InitializePopulationByRandom<S : SolutionRepresentation<C>, C : PhysicsUni
                 )
             })
         else arrayListOf(
-            subSolutionFactory.produce(
+            solutionFactory.produce(
                 0,
                 arrayOf(IntArray(algorithmState.task.costGraph.objectives.size) { it })
             )

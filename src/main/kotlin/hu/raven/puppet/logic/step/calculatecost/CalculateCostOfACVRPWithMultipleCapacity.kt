@@ -15,7 +15,7 @@ import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.extention.sumClever
 
 class CalculateCostOfACVRPWithMultipleCapacity<S : SolutionRepresentation<Euro>>(
-    override val subSolutionFactory: SolutionRepresentationFactory<S, Euro>,
+    override val solutionFactory: SolutionRepresentationFactory<S, Euro>,
     override val statistics: BacterialAlgorithmStatistics,
     override val algorithmState: AlgorithmState
 ) : CalculateCost<S, Euro>() {

@@ -10,7 +10,7 @@ import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.extention.sumClever
 
 class CalculateCostOfTspSolution<S : SolutionRepresentation<Meter>>(
-    override val subSolutionFactory: SolutionRepresentationFactory<S, Meter>,
+    override val solutionFactory: SolutionRepresentationFactory<S, Meter>,
     override val statistics: BacterialAlgorithmStatistics,
     override val algorithmState: AlgorithmState
 ) : CalculateCost<S, Meter>() {

@@ -13,7 +13,7 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
 class GeneTransferByCrossOver<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
+    override val solutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
     override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,
     override val calculateCostOf: CalculateCost<S, C>,
@@ -24,7 +24,7 @@ class GeneTransferByCrossOver<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>
 
     @OptIn(ExperimentalTime::class)
     override fun invoke(source: S, target: S): StepEfficiencyData {
-        val child = subSolutionFactory.copy(target)
+        val child = solutionFactory.copy(target)
 
         val spentTime = measureTime {
             crossOverOperator(

@@ -7,7 +7,7 @@ import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
 import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 
 class InitializePopulationByModuloStepper<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
+    override val solutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
     override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,
 ) :
@@ -20,7 +20,7 @@ class InitializePopulationByModuloStepper<S : SolutionRepresentation<C>, C : Phy
             val basePermutation = IntArray(sizeOfPermutation) { it }
             population = if (task.costGraph.objectives.size != 1)
                 ArrayList(List(parameters.sizeOfPopulation) { specimenIndex ->
-                    subSolutionFactory.produce(
+                    solutionFactory.produce(
                         specimenIndex,
                         Array(task.transportUnits.size) { index ->
                             if (index == 0)
@@ -31,7 +31,7 @@ class InitializePopulationByModuloStepper<S : SolutionRepresentation<C>, C : Phy
                     )
                 })
             else arrayListOf(
-                subSolutionFactory.produce(
+                solutionFactory.produce(
                     0,
                     arrayOf(IntArray(task.costGraph.objectives.size) { it })
                 )

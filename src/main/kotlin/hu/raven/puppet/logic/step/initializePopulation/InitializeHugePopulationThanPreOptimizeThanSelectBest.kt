@@ -15,7 +15,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
 class InitializeHugePopulationThanPreOptimizeThanSelectBest<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
+    override val solutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
     override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,
     private val mutationOperator: MutationOnSpecimen<S, C>,
@@ -79,7 +79,7 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest<S : SolutionRepresen
                 bestImprovements
                     .map { population[it.first] }
                     .slice(0 until parameters.sizeOfPopulation)
-                    .mapIndexed { index, s -> subSolutionFactory.produce(index, s.getData().toTypedArray()) }
+                    .mapIndexed { index, s -> solutionFactory.produce(index, s.getData().toTypedArray()) }
                     .toMutableList()
         }
     }
@@ -115,7 +115,7 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest<S : SolutionRepresen
     private fun createPopulation(): MutableList<S> {
         return if (algorithmState.task.costGraph.objectives.size != 1)
             ArrayList(List((algorithmState.task.costGraph.objectives.size + algorithmState.task.transportUnits.size - 1)) { specimenIndex ->
-                subSolutionFactory.produce(
+                solutionFactory.produce(
                     specimenIndex,
                     Array(algorithmState.task.transportUnits.size) { index ->
                         if (index == 0)
@@ -127,7 +127,7 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest<S : SolutionRepresen
             })
         else
             arrayListOf(
-                subSolutionFactory.produce(
+                solutionFactory.produce(
                     0,
                     arrayOf(IntArray(algorithmState.task.costGraph.objectives.size) { it })
                 )

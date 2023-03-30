@@ -12,7 +12,7 @@ import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.extention.sumClever
 
 class CalculateCostOfCVRPSolutionWithCapacityAndMaxTripLength<S : SolutionRepresentation<Meter>>(
-    override val subSolutionFactory: SolutionRepresentationFactory<S, Meter>,
+    override val solutionFactory: SolutionRepresentationFactory<S, Meter>,
     override val statistics: BacterialAlgorithmStatistics,
     override val algorithmState: AlgorithmState,
     val doubleLogger: DoubleLogger

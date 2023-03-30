@@ -7,15 +7,15 @@ import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
 import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 
 class MutateChildrenByReverseOrReset<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
+    override val solutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
     override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,
 ) : MutateChildren<S, C>() {
     val mutateChildrenByReset = MutateChildrenByReset(
-        subSolutionFactory, algorithmState, parameters
+        solutionFactory, algorithmState, parameters
     )
     val mutateChildrenByReverse = MutateChildrenByReverse(
-        subSolutionFactory, algorithmState, parameters
+        solutionFactory, algorithmState, parameters
     )
 
     override fun invoke() {

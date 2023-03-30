@@ -7,7 +7,7 @@ import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
 
 
 class Opt2Iteration<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
+    override val solutionFactory: SolutionRepresentationFactory<S, C>,
     val calculateCostOf: CalculateCost<S, C>
 ) : LocalSearchIteration<S, C>() {
 

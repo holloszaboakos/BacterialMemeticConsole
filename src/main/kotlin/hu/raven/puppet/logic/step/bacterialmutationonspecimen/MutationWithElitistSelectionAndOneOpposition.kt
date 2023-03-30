@@ -16,7 +16,7 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
 class MutationWithElitistSelectionAndOneOpposition<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
+    override val solutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
     override val parameters: BacterialMutationParameterProvider<S, C>,
     override val mutationOperator: BacterialMutationOperator<S, C>,
@@ -25,7 +25,7 @@ class MutationWithElitistSelectionAndOneOpposition<S : SolutionRepresentation<C>
 ) : MutationOnSpecimen<S, C>() {
 
     private val oppositionOperator = OppositionOperator(
-        subSolutionFactory,
+        solutionFactory,
         algorithmState,
         parameters
     )
@@ -71,7 +71,7 @@ class MutationWithElitistSelectionAndOneOpposition<S : SolutionRepresentation<C>
         specimen: S,
         selectedSegment: Segment
     ): MutableList<S> {
-        val clones = MutableList(parameters.cloneCount + 1) { subSolutionFactory.copy(specimen) }
+        val clones = MutableList(parameters.cloneCount + 1) { solutionFactory.copy(specimen) }
 
         oppositionOperator(clones[1], selectedSegment)
 

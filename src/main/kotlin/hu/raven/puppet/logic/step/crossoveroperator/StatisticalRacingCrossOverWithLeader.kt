@@ -13,7 +13,7 @@ import hu.raven.puppet.model.statistics.OperatorStatistics
 import hu.raven.puppet.utility.inject
 
 class StatisticalRacingCrossOverWithLeader<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val subSolutionFactory: SolutionRepresentationFactory<S, C>,
+    override val solutionFactory: SolutionRepresentationFactory<S, C>,
     override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
     override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,
     val logger: DoubleLogger
