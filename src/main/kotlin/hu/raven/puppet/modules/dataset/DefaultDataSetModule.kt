@@ -11,6 +11,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val defaultDataSetModule = module {
+    /*
     single(named(INPUT_FOLDER)) { "input" }
     single(named(GRAPH_FILE)) { "hungarianExample/graph.json" }
     single(named(EDGES_BETWEEN_FILE)) { "hungarianExample/between.json" }
@@ -24,4 +25,6 @@ val defaultDataSetModule = module {
             get(), get(), get(), get()
         )
     }
+
+     */
 }

@@ -13,6 +13,7 @@ import org.koin.dsl.module
 
 
 val augeratDataSetModule = module {
+    /*
     single(named(AlgorithmParameters.VEHICLE_COUNT)) { 10 }
 
     single(named(FilePathVariableNames.INPUT_FOLDER)) { "input" }
@@ -24,4 +25,6 @@ val augeratDataSetModule = module {
             get(), get(), get(), get()
         )
     }
+
+     */
 }

@@ -27,6 +27,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val bacterialModule = module {
+    /*
     single(named(ITERATION_LIMIT)) { Int.MAX_VALUE }
     single(named(SIZE_OF_POPULATION)) { 50 }
 
@@ -99,4 +100,6 @@ val bacterialModule = module {
     single {
         CSVLogger()
     }
+
+     */
 }

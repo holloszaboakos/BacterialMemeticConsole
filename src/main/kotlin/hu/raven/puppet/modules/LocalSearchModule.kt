@@ -14,6 +14,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val localSearchModule = module {
+    /*
     factory<InitializeAlgorithm<*, *>>(named("default")) {
         InitializeLocalSearchAlgorithm<TwoPartRepresentation<Meter>, Meter>(
             get(), get(), get(), get(),
@@ -33,4 +34,6 @@ val localSearchModule = module {
     single<IterativeAlgorithmStateWithSingleCandidate<OnePartRepresentation<Meter>, Meter>> {
         IterativeAlgorithmStateWithSingleCandidate(get())
     }
+
+     */
 }

@@ -19,6 +19,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val geneticModule = module {
+    /*
     single(named(AlgorithmParameters.ITERATION_LIMIT)) { 26000 }
     single(named(AlgorithmParameters.SIZE_OF_POPULATION)) { 10_000 }
 
@@ -65,4 +66,6 @@ val geneticModule = module {
     single {
         BacterialAlgorithmStatistics()
     }
+
+     */
 }

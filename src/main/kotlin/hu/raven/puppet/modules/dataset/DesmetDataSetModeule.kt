@@ -12,6 +12,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val desmetDataSetModule = module {
+    /*
     single(named(AlgorithmParameters.VEHICLE_COUNT)) { 20 }
 
     single(named(FilePathVariableNames.INPUT_FOLDER)) { "input" }
@@ -23,4 +24,6 @@ val desmetDataSetModule = module {
             get(), get(), get(), get()
         )
     }
+
+     */
 }

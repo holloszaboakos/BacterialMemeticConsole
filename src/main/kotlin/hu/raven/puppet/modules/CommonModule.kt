@@ -23,6 +23,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val commonModule = module {
+    /*
     single(named(OUTPUT_FOLDER)) { "output/default" }
 
     single {
@@ -68,6 +69,8 @@ val commonModule = module {
             get(), get(), get(), get(), get(), get(), get(),
         )
     }
+
+     */
 
 
 }

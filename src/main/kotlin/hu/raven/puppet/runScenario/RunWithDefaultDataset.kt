@@ -26,7 +26,7 @@ import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
-
+/*
 @ExperimentalTime
 fun main() {
     startKoin {
@@ -161,4 +161,6 @@ private fun <C : PhysicsUnit<C>> calculateLogData(
 
 private fun <C : PhysicsUnit<C>> SolutionRepresentation<C>.toLog() = SpecimenData(id, cost!!)
 
+
+ */
 
