@@ -11,12 +11,21 @@ class GenericEvolutionaryAlgorithm<C : PhysicsUnit<C>>(
     stepFactories: Array<EvolutionaryAlgorithmStepFactory<C>>,
 ) : EvolutionaryIteration<C>() {
 
+    /*
+    * GENETIC
+    * order
+    * boost
+    * select
+    * crossover
+    * mutate
+    * */
+
     private val steps = stepFactories
         .map(EvolutionaryAlgorithmStepFactory<C>::invoke)
         .toTypedArray()
 
     override fun invoke() {
-        steps.forEach { step -> algorithmState.run(step) }
+        steps.forEach { step -> algorithmState.step() }
         algorithmState.apply {
             copyOfBest = population.first().copy()
             copyOfWorst = population.last().copy()
