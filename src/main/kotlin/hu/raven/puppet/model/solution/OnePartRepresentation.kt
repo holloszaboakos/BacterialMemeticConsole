@@ -2,7 +2,6 @@ package hu.raven.puppet.model.solution
 
 import hu.raven.puppet.model.math.Permutation
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.utility.extention.asPermutation
 
 data class OnePartRepresentation<C : PhysicsUnit<C>>(
     val id: Int,

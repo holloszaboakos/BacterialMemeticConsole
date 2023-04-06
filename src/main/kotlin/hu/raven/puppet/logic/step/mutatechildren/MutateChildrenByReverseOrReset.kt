@@ -9,10 +9,10 @@ class MutateChildrenByReverseOrReset<C : PhysicsUnit<C>>(
     val parameters: EvolutionaryAlgorithmParameterProvider<C>,
 ) : MutateChildren<C>() {
     val mutateChildrenByReset = MutateChildrenByReset(
-         algorithmState, parameters
+        algorithmState, parameters
     )
     val mutateChildrenByReverse = MutateChildrenByReverse(
-         algorithmState, parameters
+        algorithmState, parameters
     )
 
     override fun invoke() {

@@ -6,7 +6,7 @@ import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
-sealed class CrossOverOperator<C : PhysicsUnit<C>>{
+sealed class CrossOverOperator<C : PhysicsUnit<C>> {
     companion object {
         fun <C : PhysicsUnit<C>> getVariants(
             logger: DoubleLogger,

@@ -19,7 +19,7 @@ class Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit<C : Physic
     override val calculateCostOf: CalculateCost<C>,
     val logger: DoubleLogger
 ) :
-BoostOperator<C>() {
+    BoostOperator<C>() {
     private val stepLimit: Int by inject(AlgorithmParameters.OPTIMISATION_STEP_LIMIT)
     private var lastPositionPerSpecimen = arrayOf<Pair<Int, Int>>()
     private var shuffler = intArrayOf()

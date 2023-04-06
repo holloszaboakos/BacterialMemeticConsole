@@ -8,7 +8,7 @@ import hu.raven.puppet.utility.extention.slice
 class SelectSurvivors<C : PhysicsUnit<C>>(
     val algorithmState: EvolutionaryAlgorithmState<C>,
     val parameters: EvolutionaryAlgorithmParameterProvider<C>,
-){
+) {
     operator fun invoke() {
         algorithmState.run {
             population.asSequence()

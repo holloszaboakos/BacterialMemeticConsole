@@ -11,7 +11,7 @@ class CrossOvers<C : PhysicsUnit<C>>(
     val algorithmState: EvolutionaryAlgorithmState<C>,
     val parameters: EvolutionaryAlgorithmParameterProvider<C>,
     val crossoverOperator: CrossOverOperator<C>
-){
+) {
 
     operator fun invoke() = runBlocking {
         val children = algorithmState.population

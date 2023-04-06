@@ -16,7 +16,7 @@ import kotlinx.coroutines.withContext
 class OrderPopulationByCost<C : PhysicsUnit<C>>(
     val algorithmState: EvolutionaryAlgorithmState<C>,
     val parameters: EvolutionaryAlgorithmParameterProvider<C>,
-){
+) {
     val calculateCostOf: CalculateCost<C> by inject()
 
     suspend operator fun invoke(
