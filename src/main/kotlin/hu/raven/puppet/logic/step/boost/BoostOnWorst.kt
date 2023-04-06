@@ -11,13 +11,13 @@ class BoostOnWorst<C : PhysicsUnit<C>>(
     override val statistics: BacterialAlgorithmStatistics
 ) : BoostFactory<C>() {
 
-    override operator fun invoke()=
+    override operator fun invoke() =
         fun EvolutionaryAlgorithmState<C>.() {
-        val worst = population.last()
-        val improvement = boostOperator(worst)
+            val worst = population.last()
+            val improvement = boostOperator(worst)
 
-        synchronized(statistics) {
-            statistics.boostImprovement = improvement
+            synchronized(statistics) {
+                statistics.boostImprovement = improvement
+            }
         }
-    }
 }
