@@ -5,13 +5,13 @@ import hu.raven.puppet.logic.step.EvolutionaryAlgorithmStep
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentation
-import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
+import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
 sealed class CrossOverOperator<C : PhysicsUnit<C>> : EvolutionaryAlgorithmStep<C>() {
     companion object {
         fun <C : PhysicsUnit<C>> getVariants(
             logger: DoubleLogger,
-            algorithmState: IterativeAlgorithmStateWithMultipleCandidates<C>,
+            algorithmState: EvolutionaryAlgorithmState<C>,
             parameters: EvolutionaryAlgorithmParameterProvider<C>,
         ) = listOf<CrossOverOperator<C>>(
             AlternatingEdgeCrossOver(

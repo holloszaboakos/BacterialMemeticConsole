@@ -4,10 +4,10 @@ import hu.raven.puppet.model.parameters.BacterialMutationParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.solution.Segment
-import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
+import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
 class SelectContinuesSegmentWithFullCoverage<C : PhysicsUnit<C>>(
-    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<C>,
+    override val algorithmState: EvolutionaryAlgorithmState<C>,
     override val parameters: BacterialMutationParameterProvider<C>,
 ) : SelectSegment<C>() {
     private val randomizer: IntArray by lazy {

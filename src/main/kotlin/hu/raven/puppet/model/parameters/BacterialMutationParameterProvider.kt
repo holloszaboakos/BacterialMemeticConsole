@@ -1,10 +1,10 @@
 package hu.raven.puppet.model.parameters
 
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
+import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
 class BacterialMutationParameterProvider<C : PhysicsUnit<C>>(
-    algorithmState: IterativeAlgorithmStateWithMultipleCandidates<C>,
+    algorithmState: EvolutionaryAlgorithmState<C>,
     iterationLimit: Int,
     sizeOfPopulation: Int,
     geneCount: Int,

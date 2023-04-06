@@ -6,7 +6,7 @@ import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentation
-import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
+import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.model.statistics.GeneticAlgorithmStatistics
 import hu.raven.puppet.model.statistics.OperatorStatistics
 import hu.raven.puppet.utility.extention.sumClever
@@ -18,7 +18,7 @@ import hu.raven.puppet.utility.inject
 //abc: artificial bee colony
 //cinti
 class StatisticalRacingCrossOver<C : PhysicsUnit<C>>(
-    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<C>,
+    override val algorithmState: EvolutionaryAlgorithmState<C>,
     override val parameters: EvolutionaryAlgorithmParameterProvider<C>,
     val logger: DoubleLogger
 ) : CrossOverOperator<C>() {

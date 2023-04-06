@@ -3,7 +3,7 @@ package hu.raven.puppet.logic.step.genetransfer
 import hu.raven.puppet.logic.step.genetransferoperator.GeneTransferOperator
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
+import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.utility.extention.sum
 import kotlinx.coroutines.Dispatchers
@@ -11,7 +11,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 
 class GeneTransferByTournament<C : PhysicsUnit<C>>(
-    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<C>,
+    override val algorithmState: EvolutionaryAlgorithmState<C>,
     override val parameters: EvolutionaryAlgorithmParameterProvider<C>,
     override val injectionCount: Int,
     override val geneTransferOperator: GeneTransferOperator<C>,

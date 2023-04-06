@@ -3,11 +3,11 @@ package hu.raven.puppet.logic.step.selectsurvivers
 import hu.raven.puppet.logic.step.EvolutionaryAlgorithmStep
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
+import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.utility.extention.slice
 
 class SelectSurvivors<C : PhysicsUnit<C>>(
-    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<C>,
+    override val algorithmState: EvolutionaryAlgorithmState<C>,
     override val parameters: EvolutionaryAlgorithmParameterProvider<C>,
 ) : EvolutionaryAlgorithmStep<C>() {
     operator fun invoke() {

@@ -3,7 +3,7 @@ package hu.raven.puppet.logic.step.crossoveroperator
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentation
-import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
+import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.extention.min
 import hu.raven.puppet.utility.extention.sumClever
@@ -11,7 +11,7 @@ import kotlin.math.abs
 
 //broken
 class SortedMatchCrossOver<C : PhysicsUnit<C>>(
-    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<C>,
+    override val algorithmState: EvolutionaryAlgorithmState<C>,
     override val parameters: EvolutionaryAlgorithmParameterProvider<C>
 ) : CrossOverOperator<C>() {
 

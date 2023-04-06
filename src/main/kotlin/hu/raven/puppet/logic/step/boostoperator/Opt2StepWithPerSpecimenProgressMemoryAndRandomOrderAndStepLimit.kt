@@ -7,17 +7,17 @@ import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentation
-import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
+import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.modules.AlgorithmParameters
 import hu.raven.puppet.utility.inject
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
 class Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit<C : PhysicsUnit<C>>(
-override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<C>,
-override val parameters: EvolutionaryAlgorithmParameterProvider<C>,
-override val calculateCostOf: CalculateCost<C>,
-val logger: DoubleLogger
+    override val algorithmState: EvolutionaryAlgorithmState<C>,
+    override val parameters: EvolutionaryAlgorithmParameterProvider<C>,
+    override val calculateCostOf: CalculateCost<C>,
+    val logger: DoubleLogger
 ) :
 BoostOperator<C>() {
     private val stepLimit: Int by inject(AlgorithmParameters.OPTIMISATION_STEP_LIMIT)

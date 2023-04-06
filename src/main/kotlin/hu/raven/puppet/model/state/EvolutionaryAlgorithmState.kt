@@ -4,10 +4,11 @@ import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.task.Task
 
-data class EvolutionaryAlgorithmState<C : PhysicsUnit<C>>(
-    override val task: Task,
-    override var iteration: Int,
-    val population: List<OnePartRepresentation<C>>,
-    val copyOfBest: OnePartRepresentation<C>,
-    val copyOfWorst: OnePartRepresentation<C>,
-) : IterativeAlgorithmState
+class EvolutionaryAlgorithmState<C : PhysicsUnit<C>>(
+    override val task: Task
+) : IterativeAlgorithmState {
+    override var iteration = 0
+    var population: MutableList<OnePartRepresentation<C>> = mutableListOf()
+    var copyOfBest: OnePartRepresentation<C>? = null
+    var copyOfWorst: OnePartRepresentation<C>? = null
+}

@@ -19,7 +19,7 @@ import hu.raven.puppet.model.parameters.IterativeAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.Meter
 import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.state.AlgorithmState
-import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
+import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.model.task.Task
 import hu.raven.puppet.modules.AlgorithmParameters.*
@@ -37,14 +37,14 @@ private data class Scenario(
     val fileName: String,
     val objectiveCount: Int,
     val mutationStrategy: (
-        algorithmState: IterativeAlgorithmStateWithMultipleCandidates<Meter>,
+        algorithmState: EvolutionaryAlgorithmState<Meter>,
         parameters: BacterialMutationParameterProvider<Meter>,
         mutationOperator: BacterialMutationOperator<Meter>,
         calculateCostOf: CalculateCost<Meter>,
         selectSegment: SelectSegment<Meter>,
     ) -> MutationOnSpecimen<Meter>,
     val mutationOperator: (
-        algorithmState: IterativeAlgorithmStateWithMultipleCandidates<Meter>,
+        algorithmState: EvolutionaryAlgorithmState<Meter>,
         parameters: BacterialMutationParameterProvider<Meter>,
     ) -> BacterialMutationOperator<Meter>,
 )
@@ -52,13 +52,13 @@ private data class Scenario(
 private val TASK_SIZES = arrayOf(4, 8, 16, 32, 64, 128, 256, 512, 1024)
 private val STRATEGIES: Array<(
 
-    algorithmState: IterativeAlgorithmStateWithMultipleCandidates<Meter>,
+    algorithmState: EvolutionaryAlgorithmState<Meter>,
     parameters: BacterialMutationParameterProvider<Meter>,
     mutationOperator: BacterialMutationOperator<Meter>,
     calculateCostOf: CalculateCost<Meter>,
     selectSegment: SelectSegment<Meter>,
 ) -> MutationOnSpecimen<Meter>> = arrayOf(
-    { algorithmState: IterativeAlgorithmStateWithMultipleCandidates<Meter>,
+    { algorithmState: EvolutionaryAlgorithmState<Meter>,
       parameters: BacterialMutationParameterProvider<Meter>,
       mutationOperator: BacterialMutationOperator<Meter>,
       calculateCostOf: CalculateCost<Meter>,
@@ -72,7 +72,7 @@ private val STRATEGIES: Array<(
             selectSegment
         )
     },
-    { algorithmState: IterativeAlgorithmStateWithMultipleCandidates<Meter>,
+    { algorithmState: EvolutionaryAlgorithmState<Meter>,
       parameters: BacterialMutationParameterProvider<Meter>,
       mutationOperator: BacterialMutationOperator<Meter>,
       calculateCostOf: CalculateCost<Meter>,
@@ -86,7 +86,7 @@ private val STRATEGIES: Array<(
             selectSegment,
         )
     },
-    { algorithmState: IterativeAlgorithmStateWithMultipleCandidates<Meter>,
+    { algorithmState: EvolutionaryAlgorithmState<Meter>,
       parameters: BacterialMutationParameterProvider<Meter>,
       mutationOperator: BacterialMutationOperator<Meter>,
       calculateCostOf: CalculateCost<Meter>,
@@ -105,11 +105,11 @@ private val STRATEGIES: Array<(
 )
 private val OPERATORS: Array<(
 
-    algorithmState: IterativeAlgorithmStateWithMultipleCandidates<Meter>,
+    algorithmState: EvolutionaryAlgorithmState<Meter>,
     parameters: BacterialMutationParameterProvider<Meter>,
 ) -> BacterialMutationOperator<Meter>> = arrayOf(
 
-    { algorithmState: IterativeAlgorithmStateWithMultipleCandidates<Meter>,
+    { algorithmState: EvolutionaryAlgorithmState<Meter>,
       parameters: BacterialMutationParameterProvider<Meter> ->
 
         EdgeBuilderHeuristicOnContinuousSegment(
@@ -117,7 +117,7 @@ private val OPERATORS: Array<(
             parameters,
         )
     },
-    { algorithmState: IterativeAlgorithmStateWithMultipleCandidates<Meter>,
+    { algorithmState: EvolutionaryAlgorithmState<Meter>,
       parameters: BacterialMutationParameterProvider<Meter> ->
 
         EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation(
@@ -125,7 +125,7 @@ private val OPERATORS: Array<(
             parameters,
         )
     },
-    { algorithmState: IterativeAlgorithmStateWithMultipleCandidates<Meter>,
+    { algorithmState: EvolutionaryAlgorithmState<Meter>,
       parameters: BacterialMutationParameterProvider<Meter> ->
 
         OppositionOperator(
@@ -133,7 +133,7 @@ private val OPERATORS: Array<(
             parameters,
         )
     },
-    { algorithmState: IterativeAlgorithmStateWithMultipleCandidates<Meter>,
+    { algorithmState: EvolutionaryAlgorithmState<Meter>,
       parameters: BacterialMutationParameterProvider<Meter> ->
 
         RandomShuffleOfContinuesSegment(
@@ -141,7 +141,7 @@ private val OPERATORS: Array<(
             parameters,
         )
     },
-    { algorithmState: IterativeAlgorithmStateWithMultipleCandidates<Meter>,
+    { algorithmState: EvolutionaryAlgorithmState<Meter>,
       parameters: BacterialMutationParameterProvider<Meter> ->
 
         SequentialSelectionHeuristicOnContinuousSegment(
@@ -224,13 +224,13 @@ private fun runScenario(scenario: Scenario) {
                         get(), get()
                     )
                 }
-                single<IterativeAlgorithmStateWithMultipleCandidates<*>> {
-                    IterativeAlgorithmStateWithMultipleCandidates<Meter>(
+                single<EvolutionaryAlgorithmState<*>> {
+                    EvolutionaryAlgorithmState<Meter>(
                         get()
                     )
                 }
                 single<AlgorithmState> {
-                    get<IterativeAlgorithmStateWithMultipleCandidates<*>>()
+                    get<EvolutionaryAlgorithmState<*>>()
                 }
             }
         )
