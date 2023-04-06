@@ -1,28 +1,26 @@
 package hu.raven.puppet.logic.step.boost
 
 import hu.raven.puppet.logic.step.boostoperator.BoostOperator
-import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 
 
 class BoostOnBest<C : PhysicsUnit<C>>(
-    val algorithmState: EvolutionaryAlgorithmState<C>,
-    val parameters: EvolutionaryAlgorithmParameterProvider<C>,
     override val boostOperator: BoostOperator<C>,
     override val statistics: BacterialAlgorithmStatistics
-) : Boost<C>() {
+) : BoostFactory<C>() {
 
-    override suspend operator fun invoke() {
-        val best = algorithmState.population.first()
+    override operator fun invoke() =
+        fun EvolutionaryAlgorithmState<C>.() {
+            val best = population.first()
 
-        val improvement = boostOperator(best)
+            val improvement = boostOperator(best)
 
-        synchronized(statistics) {
-            statistics.boostImprovement = improvement
-            statistics.boostOnBestImprovement = improvement
+            synchronized(statistics) {
+                statistics.boostImprovement = improvement
+                statistics.boostOnBestImprovement = improvement
+            }
         }
-    }
 
 }

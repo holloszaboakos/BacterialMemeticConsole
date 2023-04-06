@@ -1,5 +1,6 @@
-package hu.raven.puppet.logic.step.localsearchiteration
+package hu.raven.puppet.logic.step.iterationofevolutionary
 
+import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.state.LocalSearchAlgorithmState
@@ -7,8 +8,9 @@ import hu.raven.puppet.model.state.LocalSearchAlgorithmState
 
 class Opt2Iteration<C : PhysicsUnit<C>>(
     val calculateCostOf: CalculateCost<C>,
-    val algorithmState: LocalSearchAlgorithmState<C>
-) : LocalSearchIteration<C>() {
+    val algorithmState: LocalSearchAlgorithmState<C>,
+    override val logger: DoubleLogger
+) : EvolutionaryIteration<C>() {
 
     var sourceIndex = 0
     var permutation = listOf<Int>()

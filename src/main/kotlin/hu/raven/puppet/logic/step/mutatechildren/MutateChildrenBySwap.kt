@@ -1,38 +1,35 @@
 package hu.raven.puppet.logic.step.mutatechildren
 
-import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.utility.extention.slice
 import kotlin.random.Random
 
-class MutateChildrenBySwap<C : PhysicsUnit<C>>(
-    val algorithmState: EvolutionaryAlgorithmState<C>,
-    val parameters: EvolutionaryAlgorithmParameterProvider<C>,
-) : MutateChildren<C>() {
+class MutateChildrenBySwap<C : PhysicsUnit<C>> : MutateChildrenFactory<C>() {
 
-    override fun invoke(): Unit = algorithmState.run {
-        if (task.costGraph.objectives.size > 1)
-            algorithmState.population.asSequence()
-                .filter { it.iteration == algorithmState.iteration }
-                .shuffled()
-                .slice(0 until algorithmState.population.size / 4)
-                .forEach { child ->
-                    val firstCutIndex = Random.nextInt(task.costGraph.objectives.size)
-                    val secondCutIndex = Random.nextInt(task.costGraph.objectives.size)
-                        .let {
-                            if (it == firstCutIndex)
-                                (it + 1) % task.costGraph.objectives.size
-                            else
-                                it
-                        }
+    override fun invoke() =
+        fun EvolutionaryAlgorithmState<C>.() {
+            if (task.costGraph.objectives.size > 1)
+                population.asSequence()
+                    .filter { it.iteration == iteration }
+                    .shuffled()
+                    .slice(0 until population.size / 4)
+                    .forEach { child ->
+                        val firstCutIndex = Random.nextInt(task.costGraph.objectives.size)
+                        val secondCutIndex = Random.nextInt(task.costGraph.objectives.size)
+                            .let {
+                                if (it == firstCutIndex)
+                                    (it + 1) % task.costGraph.objectives.size
+                                else
+                                    it
+                            }
 
-                    val tmp = child.permutation[firstCutIndex]
-                    child.permutation[firstCutIndex] = child.permutation[secondCutIndex]
-                    child.permutation[secondCutIndex] = tmp
-                    if (!child.permutation.checkFormat())
-                        throw Error("Invalid specimen!")
-                }
+                        val tmp = child.permutation[firstCutIndex]
+                        child.permutation[firstCutIndex] = child.permutation[secondCutIndex]
+                        child.permutation[secondCutIndex] = tmp
+                        if (!child.permutation.checkFormat())
+                            throw Error("Invalid specimen!")
+                    }
 
-    }
+        }
 }

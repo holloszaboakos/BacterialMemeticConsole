@@ -1,50 +1,26 @@
 package hu.raven.puppet.logic.step.iterationofevolutionary
 
+import hu.raven.puppet.logic.EvolutionaryAlgorithmStepFactory
 import hu.raven.puppet.logic.logging.DoubleLogger
-import hu.raven.puppet.logic.step.boost.Boost
-import hu.raven.puppet.logic.step.crossover.CrossOvers
-import hu.raven.puppet.logic.step.mutatechildren.MutateChildren
-import hu.raven.puppet.logic.step.orderpopulationbycost.OrderPopulationByCost
-import hu.raven.puppet.logic.step.selectsurvivers.SelectSurvivors
-import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
-import kotlinx.coroutines.runBlocking
-import kotlin.time.ExperimentalTime
-import kotlin.time.measureTime
 
-class GeneticIteration<C : PhysicsUnit<C>>(
+class GenericEvolutionaryAlgorithm<C : PhysicsUnit<C>>(
     override val logger: DoubleLogger,
     val algorithmState: EvolutionaryAlgorithmState<C>,
-    val parameters: EvolutionaryAlgorithmParameterProvider<C>,
-    val orderPopulationByCost: OrderPopulationByCost<C>,
-    val boost: Boost<C>,
-    val selection: SelectSurvivors<C>,
-    val crossover: CrossOvers<C>,
-    val mutate: MutateChildren<C>
+    stepFactories: Array<EvolutionaryAlgorithmStepFactory<C>>,
 ) : EvolutionaryIteration<C>() {
 
+    private val steps = stepFactories
+        .map(EvolutionaryAlgorithmStepFactory<C>::invoke)
+        .toTypedArray()
 
-    override fun invoke(): Unit = runBlocking {
-
-        selection()
-        crossover()
-        mutate()
-        orderPopulationByCost()
-        boost()
+    override fun invoke() {
+        steps.forEach { step -> algorithmState.run(step) }
         algorithmState.apply {
             copyOfBest = population.first().copy()
             copyOfWorst = population.last().copy()
             iteration++
-        }
-    }
-
-    @OptIn(ExperimentalTime::class)
-    private suspend fun runAndLogTime(name: String, action: suspend () -> Unit) {
-        measureTime {
-            action()
-        }.let {
-            logger("$name time: $it")
         }
     }
 }

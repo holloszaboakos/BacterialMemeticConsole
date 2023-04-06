@@ -2,15 +2,14 @@ package hu.raven.puppet.logic.step.initialize
 
 import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.logic.step.initializePopulation.InitializePopulation
-import hu.raven.puppet.logic.step.orderpopulationbycost.OrderPopulationByCost
+import hu.raven.puppet.logic.step.orderpopulationbycost.OrderPopulationByCostFactory
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
-import kotlinx.coroutines.runBlocking
 
 
 class InitializeBacterialAlgorithm<C : PhysicsUnit<C>>(
     val initializePopulation: InitializePopulation<C>,
-    val orderPopulationByCost: OrderPopulationByCost<C>,
+    val orderPopulationByCost: OrderPopulationByCostFactory<C>,
     val algorithmState: EvolutionaryAlgorithmState<C>,
     val logger: DoubleLogger,
 ) : InitializeAlgorithm<C>() {
@@ -19,7 +18,7 @@ class InitializeBacterialAlgorithm<C : PhysicsUnit<C>>(
         logger("initializePopulation")
         initializePopulation()
         logger("orderByCost")
-        runBlocking { orderPopulationByCost() }
+        orderPopulationByCost()(algorithmState)
         logger("orderedByCost")
         algorithmState.apply {
             copyOfBest = population.first().copy()
