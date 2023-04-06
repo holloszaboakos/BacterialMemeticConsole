@@ -4,8 +4,7 @@ import hu.raven.puppet.logic.step.bacterialmutationonspecimen.MutationOnSpecimen
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
+import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.utility.extention.sum
@@ -14,13 +13,12 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
-class InitializeHugePopulationThanPreOptimizeThanSelectBest<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val solutionFactory: SolutionRepresentationFactory<S, C>,
-    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
-    override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,
-    private val mutationOperator: MutationOnSpecimen<S, C>,
+class InitializeHugePopulationThanPreOptimizeThanSelectBest<C : PhysicsUnit<C>>(
+    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<C>,
+    override val parameters: EvolutionaryAlgorithmParameterProvider<C>,
+    private val mutationOperator: MutationOnSpecimen<C>,
     private val statistics: BacterialAlgorithmStatistics,
-) : InitializePopulation<S, C>() {
+) : InitializePopulation<C>() {
 
 
     override fun invoke() {
@@ -79,7 +77,7 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest<S : SolutionRepresen
                 bestImprovements
                     .map { population[it.first] }
                     .slice(0 until parameters.sizeOfPopulation)
-                    .mapIndexed { index, s -> solutionFactory.produce(index, s.getData().toTypedArray()) }
+                    .mapIndexed { index, s -> OnePartRepresentation<C>(index, s.getData().toTypedArray()) }
                     .toMutableList()
         }
     }
@@ -112,10 +110,10 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest<S : SolutionRepresen
     }
 
 
-    private fun createPopulation(): MutableList<S> {
+    private fun createPopulation(): MutableList<OnePartRepresentation<C>> {
         return if (algorithmState.task.costGraph.objectives.size != 1)
             ArrayList(List((algorithmState.task.costGraph.objectives.size + algorithmState.task.transportUnits.size - 1)) { specimenIndex ->
-                solutionFactory.produce(
+                OnePartRepresentation<C>(
                     specimenIndex,
                     Array(algorithmState.task.transportUnits.size) { index ->
                         if (index == 0)
@@ -127,7 +125,7 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest<S : SolutionRepresen
             })
         else
             arrayListOf(
-                solutionFactory.produce(
+                OnePartRepresentation<C>(
                     0,
                     arrayOf(IntArray(algorithmState.task.costGraph.objectives.size) { it })
                 )

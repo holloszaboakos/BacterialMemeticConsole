@@ -5,25 +5,23 @@ import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
+import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
-class Opt2StepWithPerSpecimenProgressMemoryAndRandomOrder<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val solutionFactory: SolutionRepresentationFactory<S, C>,
-    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
-    override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,
-    override val calculateCostOf: CalculateCost<S, C>
+class Opt2StepWithPerSpecimenProgressMemoryAndRandomOrder<C : PhysicsUnit<C>>(
+    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<C>,
+    override val parameters: EvolutionaryAlgorithmParameterProvider<C>,
+    override val calculateCostOf: CalculateCost<C>
 ) :
-    BoostOperator<S, C>() {
+    BoostOperator<C>() {
 
     var lastPositionPerSpecimen = arrayOf<Pair<Int, Int>>()
     var shuffler = intArrayOf()
 
     @OptIn(ExperimentalTime::class)
-    override fun invoke(specimen: S): StepEfficiencyData {
+    override fun invoke(specimen: OnePartRepresentation<C>): StepEfficiencyData {
         var spentBudget = 0L
         val oldCost = specimen.costOrException()
         val spentTime = measureTime {

@@ -2,16 +2,14 @@ package hu.raven.puppet.logic.step.initializePopulation
 
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
+import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 
-class InitializePopulationByModuloStepper<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val solutionFactory: SolutionRepresentationFactory<S, C>,
-    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
-    override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,
+class InitializePopulationByModuloStepper<C : PhysicsUnit<C>>(
+    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<C>,
+    override val parameters: EvolutionaryAlgorithmParameterProvider<C>,
 ) :
-    InitializePopulation<S, C>() {
+    InitializePopulation<C>() {
 
     override fun invoke() {
         algorithmState.run {
@@ -20,7 +18,7 @@ class InitializePopulationByModuloStepper<S : SolutionRepresentation<C>, C : Phy
             val basePermutation = IntArray(sizeOfPermutation) { it }
             population = if (task.costGraph.objectives.size != 1)
                 ArrayList(List(parameters.sizeOfPopulation) { specimenIndex ->
-                    solutionFactory.produce(
+                    OnePartRepresentation<C>(
                         specimenIndex,
                         Array(task.transportUnits.size) { index ->
                             if (index == 0)
@@ -31,7 +29,7 @@ class InitializePopulationByModuloStepper<S : SolutionRepresentation<C>, C : Phy
                     )
                 })
             else arrayListOf(
-                solutionFactory.produce(
+                OnePartRepresentation<C>(
                     0,
                     arrayOf(IntArray(task.costGraph.objectives.size) { it })
                 )
@@ -50,7 +48,7 @@ class InitializePopulationByModuloStepper<S : SolutionRepresentation<C>, C : Phy
 
     private fun initSpecimen(
         instanceIndex: Int,
-        instance: S,
+        instance: OnePartRepresentation<C>,
         sizeOfPermutation: Int,
         basePermutation: IntArray
     ) {

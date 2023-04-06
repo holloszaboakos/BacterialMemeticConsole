@@ -4,8 +4,6 @@ import hu.raven.puppet.logic.step.bacterialmutationonspecimen.MutationOnSpecimen
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.parameters.BacterialMutationParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
 import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.utility.extention.sum
@@ -14,13 +12,12 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import kotlin.random.Random
 
-class BacterialMutationOnBestAndLuckyByShuffling<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val solutionFactory: SolutionRepresentationFactory<S, C>,
-    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
-    override val parameters: BacterialMutationParameterProvider<S, C>,
+class BacterialMutationOnBestAndLuckyByShuffling<C : PhysicsUnit<C>>(
+    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<C>,
+    override val parameters: BacterialMutationParameterProvider<C>,
     override val statistics: BacterialAlgorithmStatistics,
-    override val mutationOnSpecimen: MutationOnSpecimen<S, C>
-) : BacterialMutation<S, C>() {
+    override val mutationOnSpecimen: MutationOnSpecimen<C>
+) : BacterialMutation<C>() {
 
     override suspend fun invoke(): Unit = withContext(Dispatchers.Default) {
         algorithmState.run {

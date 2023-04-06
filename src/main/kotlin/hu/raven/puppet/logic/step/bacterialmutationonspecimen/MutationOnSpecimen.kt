@@ -7,21 +7,21 @@ import hu.raven.puppet.logic.step.selectsegment.SelectSegment
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.parameters.BacterialMutationParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.SolutionRepresentation
+import hu.raven.puppet.model.solution.OnePartRepresentation
 
-sealed class MutationOnSpecimen<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> :
-    EvolutionaryAlgorithmStep<S, C>() {
+sealed class MutationOnSpecimen<C : PhysicsUnit<C>> :
+    EvolutionaryAlgorithmStep<C>() {
 
-    abstract override val parameters: BacterialMutationParameterProvider<S, C>
-    protected abstract val mutationOperator: BacterialMutationOperator<S, C>
-    protected abstract val calculateCostOf: CalculateCost<S, C>
-    protected abstract val selectSegment: SelectSegment<S, C>
+    abstract override val parameters: BacterialMutationParameterProvider<C>
+    protected abstract val mutationOperator: BacterialMutationOperator<C>
+    protected abstract val calculateCostOf: CalculateCost<C>
+    protected abstract val selectSegment: SelectSegment<C>
 
-    fun calcCostOfEachAndSort(clones: MutableList<S>) {
+    fun calcCostOfEachAndSort(clones: MutableList<OnePartRepresentation<C>>) {
         clones
             .onEach { calculateCostOf(it) }
             .sortBy { it.costOrException().value }
     }
 
-    abstract operator fun invoke(specimen: S): StepEfficiencyData
+    abstract operator fun invoke(specimen: OnePartRepresentation<C>): StepEfficiencyData
 }

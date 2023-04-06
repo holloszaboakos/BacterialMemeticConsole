@@ -1,14 +1,11 @@
 package hu.raven.puppet.logic.step.initialize
 
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
 import hu.raven.puppet.model.state.AlgorithmState
 
-class InitializeAlgorithmDefault<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val solutionFactory: SolutionRepresentationFactory<S, C>,
+class InitializeAlgorithmDefault<C : PhysicsUnit<C>>(
     override val algorithmState: AlgorithmState
-) : InitializeAlgorithm<S, C>() {
+) : InitializeAlgorithm<C>() {
 
     override operator fun invoke() {}
 }

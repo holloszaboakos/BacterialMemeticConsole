@@ -4,10 +4,10 @@ import hu.raven.puppet.logic.step.EvolutionaryAlgorithmStep
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.SolutionRepresentation
+import hu.raven.puppet.model.solution.OnePartRepresentation
 
-sealed class BoostOperator<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> : EvolutionaryAlgorithmStep<S, C>() {
-    abstract val calculateCostOf: CalculateCost<S, C>
+sealed class BoostOperator<C : PhysicsUnit<C>> : EvolutionaryAlgorithmStep<C>() {
+    abstract val calculateCostOf: CalculateCost<C>
 
-    abstract operator fun invoke(specimen: S): StepEfficiencyData
+    abstract operator fun invoke(specimen: OnePartRepresentation<C>): StepEfficiencyData
 }

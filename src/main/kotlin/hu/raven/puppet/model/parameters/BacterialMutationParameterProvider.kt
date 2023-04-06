@@ -1,11 +1,10 @@
 package hu.raven.puppet.model.parameters
 
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 
-class BacterialMutationParameterProvider<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
+class BacterialMutationParameterProvider<C : PhysicsUnit<C>>(
+    algorithmState: IterativeAlgorithmStateWithMultipleCandidates<C>,
     iterationLimit: Int,
     sizeOfPopulation: Int,
     geneCount: Int,
@@ -13,6 +12,6 @@ class BacterialMutationParameterProvider<S : SolutionRepresentation<C>, C : Phys
     val cloneSegmentLength: Int,
     val cloneCycleCount: Int,
     val mutationPercentage: Float,
-) : EvolutionaryAlgorithmParameterProvider<S, C>(
+) : EvolutionaryAlgorithmParameterProvider<C>(
     algorithmState, iterationLimit, sizeOfPopulation, geneCount
 )

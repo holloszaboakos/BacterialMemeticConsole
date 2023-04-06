@@ -4,19 +4,16 @@ import hu.raven.puppet.logic.step.boost.Boost
 import hu.raven.puppet.logic.step.initializePopulation.InitializePopulation
 import hu.raven.puppet.logic.step.orderpopulationbycost.OrderPopulationByCost
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
 import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 import kotlinx.coroutines.runBlocking
 
 
-class InitializeGeneticAlgorithm<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val solutionFactory: SolutionRepresentationFactory<S, C>,
-    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
-    val initializePopulation: InitializePopulation<S, C>,
-    val orderPopulationByCost: OrderPopulationByCost<S, C>,
-    val boost: Boost<S, C>,
-) : InitializeAlgorithm<S, C>() {
+class InitializeGeneticAlgorithm<C : PhysicsUnit<C>>(
+    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<C>,
+    val initializePopulation: InitializePopulation<C>,
+    val orderPopulationByCost: OrderPopulationByCost<C>,
+    val boost: Boost<C>,
+) : InitializeAlgorithm<C>() {
 
     override fun invoke() {
         initializePopulation()
@@ -26,8 +23,8 @@ class InitializeGeneticAlgorithm<S : SolutionRepresentation<C>, C : PhysicsUnit<
         }
 
         algorithmState.apply {
-            copyOfBest = solutionFactory.copy(population.first())
-            copyOfWorst = solutionFactory.copy(population.last())
+            copyOfBest = population.first().copy()
+            copyOfWorst = population.last().copy()
         }
     }
 }

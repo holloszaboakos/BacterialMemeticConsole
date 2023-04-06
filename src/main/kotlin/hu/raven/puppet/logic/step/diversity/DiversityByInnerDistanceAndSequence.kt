@@ -2,17 +2,14 @@ package hu.raven.puppet.logic.step.diversity
 
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
 import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 import kotlinx.coroutines.runBlocking
 
 
-class DiversityByInnerDistanceAndSequence<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val solutionFactory: SolutionRepresentationFactory<S, C>,
-    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
-    override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,
-) : Diversity<S, C>() {
+class DiversityByInnerDistanceAndSequence<C : PhysicsUnit<C>>(
+    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<C>,
+    override val parameters: EvolutionaryAlgorithmParameterProvider<C>,
+) : Diversity<C>() {
 
     override fun invoke(): Double = runBlocking {
         var diversity = 0.0

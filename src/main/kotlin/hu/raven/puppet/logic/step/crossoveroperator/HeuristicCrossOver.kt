@@ -5,23 +5,21 @@ import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.math.Permutation
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
+import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.extention.sumClever
 import kotlin.random.Random.Default.nextInt
 
-class HeuristicCrossOver<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val solutionFactory: SolutionRepresentationFactory<S, C>,
-    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
-    override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,
+class HeuristicCrossOver<C : PhysicsUnit<C>>(
+    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<C>,
+    override val parameters: EvolutionaryAlgorithmParameterProvider<C>,
     val logger: DoubleLogger,
-) : CrossOverOperator<S, C>() {
+) : CrossOverOperator<C>() {
 
     override fun invoke(
-        parents: Pair<S, S>,
-        child: S,
+        parents: Pair<OnePartRepresentation<C>, OnePartRepresentation<C>>,
+        child: OnePartRepresentation<C>
     ) {
         val parentsL = parents.toList()
         val parentsInverse = Array(2) {
@@ -94,11 +92,11 @@ class HeuristicCrossOver<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
 
     }
 
-    private fun <S : SolutionRepresentation<C>> gatherNeighbouringValues(
-        parentsL: List<S>,
+    private fun  gatherNeighbouringValues(
+        parentsL: List<OnePartRepresentation<C>>,
         parentsInverse: Array<Permutation>,
         previousValue: Int,
-        child: S,
+        child: OnePartRepresentation<C>,
         childContains: BooleanArray
     ): List<Int> {
         return listOf(
@@ -109,11 +107,11 @@ class HeuristicCrossOver<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
         ).filter { !childContains[it] }
     }
 
-    private fun <S : SolutionRepresentation<C>> chooseNextValueAtRandom(
+    private fun  chooseNextValueAtRandom(
         lastIndexUsed: Int,
         randomPermutation: IntArray,
         childContains: BooleanArray,
-        child: S,
+        child: OnePartRepresentation<C>,
         geneIndex: Int
     ): Int {
 
@@ -161,9 +159,9 @@ class HeuristicCrossOver<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
     }
 
 
-    private fun <S : SolutionRepresentation<C>> chooseNextValueBasedOnWeight(
+    private fun  chooseNextValueBasedOnWeight(
         weights: Array<Fraction>,
-        child: S,
+        child: OnePartRepresentation<C>,
         geneIndex: Int,
         neighbours: List<Int>,
         childContains: BooleanArray

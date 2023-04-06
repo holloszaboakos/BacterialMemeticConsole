@@ -7,24 +7,22 @@ import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.parameters.BacterialMutationParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
+import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.solution.Segment
-import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
 import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
-class MutationWithElitistSelectionAndModuloStepper<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val solutionFactory: SolutionRepresentationFactory<S, C>,
-    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
-    override val parameters: BacterialMutationParameterProvider<S, C>,
-    override val mutationOperator: BacterialMutationOperator<S, C>,
-    override val calculateCostOf: CalculateCost<S, C>,
-    override val selectSegment: SelectSegment<S, C>
-) : MutationOnSpecimen<S, C>() {
+class MutationWithElitistSelectionAndModuloStepper<C : PhysicsUnit<C>>(
+    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<C>,
+    override val parameters: BacterialMutationParameterProvider<C>,
+    override val mutationOperator: BacterialMutationOperator<C>,
+    override val calculateCostOf: CalculateCost<C>,
+    override val selectSegment: SelectSegment<C>
+) : MutationOnSpecimen<C>() {
 
     @OptIn(ExperimentalTime::class)
-    override fun invoke(specimen: S): StepEfficiencyData = algorithmState.run {
+    override fun invoke(specimen: OnePartRepresentation<C>): StepEfficiencyData = algorithmState.run {
         var improvement = false
         calculateCostOf(specimen)
         val oldSpecimenCost = specimen.cost!!
@@ -61,10 +59,10 @@ class MutationWithElitistSelectionAndModuloStepper<S : SolutionRepresentation<C>
     }
 
     private fun generateClones(
-        specimen: S,
+        specimen: OnePartRepresentation<C>,
         selectedSegment: Segment
-    ): MutableList<S> {
-        val clones = MutableList(parameters.cloneCount + 1) { solutionFactory.copy(specimen) }
+    ): MutableList<OnePartRepresentation<C>> {
+        val clones = MutableList(parameters.cloneCount + 1) { specimen.copy() }
         val moduloStepperSegments = generateModuloStepperSegments(selectedSegment.values)
 
         clones

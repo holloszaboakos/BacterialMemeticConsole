@@ -5,8 +5,7 @@ import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
+import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 import hu.raven.puppet.model.statistics.GeneticAlgorithmStatistics
 import hu.raven.puppet.model.statistics.OperatorStatistics
@@ -18,24 +17,23 @@ import hu.raven.puppet.utility.inject
 //a mostani a méh kolónia algoritmus scout fázis menjen bele
 //abc: artificial bee colony
 //cinti
-class StatisticalRacingCrossOver<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val solutionFactory: SolutionRepresentationFactory<S, C>,
-    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
-    override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,
+class StatisticalRacingCrossOver<C : PhysicsUnit<C>>(
+    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<C>,
+    override val parameters: EvolutionaryAlgorithmParameterProvider<C>,
     val logger: DoubleLogger
-) : CrossOverOperator<S, C>() {
-    val calculateCostOf: CalculateCost<S, C> by inject()
+) : CrossOverOperator<C>() {
+    val calculateCostOf: CalculateCost<C> by inject()
 
-    private val statistics: GeneticAlgorithmStatistics<S, C> by inject()
+    private val statistics: GeneticAlgorithmStatistics<C> by inject()
 
     var iteration = -1
     var iterationLock = Object()
-    private var operator: CrossOverOperator<S, C>? = null
+    private var operator: CrossOverOperator<C>? = null
     private var actualStatistics: OperatorStatistics? = null
 
     override fun invoke(
-        parents: Pair<S, S>,
-        child: S,
+        parents: Pair<OnePartRepresentation<C>, OnePartRepresentation<C>>,
+        child: OnePartRepresentation<C>
     ) {
         var newIteration: Boolean
         synchronized(iterationLock) {

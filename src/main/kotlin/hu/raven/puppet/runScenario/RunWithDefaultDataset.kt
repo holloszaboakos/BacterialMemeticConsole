@@ -88,7 +88,7 @@ private fun <C : PhysicsUnit<C>> calculateLogData(
     timeElapsed: Duration,
     timeElapsedTotal: Duration
 ): BacterialMemeticAlgorithmLogLine<C> {
-    val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<SolutionRepresentation<C>, C> by inject()
+    val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<C>, C> by inject()
 
     val best = algorithmState.copyOfBest!!
     val second =
@@ -133,7 +133,7 @@ private fun <C : PhysicsUnit<C>> calculateLogData(
     )
 }
 
-private fun <C : PhysicsUnit<C>> SolutionRepresentation<C>.toLog() = SpecimenData(id, cost!!)
+private fun <C : PhysicsUnit<C>> OnePartRepresentation<C>.toLog() = SpecimenData(id, cost!!)
 
 
  */

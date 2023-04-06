@@ -3,8 +3,7 @@ package hu.raven.puppet.logic.step.calculatecost
 import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.model.physics.Meter
 import hu.raven.puppet.model.physics.Stere
-import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
+import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.state.AlgorithmState
 import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.model.task.CostGraph
@@ -12,18 +11,17 @@ import hu.raven.puppet.model.task.TransportUnit
 import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.inject
 
-class CalculateCostOfCVRPSolutionWithCapacity<S : SolutionRepresentation<Meter>>(
-    override val solutionFactory: SolutionRepresentationFactory<S, Meter>,
+class CalculateCostOfCVRPSolutionWithCapacity(
     override val statistics: BacterialAlgorithmStatistics,
     override val algorithmState: AlgorithmState
-) : CalculateCost<S, Meter>() {
+) : CalculateCost<Meter>() {
     data class TripState(
         val takenCapacity: Stere,
         val cost: Meter,
     )
 
     val doubleLogger: DoubleLogger by inject()
-    override fun invoke(specimen: SolutionRepresentation<Meter>) {
+    override fun invoke(specimen: OnePartRepresentation<Meter>) {
         statistics.fitnessCallCount++
         algorithmState.run {
             var tripState = TripState(Stere(0L), Meter(0L))

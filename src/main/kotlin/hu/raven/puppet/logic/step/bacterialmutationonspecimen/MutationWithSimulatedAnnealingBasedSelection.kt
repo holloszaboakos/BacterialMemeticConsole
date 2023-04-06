@@ -7,23 +7,21 @@ import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.parameters.BacterialMutationParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
+import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.solution.Segment
-import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
 import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 import kotlin.math.exp
 import kotlin.random.Random
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
-class MutationWithSimulatedAnnealingBasedSelection<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val solutionFactory: SolutionRepresentationFactory<S, C>,
-    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
-    override val parameters: BacterialMutationParameterProvider<S, C>,
-    override val mutationOperator: BacterialMutationOperator<S, C>,
-    override val calculateCostOf: CalculateCost<S, C>,
-    override val selectSegment: SelectSegment<S, C>
-) : MutationOnSpecimen<S, C>() {
+class MutationWithSimulatedAnnealingBasedSelection<C : PhysicsUnit<C>>(
+    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<C>,
+    override val parameters: BacterialMutationParameterProvider<C>,
+    override val mutationOperator: BacterialMutationOperator<C>,
+    override val calculateCostOf: CalculateCost<C>,
+    override val selectSegment: SelectSegment<C>
+) : MutationOnSpecimen<C>() {
     private val randomizer: IntArray by lazy {
         (0 until parameters.cloneSegmentLength)
             .shuffled()
@@ -31,7 +29,7 @@ class MutationWithSimulatedAnnealingBasedSelection<S : SolutionRepresentation<C>
     }
 
     @OptIn(ExperimentalTime::class)
-    override fun invoke(specimen: S): StepEfficiencyData = algorithmState.run {
+    override fun invoke(specimen: OnePartRepresentation<C>): StepEfficiencyData = algorithmState.run {
         var impruvement = false
         val oldSpecimenCost = specimen.cost
         val duration = measureTime {
@@ -71,10 +69,10 @@ class MutationWithSimulatedAnnealingBasedSelection<S : SolutionRepresentation<C>
     }
 
     private fun generateClones(
-        specimen: S,
+        specimen: OnePartRepresentation<C>,
         selectedSegment: Segment
-    ): MutableList<S> {
-        val clones = MutableList(parameters.cloneCount + 1) { solutionFactory.copy(specimen) }
+    ): MutableList<OnePartRepresentation<C>> {
+        val clones = MutableList(parameters.cloneCount + 1) { specimen.copy() }
         clones
             .slice(1 until clones.size)
             .forEach { clone ->
@@ -83,9 +81,9 @@ class MutationWithSimulatedAnnealingBasedSelection<S : SolutionRepresentation<C>
         return clones
     }
 
-    private fun <S : SolutionRepresentation<C>, C : PhysicsUnit<C>> loadDataToSpecimen(
-        specimen: S,
-        clones: MutableList<S>,
+    private fun <C : PhysicsUnit<C>> loadDataToSpecimen(
+        specimen: OnePartRepresentation<C>,
+        clones: MutableList<OnePartRepresentation<C>>,
         doSimulatedAnnealing: Boolean
     ) {
         if (!doSimulatedAnnealing ||

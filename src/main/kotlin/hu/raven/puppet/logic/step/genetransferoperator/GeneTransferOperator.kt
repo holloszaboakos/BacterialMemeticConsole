@@ -4,16 +4,16 @@ import hu.raven.puppet.logic.step.EvolutionaryAlgorithmStep
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.SolutionRepresentation
+import hu.raven.puppet.model.solution.OnePartRepresentation
 
 
-sealed class GeneTransferOperator<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> :
-    EvolutionaryAlgorithmStep<S, C>() {
-    abstract val calculateCostOf: CalculateCost<S, C>
+sealed class GeneTransferOperator<C : PhysicsUnit<C>> :
+    EvolutionaryAlgorithmStep<C>() {
+    abstract val calculateCostOf: CalculateCost<C>
     abstract val geneTransferSegmentLength: Int
 
     abstract operator fun invoke(
-        source: S,
-        target: S
+        source: OnePartRepresentation<C>,
+        target: OnePartRepresentation<C>
     ): StepEfficiencyData
 }

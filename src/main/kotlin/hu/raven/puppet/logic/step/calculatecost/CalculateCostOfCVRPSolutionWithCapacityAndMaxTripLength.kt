@@ -4,21 +4,18 @@ import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.Meter
 import hu.raven.puppet.model.physics.Stere
-import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
+import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.state.AlgorithmState
 import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.extention.sumClever
 
-class CalculateCostOfCVRPSolutionWithCapacityAndMaxTripLength<S : SolutionRepresentation<Meter>>(
-    override val solutionFactory: SolutionRepresentationFactory<S, Meter>,
+class CalculateCostOfCVRPSolutionWithCapacityAndMaxTripLength(
     override val statistics: BacterialAlgorithmStatistics,
     override val algorithmState: AlgorithmState,
     val doubleLogger: DoubleLogger
-) :
-    CalculateCost<S, Meter>() {
-    override fun invoke(specimen: SolutionRepresentation<Meter>) {
+) : CalculateCost<Meter>() {
+    override fun invoke(specimen: OnePartRepresentation<Meter>) {
         statistics.fitnessCallCount++
         algorithmState.run {
             var sumCost: Fraction? = Fraction.new(0L)

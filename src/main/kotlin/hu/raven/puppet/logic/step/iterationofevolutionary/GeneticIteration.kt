@@ -8,24 +8,21 @@ import hu.raven.puppet.logic.step.orderpopulationbycost.OrderPopulationByCost
 import hu.raven.puppet.logic.step.selectsurvivers.SelectSurvivors
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
 import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 import kotlinx.coroutines.runBlocking
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
-class GeneticIteration<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
+class GeneticIteration<C : PhysicsUnit<C>>(
     override val logger: DoubleLogger,
-    override val solutionFactory: SolutionRepresentationFactory<S, C>,
-    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
-    override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,
-    val orderPopulationByCost: OrderPopulationByCost<S, C>,
-    val boost: Boost<S, C>,
-    val selection: SelectSurvivors<S, C>,
-    val crossover: CrossOvers<S, C>,
-    val mutate: MutateChildren<S, C>
-) : EvolutionaryIteration<S, C>() {
+    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<C>,
+    override val parameters: EvolutionaryAlgorithmParameterProvider<C>,
+    val orderPopulationByCost: OrderPopulationByCost<C>,
+    val boost: Boost<C>,
+    val selection: SelectSurvivors<C>,
+    val crossover: CrossOvers<C>,
+    val mutate: MutateChildren<C>
+) : EvolutionaryIteration<C>() {
 
 
     override fun invoke(): Unit = runBlocking {
@@ -36,8 +33,8 @@ class GeneticIteration<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
         orderPopulationByCost()
         boost()
         algorithmState.apply {
-            copyOfBest = solutionFactory.copy(population.first())
-            copyOfWorst = solutionFactory.copy(population.last())
+            copyOfBest = population.first().copy()
+            copyOfWorst = population.last().copy()
             iteration++
         }
     }

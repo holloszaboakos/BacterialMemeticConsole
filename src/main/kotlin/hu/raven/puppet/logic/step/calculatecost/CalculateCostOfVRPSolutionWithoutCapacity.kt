@@ -1,8 +1,7 @@
 package hu.raven.puppet.logic.step.calculatecost
 
 import hu.raven.puppet.model.physics.Euro
-import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
+import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.state.AlgorithmState
 import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.model.task.CostGraphEdge
@@ -11,15 +10,14 @@ import hu.raven.puppet.model.task.TransportUnit
 import hu.raven.puppet.utility.extention.getEdgeBetween
 
 
-class CalculateCostOfVRPSolutionWithoutCapacity<S : SolutionRepresentation<Euro>>(
-    override val solutionFactory: SolutionRepresentationFactory<S, Euro>,
+class CalculateCostOfVRPSolutionWithoutCapacity(
     override val statistics: BacterialAlgorithmStatistics,
     override val algorithmState: AlgorithmState
 ) :
-    CalculateCost<S, Euro>() {
+    CalculateCost<Euro>() {
 
     override operator fun invoke(
-        specimen: SolutionRepresentation<Euro>
+        specimen: OnePartRepresentation<Euro>
     ) {
         statistics.fitnessCallCount++
         algorithmState.run {

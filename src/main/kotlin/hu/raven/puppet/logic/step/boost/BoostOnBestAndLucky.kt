@@ -3,21 +3,18 @@ package hu.raven.puppet.logic.step.boost
 import hu.raven.puppet.logic.step.boostoperator.BoostOperator
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
 import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.utility.extention.sum
 
 
-class BoostOnBestAndLucky<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
+class BoostOnBestAndLucky<C : PhysicsUnit<C>>(
     val luckyCount: Int,
-    override val solutionFactory: SolutionRepresentationFactory<S, C>,
-    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
-    override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,
-    override val boostOperator: BoostOperator<S, C>,
+    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<C>,
+    override val parameters: EvolutionaryAlgorithmParameterProvider<C>,
+    override val boostOperator: BoostOperator<C>,
     override val statistics: BacterialAlgorithmStatistics
-) : Boost<S, C>() {
+) : Boost<C>() {
 
     override suspend fun invoke() {
 

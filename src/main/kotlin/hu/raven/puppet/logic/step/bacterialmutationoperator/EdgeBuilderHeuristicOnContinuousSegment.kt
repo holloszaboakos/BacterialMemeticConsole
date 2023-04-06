@@ -3,21 +3,19 @@ package hu.raven.puppet.logic.step.bacterialmutationoperator
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.parameters.BacterialMutationParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
+import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.solution.Segment
-import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
 import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.extention.sumClever
 
-class EdgeBuilderHeuristicOnContinuousSegment<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val solutionFactory: SolutionRepresentationFactory<S, C>,
-    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
-    override val parameters: BacterialMutationParameterProvider<S, C>,
+class EdgeBuilderHeuristicOnContinuousSegment<C : PhysicsUnit<C>>(
+    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<C>,
+    override val parameters: BacterialMutationParameterProvider<C>,
 ) :
-    BacterialMutationOperator<S, C>() {
+    BacterialMutationOperator<C>() {
     override fun invoke(
-        clone: S,
+        clone: OnePartRepresentation<C>,
         selectedSegment: Segment
     ) {
 
@@ -216,8 +214,8 @@ class EdgeBuilderHeuristicOnContinuousSegment<S : SolutionRepresentation<C>, C :
         map { row -> row.map { it * maximalDenominator }.toTypedArray() }.toTypedArray()
     }
 
-    private fun <S : SolutionRepresentation<C>> calculateWeightsOfEdgesToNext(
-        clone: S,
+    private fun calculateWeightsOfEdgesToNext(
+        clone: OnePartRepresentation<C>,
         selectedSegment: Segment
     ): Array<Fraction> = algorithmState.run {
         val objectiveCount = task.costGraph.objectives.size
@@ -234,8 +232,8 @@ class EdgeBuilderHeuristicOnContinuousSegment<S : SolutionRepresentation<C>, C :
         }
     }
 
-    private fun <S : SolutionRepresentation<C>> calculateWeightsOfEdgesFromPrevious(
-        clone: S,
+    private fun calculateWeightsOfEdgesFromPrevious(
+        clone: OnePartRepresentation<C>,
         selectedSegment: Segment
     ): Array<Fraction> = algorithmState.run {
         val objectiveCount = task.costGraph.objectives.size

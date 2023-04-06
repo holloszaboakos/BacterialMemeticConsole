@@ -4,8 +4,6 @@ import hu.raven.puppet.logic.step.EvolutionaryAlgorithmStep
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
 import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 import hu.raven.puppet.utility.inject
 import kotlinx.coroutines.Dispatchers
@@ -16,12 +14,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
 
-class OrderPopulationByCost<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val solutionFactory: SolutionRepresentationFactory<S, C>,
-    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
-    override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,
-) : EvolutionaryAlgorithmStep<S, C>() {
-    val calculateCostOf: CalculateCost<S, C> by inject()
+class OrderPopulationByCost<C : PhysicsUnit<C>>(
+    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<C>,
+    override val parameters: EvolutionaryAlgorithmParameterProvider<C>,
+) : EvolutionaryAlgorithmStep<C>() {
+    val calculateCostOf: CalculateCost<C> by inject()
 
     suspend operator fun invoke(
     ) = withContext(Dispatchers.Default) {

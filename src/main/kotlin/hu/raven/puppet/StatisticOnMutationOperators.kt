@@ -18,8 +18,6 @@ import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.parameters.IterativeAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.Meter
 import hu.raven.puppet.model.solution.OnePartRepresentation
-import hu.raven.puppet.model.solution.factory.OnePartRepresentationFactory
-import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
 import hu.raven.puppet.model.state.AlgorithmState
 import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
@@ -39,38 +37,34 @@ private data class Scenario(
     val fileName: String,
     val objectiveCount: Int,
     val mutationStrategy: (
-        subSolutionFactory: SolutionRepresentationFactory<OnePartRepresentation<Meter>, Meter>,
-        algorithmState: IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>,
-        parameters: BacterialMutationParameterProvider<OnePartRepresentation<Meter>, Meter>,
-        mutationOperator: BacterialMutationOperator<OnePartRepresentation<Meter>, Meter>,
-        calculateCostOf: CalculateCost<OnePartRepresentation<Meter>, Meter>,
-        selectSegment: SelectSegment<OnePartRepresentation<Meter>, Meter>,
-    ) -> MutationOnSpecimen<OnePartRepresentation<Meter>, Meter>,
+        algorithmState: IterativeAlgorithmStateWithMultipleCandidates<Meter>,
+        parameters: BacterialMutationParameterProvider<Meter>,
+        mutationOperator: BacterialMutationOperator<Meter>,
+        calculateCostOf: CalculateCost<Meter>,
+        selectSegment: SelectSegment<Meter>,
+    ) -> MutationOnSpecimen<Meter>,
     val mutationOperator: (
-        subSolutionFactory: SolutionRepresentationFactory<OnePartRepresentation<Meter>, Meter>,
-        algorithmState: IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>,
-        parameters: BacterialMutationParameterProvider<OnePartRepresentation<Meter>, Meter>,
-    ) -> BacterialMutationOperator<OnePartRepresentation<Meter>, Meter>,
+        algorithmState: IterativeAlgorithmStateWithMultipleCandidates<Meter>,
+        parameters: BacterialMutationParameterProvider<Meter>,
+    ) -> BacterialMutationOperator<Meter>,
 )
 
 private val TASK_SIZES = arrayOf(4, 8, 16, 32, 64, 128, 256, 512, 1024)
 private val STRATEGIES: Array<(
-    subSolutionFactory: SolutionRepresentationFactory<OnePartRepresentation<Meter>, Meter>,
-    algorithmState: IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>,
-    parameters: BacterialMutationParameterProvider<OnePartRepresentation<Meter>, Meter>,
-    mutationOperator: BacterialMutationOperator<OnePartRepresentation<Meter>, Meter>,
-    calculateCostOf: CalculateCost<OnePartRepresentation<Meter>, Meter>,
-    selectSegment: SelectSegment<OnePartRepresentation<Meter>, Meter>,
-) -> MutationOnSpecimen<OnePartRepresentation<Meter>, Meter>> = arrayOf(
-    { subSolutionFactory: SolutionRepresentationFactory<OnePartRepresentation<Meter>, Meter>,
-      algorithmState: IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>,
-      parameters: BacterialMutationParameterProvider<OnePartRepresentation<Meter>, Meter>,
-      mutationOperator: BacterialMutationOperator<OnePartRepresentation<Meter>, Meter>,
-      calculateCostOf: CalculateCost<OnePartRepresentation<Meter>, Meter>,
-      selectSegment: SelectSegment<OnePartRepresentation<Meter>, Meter> ->
+
+    algorithmState: IterativeAlgorithmStateWithMultipleCandidates<Meter>,
+    parameters: BacterialMutationParameterProvider<Meter>,
+    mutationOperator: BacterialMutationOperator<Meter>,
+    calculateCostOf: CalculateCost<Meter>,
+    selectSegment: SelectSegment<Meter>,
+) -> MutationOnSpecimen<Meter>> = arrayOf(
+    { algorithmState: IterativeAlgorithmStateWithMultipleCandidates<Meter>,
+      parameters: BacterialMutationParameterProvider<Meter>,
+      mutationOperator: BacterialMutationOperator<Meter>,
+      calculateCostOf: CalculateCost<Meter>,
+      selectSegment: SelectSegment<Meter> ->
 
         MutationWithElitistSelection(
-            subSolutionFactory,
             algorithmState,
             parameters,
             mutationOperator,
@@ -78,15 +72,13 @@ private val STRATEGIES: Array<(
             selectSegment
         )
     },
-    { subSolutionFactory: SolutionRepresentationFactory<OnePartRepresentation<Meter>, Meter>,
-      algorithmState: IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>,
-      parameters: BacterialMutationParameterProvider<OnePartRepresentation<Meter>, Meter>,
-      mutationOperator: BacterialMutationOperator<OnePartRepresentation<Meter>, Meter>,
-      calculateCostOf: CalculateCost<OnePartRepresentation<Meter>, Meter>,
-      selectSegment: SelectSegment<OnePartRepresentation<Meter>, Meter> ->
+    { algorithmState: IterativeAlgorithmStateWithMultipleCandidates<Meter>,
+      parameters: BacterialMutationParameterProvider<Meter>,
+      mutationOperator: BacterialMutationOperator<Meter>,
+      calculateCostOf: CalculateCost<Meter>,
+      selectSegment: SelectSegment<Meter> ->
 
         MutationWithElitistSelectionAndOneOpposition(
-            subSolutionFactory,
             algorithmState,
             parameters,
             mutationOperator,
@@ -94,15 +86,13 @@ private val STRATEGIES: Array<(
             selectSegment,
         )
     },
-    { subSolutionFactory: SolutionRepresentationFactory<OnePartRepresentation<Meter>, Meter>,
-      algorithmState: IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>,
-      parameters: BacterialMutationParameterProvider<OnePartRepresentation<Meter>, Meter>,
-      mutationOperator: BacterialMutationOperator<OnePartRepresentation<Meter>, Meter>,
-      calculateCostOf: CalculateCost<OnePartRepresentation<Meter>, Meter>,
-      selectSegment: SelectSegment<OnePartRepresentation<Meter>, Meter> ->
+    { algorithmState: IterativeAlgorithmStateWithMultipleCandidates<Meter>,
+      parameters: BacterialMutationParameterProvider<Meter>,
+      mutationOperator: BacterialMutationOperator<Meter>,
+      calculateCostOf: CalculateCost<Meter>,
+      selectSegment: SelectSegment<Meter> ->
 
         MutationWithElitistSelectionAndModuloStepper(
-            subSolutionFactory,
             algorithmState,
             parameters,
             mutationOperator,
@@ -114,57 +104,47 @@ private val STRATEGIES: Array<(
     //random + modulo stepper
 )
 private val OPERATORS: Array<(
-    subSolutionFactory: SolutionRepresentationFactory<OnePartRepresentation<Meter>, Meter>,
-    algorithmState: IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>,
-    parameters: BacterialMutationParameterProvider<OnePartRepresentation<Meter>, Meter>,
-) -> BacterialMutationOperator<OnePartRepresentation<Meter>, Meter>> = arrayOf(
 
-    { subSolutionFactory: SolutionRepresentationFactory<OnePartRepresentation<Meter>, Meter>,
-      algorithmState: IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>,
-      parameters: BacterialMutationParameterProvider<OnePartRepresentation<Meter>, Meter> ->
+    algorithmState: IterativeAlgorithmStateWithMultipleCandidates<Meter>,
+    parameters: BacterialMutationParameterProvider<Meter>,
+) -> BacterialMutationOperator<Meter>> = arrayOf(
+
+    { algorithmState: IterativeAlgorithmStateWithMultipleCandidates<Meter>,
+      parameters: BacterialMutationParameterProvider<Meter> ->
 
         EdgeBuilderHeuristicOnContinuousSegment(
-            subSolutionFactory,
             algorithmState,
             parameters,
         )
     },
-    { subSolutionFactory: SolutionRepresentationFactory<OnePartRepresentation<Meter>, Meter>,
-      algorithmState: IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>,
-      parameters: BacterialMutationParameterProvider<OnePartRepresentation<Meter>, Meter> ->
+    { algorithmState: IterativeAlgorithmStateWithMultipleCandidates<Meter>,
+      parameters: BacterialMutationParameterProvider<Meter> ->
 
         EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation(
-            subSolutionFactory,
             algorithmState,
             parameters,
         )
     },
-    { subSolutionFactory: SolutionRepresentationFactory<OnePartRepresentation<Meter>, Meter>,
-      algorithmState: IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>,
-      parameters: BacterialMutationParameterProvider<OnePartRepresentation<Meter>, Meter> ->
+    { algorithmState: IterativeAlgorithmStateWithMultipleCandidates<Meter>,
+      parameters: BacterialMutationParameterProvider<Meter> ->
 
         OppositionOperator(
-            subSolutionFactory,
             algorithmState,
             parameters,
         )
     },
-    { subSolutionFactory: SolutionRepresentationFactory<OnePartRepresentation<Meter>, Meter>,
-      algorithmState: IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>,
-      parameters: BacterialMutationParameterProvider<OnePartRepresentation<Meter>, Meter> ->
+    { algorithmState: IterativeAlgorithmStateWithMultipleCandidates<Meter>,
+      parameters: BacterialMutationParameterProvider<Meter> ->
 
         RandomShuffleOfContinuesSegment(
-            subSolutionFactory,
             algorithmState,
             parameters,
         )
     },
-    { subSolutionFactory: SolutionRepresentationFactory<OnePartRepresentation<Meter>, Meter>,
-      algorithmState: IterativeAlgorithmStateWithMultipleCandidates<OnePartRepresentation<Meter>, Meter>,
-      parameters: BacterialMutationParameterProvider<OnePartRepresentation<Meter>, Meter> ->
+    { algorithmState: IterativeAlgorithmStateWithMultipleCandidates<Meter>,
+      parameters: BacterialMutationParameterProvider<Meter> ->
 
         SequentialSelectionHeuristicOnContinuousSegment(
-            subSolutionFactory,
             algorithmState,
             parameters,
         )
@@ -204,67 +184,64 @@ private fun runScenario(scenario: Scenario) {
                 single(named(CLONE_CYCLE_COUNT)) { 5 }
                 single(named(SIZE_OF_POPULATION)) { 1 }
                 single(named(ITERATION_LIMIT)) { Int.MAX_VALUE }
-                single<BacterialMutationParameterProvider<*, *>> {
-                    BacterialMutationParameterProvider<OnePartRepresentation<Meter>, Meter>(
+                single<BacterialMutationParameterProvider<*>> {
+                    BacterialMutationParameterProvider<Meter>(
                         cloneCount = 40,
                         cloneSegmentLength = scenario.objectiveCount,
                         cloneCycleCount = 5,
                         algorithmState = get(),
                         sizeOfPopulation = 1,
                         geneCount = scenario.objectiveCount,
-                        iterationLimit = Int.MAX_VALUE
+                        iterationLimit = Int.MAX_VALUE,
+                        mutationPercentage = 0f
                     )
                 }
-                single<EvolutionaryAlgorithmParameterProvider<*, *>> {
-                    get<BacterialMutationParameterProvider<OnePartRepresentation<Meter>, Meter>>()
+                single<EvolutionaryAlgorithmParameterProvider<*>> {
+                    get<BacterialMutationParameterProvider<Meter>>()
                 }
                 single<IterativeAlgorithmParameterProvider> {
-                    get<BacterialMutationParameterProvider<OnePartRepresentation<Meter>, Meter>>()
+                    get<BacterialMutationParameterProvider<Meter>>()
                 }
                 single(named(INPUT_FOLDER)) { "input/tsp" }
                 single(named(OUTPUT_FOLDER)) { "output" }
                 single(named(SINGLE_FILE)) { scenario.fileName }
-                single<CalculateCost<*, *>> {
-                    CalculateCostOfTspSolution<OnePartRepresentation<Meter>>(
-                        get(), get(), get()
+                single<CalculateCost<*>> {
+                    CalculateCostOfTspSolution(
+                        get(), get()
                     )
                 }
                 single { BacterialAlgorithmStatistics() }
                 single { DoubleLogger() }
                 single<TaskLoader> { TspTaskLoader() }
                 single { get<TaskLoader>().loadTask(get(INPUT_FOLDER)) }
-                single<SolutionRepresentationFactory<*, *>> {
-                    OnePartRepresentationFactory<Meter>()
-                }
-                single<BacterialMutationOperator<*, *>> {
+                single<BacterialMutationOperator<*>> {
                     scenario.mutationOperator(
-                        get(), get(), get()
+                        get(), get()
                     )
                 }
-                single<SelectSegment<*, *>> {
-                    SelectContinuesSegment<OnePartRepresentation<Meter>, Meter>(
-                        get(), get(), get()
+                single<SelectSegment<*>> {
+                    SelectContinuesSegment<Meter>(
+                        get(), get()
                     )
                 }
-                single<IterativeAlgorithmStateWithMultipleCandidates<*, *>> {
-                    IterativeAlgorithmStateWithMultipleCandidates(
+                single<IterativeAlgorithmStateWithMultipleCandidates<*>> {
+                    IterativeAlgorithmStateWithMultipleCandidates<Meter>(
                         get()
                     )
                 }
                 single<AlgorithmState> {
-                    get<IterativeAlgorithmStateWithMultipleCandidates<*, *>>()
+                    get<IterativeAlgorithmStateWithMultipleCandidates<*>>()
                 }
             }
         )
     }
 
     val task: Task by inject()
-    val calculateCost: CalculateCost<OnePartRepresentation<Meter>, Meter> by inject()
+    val calculateCost: CalculateCost<Meter> by inject()
     task.costGraph.edgesFromCenter.forEach { println(it.length) }
     task.costGraph.edgesToCenter.forEach { println(it.length) }
     task.costGraph.edgesBetween.flatten().forEach { println(it.length) }
-    val strategy: MutationOnSpecimen<OnePartRepresentation<Meter>, Meter> = scenario.mutationStrategy(
-        get(),
+    val strategy: MutationOnSpecimen<Meter> = scenario.mutationStrategy(
         get(),
         get(),
         get(),

@@ -3,16 +3,13 @@ package hu.raven.puppet.logic.step.selectsurvivers
 import hu.raven.puppet.logic.step.EvolutionaryAlgorithmStep
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
 import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 import hu.raven.puppet.utility.extention.slice
 
-class SelectSurvivors<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val solutionFactory: SolutionRepresentationFactory<S, C>,
-    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
-    override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,
-) : EvolutionaryAlgorithmStep<S, C>() {
+class SelectSurvivors<C : PhysicsUnit<C>>(
+    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<C>,
+    override val parameters: EvolutionaryAlgorithmParameterProvider<C>,
+) : EvolutionaryAlgorithmStep<C>() {
     operator fun invoke() {
         algorithmState.run {
             population.asSequence()

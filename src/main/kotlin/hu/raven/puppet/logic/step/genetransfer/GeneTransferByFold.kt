@@ -3,8 +3,6 @@ package hu.raven.puppet.logic.step.genetransfer
 import hu.raven.puppet.logic.step.genetransferoperator.GeneTransferOperator
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
 import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.utility.extention.sum
@@ -12,15 +10,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 
-class GeneTransferByFold<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val solutionFactory: SolutionRepresentationFactory<S, C>,
-    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
-    override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,
+class GeneTransferByFold<C : PhysicsUnit<C>>(
+    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<C>,
+    override val parameters: EvolutionaryAlgorithmParameterProvider<C>,
     override val injectionCount: Int,
-    override val geneTransferOperator: GeneTransferOperator<S, C>,
+    override val geneTransferOperator: GeneTransferOperator<C>,
     override val statistics: BacterialAlgorithmStatistics
 ) :
-    GeneTransfer<S, C>() {
+    GeneTransfer<C>() {
 
     override suspend fun invoke(): Unit = withContext(Dispatchers.Default) {
         algorithmState.run {

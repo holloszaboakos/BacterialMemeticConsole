@@ -2,8 +2,7 @@ package hu.raven.puppet.logic.step.diversity
 
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
+import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -11,11 +10,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlin.math.abs
 
-class DiversityByMatrixDistanceFromBest<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val solutionFactory: SolutionRepresentationFactory<S, C>,
-    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
-    override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>
-) : Diversity<S, C>() {
+class DiversityByMatrixDistanceFromBest<C : PhysicsUnit<C>>(
+    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<C>,
+    override val parameters: EvolutionaryAlgorithmParameterProvider<C>
+) : Diversity<C>() {
 
     override fun invoke(): Double = runBlocking {
         val best = algorithmState.copyOfBest!!
@@ -50,8 +48,8 @@ class DiversityByMatrixDistanceFromBest<S : SolutionRepresentation<C>, C : Physi
         return distance
     }
 
-    private fun <S : SolutionRepresentation<C>, C : PhysicsUnit<C>> preceditionMatrixWithDistance(
-        specimen: S
+    private fun <C : PhysicsUnit<C>> preceditionMatrixWithDistance(
+        specimen: OnePartRepresentation<C>
     ): Array<IntArray> {
         val inverse = specimen.inverseOfPermutation()
         return Array(inverse.value.size) { fromIndex ->

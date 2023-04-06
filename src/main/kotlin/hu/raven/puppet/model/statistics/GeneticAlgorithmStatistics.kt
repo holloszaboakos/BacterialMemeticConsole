@@ -3,12 +3,11 @@ package hu.raven.puppet.model.statistics
 import hu.raven.puppet.logic.step.crossoveroperator.CrossOverOperator
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.SolutionRepresentation
 import hu.raven.puppet.utility.get
 
-class GeneticAlgorithmStatistics<S : SolutionRepresentation<C>, C : PhysicsUnit<C>> {
+class GeneticAlgorithmStatistics<C : PhysicsUnit<C>> {
     val operatorsWithStatistics =
-        CrossOverOperator.getVariants<S, C>(get(), get(), get(), get()).associateWith {
+        CrossOverOperator.getVariants<C>(get(), get(), get()).associateWith {
             OperatorStatistics(Fraction.new(0), 1, Fraction.new(Int.MAX_VALUE.toLong()))
         }.toMutableMap()
 

@@ -1,12 +1,12 @@
 package hu.raven.puppet.model.state
 
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.SolutionRepresentation
+import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.task.Task
 
-class IterativeAlgorithmStateWithSingleCandidate<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
+class IterativeAlgorithmStateWithSingleCandidate<C : PhysicsUnit<C>>(
     override val task: Task
 ) : IterativeAlgorithmState {
-    lateinit var actualCandidate: S
+    lateinit var actualCandidate: OnePartRepresentation<C>
     override var iteration = 0
 }

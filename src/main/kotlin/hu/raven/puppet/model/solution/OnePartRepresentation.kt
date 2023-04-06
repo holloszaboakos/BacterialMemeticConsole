@@ -8,15 +8,16 @@ import kotlin.concurrent.read
 import kotlin.concurrent.write
 
 data class OnePartRepresentation<C : PhysicsUnit<C>>(
-    override val id: Int,
-    override val objectiveCount: Int,
+    val id: Int,
+    val objectiveCount: Int,
     val permutation: Permutation,
-    override var inUse: Boolean = true,
-    override var cost: C? = null,
-    override var iteration: Int = 0,
-    override var orderInPopulation: Int = 0
-) : SolutionRepresentation<C> {
+    var inUse: Boolean = true,
+    var cost: C? = null,
+    var iteration: Int = 0,
+    var orderInPopulation: Int = 0
+) {
 
+    fun costOrException() = cost ?: throw Exception("Cost of specimen should be already set!")
     private val lock = ReentrantReadWriteLock()
 
     constructor(id: Int, data: Array<IntArray>) : this(
@@ -50,38 +51,38 @@ data class OnePartRepresentation<C : PhysicsUnit<C>>(
         other.iteration
     )
 
-    override val salesmanCount: Int = permutation.value.size - objectiveCount + 1
+    val salesmanCount: Int = permutation.value.size - objectiveCount + 1
 
-    override val permutationIndices: IntRange = permutation.value.indices
-    override val permutationSize: Int = permutation.value.size
+    val permutationIndices: IntRange = permutation.value.indices
+    val permutationSize: Int = permutation.value.size
 
-    override operator fun get(index: Int) = lock.read {
+    operator fun get(index: Int) = lock.read {
         permutation.value[index]
     }
 
-    override operator fun set(index: Int, value: Int) = lock.write {
+    operator fun set(index: Int, value: Int) = lock.write {
         permutation.value[index] = value
     }
 
-    override fun indexOf(value: Int): Int = permutation.value.indexOf(value)
+    fun indexOf(value: Int): Int = permutation.value.indexOf(value)
 
-    override fun contains(value: Int): Boolean = permutation.value.contains(value)
+    fun contains(value: Int): Boolean = permutation.value.contains(value)
 
-    override fun <T> map(mapper: (Int) -> T): Sequence<T> = permutation.value.map(mapper).asSequence()
+    fun <T> map(mapper: (Int) -> T): Sequence<T> = permutation.value.map(mapper).asSequence()
 
-    override fun forEach(operation: (Int) -> Unit) =
+    fun forEach(operation: (Int) -> Unit) =
         lock.read { permutation.value.forEach(operation) }
 
-    override fun forEachIndexed(operation: (Int, Int) -> Unit) =
+    fun forEachIndexed(operation: (Int, Int) -> Unit) =
         lock.read { permutation.value.forEachIndexed(operation) }
 
-    override fun setEach(operation: (Int, Int) -> Int) = lock.write {
+    fun setEach(operation: (Int, Int) -> Int) = lock.write {
         permutation.value.forEachIndexed { index: Int, value: Int ->
             permutation.value[index] = operation(index, value)
         }
     }
 
-    override fun <T> mapSlice(mapper: (slice: IntArray) -> T): Collection<T> = lock.read {
+    fun <T> mapSlice(mapper: (slice: IntArray) -> T): Collection<T> = lock.read {
         val result = mutableListOf<MutableList<Int>>(mutableListOf())
         permutation.value.forEach { value ->
             if (value < objectiveCount)
@@ -92,7 +93,7 @@ data class OnePartRepresentation<C : PhysicsUnit<C>>(
         result.map { mapper(it.toIntArray()) }
     }
 
-    override fun <T> mapSliceIndexed(mapper: (index: Int, slice: IntArray) -> T): Collection<T> = lock.read {
+    fun <T> mapSliceIndexed(mapper: (index: Int, slice: IntArray) -> T): Collection<T> = lock.read {
         val result = mutableListOf<MutableList<Int>>(mutableListOf())
         permutation.value.forEach { value ->
             if (value < objectiveCount)
@@ -103,14 +104,14 @@ data class OnePartRepresentation<C : PhysicsUnit<C>>(
         result.mapIndexed { index, it -> mapper(index, it.toIntArray()) }
     }
 
-    override fun forEachSlice(operation: (slice: IntArray) -> Unit) {
+    fun forEachSlice(operation: (slice: IntArray) -> Unit) {
         mapSlice { it }
             .toList()
             .forEach { slice -> operation(slice) }
 
     }
 
-    override fun forEachSliceIndexed(operation: (index: Int, slice: IntArray) -> Unit) {
+    fun forEachSliceIndexed(operation: (index: Int, slice: IntArray) -> Unit) {
         mapSlice { it }
             .toList()
             .forEachIndexed { index, flow ->
@@ -119,14 +120,14 @@ data class OnePartRepresentation<C : PhysicsUnit<C>>(
 
     }
 
-    override fun slice(indices: IntRange): Collection<Int> = lock.read {
+    fun slice(indices: IntRange): Collection<Int> = lock.read {
         permutation.value.slice(indices)
     }
 
-    override fun shuffle() = lock.write { permutation.value.shuffle() }
-    override fun first(selector: (Int) -> Boolean): Int = lock.read { permutation.value.first(selector) }
+    fun shuffle() = lock.write { permutation.value.shuffle() }
+    fun first(selector: (Int) -> Boolean): Int = lock.read { permutation.value.first(selector) }
 
-    override fun setData(data: Collection<IntArray>) {
+    fun setData(data: Collection<IntArray>) {
         var counter = 0
         data.forEachIndexed { index, array ->
             array.forEach {
@@ -140,26 +141,31 @@ data class OnePartRepresentation<C : PhysicsUnit<C>>(
         }
     }
 
-    override fun getData(): Collection<IntArray> {
+    fun getData(): Collection<IntArray> {
         lock.read {
             return mapSlice { list -> list }
         }
     }
 
-    override fun checkFormat(): Boolean {
+    fun checkFormat(): Boolean {
         val result = permutation.isNotMalformed()
         return if (permutation.value.filter { it >= objectiveCount }.size != salesmanCount - 1)
             false
         else result
     }
 
-    override fun inverseOfPermutation() = permutation.inverse()
+    fun inverseOfPermutation() = permutation.inverse()
 
-    override fun sequentialOfPermutation() = permutation.sequential()
+    fun sequentialOfPermutation() = permutation.sequential()
 
-    override fun copyOfPermutation() = permutation.value.copyOf()
+    fun copyOfPermutation() = permutation.value.copyOf()
 
-    override fun <T : (Int, (Int) -> Int) -> Collection<Int>> copyOfPermutationBy(initializer: T) =
+    fun <T : (Int, (Int) -> Int) -> Collection<Int>> copyOfPermutationBy(initializer: T) =
         initializer(permutation.value.size) { permutation.value[it] }
 
+    fun swapGenes(firstIndex: Int, secondIndex: Int) {
+        val tempGene = this[firstIndex]
+        this[firstIndex] = this[secondIndex]
+        this[secondIndex] = tempGene
+    }
 }

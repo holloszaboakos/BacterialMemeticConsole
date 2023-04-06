@@ -2,17 +2,15 @@ package hu.raven.puppet.logic.step.initializationofiterative
 
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
+import hu.raven.puppet.model.solution.OnePartRepresentation
 
 
-class InitializeByRandom<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val solutionFactory: SolutionRepresentationFactory<S, C>,
-    val calculateCostOf: CalculateCost<S, C>
-) : InitializeLocalSearch<S, C>() {
+class InitializeByRandom<C : PhysicsUnit<C>>(
+    val calculateCostOf: CalculateCost<C>
+) : InitializeLocalSearch<C>() {
 
     override operator fun invoke() = algorithmState.run {
-        actualCandidate = solutionFactory.produce(0, Array(task.transportUnits.size) { index ->
+        actualCandidate = OnePartRepresentation<C>(0, Array(task.transportUnits.size) { index ->
             if (index == 0)
                 IntArray(task.costGraph.objectives.size) { it }
             else

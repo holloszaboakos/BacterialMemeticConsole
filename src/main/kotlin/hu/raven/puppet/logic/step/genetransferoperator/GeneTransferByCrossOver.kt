@@ -6,25 +6,23 @@ import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
+import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
-class GeneTransferByCrossOver<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val solutionFactory: SolutionRepresentationFactory<S, C>,
-    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
-    override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,
-    override val calculateCostOf: CalculateCost<S, C>,
+class GeneTransferByCrossOver<C : PhysicsUnit<C>>(
+    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<C>,
+    override val parameters: EvolutionaryAlgorithmParameterProvider<C>,
+    override val calculateCostOf: CalculateCost<C>,
     override val geneTransferSegmentLength: Int,
-    val crossOverOperator: CrossOverOperator<S, C>,
-) : GeneTransferOperator<S, C>() {
+    val crossOverOperator: CrossOverOperator<C>,
+) : GeneTransferOperator<C>() {
 
 
     @OptIn(ExperimentalTime::class)
-    override fun invoke(source: S, target: S): StepEfficiencyData {
-        val child = solutionFactory.copy(target)
+    override fun invoke(source: OnePartRepresentation<C>, target: OnePartRepresentation<C>): StepEfficiencyData {
+        val child = target.copy()
 
         val spentTime = measureTime {
             crossOverOperator(

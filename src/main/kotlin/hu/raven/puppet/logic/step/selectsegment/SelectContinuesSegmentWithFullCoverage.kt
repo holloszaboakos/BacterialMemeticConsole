@@ -2,16 +2,14 @@ package hu.raven.puppet.logic.step.selectsegment
 
 import hu.raven.puppet.model.parameters.BacterialMutationParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
+import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.solution.Segment
-import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
 import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 
-class SelectContinuesSegmentWithFullCoverage<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val solutionFactory: SolutionRepresentationFactory<S, C>,
-    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
-    override val parameters: BacterialMutationParameterProvider<S, C>,
-) : SelectSegment<S, C>() {
+class SelectContinuesSegmentWithFullCoverage<C : PhysicsUnit<C>>(
+    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<C>,
+    override val parameters: BacterialMutationParameterProvider<C>,
+) : SelectSegment<C>() {
     private val randomizer: IntArray by lazy {
         (0 until parameters.cloneSegmentLength)
             .shuffled()
@@ -19,7 +17,7 @@ class SelectContinuesSegmentWithFullCoverage<S : SolutionRepresentation<C>, C : 
     }
 
     override fun invoke(
-        specimen: S,
+        specimen: OnePartRepresentation<C>,
         cycleIndex: Int,
         cycleCount: Int
     ): Segment = algorithmState.run {

@@ -2,20 +2,18 @@ package hu.raven.puppet.logic.step.crossoveroperator
 
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
+import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 import kotlin.random.Random
 
-class OrderCrossOver<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val solutionFactory: SolutionRepresentationFactory<S, C>,
-    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
-    override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>
-) : CrossOverOperator<S, C>() {
+class OrderCrossOver<C : PhysicsUnit<C>>(
+    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<C>,
+    override val parameters: EvolutionaryAlgorithmParameterProvider<C>
+) : CrossOverOperator<C>() {
 
     override fun invoke(
-        parents: Pair<S, S>,
-        child: S,
+        parents: Pair<OnePartRepresentation<C>, OnePartRepresentation<C>>,
+        child: OnePartRepresentation<C>
     ) {
         val parentsL = parents.toList()
         val cut = arrayOf(Random.nextInt(parentsL.size), Random.nextInt(parentsL.size - 1))

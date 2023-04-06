@@ -2,19 +2,17 @@ package hu.raven.puppet.logic.step.calculatecost
 
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.Meter
-import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
+import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.state.AlgorithmState
 import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.extention.sumClever
 
-class CalculateCostOfTspSolution<S : SolutionRepresentation<Meter>>(
-    override val solutionFactory: SolutionRepresentationFactory<S, Meter>,
+class CalculateCostOfTspSolution(
     override val statistics: BacterialAlgorithmStatistics,
     override val algorithmState: AlgorithmState
-) : CalculateCost<S, Meter>() {
-    override operator fun invoke(specimen: SolutionRepresentation<Meter>) {
+) : CalculateCost<Meter>() {
+    override operator fun invoke(specimen: OnePartRepresentation<Meter>) {
         algorithmState.task.run {
             specimen.cost = arrayOf(
                 costGraph.edgesFromCenter[specimen[0]].length,

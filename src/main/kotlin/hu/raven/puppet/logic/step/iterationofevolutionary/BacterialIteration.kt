@@ -6,23 +6,20 @@ import hu.raven.puppet.logic.step.boost.Boost
 import hu.raven.puppet.logic.step.orderpopulationbycost.OrderPopulationByCost
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
 import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 import kotlinx.coroutines.runBlocking
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
-class BacterialIteration<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
+class BacterialIteration<C : PhysicsUnit<C>>(
     override val logger: DoubleLogger,
-    override val solutionFactory: SolutionRepresentationFactory<S, C>,
-    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
-    override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,
-    val boost: Boost<S, C>,
-    val geneTransfer: hu.raven.puppet.logic.step.genetransfer.GeneTransfer<S, C>,
-    val mutate: BacterialMutation<S, C>,
-    val orderPopulationByCost: OrderPopulationByCost<S, C>,
-) : EvolutionaryIteration<S, C>() {
+    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<C>,
+    override val parameters: EvolutionaryAlgorithmParameterProvider<C>,
+    val boost: Boost<C>,
+    val geneTransfer: hu.raven.puppet.logic.step.genetransfer.GeneTransfer<C>,
+    val mutate: BacterialMutation<C>,
+    val orderPopulationByCost: OrderPopulationByCost<C>,
+) : EvolutionaryIteration<C>() {
 
     override fun invoke(): Unit = runBlocking {
         boost()
@@ -31,18 +28,9 @@ class BacterialIteration<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
         orderPopulationByCost()
 
         algorithmState.apply {
-            copyOfBest = solutionFactory.copy(population.first())
-            copyOfWorst = solutionFactory.copy(population.last())
+            copyOfBest = population.first().copy()
+            copyOfWorst = population.last().copy()
             iteration++
-        }
-    }
-
-    @OptIn(ExperimentalTime::class)
-    private suspend fun runAndLogTime(name: String, action: suspend () -> Unit) {
-        measureTime {
-            action()
-        }.let {
-            logger("$name time: $it")
         }
     }
 }

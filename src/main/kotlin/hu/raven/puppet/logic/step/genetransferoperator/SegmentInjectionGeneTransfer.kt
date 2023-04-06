@@ -6,27 +6,25 @@ import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.SolutionRepresentation
-import hu.raven.puppet.model.solution.factory.SolutionRepresentationFactory
+import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.state.IterativeAlgorithmStateWithMultipleCandidates
 import hu.raven.puppet.utility.extention.nextSegmentStartPosition
 import kotlin.random.Random
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
-class SegmentInjectionGeneTransfer<S : SolutionRepresentation<C>, C : PhysicsUnit<C>>(
-    override val solutionFactory: SolutionRepresentationFactory<S, C>,
-    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<S, C>,
-    override val parameters: EvolutionaryAlgorithmParameterProvider<S, C>,
-    override val calculateCostOf: CalculateCost<S, C>,
+class SegmentInjectionGeneTransfer<C : PhysicsUnit<C>>(
+    override val algorithmState: IterativeAlgorithmStateWithMultipleCandidates<C>,
+    override val parameters: EvolutionaryAlgorithmParameterProvider<C>,
+    override val calculateCostOf: CalculateCost<C>,
     override val geneTransferSegmentLength: Int,
     val logger: DoubleLogger,
-) : GeneTransferOperator<S, C>() {
+) : GeneTransferOperator<C>() {
 
     @OptIn(ExperimentalTime::class)
     override fun invoke(
-        source: S,
-        target: S
+        source: OnePartRepresentation<C>,
+        target: OnePartRepresentation<C>
     ): StepEfficiencyData {
         algorithmState.run {
             val oldCost = target.costOrException()
@@ -71,8 +69,8 @@ class SegmentInjectionGeneTransfer<S : SolutionRepresentation<C>, C : PhysicsUni
         }
     }
 
-    private fun <S : SolutionRepresentation<C>, C : PhysicsUnit<C>> collectElementsOfSegment(
-        source: S,
+    private fun <C : PhysicsUnit<C>> collectElementsOfSegment(
+        source: OnePartRepresentation<C>,
         rangeOfSegment: IntRange
     ): IntArray {
         return source
@@ -81,8 +79,8 @@ class SegmentInjectionGeneTransfer<S : SolutionRepresentation<C>, C : PhysicsUni
             .toIntArray()
     }
 
-    private fun <S : SolutionRepresentation<C>, C : PhysicsUnit<C>> collectElementsNotInSegment(
-        target: S,
+    private fun <C : PhysicsUnit<C>> collectElementsNotInSegment(
+        target: OnePartRepresentation<C>,
         elementsOfSegment: IntArray,
     ): IntArray {
 
@@ -96,8 +94,8 @@ class SegmentInjectionGeneTransfer<S : SolutionRepresentation<C>, C : PhysicsUni
             .toIntArray()
     }
 
-    private fun <S : SolutionRepresentation<C>, C : PhysicsUnit<C>> loadSegmentToTarget(
-        target: S,
+    private fun <C : PhysicsUnit<C>> loadSegmentToTarget(
+        target: OnePartRepresentation<C>,
         rangeOfSegment: IntRange,
         elementsOfSegment: IntArray,
         elementsOfTargetNotInSegment: IntArray,
@@ -122,12 +120,12 @@ class SegmentInjectionGeneTransfer<S : SolutionRepresentation<C>, C : PhysicsUni
         }
     }
 
-    private fun <S : SolutionRepresentation<C>, C : PhysicsUnit<C>> resetFlagsOf(specimen: S) {
+    private fun <C : PhysicsUnit<C>> resetFlagsOf(specimen: OnePartRepresentation<C>) {
         specimen.iteration = algorithmState.iteration
         specimen.cost = null
     }
 
-    private fun <S : SolutionRepresentation<C>, C : PhysicsUnit<C>> checkFormatOf(specimen: S) {
+    private fun <C : PhysicsUnit<C>> checkFormatOf(specimen: OnePartRepresentation<C>) {
         if (!specimen.checkFormat()) {
             logger("Wrongly formatted")
         }
