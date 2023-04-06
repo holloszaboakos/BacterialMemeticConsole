@@ -18,8 +18,8 @@ import hu.raven.puppet.utility.inject
 //abc: artificial bee colony
 //cinti
 class StatisticalRacingCrossOver<C : PhysicsUnit<C>>(
-    override val algorithmState: EvolutionaryAlgorithmState<C>,
-    override val parameters: EvolutionaryAlgorithmParameterProvider<C>,
+    val algorithmState: EvolutionaryAlgorithmState<C>,
+    val parameters: EvolutionaryAlgorithmParameterProvider<C>,
     val logger: DoubleLogger
 ) : CrossOverOperator<C>() {
     val calculateCostOf: CalculateCost<C> by inject()

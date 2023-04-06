@@ -11,8 +11,8 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 
 class GeneTransferByTournament<C : PhysicsUnit<C>>(
-    override val algorithmState: EvolutionaryAlgorithmState<C>,
-    override val parameters: EvolutionaryAlgorithmParameterProvider<C>,
+    val algorithmState: EvolutionaryAlgorithmState<C>,
+    val parameters: EvolutionaryAlgorithmParameterProvider<C>,
     override val injectionCount: Int,
     override val geneTransferOperator: GeneTransferOperator<C>,
     override val statistics: BacterialAlgorithmStatistics

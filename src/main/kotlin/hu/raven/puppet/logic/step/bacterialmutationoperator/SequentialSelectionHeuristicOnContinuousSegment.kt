@@ -11,7 +11,7 @@ import hu.raven.puppet.utility.extention.sumClever
 
 //TODO repair
 class SequentialSelectionHeuristicOnContinuousSegment<C : PhysicsUnit<C>>(
-    override val algorithmState: EvolutionaryAlgorithmState<C>,
+    val algorithmState: EvolutionaryAlgorithmState<C>,
     override val parameters: BacterialMutationParameterProvider<C>,
 ) :
     BacterialMutationOperator<C>() {

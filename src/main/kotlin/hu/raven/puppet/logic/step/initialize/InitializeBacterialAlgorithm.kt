@@ -11,7 +11,7 @@ import kotlinx.coroutines.runBlocking
 class InitializeBacterialAlgorithm<C : PhysicsUnit<C>>(
     val initializePopulation: InitializePopulation<C>,
     val orderPopulationByCost: OrderPopulationByCost<C>,
-    override val algorithmState: EvolutionaryAlgorithmState<C>,
+    val algorithmState: EvolutionaryAlgorithmState<C>,
     val logger: DoubleLogger,
 ) : InitializeAlgorithm<C>() {
 

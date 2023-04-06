@@ -2,10 +2,12 @@ package hu.raven.puppet.logic.step.localsearchiteration
 
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.model.physics.PhysicsUnit
+import hu.raven.puppet.model.state.LocalSearchAlgorithmState
 
 
 class Opt2Iteration<C : PhysicsUnit<C>>(
-    val calculateCostOf: CalculateCost<C>
+    val calculateCostOf: CalculateCost<C>,
+    val algorithmState: LocalSearchAlgorithmState<C>
 ) : LocalSearchIteration<C>() {
 
     var sourceIndex = 0

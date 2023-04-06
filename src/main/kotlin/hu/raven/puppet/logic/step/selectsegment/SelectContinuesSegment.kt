@@ -9,7 +9,7 @@ import hu.raven.puppet.utility.extention.nextSegmentStartPosition
 import kotlin.random.Random
 
 class SelectContinuesSegment<C : PhysicsUnit<C>>(
-    override val algorithmState: EvolutionaryAlgorithmState<C>,
+    val algorithmState: EvolutionaryAlgorithmState<C>,
     override val parameters: BacterialMutationParameterProvider<C>,
 ) : SelectSegment<C>() {
     override fun invoke(

@@ -7,7 +7,7 @@ import hu.raven.puppet.model.solution.Segment
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
 class OppositionOperator<C : PhysicsUnit<C>>(
-    override val algorithmState: EvolutionaryAlgorithmState<C>,
+    val algorithmState: EvolutionaryAlgorithmState<C>,
     override val parameters: BacterialMutationParameterProvider<C>,
 ) :
     BacterialMutationOperator<C>() {

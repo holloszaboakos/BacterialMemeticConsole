@@ -1,6 +1,5 @@
 package hu.raven.puppet.logic.step.crossover
 
-import hu.raven.puppet.logic.step.EvolutionaryAlgorithmStep
 import hu.raven.puppet.logic.step.crossoveroperator.CrossOverOperator
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
@@ -9,10 +8,10 @@ import kotlinx.coroutines.runBlocking
 
 
 class CrossOvers<C : PhysicsUnit<C>>(
-    override val algorithmState: EvolutionaryAlgorithmState<C>,
-    override val parameters: EvolutionaryAlgorithmParameterProvider<C>,
+    val algorithmState: EvolutionaryAlgorithmState<C>,
+    val parameters: EvolutionaryAlgorithmParameterProvider<C>,
     val crossoverOperator: CrossOverOperator<C>
-) : EvolutionaryAlgorithmStep<C>() {
+){
 
     operator fun invoke() = runBlocking {
         val children = algorithmState.population

@@ -13,7 +13,7 @@ import hu.raven.puppet.utility.inject
 
 class CalculateCostOfCVRPSolutionWithCapacity(
     override val statistics: BacterialAlgorithmStatistics,
-    override val algorithmState: AlgorithmState
+    val algorithmState: AlgorithmState
 ) : CalculateCost<Meter>() {
     data class TripState(
         val takenCapacity: Stere,

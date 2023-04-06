@@ -11,8 +11,8 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
 class Opt2CycleWithRandomOrder<C : PhysicsUnit<C>>(
-    override val algorithmState: EvolutionaryAlgorithmState<C>,
-    override val parameters: EvolutionaryAlgorithmParameterProvider<C>,
+    val algorithmState: EvolutionaryAlgorithmState<C>,
+    val parameters: EvolutionaryAlgorithmParameterProvider<C>,
     override val calculateCostOf: CalculateCost<C>
 ) : BoostOperator<C>() {
 

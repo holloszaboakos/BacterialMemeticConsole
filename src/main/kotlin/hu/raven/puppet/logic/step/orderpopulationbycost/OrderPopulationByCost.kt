@@ -1,6 +1,5 @@
 package hu.raven.puppet.logic.step.orderpopulationbycost
 
-import hu.raven.puppet.logic.step.EvolutionaryAlgorithmStep
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
@@ -15,9 +14,9 @@ import kotlinx.coroutines.withContext
 
 
 class OrderPopulationByCost<C : PhysicsUnit<C>>(
-    override val algorithmState: EvolutionaryAlgorithmState<C>,
-    override val parameters: EvolutionaryAlgorithmParameterProvider<C>,
-) : EvolutionaryAlgorithmStep<C>() {
+    val algorithmState: EvolutionaryAlgorithmState<C>,
+    val parameters: EvolutionaryAlgorithmParameterProvider<C>,
+){
     val calculateCostOf: CalculateCost<C> by inject()
 
     suspend operator fun invoke(

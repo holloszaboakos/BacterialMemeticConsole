@@ -11,8 +11,8 @@ import kotlinx.coroutines.runBlocking
 
 class BacterialIteration<C : PhysicsUnit<C>>(
     override val logger: DoubleLogger,
-    override val algorithmState: EvolutionaryAlgorithmState<C>,
-    override val parameters: EvolutionaryAlgorithmParameterProvider<C>,
+    val algorithmState: EvolutionaryAlgorithmState<C>,
+    val parameters: EvolutionaryAlgorithmParameterProvider<C>,
     val boost: Boost<C>,
     val geneTransfer: hu.raven.puppet.logic.step.genetransfer.GeneTransfer<C>,
     val mutate: BacterialMutation<C>,

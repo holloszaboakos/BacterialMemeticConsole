@@ -5,8 +5,8 @@ import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
 class MutateChildrenByReverseOrReset<C : PhysicsUnit<C>>(
-    override val algorithmState: EvolutionaryAlgorithmState<C>,
-    override val parameters: EvolutionaryAlgorithmParameterProvider<C>,
+    val algorithmState: EvolutionaryAlgorithmState<C>,
+    val parameters: EvolutionaryAlgorithmParameterProvider<C>,
 ) : MutateChildren<C>() {
     val mutateChildrenByReset = MutateChildrenByReset(
          algorithmState, parameters

@@ -14,8 +14,8 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
 class InitializeHugePopulationThanPreOptimizeThanSelectBest<C : PhysicsUnit<C>>(
-    override val algorithmState: EvolutionaryAlgorithmState<C>,
-    override val parameters: EvolutionaryAlgorithmParameterProvider<C>,
+    val algorithmState: EvolutionaryAlgorithmState<C>,
+    val parameters: EvolutionaryAlgorithmParameterProvider<C>,
     private val mutationOperator: MutationOnSpecimen<C>,
     private val statistics: BacterialAlgorithmStatistics,
 ) : InitializePopulation<C>() {

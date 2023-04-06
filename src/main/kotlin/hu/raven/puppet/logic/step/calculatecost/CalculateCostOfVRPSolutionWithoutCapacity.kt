@@ -12,7 +12,7 @@ import hu.raven.puppet.utility.extention.getEdgeBetween
 
 class CalculateCostOfVRPSolutionWithoutCapacity(
     override val statistics: BacterialAlgorithmStatistics,
-    override val algorithmState: AlgorithmState
+    val algorithmState: AlgorithmState
 ) :
     CalculateCost<Euro>() {
 

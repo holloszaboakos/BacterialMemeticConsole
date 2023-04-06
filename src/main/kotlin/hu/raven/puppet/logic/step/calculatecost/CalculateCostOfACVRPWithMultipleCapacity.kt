@@ -15,7 +15,7 @@ import hu.raven.puppet.utility.extention.sumClever
 
 class CalculateCostOfACVRPWithMultipleCapacity(
     override val statistics: BacterialAlgorithmStatistics,
-    override val algorithmState: AlgorithmState
+    val algorithmState: AlgorithmState
 ) : CalculateCost<Euro>() {
     override operator fun invoke(
         specimen: OnePartRepresentation<Euro>

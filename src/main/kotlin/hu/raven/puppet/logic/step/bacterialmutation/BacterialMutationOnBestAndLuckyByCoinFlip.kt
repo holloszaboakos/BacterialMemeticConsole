@@ -13,8 +13,8 @@ import kotlinx.coroutines.withContext
 import kotlin.random.Random
 
 class BacterialMutationOnBestAndLuckyByCoinFlip<C : PhysicsUnit<C>>(
-    override val algorithmState: EvolutionaryAlgorithmState<C>,
-    override val parameters: BacterialMutationParameterProvider<C>,
+    val algorithmState: EvolutionaryAlgorithmState<C>,
+    val parameters: BacterialMutationParameterProvider<C>,
     override val statistics: BacterialAlgorithmStatistics,
     override val mutationOnSpecimen: MutationOnSpecimen<C>
 ) : BacterialMutation<C>() {

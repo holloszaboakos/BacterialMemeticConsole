@@ -7,7 +7,7 @@ import hu.raven.puppet.model.state.AlgorithmState
 
 class InitializeLocalSearchAlgorithm<C : PhysicsUnit<C>>(
     val initializeLocalSearch: InitializeLocalSearch<C>,
-    override val algorithmState: AlgorithmState
+    val algorithmState: AlgorithmState
 ) : InitializeAlgorithm<C>() {
 
     override fun invoke() = initializeLocalSearch()

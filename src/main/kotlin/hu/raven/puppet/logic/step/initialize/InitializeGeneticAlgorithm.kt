@@ -9,7 +9,7 @@ import kotlinx.coroutines.runBlocking
 
 
 class InitializeGeneticAlgorithm<C : PhysicsUnit<C>>(
-    override val algorithmState: EvolutionaryAlgorithmState<C>,
+    val algorithmState: EvolutionaryAlgorithmState<C>,
     val initializePopulation: InitializePopulation<C>,
     val orderPopulationByCost: OrderPopulationByCost<C>,
     val boost: Boost<C>,

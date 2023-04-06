@@ -7,8 +7,8 @@ import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 
 class NoBoost<C : PhysicsUnit<C>>(
-    override val algorithmState: EvolutionaryAlgorithmState<C>,
-    override val parameters: EvolutionaryAlgorithmParameterProvider<C>,
+    val algorithmState: EvolutionaryAlgorithmState<C>,
+    val parameters: EvolutionaryAlgorithmParameterProvider<C>,
     override val boostOperator: BoostOperator<C>,
     override val statistics: BacterialAlgorithmStatistics
 ) : Boost<C>() {

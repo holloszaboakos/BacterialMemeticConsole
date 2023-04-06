@@ -12,8 +12,8 @@ import hu.raven.puppet.utility.extention.sumClever
 import kotlin.random.Random.Default.nextInt
 
 class HeuristicCrossOver<C : PhysicsUnit<C>>(
-    override val algorithmState: EvolutionaryAlgorithmState<C>,
-    override val parameters: EvolutionaryAlgorithmParameterProvider<C>,
+    val algorithmState: EvolutionaryAlgorithmState<C>,
+    val parameters: EvolutionaryAlgorithmParameterProvider<C>,
     val logger: DoubleLogger,
 ) : CrossOverOperator<C>() {
 

@@ -7,8 +7,8 @@ import kotlinx.coroutines.runBlocking
 
 
 class DiversityByInnerDistanceAndSequence<C : PhysicsUnit<C>>(
-    override val algorithmState: EvolutionaryAlgorithmState<C>,
-    override val parameters: EvolutionaryAlgorithmParameterProvider<C>,
+    val algorithmState: EvolutionaryAlgorithmState<C>,
+    val parameters: EvolutionaryAlgorithmParameterProvider<C>,
 ) : Diversity<C>() {
 
     override fun invoke(): Double = runBlocking {

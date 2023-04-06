@@ -10,7 +10,7 @@ import hu.raven.puppet.utility.extention.sumClever
 
 class CalculateCostOfTspSolution(
     override val statistics: BacterialAlgorithmStatistics,
-    override val algorithmState: AlgorithmState
+    val algorithmState: AlgorithmState
 ) : CalculateCost<Meter>() {
     override operator fun invoke(specimen: OnePartRepresentation<Meter>) {
         algorithmState.task.run {

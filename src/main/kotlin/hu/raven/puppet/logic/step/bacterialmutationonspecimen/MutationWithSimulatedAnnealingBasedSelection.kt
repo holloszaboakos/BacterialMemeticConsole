@@ -16,7 +16,7 @@ import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
 class MutationWithSimulatedAnnealingBasedSelection<C : PhysicsUnit<C>>(
-    override val algorithmState: EvolutionaryAlgorithmState<C>,
+    val algorithmState: EvolutionaryAlgorithmState<C>,
     override val parameters: BacterialMutationParameterProvider<C>,
     override val mutationOperator: BacterialMutationOperator<C>,
     override val calculateCostOf: CalculateCost<C>,

@@ -7,8 +7,8 @@ import hu.raven.puppet.utility.extention.slice
 import kotlin.random.Random
 
 class MutateChildrenByReverse<C : PhysicsUnit<C>>(
-    override val algorithmState: EvolutionaryAlgorithmState<C>,
-    override val parameters: EvolutionaryAlgorithmParameterProvider<C>,
+    val algorithmState: EvolutionaryAlgorithmState<C>,
+    val parameters: EvolutionaryAlgorithmParameterProvider<C>,
 ) : MutateChildren<C>() {
 
     override fun invoke() {

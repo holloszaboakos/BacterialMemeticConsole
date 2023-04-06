@@ -12,7 +12,7 @@ import hu.raven.puppet.utility.extention.sumClever
 
 class CalculateCostOfCVRPSolutionWithCapacityAndMaxTripLength(
     override val statistics: BacterialAlgorithmStatistics,
-    override val algorithmState: AlgorithmState,
+    val algorithmState: AlgorithmState,
     val doubleLogger: DoubleLogger
 ) : CalculateCost<Meter>() {
     override fun invoke(specimen: OnePartRepresentation<Meter>) {

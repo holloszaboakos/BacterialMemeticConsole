@@ -1,13 +1,12 @@
 package hu.raven.puppet.logic.step.crossoveroperator
 
 import hu.raven.puppet.logic.logging.DoubleLogger
-import hu.raven.puppet.logic.step.EvolutionaryAlgorithmStep
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
-sealed class CrossOverOperator<C : PhysicsUnit<C>> : EvolutionaryAlgorithmStep<C>() {
+sealed class CrossOverOperator<C : PhysicsUnit<C>>{
     companion object {
         fun <C : PhysicsUnit<C>> getVariants(
             logger: DoubleLogger,

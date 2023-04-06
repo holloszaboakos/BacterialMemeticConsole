@@ -15,8 +15,8 @@ import kotlin.time.measureTime
 
 class GeneticIteration<C : PhysicsUnit<C>>(
     override val logger: DoubleLogger,
-    override val algorithmState: EvolutionaryAlgorithmState<C>,
-    override val parameters: EvolutionaryAlgorithmParameterProvider<C>,
+    val algorithmState: EvolutionaryAlgorithmState<C>,
+    val parameters: EvolutionaryAlgorithmParameterProvider<C>,
     val orderPopulationByCost: OrderPopulationByCost<C>,
     val boost: Boost<C>,
     val selection: SelectSurvivors<C>,
