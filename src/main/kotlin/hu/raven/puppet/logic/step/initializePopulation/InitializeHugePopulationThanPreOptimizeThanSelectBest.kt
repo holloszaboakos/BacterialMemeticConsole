@@ -2,11 +2,13 @@ package hu.raven.puppet.logic.step.initializePopulation
 
 import hu.raven.puppet.logic.step.bacterialmutationonspecimen.MutationOnSpecimen
 import hu.raven.puppet.model.logging.StepEfficiencyData
+import hu.raven.puppet.model.math.Permutation
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
+import hu.raven.puppet.utility.extention.asPermutation
 import hu.raven.puppet.utility.extention.sum
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -44,22 +46,9 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest<C : PhysicsUnit<C>>(
                     newContains[basePermutation[baseIndex]] = true
                     baseIndex = (baseIndex + step) % sizeOfPermutation
                 }
-
-                val breakPoints = newPermutation
-                    .mapIndexed { index, value ->
-                        if (value < task.costGraph.objectives.size)
-                            -1
-                        else
-                            index
-                    }
-                    .filter { it != -1 }
-                    .toMutableList()
-
-                breakPoints.add(0, -1)
-                breakPoints.add(sizeOfPermutation)
-                instance.setData(List(breakPoints.size - 1) {
-                    newPermutation.slice((breakPoints[it] + 1) until breakPoints[it + 1]).toIntArray()
-                })
+                instance.permutation.setEach { index, _ ->
+                    newPermutation[index]
+                }
                 instance.iteration = 0
                 instance.inUse = true
                 instance.cost = null
@@ -77,7 +66,13 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest<C : PhysicsUnit<C>>(
                 bestImprovements
                     .map { population[it.first] }
                     .slice(0 until parameters.sizeOfPopulation)
-                    .mapIndexed { index, s -> OnePartRepresentation<C>(index, s.getData().toTypedArray()) }
+                    .mapIndexed { index, s ->
+                        OnePartRepresentation<C>(
+                            id = index,
+                            permutation = s.permutation.clone(),
+                            objectiveCount = s.objectiveCount
+                        )
+                    }
                     .toMutableList()
         }
     }
@@ -114,20 +109,22 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest<C : PhysicsUnit<C>>(
         return if (algorithmState.task.costGraph.objectives.size != 1)
             ArrayList(List((algorithmState.task.costGraph.objectives.size + algorithmState.task.transportUnits.size - 1)) { specimenIndex ->
                 OnePartRepresentation<C>(
-                    specimenIndex,
-                    Array(algorithmState.task.transportUnits.size) { index ->
-                        if (index == 0)
-                            IntArray(algorithmState.task.costGraph.objectives.size) { it }
-                        else
-                            intArrayOf()
-                    }
+                    id = specimenIndex,
+                    objectiveCount = algorithmState.task.costGraph.objectives.size,
+                    permutation = Permutation(IntArray(
+                        algorithmState.task.transportUnits.size +
+                                algorithmState.task.costGraph.objectives.size
+                    ) { index ->
+                        index
+                    })
                 )
             })
         else
             arrayListOf(
                 OnePartRepresentation<C>(
                     0,
-                    arrayOf(IntArray(algorithmState.task.costGraph.objectives.size) { it })
+                    1,
+                    intArrayOf(0).asPermutation()
                 )
             )
     }

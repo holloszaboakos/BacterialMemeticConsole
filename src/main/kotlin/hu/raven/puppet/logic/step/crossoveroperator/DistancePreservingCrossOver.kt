@@ -14,16 +14,16 @@ class DistancePreservingCrossOver<C : PhysicsUnit<C>>(
         parents: Pair<OnePartRepresentation<C>, OnePartRepresentation<C>>,
         child: OnePartRepresentation<C>
     ) {
-        val primaryInverse = parents.first.inverseOfPermutation()
-        child.setEach { index, _ ->
-            if (parents.first[index] == parents.second[index])
-                parents.first[index]
+        val primaryInverse = parents.first.permutation.inverse()
+        child.permutation.setEach { index, _ ->
+            if (parents.first.permutation[index] == parents.second.permutation[index])
+                parents.first.permutation[index]
             else
                 -1
         }
-        child.setEach { index, value ->
+        child.permutation.setEach { index, value ->
             if (value == -1)
-                parents.second[primaryInverse.value[parents.second[index]]]
+                parents.second.permutation[primaryInverse[parents.second.permutation[index]]]
             else
                 value
         }
@@ -32,7 +32,7 @@ class DistancePreservingCrossOver<C : PhysicsUnit<C>>(
         child.inUse = true
 
 
-        if (!child.checkFormat())
+        if (!child.permutation.checkFormat())
             throw Error("Invalid specimen!")
 
     }

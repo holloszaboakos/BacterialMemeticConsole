@@ -42,35 +42,35 @@ class SubTourChunksCrossOver<C : PhysicsUnit<C>>(
     ) {
         val parentsL = parents.toList()
         val parentsNeighbouring = List(2) { parentIndex ->
-            parentsL[parentIndex].sequentialOfPermutation()
+            parentsL[parentIndex].permutation.sequential()
         }
-        var size = nextInt(child.permutationSize / 2) + 1
+        var size = nextInt(child.permutation.size / 2) + 1
         var parentIndex = 0
-        val childContains = BooleanArray(child.permutationSize) { false }
-        child.setEach { _, _ -> child.permutationSize }
-        val randomizer = Randomizer(child.permutationSize)
+        val childContains = BooleanArray(child.permutation.size) { false }
+        child.permutation.setEach { _, _ -> child.permutation.size }
+        val randomizer = Randomizer(child.permutation.size)
 
-        child.setEach { nextGeneIndex, _ ->
+        child.permutation.setEach { nextGeneIndex, _ ->
             if (nextGeneIndex == 0) {
-                childContains[parents.first[0]] = true
-                return@setEach parents.first[0]
+                childContains[parents.first.permutation[0]] = true
+                return@setEach parents.first.permutation[0]
             }
 
             val parent = parentsNeighbouring[parentIndex]
             size--
             if (size == 0) {
-                size = nextInt(nextGeneIndex, child.permutationSize)
+                size = nextInt(nextGeneIndex, child.permutation.size)
                 parentIndex = (parentIndex + 1) % 2
             }
 
-            if (!child.contains(parent[child[nextGeneIndex - 1]])) {
-                val result = parent[child[nextGeneIndex - 1]]
+            if (!child.permutation.contains(parent[child.permutation[nextGeneIndex - 1]])) {
+                val result = parent[child.permutation[nextGeneIndex - 1]]
                 childContains[result] = true
                 return@setEach result
             }
 
             val result = randomizer.getRandomValue(
-                child.permutationSize,
+                child.permutation.size,
                 childContains
             )
             childContains[result] = true
@@ -85,7 +85,7 @@ class SubTourChunksCrossOver<C : PhysicsUnit<C>>(
         child.iteration = algorithmState.iteration
         child.cost = null
         child.inUse = true
-        if (!child.checkFormat())
+        if (!child.permutation.checkFormat())
             throw Error("Invalid specimen!")
     }
 }

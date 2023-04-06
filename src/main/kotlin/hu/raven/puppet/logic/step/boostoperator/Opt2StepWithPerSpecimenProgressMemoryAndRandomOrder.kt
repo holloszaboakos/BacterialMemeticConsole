@@ -29,7 +29,7 @@ class Opt2StepWithPerSpecimenProgressMemoryAndRandomOrder<C : PhysicsUnit<C>>(
                 lastPositionPerSpecimen = Array(parameters.sizeOfPopulation) { Pair(0, 1) }
             }
             if (shuffler.isEmpty()) {
-                shuffler = (0 until algorithmState.population.first().permutationSize)
+                shuffler = (0 until algorithmState.population.first().permutation.size)
                     .shuffled()
                     .toIntArray()
             }
@@ -44,14 +44,14 @@ class Opt2StepWithPerSpecimenProgressMemoryAndRandomOrder<C : PhysicsUnit<C>>(
                 val secondIndexStart =
                     if (firstIndexIndex == lastPosition.first) lastPosition.second
                     else firstIndexIndex + 1
-                for (secondIndexIndex in secondIndexStart until algorithmState.population.first().permutationSize) {
+                for (secondIndexIndex in secondIndexStart until algorithmState.population.first().permutation.size) {
                     val secondIndex = shuffler[secondIndexIndex]
-                    specimen.swapGenes(firstIndex, secondIndex)
+                    specimen.permutation.swapValues(firstIndex, secondIndex)
                     calculateCostOf(specimen)
                     spentBudget++
 
                     if (specimen.costOrException() >= bestCost!!) {
-                        specimen.swapGenes(firstIndex, secondIndex)
+                        specimen.permutation.swapValues(firstIndex, secondIndex)
                         specimen.cost = bestCost
                         continue
                     }

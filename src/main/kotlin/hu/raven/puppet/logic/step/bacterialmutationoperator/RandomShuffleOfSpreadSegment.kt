@@ -18,7 +18,7 @@ class RandomShuffleOfSpreadSegment<C : PhysicsUnit<C>>(
 
         val shuffler = (0 until parameters.cloneSegmentLength).shuffled()
         selectedSegment.positions.forEachIndexed { index, position ->
-            clone[position] = selectedSegment.values[shuffler[index]]
+            clone.permutation[position] = selectedSegment.values[shuffler[index]]
         }
     }
 }

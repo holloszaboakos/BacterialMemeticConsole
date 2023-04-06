@@ -28,15 +28,15 @@ class MutateChildrenByReverse<C : PhysicsUnit<C>>(
                         }
 
                     if (secondCutIndex > firstCutIndex) {
-                        val reversed = child.slice(firstCutIndex..secondCutIndex).toList().reversed()
+                        val reversed = child.permutation.slice(firstCutIndex..secondCutIndex).toList().reversed()
                         for (geneIndex in firstCutIndex..secondCutIndex)
-                            child[geneIndex] = reversed[geneIndex - firstCutIndex]
+                            child.permutation[geneIndex] = reversed[geneIndex - firstCutIndex]
                     } else {
-                        val reversed = child.slice(secondCutIndex..firstCutIndex).toList().reversed()
+                        val reversed = child.permutation.slice(secondCutIndex..firstCutIndex).toList().reversed()
                         for (geneIndex in secondCutIndex..firstCutIndex)
-                            child[geneIndex] = reversed[geneIndex - secondCutIndex]
+                            child.permutation[geneIndex] = reversed[geneIndex - secondCutIndex]
                     }
-                    if (!child.checkFormat())
+                    if (!child.permutation.checkFormat())
                         throw Error("Invalid specimen!")
 
                 }

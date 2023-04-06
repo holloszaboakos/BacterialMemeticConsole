@@ -16,7 +16,7 @@ class OppositionOperator<C : PhysicsUnit<C>>(
         selectedSegment: Segment
     ) {
         selectedSegment.positions.forEachIndexed { readIndex, writeIndex ->
-            clone[writeIndex] = selectedSegment.values[selectedSegment.values.size - 1 - readIndex]
+            clone.permutation[writeIndex] = selectedSegment.values[selectedSegment.values.size - 1 - readIndex]
         }
     }
 }

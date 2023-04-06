@@ -14,23 +14,23 @@ class VotingRecombinationCrossOver<C : PhysicsUnit<C>>(
         parents: Pair<OnePartRepresentation<C>, OnePartRepresentation<C>>,
         child: OnePartRepresentation<C>
     ) {
-        val childContains = Array(child.permutationSize) { false }
-        val randomPermutation = IntArray(child.permutationSize) { it }
+        val childContains = Array(child.permutation.size) { false }
+        val randomPermutation = IntArray(child.permutation.size) { it }
         randomPermutation.shuffle()
         var lastIndex = 0
 
-        child.setEach { index, _ ->
-            if (parents.first[index] == parents.second[index]) {
-                childContains[parents.first[index]] = true
-                parents.first[index]
+        child.permutation.setEach { index, _ ->
+            if (parents.first.permutation[index] == parents.second.permutation[index]) {
+                childContains[parents.first.permutation[index]] = true
+                parents.first.permutation[index]
             } else
-                child.permutationSize
+                child.permutation.size
         }
 
-        child.setEach { _, value ->
-            if (value == child.permutationSize) {
-                var actualValue = child.permutationSize
-                for (actualIndex in lastIndex until child.permutationSize) {
+        child.permutation.setEach { _, value ->
+            if (value == child.permutation.size) {
+                var actualValue = child.permutation.size
+                for (actualIndex in lastIndex until child.permutation.size) {
                     if (!childContains[randomPermutation[actualIndex]]) {
                         actualValue = randomPermutation[actualIndex]
                         childContains[actualValue] = true
@@ -49,7 +49,7 @@ class VotingRecombinationCrossOver<C : PhysicsUnit<C>>(
         child.inUse = true
 
 
-        if (!child.checkFormat())
+        if (!child.permutation.checkFormat())
             throw Error("Invalid specimen!")
 
     }

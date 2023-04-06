@@ -15,15 +15,15 @@ class AlternatingPositionCrossOver<C : PhysicsUnit<C>>(
         child: OnePartRepresentation<C>
     ) {
         val parentsL = listOf(parents.first, parents.second)
-        val childContains = BooleanArray(child.permutationSize) { false }
-        child.setEach { _, _ -> child.permutationSize }
+        val childContains = BooleanArray(child.permutation.size) { false }
+        child.permutation.setEach { _, _ -> child.permutation.size }
 
         var counter = 0
-        (0 until child.permutationSize).forEach { geneIndex ->
+        (0 until child.permutation.size).forEach { geneIndex ->
             parentsL.forEach { parent ->
-                if (!childContains[parent[geneIndex]]) {
-                    child[counter] = parent[geneIndex]
-                    childContains[child[counter]] = true
+                if (!childContains[parent.permutation[geneIndex]]) {
+                    child.permutation[counter] = parent.permutation[geneIndex]
+                    childContains[child.permutation[counter]] = true
                     counter++
                 }
             }
@@ -34,7 +34,7 @@ class AlternatingPositionCrossOver<C : PhysicsUnit<C>>(
         child.inUse = true
 
 
-        if (!child.checkFormat())
+        if (!child.permutation.checkFormat())
             throw Error("Invalid specimen!")
 
     }

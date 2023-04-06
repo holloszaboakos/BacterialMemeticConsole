@@ -26,7 +26,7 @@ class SequentialSelectionHeuristicOnContinuousSegment<C : PhysicsUnit<C>>(
         var previousElement = if (selectedSegment.positions.first() == 0) {
             objectiveCount
         } else {
-            clone[selectedSegment.positions.first() - 1]
+            clone.permutation[selectedSegment.positions.first() - 1]
         }
 
         selectedSegment.positions.forEach { writeIndex ->
@@ -35,7 +35,7 @@ class SequentialSelectionHeuristicOnContinuousSegment<C : PhysicsUnit<C>>(
                 remainingElements
             )
             previousElement = selectedElement
-            clone[writeIndex] = selectedElement
+            clone.permutation[writeIndex] = selectedElement
             remainingElements.remove(selectedElement)
         }
     }

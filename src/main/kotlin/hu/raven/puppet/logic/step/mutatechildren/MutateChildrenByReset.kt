@@ -12,48 +12,34 @@ class MutateChildrenByReset<C : PhysicsUnit<C>>(
 
     override fun invoke() {
         val basePermutation =
-            List(algorithmState.copyOfBest?.permutationIndices?.count() ?: 0) { it }.shuffled().toIntArray()
+            List(algorithmState.copyOfBest?.permutation?.indices?.count() ?: 0) { it }.shuffled().toIntArray()
         if (algorithmState.task.costGraph.objectives.size > 1)
             algorithmState.population.asSequence()
                 .filter { it.iteration == algorithmState.iteration }
                 .shuffled()
                 .slice(0 until (algorithmState.population.size / 16))
                 .forEachIndexed { instanceIndex, child ->
-                    if (instanceIndex < child.permutationIndices.count()) {
-                        val step = instanceIndex % (child.permutationIndices.count() - 1) + 1
+                    if (instanceIndex < child.permutation.indices.count()) {
+                        val step = instanceIndex % (child.permutation.indices.count() - 1) + 1
                         if (step == 1) {
                             basePermutation.shuffle()
                         }
-                        val newContains = BooleanArray(child.permutationIndices.count()) { false }
-                        val newPermutation = IntArray(child.permutationIndices.count()) { -1 }
+                        val newContains = BooleanArray(child.permutation.indices.count()) { false }
+                        val newPermutation = IntArray(child.permutation.indices.count()) { -1 }
                         var baseIndex = step
-                        for (newIndex in 0 until child.permutationIndices.count()) {
+                        for (newIndex in 0 until child.permutation.indices.count()) {
                             if (newContains[basePermutation[baseIndex]])
-                                baseIndex = (baseIndex + 1) % child.permutationIndices.count()
+                                baseIndex = (baseIndex + 1) % child.permutation.indices.count()
                             newPermutation[newIndex] = basePermutation[baseIndex]
                             newContains[basePermutation[baseIndex]] = true
-                            baseIndex = (baseIndex + step) % child.permutationIndices.count()
+                            baseIndex = (baseIndex + step) % child.permutation.indices.count()
                         }
 
-                        val breakPoints = newPermutation
-                            .mapIndexed { index, value ->
-                                if (value < child.permutationIndices.count())
-                                    -1
-                                else
-                                    index
-                            }
-                            .filter { it != -1 }
-                            .toMutableList()
+                        newPermutation.forEachIndexed { index, value ->
+                            child.permutation[index] = value
+                        }
 
-                        breakPoints.add(0, -1)
-                        breakPoints.add(child.permutationIndices.count())
-                        child.setData(List(breakPoints.size - 1) {
-                            newPermutation.slice((breakPoints[it] + 1) until breakPoints[it + 1])
-                                .toIntArray()
-
-                        })
-
-                        if (!child.checkFormat())
+                        if (!child.permutation.checkFormat())
                             throw Error("Invalid specimen!")
                     }
                 }

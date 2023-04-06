@@ -20,17 +20,17 @@ class SortedMatchCrossOver<C : PhysicsUnit<C>>(
         child: OnePartRepresentation<C>
     ) {
         val parentsInverse = listOf(
-            Array(parents.first.permutationIndices.count()) {
-                parents.first.indexOf(it)
+            Array(parents.first.permutation.indices.count()) {
+                parents.first.permutation.indexOf(it)
             },
-            Array(parents.second.permutationIndices.count()) {
-                parents.second.indexOf(it)
+            Array(parents.second.permutation.indices.count()) {
+                parents.second.permutation.indexOf(it)
             }
         )
         var longestSliceSize = 0
         var foundSlices = listOf<IntArray>()
-        for (firstValue in 0 until parents.first.permutationIndices.count() - 1) {
-            for (secondValue in firstValue until parents.first.permutationIndices.count()) {
+        for (firstValue in 0 until parents.first.permutation.indices.count() - 1) {
+            for (secondValue in firstValue until parents.first.permutation.indices.count()) {
                 if (
                     parentsInverse[0][firstValue] - parentsInverse[0][secondValue]
                     ==
@@ -42,8 +42,8 @@ class SortedMatchCrossOver<C : PhysicsUnit<C>>(
                     val secondIndices =
                         arrayOf(parentsInverse[1][firstValue], parentsInverse[1][secondValue]).sorted()
                     val slices = listOf(
-                        parents.first.slice(firstIndices[0]..firstIndices[1]),
-                        parents.second.slice(secondIndices[0]..secondIndices[1])
+                        parents.first.permutation.slice(firstIndices[0]..firstIndices[1]),
+                        parents.second.permutation.slice(secondIndices[0]..secondIndices[1])
                     )
                     if (slices[0].all { slices[1].contains(it) }) {
                         longestSliceSize = abs(parentsInverse[0][firstValue] - parentsInverse[0][secondValue])
@@ -68,13 +68,13 @@ class SortedMatchCrossOver<C : PhysicsUnit<C>>(
                         parentsInverse[index][foundSlices[index].last()]
             }
             (0 until indices[0].first).forEach { geneIndex ->
-                child[geneIndex] = parents.toList()[0][geneIndex]
+                child.permutation[geneIndex] = parents.toList()[0].permutation[geneIndex]
             }
             indices[0].forEach { geneIndex ->
-                child[geneIndex] = foundSlices[cheaperIndex][geneIndex - indices[0].first]
+                child.permutation[geneIndex] = foundSlices[cheaperIndex][geneIndex - indices[0].first]
             }
-            (indices[0].last + 1 until parents.first.permutationIndices.count()).forEach { geneIndex ->
-                child[geneIndex] = parents.toList()[0][geneIndex]
+            (indices[0].last + 1 until parents.first.permutation.indices.count()).forEach { geneIndex ->
+                child.permutation[geneIndex] = parents.toList()[0].permutation[geneIndex]
             }
         }
         child.iteration = algorithmState.iteration
@@ -82,7 +82,7 @@ class SortedMatchCrossOver<C : PhysicsUnit<C>>(
         child.inUse = true
 
 
-        if (!child.checkFormat())
+        if (!child.permutation.checkFormat())
             throw Error("Invalid specimen!")
 
     }

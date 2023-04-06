@@ -16,13 +16,13 @@ class DiversityBySequenceBreak<C : PhysicsUnit<C>>(
 
     override fun invoke(): Double = runBlocking {
         val best = algorithmState.copyOfBest!!
-        val sequentialOfBest = best.sequentialOfPermutation()
+        val sequentialOfBest = best.permutation.sequential()
         var diversity = 0.0
 
         algorithmState.population
             .map {
                 CoroutineScope(Dispatchers.Default).launch {
-                    val sequential = it.sequentialOfPermutation()
+                    val sequential = it.permutation.sequential()
                     val distance = distanceOfSpecimen(sequentialOfBest, sequential)
                     diversity += distance
                 }

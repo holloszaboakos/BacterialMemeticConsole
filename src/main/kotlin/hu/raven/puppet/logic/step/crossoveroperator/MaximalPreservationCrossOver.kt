@@ -15,22 +15,22 @@ class MaximalPreservationCrossOver<C : PhysicsUnit<C>>(
         parents: Pair<OnePartRepresentation<C>, OnePartRepresentation<C>>,
         child: OnePartRepresentation<C>
     ) {
-        val size = child.permutationSize / 4 + nextInt(child.permutationSize / 4)
-        val start = nextInt(child.permutationSize - size)
+        val size = child.permutation.size / 4 + nextInt(child.permutation.size / 4)
+        val start = nextInt(child.permutation.size - size)
         val seconderCopy = parents.second.copyOfPermutationBy(::MutableList) as MutableList
-        val seconderInverse = parents.second.inverseOfPermutation()
+        val seconderInverse = parents.second.permutation.inverse()
 
-        child.setEach { index, _ ->
+        child.permutation.setEach { index, _ ->
             if (index < size) {
-                seconderCopy[seconderInverse.value[parents.first[index + start]]] = child.permutationSize
-                parents.first[index + start]
+                seconderCopy[seconderInverse[parents.first.permutation[index + start]]] = child.permutation.size
+                parents.first.permutation[index + start]
             } else
-                child.permutationSize
+                child.permutation.size
         }
-        seconderCopy.removeIf { it == child.permutationSize }
+        seconderCopy.removeIf { it == child.permutation.size }
 
         seconderCopy.forEachIndexed { index, value ->
-            child[size + index] = value
+            child.permutation[size + index] = value
         }
 
         child.iteration = algorithmState.iteration
@@ -38,7 +38,7 @@ class MaximalPreservationCrossOver<C : PhysicsUnit<C>>(
         child.inUse = true
 
 
-        if (!child.checkFormat())
+        if (!child.permutation.checkFormat())
             throw Error("Invalid specimen!")
 
     }

@@ -19,13 +19,13 @@ class SelectContinuesSegment<C : PhysicsUnit<C>>(
     ): Segment {
         val randomPosition =
             Random.nextSegmentStartPosition(
-                specimen.permutationIndices.count(),
+                specimen.permutation.indices.count(),
                 parameters.cloneSegmentLength
             )
         val positions = IntArray(parameters.cloneSegmentLength) { randomPosition + it }
         return Segment(
             positions = positions,
-            values = positions.map { specimen[it] }.toIntArray()
+            values = positions.map { specimen.permutation[it] }.toIntArray()
         )
     }
 }

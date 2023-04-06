@@ -18,24 +18,24 @@ class PositionBasedCrossOver<C : PhysicsUnit<C>>(
         val primerParent = parents.first
         val seconderParent = parents.second
         val seconderCopy = seconderParent.copyOfPermutationBy(::MutableList) as MutableList
-        val seconderInverse = seconderParent.inverseOfPermutation()
-        val selected = BooleanArray(child.permutationSize) { Random.nextBoolean() && Random.nextBoolean() }
+        val seconderInverse = seconderParent.permutation.inverse()
+        val selected = BooleanArray(child.permutation.size) { Random.nextBoolean() && Random.nextBoolean() }
 
         //clean child
         //copy parent middle to child
-        child.setEach { valueIndex, _ ->
+        child.permutation.setEach { valueIndex, _ ->
             if (selected[valueIndex]) {
-                seconderCopy[seconderInverse.value[primerParent[valueIndex]]] = child.permutationSize
-                primerParent[valueIndex]
+                seconderCopy[seconderInverse[primerParent.permutation[valueIndex]]] = child.permutation.size
+                primerParent.permutation[valueIndex]
             } else
-                child.permutationSize
+                child.permutation.size
         }
-        seconderCopy.removeIf { it == child.permutationSize }
+        seconderCopy.removeIf { it == child.permutation.size }
 
         //fill missing places of child
         var counter = -1
-        child.setEach { _, value ->
-            if (value == child.permutationSize) {
+        child.permutation.setEach { _, value ->
+            if (value == child.permutation.size) {
                 counter++
                 seconderCopy[counter]
             } else
@@ -46,7 +46,7 @@ class PositionBasedCrossOver<C : PhysicsUnit<C>>(
         child.inUse = true
 
 
-        if (!child.checkFormat())
+        if (!child.permutation.checkFormat())
             throw Error("Invalid specimen!")
 
     }

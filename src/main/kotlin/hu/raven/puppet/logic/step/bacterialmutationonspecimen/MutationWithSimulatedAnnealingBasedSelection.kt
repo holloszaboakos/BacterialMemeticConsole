@@ -92,12 +92,16 @@ class MutationWithSimulatedAnnealingBasedSelection<C : PhysicsUnit<C>>(
                 parameters.iterationLimit
             )
         ) {
-            specimen.setData(clones.first().getData())
+            specimen.permutation.setEach { index, _ ->
+                clones.first().permutation[index]
+            }
             specimen.cost = clones.first().cost
             return
         }
 
-        specimen.setData(clones[1].getData())
+        specimen.permutation.setEach { index, _ ->
+            clones.first().permutation[index]
+        }
         specimen.cost = clones[1].cost
     }
 

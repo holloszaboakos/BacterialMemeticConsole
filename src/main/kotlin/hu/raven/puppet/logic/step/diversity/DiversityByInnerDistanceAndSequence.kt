@@ -13,7 +13,7 @@ class DiversityByInnerDistanceAndSequence<C : PhysicsUnit<C>>(
 
     override fun invoke(): Double = runBlocking {
         var diversity = 0.0
-        val sequentials = algorithmState.population.map { it.sequentialOfPermutation() }
+        val sequentials = algorithmState.population.map { it.permutation.sequential() }
 
         sequentials.forEach { firstSequential ->
             sequentials.forEach { secondSequential ->

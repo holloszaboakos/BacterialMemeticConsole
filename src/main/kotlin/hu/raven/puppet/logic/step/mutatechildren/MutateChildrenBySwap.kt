@@ -27,10 +27,10 @@ class MutateChildrenBySwap<C : PhysicsUnit<C>>(
                                 it
                         }
 
-                    val tmp = child[firstCutIndex]
-                    child[firstCutIndex] = child[secondCutIndex]
-                    child[secondCutIndex] = tmp
-                    if (!child.checkFormat())
+                    val tmp = child.permutation[firstCutIndex]
+                    child.permutation[firstCutIndex] = child.permutation[secondCutIndex]
+                    child.permutation[secondCutIndex] = tmp
+                    if (!child.permutation.checkFormat())
                         throw Error("Invalid specimen!")
                 }
 

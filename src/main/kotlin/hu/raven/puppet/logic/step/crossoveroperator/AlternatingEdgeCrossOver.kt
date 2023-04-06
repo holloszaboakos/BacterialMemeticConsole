@@ -14,32 +14,32 @@ class AlternatingEdgeCrossOver<C : PhysicsUnit<C>>(
         parents: Pair<OnePartRepresentation<C>, OnePartRepresentation<C>>,
         child: OnePartRepresentation<C>
     ) {
-        val childContains = Array(child.permutationSize) { false }
-        val randomPermutation = IntArray(child.permutationSize) { it }
+        val childContains = Array(child.permutation.size) { false }
+        val randomPermutation = IntArray(child.permutation.size) { it }
         randomPermutation.shuffle()
         var lastIndex = 0
         val parentsL = listOf(parents.first, parents.second)
         val parentsNeighbouring = List(2) { parentIndex ->
-            parentsL[parentIndex].sequentialOfPermutation()
+            parentsL[parentIndex].permutation.sequential()
         }
-        child.setEach { _, _ -> child.permutationSize }
-        child[0] = (0 until child.permutationSize).random()
-        childContains[child[0]] = true
-        (1 until child.permutationSize).forEach { geneIndex ->
+        child.permutation.setEach { _, _ -> child.permutation.size }
+        child.permutation[0] = (0 until child.permutation.size).random()
+        childContains[child.permutation[0]] = true
+        (1 until child.permutation.size).forEach { geneIndex ->
             val parent = parentsNeighbouring[geneIndex % 2]
 
-            if (!childContains[parent[child[geneIndex - 1]]])
-                child[geneIndex] = parent[child[geneIndex - 1]]
+            if (!childContains[parent[child.permutation[geneIndex - 1]]])
+                child.permutation[geneIndex] = parent[child.permutation[geneIndex - 1]]
             else {
                 for (index in lastIndex until randomPermutation.size) {
                     if (!childContains[randomPermutation[index]]) {
-                        child[geneIndex] = randomPermutation[index]
+                        child.permutation[geneIndex] = randomPermutation[index]
                         lastIndex = index + 1
                         break
                     }
                 }
             }
-            childContains[child[geneIndex]] = true
+            childContains[child.permutation[geneIndex]] = true
         }
 
         child.iteration = algorithmState.iteration
@@ -47,7 +47,7 @@ class AlternatingEdgeCrossOver<C : PhysicsUnit<C>>(
         child.inUse = true
 
 
-        if (!child.checkFormat())
+        if (!child.permutation.checkFormat())
             throw Error("Invalid specimen!")
 
 

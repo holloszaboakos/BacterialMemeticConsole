@@ -16,28 +16,28 @@ class CycleCrossOver<C : PhysicsUnit<C>>(
     ) {
         val primerParent = parents.first
         val seconderCopy = parents.second.copyOfPermutationBy(::MutableList) as MutableList
-        val seconderInverse = parents.second.inverseOfPermutation()
+        val seconderInverse = parents.second.permutation.inverse()
 
         //clean child
         //copy parent middle to child
-        child.setEach { _, _ -> child.permutationSize }
+        child.permutation.setEach { _, _ -> child.permutation.size }
 
-        child[0] = primerParent[0]
-        var actualIndex = seconderInverse.value[child[0]]
-        seconderCopy[actualIndex] = child.permutationSize
+        child.permutation[0] = primerParent.permutation[0]
+        var actualIndex = seconderInverse[child.permutation[0]]
+        seconderCopy[actualIndex] = child.permutation.size
         //fill missing places of child
         if (actualIndex != 0)
             while (actualIndex != 0) {
-                child[actualIndex] = primerParent[actualIndex]
-                actualIndex = seconderInverse.value[primerParent[actualIndex]]
-                seconderCopy[actualIndex] = child.permutationSize
+                child.permutation[actualIndex] = primerParent.permutation[actualIndex]
+                actualIndex = seconderInverse[primerParent.permutation[actualIndex]]
+                seconderCopy[actualIndex] = child.permutation.size
             }
-        seconderCopy.removeIf { it == child.permutationSize }
+        seconderCopy.removeIf { it == child.permutation.size }
 
         //fill missing places of child
         var counter = -1
-        child.setEach { _, value ->
-            if (value == child.permutationSize) {
+        child.permutation.setEach { _, value ->
+            if (value == child.permutation.size) {
                 counter++
                 seconderCopy[counter]
             } else
@@ -49,7 +49,7 @@ class CycleCrossOver<C : PhysicsUnit<C>>(
         child.inUse = true
 
 
-        if (!child.checkFormat())
+        if (!child.permutation.checkFormat())
             throw Error("Invalid specimen!")
 
     }

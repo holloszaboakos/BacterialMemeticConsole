@@ -45,7 +45,9 @@ class MutationWithElitistSelectionAndOneOpposition<C : PhysicsUnit<C>>(
 
                 if (clones.first().cost != specimen.cost) {
                     improvement = true
-                    specimen.setData(clones.first().getData())
+                    specimen.permutation.setEach { index, _ ->
+                        clones.first().permutation[index]
+                    }
                     specimen.cost = clones.first().cost
                 }
             }

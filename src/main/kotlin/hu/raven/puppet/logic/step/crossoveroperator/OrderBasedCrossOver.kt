@@ -18,24 +18,24 @@ class OrderBasedCrossOver<C : PhysicsUnit<C>>(
         val primerParent = parents.first
         val seconderParent = parents.second
         val seconderCopy = seconderParent.copyOfPermutationBy(::MutableList) as MutableList
-        val seconderInverse = seconderParent.inverseOfPermutation()
+        val seconderInverse = seconderParent.permutation.inverse()
 
         //clean child
         //copy parent middle to child
-        child.setEach { valueIndex, _ ->
+        child.permutation.setEach { valueIndex, _ ->
             if (Random.nextBoolean()) {
-                seconderCopy[seconderInverse.value[primerParent[valueIndex]]] = child.permutationSize
-                primerParent[valueIndex]
+                seconderCopy[seconderInverse[primerParent.permutation[valueIndex]]] = child.permutation.size
+                primerParent.permutation[valueIndex]
             } else
-                child.permutationSize
+                child.permutation.size
         }
 
-        seconderCopy.removeIf { it == child.permutationSize }
+        seconderCopy.removeIf { it == child.permutation.size }
 
         var counter = -1
         //fill missing places of child
-        child.setEach { _, value ->
-            if (value == child.permutationSize) {
+        child.permutation.setEach { _, value ->
+            if (value == child.permutation.size) {
                 counter++
                 seconderCopy[counter]
             } else
@@ -45,7 +45,7 @@ class OrderBasedCrossOver<C : PhysicsUnit<C>>(
         child.cost = null
         child.inUse = true
 
-        if (!child.checkFormat())
+        if (!child.permutation.checkFormat())
             throw Error("Invalid specimen!")
 
 

@@ -25,36 +25,38 @@ class CalculateCostOfCVRPSolutionWithCapacity(
         statistics.fitnessCallCount++
         algorithmState.run {
             var tripState = TripState(Stere(0L), Meter(0L))
-            specimen.forEachSliceIndexed { sliceIndex, slice ->
-                val salesman = task.transportUnits[sliceIndex]
-                slice.forEachIndexed { sliceValueIndex, sliceValue ->
-                    tripState = when (sliceValueIndex) {
-                        0 -> onFirstValueOfSlice(
-                            task.costGraph,
-                            sliceValue,
-                            tripState,
-                            sliceValueIndex != slice.lastIndex
-                        )
+            specimen.permutation
+                .sliced { it >= task.costGraph.objectives.size - 1 }
+                .forEachIndexed { sliceIndex, slice ->
+                    val salesman = task.transportUnits[sliceIndex]
+                    slice.forEachIndexed { sliceValueIndex, sliceValue ->
+                        tripState = when (sliceValueIndex) {
+                            0 -> onFirstValueOfSlice(
+                                task.costGraph,
+                                sliceValue,
+                                tripState,
+                                sliceValueIndex != slice.lastIndex
+                            )
 
-                        slice.size - 1 -> onLastValueOfSlice(
-                            task.costGraph,
-                            sliceValue,
-                            tripState,
-                            salesman,
-                            slice[sliceValueIndex - 1],
-                        )
+                            slice.size - 1 -> onLastValueOfSlice(
+                                task.costGraph,
+                                sliceValue,
+                                tripState,
+                                salesman,
+                                slice[sliceValueIndex - 1],
+                            )
 
-                        else -> onOtherValuesOfSlice(
-                            task.costGraph,
-                            sliceValue,
-                            tripState,
-                            salesman,
-                            slice[sliceValueIndex - 1],
-                        )
+                            else -> onOtherValuesOfSlice(
+                                task.costGraph,
+                                sliceValue,
+                                tripState,
+                                salesman,
+                                slice[sliceValueIndex - 1],
+                            )
+                        }
+
                     }
-
                 }
-            }
             specimen.cost = tripState.cost
             if (tripState.cost == Meter(0L)) {
                 println("Impossible!")

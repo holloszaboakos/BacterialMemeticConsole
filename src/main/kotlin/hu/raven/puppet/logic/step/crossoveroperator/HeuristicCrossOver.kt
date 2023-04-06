@@ -23,22 +23,22 @@ class HeuristicCrossOver<C : PhysicsUnit<C>>(
     ) {
         val parentsL = parents.toList()
         val parentsInverse = Array(2) {
-            parentsL[it].inverseOfPermutation()
+            parentsL[it].permutation.inverse()
         }
 
-        val randomPermutation = IntArray(child.permutationSize) { it }
+        val randomPermutation = IntArray(child.permutation.size) { it }
         randomPermutation.shuffle()
         var lastIndexUsed = 0
 
-        val childContains = BooleanArray(child.permutationSize) { false }
+        val childContains = BooleanArray(child.permutation.size) { false }
 
-        child.setEach { _, _ -> child.permutationSize }
-        child[0] = nextInt(child.permutationSize)
-        childContains[child[0]] = true
+        child.permutation.setEach { _, _ -> child.permutation.size }
+        child.permutation[0] = nextInt(child.permutation.size)
+        childContains[child.permutation[0]] = true
 
-        for (geneIndex in 1 until child.permutationSize) {
+        for (geneIndex in 1 until child.permutation.size) {
 
-            val previousValue = child[geneIndex - 1]
+            val previousValue = child.permutation[geneIndex - 1]
 
             val neighbours = gatherNeighbouringValues(
                 parentsL,
@@ -57,7 +57,7 @@ class HeuristicCrossOver<C : PhysicsUnit<C>>(
                     geneIndex
                 )
 
-                if (child[geneIndex] == child.permutationSize)
+                if (child.permutation[geneIndex] == child.permutation.size)
                     logger("Failed to choose at random")
 
                 continue
@@ -76,7 +76,7 @@ class HeuristicCrossOver<C : PhysicsUnit<C>>(
                 childContains
             )
 
-            if (child[geneIndex] == child.permutationSize)
+            if (child.permutation[geneIndex] == child.permutation.size)
                 println("Failed to choose based on weights")
 
 
@@ -87,12 +87,12 @@ class HeuristicCrossOver<C : PhysicsUnit<C>>(
         child.inUse = true
 
 
-        if (!child.checkFormat())
+        if (!child.permutation.checkFormat())
             throw Error("Invalid specimen after heuristic crossover!")
 
     }
 
-    private fun  gatherNeighbouringValues(
+    private fun gatherNeighbouringValues(
         parentsL: List<OnePartRepresentation<C>>,
         parentsInverse: Array<Permutation>,
         previousValue: Int,
@@ -100,14 +100,14 @@ class HeuristicCrossOver<C : PhysicsUnit<C>>(
         childContains: BooleanArray
     ): List<Int> {
         return listOf(
-            parentsL[0][(parentsInverse[0].value[previousValue] + child.permutationSize - 1) % child.permutationSize],
-            parentsL[0][(parentsInverse[0].value[previousValue] + 1) % child.permutationSize],
-            parentsL[1][(parentsInverse[1].value[previousValue] + child.permutationSize - 1) % child.permutationSize],
-            parentsL[1][(parentsInverse[1].value[previousValue] + 1) % child.permutationSize]
+            parentsL[0].permutation[(parentsInverse[0][previousValue] + child.permutation.size - 1) % child.permutation.size],
+            parentsL[0].permutation[(parentsInverse[0][previousValue] + 1) % child.permutation.size],
+            parentsL[1].permutation[(parentsInverse[1][previousValue] + child.permutation.size - 1) % child.permutation.size],
+            parentsL[1].permutation[(parentsInverse[1][previousValue] + 1) % child.permutation.size]
         ).filter { !childContains[it] }
     }
 
-    private fun  chooseNextValueAtRandom(
+    private fun chooseNextValueAtRandom(
         lastIndexUsed: Int,
         randomPermutation: IntArray,
         childContains: BooleanArray,
@@ -117,8 +117,8 @@ class HeuristicCrossOver<C : PhysicsUnit<C>>(
 
         for (index in lastIndexUsed until randomPermutation.size) {
             if (!childContains[randomPermutation[index]]) {
-                child[geneIndex] = randomPermutation[index]
-                childContains[child[geneIndex]] = true
+                child.permutation[geneIndex] = randomPermutation[index]
+                childContains[child.permutation[geneIndex]] = true
                 return index + 1
             }
         }
@@ -159,7 +159,7 @@ class HeuristicCrossOver<C : PhysicsUnit<C>>(
     }
 
 
-    private fun  chooseNextValueBasedOnWeight(
+    private fun chooseNextValueBasedOnWeight(
         weights: Array<Fraction>,
         child: OnePartRepresentation<C>,
         geneIndex: Int,
@@ -172,8 +172,8 @@ class HeuristicCrossOver<C : PhysicsUnit<C>>(
 
         for (weightIndex in weights.indices) {
             if (choice <= weights[weightIndex]) {
-                child[geneIndex] = neighbours[weightIndex]
-                childContains[child[geneIndex]] = true
+                child.permutation[geneIndex] = neighbours[weightIndex]
+                childContains[child.permutation[geneIndex]] = true
                 break
             }
             choice -= weights[weightIndex]

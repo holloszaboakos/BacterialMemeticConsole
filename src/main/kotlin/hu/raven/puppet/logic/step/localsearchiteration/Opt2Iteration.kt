@@ -18,23 +18,23 @@ class Opt2Iteration<C : PhysicsUnit<C>>(
         var bestCost = best.costOrException()
         var tempGene: Int
         if (sourceIndex == 0) {
-            permutation = (0 until best.permutationIndices.count() - 1).shuffled()
+            permutation = (0 until best.permutation.indices.count() - 1).shuffled()
         }
 
         val firstIndex = permutation[sourceIndex]
 
-        for (secondIndex in (firstIndex + 1 until best.permutationIndices.count()).shuffled()) {
-            tempGene = best[firstIndex]
-            best[firstIndex] = best[secondIndex]
-            best[secondIndex] = tempGene
+        for (secondIndex in (firstIndex + 1 until best.permutation.indices.count()).shuffled()) {
+            tempGene = best.permutation[firstIndex]
+            best.permutation[firstIndex] = best.permutation[secondIndex]
+            best.permutation[secondIndex] = tempGene
             calculateCostOf(best)
             if (best.costOrException() < bestCost) {
                 println(best.cost)
                 bestCost = best.costOrException()
             } else {
-                tempGene = best[firstIndex]
-                best[firstIndex] = best[secondIndex]
-                best[secondIndex] = tempGene
+                tempGene = best.permutation[firstIndex]
+                best.permutation[firstIndex] = best.permutation[secondIndex]
+                best.permutation[secondIndex] = tempGene
                 best.cost = bestCost
             }
         }

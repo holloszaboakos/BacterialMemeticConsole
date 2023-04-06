@@ -32,7 +32,7 @@ class SegmentInjectionGeneTransfer<C : PhysicsUnit<C>>(
             val spentTime = measureTime {
                 val startOfSegment =
                     Random.nextSegmentStartPosition(
-                        source.permutationIndices.count(),
+                        source.permutation.indices.count(),
                         geneTransferSegmentLength
                     )
                 val rangeOfSegment = startOfSegment until startOfSegment + geneTransferSegmentLength
@@ -73,7 +73,7 @@ class SegmentInjectionGeneTransfer<C : PhysicsUnit<C>>(
         source: OnePartRepresentation<C>,
         rangeOfSegment: IntRange
     ): IntArray {
-        return source
+        return source.permutation
             .slice(rangeOfSegment)
             .toList()
             .toIntArray()
@@ -84,10 +84,10 @@ class SegmentInjectionGeneTransfer<C : PhysicsUnit<C>>(
         elementsOfSegment: IntArray,
     ): IntArray {
 
-        val segmentContains = BooleanArray(target.permutationIndices.count()) { false }
+        val segmentContains = BooleanArray(target.permutation.indices.count()) { false }
         elementsOfSegment.forEach { segmentContains[it] = true }
 
-        return target
+        return target.permutation
             .map { it }
             .filter { !segmentContains[it] }
             .toList()
@@ -102,9 +102,9 @@ class SegmentInjectionGeneTransfer<C : PhysicsUnit<C>>(
     ) {
 
         val rangeOfBeforeSegment = 0 until rangeOfSegment.first
-        val rangeOfAfterSegment = (rangeOfSegment.last + 1) until target.permutationSize
+        val rangeOfAfterSegment = (rangeOfSegment.last + 1) until target.permutation.size
 
-        target.setEach { index, _ ->
+        target.permutation.setEach { index, _ ->
             when (index) {
                 in rangeOfBeforeSegment ->
                     elementsOfTargetNotInSegment[index]
@@ -126,7 +126,7 @@ class SegmentInjectionGeneTransfer<C : PhysicsUnit<C>>(
     }
 
     private fun <C : PhysicsUnit<C>> checkFormatOf(specimen: OnePartRepresentation<C>) {
-        if (!specimen.checkFormat()) {
+        if (!specimen.permutation.checkFormat()) {
             logger("Wrongly formatted")
         }
     }

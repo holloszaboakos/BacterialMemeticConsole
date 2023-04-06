@@ -24,7 +24,7 @@ class Opt2CycleWithRandomOrder<C : PhysicsUnit<C>>(
         val oldCost = specimen.costOrException()
         val spentTime = measureTime {
             if (shuffler.isEmpty()) {
-                shuffler = (0 until algorithmState.population.first().permutationSize)
+                shuffler = (0 until algorithmState.population.first().permutation.size)
                     .shuffled()
                     .toIntArray()
             }
@@ -32,17 +32,17 @@ class Opt2CycleWithRandomOrder<C : PhysicsUnit<C>>(
 
             var bestCost = specimen.cost
 
-            for (firstIndexIndex in 0 until algorithmState.population.first().permutationSize - 1) {
+            for (firstIndexIndex in 0 until algorithmState.population.first().permutation.size - 1) {
                 val firstIndex = shuffler[firstIndexIndex]
-                for (secondIndexIndex in firstIndexIndex + 1 until algorithmState.population.first().permutationSize) {
+                for (secondIndexIndex in firstIndexIndex + 1 until algorithmState.population.first().permutation.size) {
                     val secondIndex = shuffler[secondIndexIndex]
 
-                    specimen.swapGenes(firstIndex, secondIndex)
+                    specimen.permutation.swapValues(firstIndex, secondIndex)
                     calculateCostOf(specimen)
                     spentBudget++
 
                     if (specimen.costOrException() >= bestCost!!) {
-                        specimen.swapGenes(firstIndex, secondIndex)
+                        specimen.permutation.swapValues(firstIndex, secondIndex)
                         specimen.cost = bestCost
                         continue
                     }

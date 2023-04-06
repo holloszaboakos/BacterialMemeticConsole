@@ -24,7 +24,7 @@ class SelectContinuesSegmentWithFullCoverage<C : PhysicsUnit<C>>(
         val segmentPosition = randomizer[iteration % randomizer.size] + cycleIndex * parameters.cloneSegmentLength
         val selectedPositions = IntArray(parameters.cloneSegmentLength) { segmentPosition + it }
         val selectedElements = selectedPositions
-            .map { specimen[it] }
+            .map { specimen.permutation[it] }
             .toIntArray()
         Segment(
             selectedPositions,

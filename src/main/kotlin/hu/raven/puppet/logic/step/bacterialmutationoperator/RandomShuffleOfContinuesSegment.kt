@@ -21,7 +21,7 @@ class RandomShuffleOfContinuesSegment<C : PhysicsUnit<C>>(
             .asPermutation()
             .shuffled()
             .forEachIndexed { readIndex, writeIndex ->
-                clone[writeIndex] = selectedSegment.values[readIndex]
+                clone.permutation[writeIndex] = selectedSegment.values[readIndex]
             }
     }
 }

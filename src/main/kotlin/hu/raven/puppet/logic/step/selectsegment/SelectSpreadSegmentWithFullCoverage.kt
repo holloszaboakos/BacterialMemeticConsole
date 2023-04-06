@@ -28,7 +28,7 @@ class SelectSpreadSegmentWithFullCoverage<C : PhysicsUnit<C>>(
             .sortedBy { it }
             .toIntArray()
         val selectedElements = selectedPositions
-            .map { specimen[it] }
+            .map { specimen.permutation[it] }
             .toIntArray()
         return Segment(selectedPositions, selectedElements)
     }

@@ -26,17 +26,17 @@ class Opt2StepWithProgressMemory<C : PhysicsUnit<C>>(
             val bestCost = specimen.cost
             var improved = false
 
-            outer@ for (firstIndex in lastPosition.first until algorithmState.population.first().permutationSize - 1) {
+            outer@ for (firstIndex in lastPosition.first until algorithmState.population.first().permutation.size - 1) {
                 val secondIndexStart =
                     if (firstIndex == lastPosition.first) lastPosition.second
                     else firstIndex + 1
                 for (secondIndex in secondIndexStart until algorithmState.task.costGraph.objectives.size) {
-                    specimen.swapGenes(firstIndex, secondIndex)
+                    specimen.permutation.swapValues(firstIndex, secondIndex)
                     calculateCostOf(specimen)
                     spentBudget++
 
                     if (specimen.costOrException() >= bestCost!!) {
-                        specimen.swapGenes(firstIndex, secondIndex)
+                        specimen.permutation.swapValues(firstIndex, secondIndex)
                         specimen.cost = bestCost
                         continue
                     }

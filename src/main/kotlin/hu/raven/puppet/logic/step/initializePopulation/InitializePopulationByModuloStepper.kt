@@ -1,9 +1,11 @@
 package hu.raven.puppet.logic.step.initializePopulation
 
+import hu.raven.puppet.model.math.Permutation
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
+import hu.raven.puppet.utility.extention.asPermutation
 
 class InitializePopulationByModuloStepper<C : PhysicsUnit<C>>(
     val algorithmState: EvolutionaryAlgorithmState<C>,
@@ -16,24 +18,27 @@ class InitializePopulationByModuloStepper<C : PhysicsUnit<C>>(
             val sizeOfPermutation =
                 (task.costGraph.objectives.size + task.transportUnits.size - 1)
             val basePermutation = IntArray(sizeOfPermutation) { it }
-            population = if (task.costGraph.objectives.size != 1)
-                ArrayList(List(parameters.sizeOfPopulation) { specimenIndex ->
+            population = if (algorithmState.task.costGraph.objectives.size != 1)
+                ArrayList(List((algorithmState.task.costGraph.objectives.size + algorithmState.task.transportUnits.size - 1)) { specimenIndex ->
                     OnePartRepresentation<C>(
-                        specimenIndex,
-                        Array(task.transportUnits.size) { index ->
-                            if (index == 0)
-                                IntArray(task.costGraph.objectives.size) { it }
-                            else
-                                intArrayOf()
-                        }
+                        id = specimenIndex,
+                        objectiveCount = algorithmState.task.costGraph.objectives.size,
+                        permutation = Permutation(IntArray(
+                            algorithmState.task.transportUnits.size +
+                                    algorithmState.task.costGraph.objectives.size
+                        ) { index ->
+                            index
+                        })
                     )
                 })
-            else arrayListOf(
-                OnePartRepresentation<C>(
-                    0,
-                    arrayOf(IntArray(task.costGraph.objectives.size) { it })
+            else
+                arrayListOf(
+                    OnePartRepresentation<C>(
+                        0,
+                        1,
+                        intArrayOf(0).asPermutation()
+                    )
                 )
-            )
 
             population.forEachIndexed { instanceIndex, instance ->
                 initSpecimen(
@@ -80,9 +85,9 @@ class InitializePopulationByModuloStepper<C : PhysicsUnit<C>>(
 
         breakPoints.add(0, -1)
         breakPoints.add(sizeOfPermutation)
-        instance.setData(List(breakPoints.size - 1) {
-            newPermutation.slice((breakPoints[it] + 1) until breakPoints[it + 1]).toIntArray()
-        })
+        instance.permutation.setEach { index, _ ->
+            newPermutation[index]
+        }
         instance.iteration = 0
         instance.inUse = true
         instance.cost = null

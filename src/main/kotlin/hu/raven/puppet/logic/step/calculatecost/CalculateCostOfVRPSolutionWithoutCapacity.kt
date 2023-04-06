@@ -23,54 +23,56 @@ class CalculateCostOfVRPSolutionWithoutCapacity(
         algorithmState.run {
             var sumCost = Euro(0L)
             var geneIndex = 0
-            specimen.forEachSliceIndexed { sliceIndex, slice ->
-                val salesman = task.transportUnits[sliceIndex]
-                var cost = salesman.basePrice
-                slice.map { it }.forEachIndexed { index, value ->
-                    cost += when (index) {
-                        0 -> {
-                            if (index != slice.size - 1) {
-                                val fromCenterEdge = task.costGraph.edgesFromCenter[value]
-                                val objective = task.costGraph.objectives[value]
+            specimen.permutation
+                .sliced { it >= task.costGraph.objectives.size - 1 }
+                .forEachIndexed { sliceIndex, slice ->
+                    val salesman = task.transportUnits[sliceIndex]
+                    var cost = salesman.basePrice
+                    slice.map { it }.forEachIndexed { index, value ->
+                        cost += when (index) {
+                            0 -> {
+                                if (index != slice.size - 1) {
+                                    val fromCenterEdge = task.costGraph.edgesFromCenter[value]
+                                    val objective = task.costGraph.objectives[value]
 
-                                calcCostOnEdge(salesman, fromCenterEdge) +
-                                        calcCostOnNode(salesman, objective)
-                            } else {
-                                val fromCenterEdge = task.costGraph.edgesFromCenter[value]
+                                    calcCostOnEdge(salesman, fromCenterEdge) +
+                                            calcCostOnNode(salesman, objective)
+                                } else {
+                                    val fromCenterEdge = task.costGraph.edgesFromCenter[value]
+                                    val objective = task.costGraph.objectives[value]
+                                    val toCenterEdge = task.costGraph.edgesToCenter[value]
+
+                                    calcCostOnEdge(salesman, fromCenterEdge) +
+                                            calcCostOnNode(salesman, objective) +
+                                            calcCostOnEdge(salesman, toCenterEdge)
+
+                                }
+                            }
+
+                            slice.size - 1 -> {
+                                val betweenEdge = task.costGraph.getEdgeBetween(slice[index - 1], value)
                                 val objective = task.costGraph.objectives[value]
                                 val toCenterEdge = task.costGraph.edgesToCenter[value]
 
-                                calcCostOnEdge(salesman, fromCenterEdge) +
+                                calcCostOnEdge(salesman, betweenEdge) +
                                         calcCostOnNode(salesman, objective) +
                                         calcCostOnEdge(salesman, toCenterEdge)
+                            }
 
+                            else -> {
+                                val betweenEdge = task.costGraph.getEdgeBetween(slice[index - 1], value)
+                                val objective = task.costGraph.objectives[value]
+
+                                calcCostOnEdge(salesman, betweenEdge) +
+                                        calcCostOnNode(salesman, objective)
                             }
                         }
 
-                        slice.size - 1 -> {
-                            val betweenEdge = task.costGraph.getEdgeBetween(slice[index - 1], value)
-                            val objective = task.costGraph.objectives[value]
-                            val toCenterEdge = task.costGraph.edgesToCenter[value]
-
-                            calcCostOnEdge(salesman, betweenEdge) +
-                                    calcCostOnNode(salesman, objective) +
-                                    calcCostOnEdge(salesman, toCenterEdge)
-                        }
-
-                        else -> {
-                            val betweenEdge = task.costGraph.getEdgeBetween(slice[index - 1], value)
-                            val objective = task.costGraph.objectives[value]
-
-                            calcCostOnEdge(salesman, betweenEdge) +
-                                    calcCostOnNode(salesman, objective)
-                        }
                     }
+                    geneIndex += slice.size
+                    sumCost += cost
 
                 }
-                geneIndex += slice.size
-                sumCost += cost
-
-            }
             specimen.cost = sumCost
             if (sumCost == Euro(0L)) {
                 println("Impossible!")

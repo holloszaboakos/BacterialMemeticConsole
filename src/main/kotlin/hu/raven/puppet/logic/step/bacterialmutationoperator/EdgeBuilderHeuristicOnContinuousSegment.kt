@@ -79,10 +79,10 @@ class EdgeBuilderHeuristicOnContinuousSegment<C : PhysicsUnit<C>>(
         }
 
         elementIndexes.forEachIndexed { index, elementIndex ->
-            clone[selectedSegment.positions[index]] = selectedSegment.values[elementIndex]
+            clone.permutation[selectedSegment.positions[index]] = selectedSegment.values[elementIndex]
         }
 
-        if (!clone.checkFormat()) {
+        if (!clone.permutation.checkFormat()) {
             println("AJJAJ")
         }
     }
@@ -219,10 +219,10 @@ class EdgeBuilderHeuristicOnContinuousSegment<C : PhysicsUnit<C>>(
         selectedSegment: Segment
     ): Array<Fraction> = algorithmState.run {
         val objectiveCount = task.costGraph.objectives.size
-        val nextElement = if (selectedSegment.positions.last() == clone.permutationIndices.last) {
+        val nextElement = if (selectedSegment.positions.last() == clone.permutation.indices.last) {
             objectiveCount
         } else {
-            clone[selectedSegment.positions.last() + 1]
+            clone.permutation[selectedSegment.positions.last() + 1]
         }
         Array(selectedSegment.values.size) { fromIndex ->
             calculateWeightBetween(
@@ -240,7 +240,7 @@ class EdgeBuilderHeuristicOnContinuousSegment<C : PhysicsUnit<C>>(
         val previousElement = if (selectedSegment.positions.first() == 0) {
             objectiveCount
         } else {
-            clone[selectedSegment.positions.first() - 1]
+            clone.permutation[selectedSegment.positions.first() - 1]
         }
 
         Array(selectedSegment.values.size) { toIndex ->

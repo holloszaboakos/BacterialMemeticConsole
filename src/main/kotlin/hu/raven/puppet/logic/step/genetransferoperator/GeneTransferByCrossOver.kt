@@ -34,7 +34,9 @@ class GeneTransferByCrossOver<C : PhysicsUnit<C>>(
         calculateCostOf(child)
 
         if (child.costOrException() < target.costOrException()) {
-            target.setData(child.getData())
+            target.permutation.setEach { index, _ ->
+                child.permutation[index]
+            }
             val oldCost = target.cost
             target.cost = child.cost
             return StepEfficiencyData(

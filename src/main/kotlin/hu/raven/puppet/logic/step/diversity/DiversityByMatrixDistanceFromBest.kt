@@ -51,10 +51,10 @@ class DiversityByMatrixDistanceFromBest<C : PhysicsUnit<C>>(
     private fun <C : PhysicsUnit<C>> preceditionMatrixWithDistance(
         specimen: OnePartRepresentation<C>
     ): Array<IntArray> {
-        val inverse = specimen.inverseOfPermutation()
-        return Array(inverse.value.size) { fromIndex ->
-            IntArray(inverse.value.size) { toIndex ->
-                inverse.value[fromIndex] - inverse.value[toIndex]
+        val inverse = specimen.permutation.inverse()
+        return Array(inverse.size) { fromIndex ->
+            IntArray(inverse.size) { toIndex ->
+                inverse[fromIndex] - inverse[toIndex]
             }
         }
     }

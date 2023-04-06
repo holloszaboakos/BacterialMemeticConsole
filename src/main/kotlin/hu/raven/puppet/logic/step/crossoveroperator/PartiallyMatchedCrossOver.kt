@@ -16,8 +16,8 @@ class PartiallyMatchedCrossOver<C : PhysicsUnit<C>>(
         child: OnePartRepresentation<C>
     ) {
         val cut = arrayOf(
-            Random.nextInt(parents.first.permutationIndices.count()),
-            Random.nextInt(parents.first.permutationIndices.count() - 1)
+            Random.nextInt(parents.first.permutation.indices.count()),
+            Random.nextInt(parents.first.permutation.indices.count() - 1)
         )
         if (cut[0] == cut[1])
             cut[1]++
@@ -25,22 +25,22 @@ class PartiallyMatchedCrossOver<C : PhysicsUnit<C>>(
         val primerParent = parents.first
         val seconderParent = parents.second
         val seconderCopy = seconderParent.copyOfPermutationBy(::MutableList) as MutableList
-        val seconderInverse = seconderParent.inverseOfPermutation()
+        val seconderInverse = seconderParent.permutation.inverse()
 
         //copy parent middle to child
         //start mapping
-        child.setEach { index, _ ->
+        child.permutation.setEach { index, _ ->
             if (index in cut[0]..cut[1])
-                child.permutationSize
+                child.permutation.size
             else {
-                seconderCopy[seconderInverse.value[primerParent[index]]] = child.permutationSize
-                primerParent[index]
+                seconderCopy[seconderInverse[primerParent.permutation[index]]] = child.permutation.size
+                primerParent.permutation[index]
             }
         }
-        seconderCopy.removeIf { it == child.permutationSize }
+        seconderCopy.removeIf { it == child.permutation.size }
         //fill empty positions
         seconderCopy.forEachIndexed { index, value ->
-            child[cut[0] + index] = value
+            child.permutation[cut[0] + index] = value
         }
 
         child.iteration = algorithmState.iteration
@@ -48,7 +48,7 @@ class PartiallyMatchedCrossOver<C : PhysicsUnit<C>>(
         child.inUse = true
 
 
-        if (!child.checkFormat())
+        if (!child.permutation.checkFormat())
             throw Error("Invalid specimen!")
     }
 }

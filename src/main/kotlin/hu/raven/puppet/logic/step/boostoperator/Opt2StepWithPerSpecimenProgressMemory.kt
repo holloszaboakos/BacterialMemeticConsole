@@ -33,17 +33,17 @@ class Opt2StepWithPerSpecimenProgressMemory<C : PhysicsUnit<C>>(
 
             var lastPosition = lastPositionPerSpecimen[specimen.id]
 
-            outer@ for (firstIndex in lastPosition.first until algorithmState.population.first().permutationSize - 1) {
+            outer@ for (firstIndex in lastPosition.first until algorithmState.population.first().permutation.size - 1) {
                 val secondIndexStart =
                     if (firstIndex == lastPosition.first) lastPosition.second
                     else firstIndex + 1
-                for (secondIndex in secondIndexStart until algorithmState.population.first().permutationSize) {
-                    specimen.swapGenes(firstIndex, secondIndex)
+                for (secondIndex in secondIndexStart until algorithmState.population.first().permutation.size) {
+                    specimen.permutation.swapValues(firstIndex, secondIndex)
                     calculateCostOf(specimen)
                     spentBudget++
 
                     if (specimen.costOrException() >= bestCost!!) {
-                        specimen.swapGenes(firstIndex, secondIndex)
+                        specimen.permutation.swapValues(firstIndex, secondIndex)
                         specimen.cost = bestCost
                         continue
                     }

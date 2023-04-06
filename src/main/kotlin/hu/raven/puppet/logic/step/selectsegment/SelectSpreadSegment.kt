@@ -17,11 +17,11 @@ class SelectSpreadSegment<C : PhysicsUnit<C>>(
         cycleIndex: Int,
         cycleCount: Int
     ): Segment {
-        val positions = specimen.permutationIndices
+        val positions = specimen.permutation.indices
             .selectRandomPositions(parameters.cloneSegmentLength)
         return Segment(
             positions = positions,
-            values = positions.map { specimen[it] }.toIntArray()
+            values = positions.map { specimen.permutation[it] }.toIntArray()
         )
     }
 }

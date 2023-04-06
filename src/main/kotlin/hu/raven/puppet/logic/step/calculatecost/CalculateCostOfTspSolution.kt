@@ -15,16 +15,16 @@ class CalculateCostOfTspSolution(
     override operator fun invoke(specimen: OnePartRepresentation<Meter>) {
         algorithmState.task.run {
             specimen.cost = arrayOf(
-                costGraph.edgesFromCenter[specimen[0]].length,
-                costGraph.edgesToCenter[specimen[specimen.permutationIndices.last]].length,
-                *specimen
+                costGraph.edgesFromCenter[specimen.permutation[0]].length,
+                costGraph.edgesToCenter[specimen.permutation[specimen.permutation.indices.last]].length,
+                *specimen.permutation
                     .map { it }
                     .mapIndexed { index, value ->
                         if (index == 0) {
                             return@mapIndexed Meter(Fraction.new(0))
                         }
 
-                        costGraph.getEdgeBetween(specimen[index - 1], value).length
+                        costGraph.getEdgeBetween(specimen.permutation[index - 1], value).length
                     }
                     .toList()
                     .toTypedArray()
