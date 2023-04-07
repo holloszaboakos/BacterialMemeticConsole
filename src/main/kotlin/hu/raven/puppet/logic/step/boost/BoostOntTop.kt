@@ -11,29 +11,28 @@ class BoostOntTop<C : PhysicsUnit<C>>(
     val boostedCount: Int,
     override val boostOperator: BoostOperator<C>,
     override val statistics: BacterialAlgorithmStatistics
-) : BoostFactory<C>() {
+) : Boost<C>() {
 
-    override operator fun invoke() =
-        fun EvolutionaryAlgorithmState<C>.() {
-            population
-                .slice(0 until boostedCount)
-                .map {
-                    boostOperator(it)
-                }
-                .map { it }
-                .onEachIndexed { index, it ->
-                    if (index == 0) {
-                        synchronized(statistics) {
-                            statistics.boostOnBestImprovement = it
-                        }
-                    }
-                }
-                .sum()
-                .also {
+    override operator fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {
+        population
+            .slice(0 until boostedCount)
+            .map {
+                boostOperator(it)
+            }
+            .map { it }
+            .onEachIndexed { index, it ->
+                if (index == 0) {
                     synchronized(statistics) {
-                        statistics.boostImprovement = it
+                        statistics.boostOnBestImprovement = it
                     }
                 }
-        }
+            }
+            .sum()
+            .also {
+                synchronized(statistics) {
+                    statistics.boostImprovement = it
+                }
+            }
+    }
 
 }

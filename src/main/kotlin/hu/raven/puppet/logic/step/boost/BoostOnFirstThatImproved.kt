@@ -11,30 +11,29 @@ class BoostOnFirstThatImproved<C : PhysicsUnit<C>>(
     override val boostOperator: BoostOperator<C>,
     override val statistics: BacterialAlgorithmStatistics
 ) :
-    BoostFactory<C>() {
+    Boost<C>() {
     var costPerPermutation = mutableListOf<C?>()
 
-    override fun invoke() =
-        fun EvolutionaryAlgorithmState<C>.() {
-            if (costPerPermutation.isEmpty()) {
-                costPerPermutation = MutableList(population.size) { null }
-            }
-
-            population
-                .firstOrNull {
-                    costPerPermutation[it.id] != null && it.costOrException() < costPerPermutation[it.id]!!
-                }
-                ?.let {
-                    costPerPermutation[it.id] = it.cost
-                    val improvement = boostOperator(it)
-                    synchronized(statistics) {
-                        if (it == population.first()) {
-                            statistics.boostOnBestImprovement = improvement
-                        } else {
-                            statistics.boostOnBestImprovement = StepEfficiencyData()
-                        }
-                        statistics.boostImprovement = improvement
-                    }
-                }
+    override fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {
+        if (costPerPermutation.isEmpty()) {
+            costPerPermutation = MutableList(population.size) { null }
         }
+
+        population
+            .firstOrNull {
+                costPerPermutation[it.id] != null && it.costOrException() < costPerPermutation[it.id]!!
+            }
+            ?.let {
+                costPerPermutation[it.id] = it.cost
+                val improvement = boostOperator(it)
+                synchronized(statistics) {
+                    if (it == population.first()) {
+                        statistics.boostOnBestImprovement = improvement
+                    } else {
+                        statistics.boostOnBestImprovement = StepEfficiencyData()
+                    }
+                    statistics.boostImprovement = improvement
+                }
+            }
+    }
 }

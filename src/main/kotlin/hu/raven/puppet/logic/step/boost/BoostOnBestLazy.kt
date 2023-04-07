@@ -11,27 +11,26 @@ class BoostOnBestLazy<C : PhysicsUnit<C>>(
     override val boostOperator: BoostOperator<C>,
     override val statistics: BacterialAlgorithmStatistics
 ) :
-    BoostFactory<C>() {
+    Boost<C>() {
     var costOfBest: C? = null
 
-    override operator fun invoke() =
-        fun EvolutionaryAlgorithmState<C>.() {
-            val best = population.first()
-            if (best.cost == costOfBest) {
-                val improvement = boostOperator(best)
-                synchronized(statistics) {
-                    statistics.boostImprovement = improvement
-                    statistics.boostOnBestImprovement = improvement
-                }
-            } else {
-                val improvement = StepEfficiencyData()
-
-                synchronized(statistics) {
-                    statistics.boostImprovement = improvement
-                    statistics.boostOnBestImprovement = improvement
-                }
+    override operator fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {
+        val best = population.first()
+        if (best.cost == costOfBest) {
+            val improvement = boostOperator(best)
+            synchronized(statistics) {
+                statistics.boostImprovement = improvement
+                statistics.boostOnBestImprovement = improvement
             }
-            costOfBest = best.cost
+        } else {
+            val improvement = StepEfficiencyData()
+
+            synchronized(statistics) {
+                statistics.boostImprovement = improvement
+                statistics.boostOnBestImprovement = improvement
+            }
         }
+        costOfBest = best.cost
+    }
 
 }

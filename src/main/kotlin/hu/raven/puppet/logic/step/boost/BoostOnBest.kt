@@ -9,18 +9,17 @@ import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 class BoostOnBest<C : PhysicsUnit<C>>(
     override val boostOperator: BoostOperator<C>,
     override val statistics: BacterialAlgorithmStatistics
-) : BoostFactory<C>() {
+) : Boost<C>() {
 
-    override operator fun invoke() =
-        fun EvolutionaryAlgorithmState<C>.() {
-            val best = population.first()
+    override operator fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {
+        val best = population.first()
 
-            val improvement = boostOperator(best)
+        val improvement = boostOperator(best)
 
-            synchronized(statistics) {
-                statistics.boostImprovement = improvement
-                statistics.boostOnBestImprovement = improvement
-            }
+        synchronized(statistics) {
+            statistics.boostImprovement = improvement
+            statistics.boostOnBestImprovement = improvement
         }
+    }
 
 }

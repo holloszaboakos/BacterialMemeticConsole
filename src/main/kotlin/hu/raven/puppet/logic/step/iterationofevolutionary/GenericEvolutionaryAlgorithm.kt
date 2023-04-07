@@ -1,6 +1,6 @@
 package hu.raven.puppet.logic.step.iterationofevolutionary
 
-import hu.raven.puppet.logic.EvolutionaryAlgorithmStepFactory
+import hu.raven.puppet.logic.EvolutionaryAlgorithmStep
 import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
@@ -8,7 +8,7 @@ import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 class GenericEvolutionaryAlgorithm<C : PhysicsUnit<C>>(
     override val logger: DoubleLogger,
     val algorithmState: EvolutionaryAlgorithmState<C>,
-    stepFactories: Array<EvolutionaryAlgorithmStepFactory<C>>,
+    steps: Array<EvolutionaryAlgorithmStep<C>>
 ) : EvolutionaryIteration<C>() {
 
     /*
@@ -20,12 +20,10 @@ class GenericEvolutionaryAlgorithm<C : PhysicsUnit<C>>(
     * mutate
     * */
 
-    private val steps = stepFactories
-        .map(EvolutionaryAlgorithmStepFactory<C>::invoke)
-        .toTypedArray()
+    private val steps = steps
 
     override fun invoke() {
-        steps.forEach { step -> algorithmState.step() }
+        steps.forEach { step -> step(algorithmState) }
         algorithmState.apply {
             copyOfBest = population.first().copy()
             copyOfWorst = population.last().copy()

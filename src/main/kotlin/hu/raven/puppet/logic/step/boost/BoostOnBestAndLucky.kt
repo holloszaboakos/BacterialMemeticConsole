@@ -11,29 +11,28 @@ class BoostOnBestAndLucky<C : PhysicsUnit<C>>(
     val luckyCount: Int,
     override val boostOperator: BoostOperator<C>,
     override val statistics: BacterialAlgorithmStatistics
-) : BoostFactory<C>() {
+) : Boost<C>() {
 
-    override fun invoke() =
-        fun EvolutionaryAlgorithmState<C>.() {
+    override fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {
 
-            val boostOnBestImprovement = boostOperator(population.first())
+        val boostOnBestImprovement = boostOperator(population.first())
 
-            synchronized(statistics) {
-                statistics.boostOnBestImprovement = boostOnBestImprovement
+        synchronized(statistics) {
+            statistics.boostOnBestImprovement = boostOnBestImprovement
+        }
+
+        population
+            .slice(1 until population.size)
+            .shuffled()
+            .slice(0 until luckyCount)
+            .map { boostOperator(it) }
+            .let { it + boostOnBestImprovement }
+            .sum()
+            .also {
+                synchronized(statistics) {
+                    statistics.boostImprovement = it
+                }
             }
 
-            population
-                .slice(1 until population.size)
-                .shuffled()
-                .slice(0 until luckyCount)
-                .map { boostOperator(it) }
-                .let { it + boostOnBestImprovement }
-                .sum()
-                .also {
-                    synchronized(statistics) {
-                        statistics.boostImprovement = it
-                    }
-                }
-
-        }
+    }
 }
