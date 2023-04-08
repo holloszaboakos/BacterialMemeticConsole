@@ -269,7 +269,7 @@ class EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation<C : Physics
         } else {
             clone.permutation[selectedSegment.positions.last() + 1]
         }
-       return Array(selectedSegment.values.size) { fromIndex ->
+        return Array(selectedSegment.values.size) { fromIndex ->
             calculateWeightBetween(
                 selectedSegment.values[fromIndex],
                 nextElement
@@ -280,7 +280,7 @@ class EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation<C : Physics
     private fun calculateWeightsOfEdgesFromPrevious(
         clone: OnePartRepresentation<C>,
         selectedSegment: Segment
-    ): Array<Fraction>{
+    ): Array<Fraction> {
         val objectiveCount = task.costGraph.objectives.size
         val previousElement = if (selectedSegment.positions.first() == 0) {
             objectiveCount

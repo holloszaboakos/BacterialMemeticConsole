@@ -1,9 +1,7 @@
 package hu.raven.puppet.logic.step.crossoveroperator
 
-import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentation
-import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import kotlin.random.Random
 
 class OrderCrossOver<C : PhysicsUnit<C>> : CrossOverOperator<C>() {

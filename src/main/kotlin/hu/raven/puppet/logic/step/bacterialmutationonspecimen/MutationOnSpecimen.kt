@@ -10,8 +10,8 @@ sealed class MutationOnSpecimen<C : PhysicsUnit<C>> {
     protected abstract val mutationOperator: BacterialMutationOperator<C>
     protected abstract val calculateCostOf: CalculateCost<C>
     protected abstract val selectSegment: SelectSegment<C>
-    protected abstract  val cloneCount: Int
-    protected abstract  val cloneCycleCount: Int
+    protected abstract val cloneCount: Int
+    protected abstract val cloneCycleCount: Int
 
     fun calcCostOfEachAndSort(clones: MutableList<OnePartRepresentation<C>>) {
         clones
