@@ -37,117 +37,86 @@ private data class Scenario(
     val fileName: String,
     val objectiveCount: Int,
     val mutationStrategy: (
-        algorithmState: EvolutionaryAlgorithmState<Meter>,
-        parameters: BacterialMutationParameterProvider<Meter>,
         mutationOperator: BacterialMutationOperator<Meter>,
         calculateCostOf: CalculateCost<Meter>,
         selectSegment: SelectSegment<Meter>,
+        cloneCount: Int,
+        cloneCycleCount: Int,
     ) -> MutationOnSpecimen<Meter>,
-    val mutationOperator: (
-        algorithmState: EvolutionaryAlgorithmState<Meter>,
-        parameters: BacterialMutationParameterProvider<Meter>,
-    ) -> BacterialMutationOperator<Meter>,
+    val mutationOperator: (task: Task) -> BacterialMutationOperator<Meter>,
 )
 
 private val TASK_SIZES = arrayOf(4, 8, 16, 32, 64, 128, 256, 512, 1024)
 private val STRATEGIES: Array<(
-
-    algorithmState: EvolutionaryAlgorithmState<Meter>,
-    parameters: BacterialMutationParameterProvider<Meter>,
     mutationOperator: BacterialMutationOperator<Meter>,
     calculateCostOf: CalculateCost<Meter>,
     selectSegment: SelectSegment<Meter>,
+    cloneCount: Int,
+    cloneCycleCount: Int
 ) -> MutationOnSpecimen<Meter>> = arrayOf(
-    { algorithmState: EvolutionaryAlgorithmState<Meter>,
-      parameters: BacterialMutationParameterProvider<Meter>,
-      mutationOperator: BacterialMutationOperator<Meter>,
+    { mutationOperator: BacterialMutationOperator<Meter>,
       calculateCostOf: CalculateCost<Meter>,
-      selectSegment: SelectSegment<Meter> ->
+      selectSegment: SelectSegment<Meter>,
+      cloneCount: Int,
+      cloneCycleCount: Int ->
 
         MutationWithElitistSelection(
-            algorithmState,
-            parameters,
-            mutationOperator,
-            calculateCostOf,
-            selectSegment
-        )
-    },
-    { algorithmState: EvolutionaryAlgorithmState<Meter>,
-      parameters: BacterialMutationParameterProvider<Meter>,
-      mutationOperator: BacterialMutationOperator<Meter>,
-      calculateCostOf: CalculateCost<Meter>,
-      selectSegment: SelectSegment<Meter> ->
-
-        MutationWithElitistSelectionAndOneOpposition(
-            algorithmState,
-            parameters,
             mutationOperator,
             calculateCostOf,
             selectSegment,
+            cloneCount,
+            cloneCycleCount
         )
     },
-    { algorithmState: EvolutionaryAlgorithmState<Meter>,
-      parameters: BacterialMutationParameterProvider<Meter>,
-      mutationOperator: BacterialMutationOperator<Meter>,
+    { mutationOperator: BacterialMutationOperator<Meter>,
       calculateCostOf: CalculateCost<Meter>,
-      selectSegment: SelectSegment<Meter> ->
+      selectSegment: SelectSegment<Meter>,
+      cloneCount: Int,
+      cloneCycleCount: Int ->
 
-        MutationWithElitistSelectionAndModuloStepper(
-            algorithmState,
-            parameters,
+        MutationWithElitistSelectionAndOneOpposition(
             mutationOperator,
             calculateCostOf,
-            selectSegment
+            selectSegment,
+            cloneCount,
+            cloneCycleCount
+        )
+    },
+    { mutationOperator: BacterialMutationOperator<Meter>,
+      calculateCostOf: CalculateCost<Meter>,
+      selectSegment: SelectSegment<Meter>,
+      cloneCount: Int,
+      cloneCycleCount: Int ->
+
+        MutationWithElitistSelectionAndModuloStepper(
+            mutationOperator,
+            calculateCostOf,
+            selectSegment,
+            cloneCount,
+            cloneCycleCount
         )
     },
     //other operator for each or more complex
     //random + modulo stepper
 )
 private val OPERATORS: Array<(
-
-    algorithmState: EvolutionaryAlgorithmState<Meter>,
-    parameters: BacterialMutationParameterProvider<Meter>,
+    task: Task
 ) -> BacterialMutationOperator<Meter>> = arrayOf(
 
-    { algorithmState: EvolutionaryAlgorithmState<Meter>,
-      parameters: BacterialMutationParameterProvider<Meter> ->
-
-        EdgeBuilderHeuristicOnContinuousSegment(
-            algorithmState,
-            parameters,
-        )
+    { task: Task ->
+        EdgeBuilderHeuristicOnContinuousSegment(task)
     },
-    { algorithmState: EvolutionaryAlgorithmState<Meter>,
-      parameters: BacterialMutationParameterProvider<Meter> ->
-
-        EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation(
-            algorithmState,
-            parameters,
-        )
+    { task: Task ->
+        EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation(task)
     },
-    { algorithmState: EvolutionaryAlgorithmState<Meter>,
-      parameters: BacterialMutationParameterProvider<Meter> ->
-
-        OppositionOperator(
-            algorithmState,
-            parameters,
-        )
+    { task: Task ->
+        OppositionOperator()
     },
-    { algorithmState: EvolutionaryAlgorithmState<Meter>,
-      parameters: BacterialMutationParameterProvider<Meter> ->
-
-        RandomShuffleOfContinuesSegment(
-            algorithmState,
-            parameters,
-        )
+    { task: Task ->
+        RandomShuffleOfContinuesSegment()
     },
-    { algorithmState: EvolutionaryAlgorithmState<Meter>,
-      parameters: BacterialMutationParameterProvider<Meter> ->
-
-        SequentialSelectionHeuristicOnContinuousSegment(
-            algorithmState,
-            parameters,
-        )
+    { task: Task ->
+        SequentialSelectionHeuristicOnContinuousSegment(task)
     }
 )
 
@@ -207,7 +176,7 @@ private fun runScenario(scenario: Scenario) {
                 single(named(SINGLE_FILE)) { scenario.fileName }
                 single<CalculateCost<*>> {
                     CalculateCostOfTspSolution(
-                        get(), get()
+                        get()
                     )
                 }
                 single { BacterialAlgorithmStatistics() }
@@ -216,12 +185,12 @@ private fun runScenario(scenario: Scenario) {
                 single { get<TaskLoader>().loadTask(get(INPUT_FOLDER)) }
                 single<BacterialMutationOperator<*>> {
                     scenario.mutationOperator(
-                        get(), get()
+                        get(),
                     )
                 }
                 single<SelectSegment<*>> {
                     SelectContinuesSegment<Meter>(
-                        get(), get()
+                        get(CLONE_SEGMENT_LENGTH)
                     )
                 }
                 single<EvolutionaryAlgorithmState<*>> {
@@ -245,8 +214,8 @@ private fun runScenario(scenario: Scenario) {
         get(),
         get(),
         get(),
-        get(),
-        get(),
+        get(CLONE_COUNT),
+        get(CLONE_CYCLE_COUNT),
     )
 
     (0 until 25).map {
@@ -260,7 +229,7 @@ private fun runScenario(scenario: Scenario) {
                 0,
                 0
             )
-        strategy(specimen)
+        strategy(specimen, 0)
         calculateCost(specimen)
         specimen.costOrException()
     }

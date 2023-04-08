@@ -2,7 +2,6 @@ package hu.raven.puppet.logic.step.crossoveroperator
 
 import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
-import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
@@ -11,8 +10,7 @@ import hu.raven.puppet.model.statistics.OperatorStatistics
 import hu.raven.puppet.utility.inject
 
 class StatisticalRacingCrossOverWithLeader<C : PhysicsUnit<C>>(
-    val algorithmState: EvolutionaryAlgorithmState<C>,
-    val parameters: EvolutionaryAlgorithmParameterProvider<C>,
+    val algorithmStateProvider: () -> EvolutionaryAlgorithmState<C>,
     val logger: DoubleLogger
 ) :
     CrossOverOperator<C>() {
@@ -33,7 +31,7 @@ class StatisticalRacingCrossOverWithLeader<C : PhysicsUnit<C>>(
             iteration = -1
         }
          */
-
+        val algorithmState = algorithmStateProvider()
         if (iteration != algorithmState.iteration) {
             iteration = algorithmState.iteration
             actualStatistics?.let { statistics ->
@@ -63,15 +61,7 @@ class StatisticalRacingCrossOverWithLeader<C : PhysicsUnit<C>>(
                 operator.invoke(parents, child)
                 calculateCostOf(child)
                 synchronized(statistics) {
-                    if (parents.first.costOrException() > child.costOrException())
-                        statistics.success += ((parents.first.costOrException().value - child.costOrException().value) / parents.first.costOrException().value).let { it * it } * 3L / 2L *
-                                (algorithmState.iteration - parents.first.iteration).toLong() *
-                                (algorithmState.population.size - parents.first.orderInPopulation).toLong()
-
-                    if (parents.second.costOrException() > child.costOrException())
-                        statistics.success += ((parents.second.costOrException().value - child.costOrException().value) / parents.second.costOrException().value).let { it * it } *
-                                (algorithmState.iteration - parents.second.iteration).toLong() *
-                                (algorithmState.population.size - parents.second.orderInPopulation).toLong()
+                    //TODO increase success
                 }
             }
         }

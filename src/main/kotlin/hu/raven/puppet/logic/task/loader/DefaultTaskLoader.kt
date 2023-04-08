@@ -2,7 +2,6 @@ package hu.raven.puppet.logic.task.loader
 
 import hu.raven.puppet.model.task.*
 import hu.raven.puppet.modules.FilePathVariableNames
-import hu.raven.puppet.utility.extention.min
 import hu.raven.puppet.utility.extention.sumClever
 
 //TODO fix json structures

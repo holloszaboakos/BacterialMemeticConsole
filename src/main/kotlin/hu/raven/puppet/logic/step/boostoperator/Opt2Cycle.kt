@@ -3,16 +3,12 @@ package hu.raven.puppet.logic.step.boostoperator
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.math.Fraction
-import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentation
-import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
 class Opt2Cycle<C : PhysicsUnit<C>>(
-    val algorithmState: EvolutionaryAlgorithmState<C>,
-    val parameters: EvolutionaryAlgorithmParameterProvider<C>,
     override val calculateCostOf: CalculateCost<C>
 ) : BoostOperator<C>() {
 
@@ -23,8 +19,8 @@ class Opt2Cycle<C : PhysicsUnit<C>>(
         val spentTime = measureTime {
             var bestCost = specimen.cost
 
-            for (firstIndex in 0 until algorithmState.population.first().permutation.size - 1) {
-                for (secondIndex in firstIndex + 1 until algorithmState.population.first().permutation.size) {
+            for (firstIndex in 0 until specimen.permutation.size - 1) {
+                for (secondIndex in firstIndex + 1 until specimen.permutation.size) {
                     specimen.permutation.swapValues(firstIndex, secondIndex)
                     calculateCostOf(specimen)
                     spentBudget++

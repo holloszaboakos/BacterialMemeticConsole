@@ -1,66 +1,58 @@
 package hu.raven.puppet.logic.step.calculatecost
 
-import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.model.physics.Meter
 import hu.raven.puppet.model.physics.Stere
 import hu.raven.puppet.model.solution.OnePartRepresentation
-import hu.raven.puppet.model.state.AlgorithmState
-import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.model.task.CostGraph
+import hu.raven.puppet.model.task.Task
 import hu.raven.puppet.model.task.TransportUnit
 import hu.raven.puppet.utility.extention.getEdgeBetween
-import hu.raven.puppet.utility.inject
 
 class CalculateCostOfCVRPSolutionWithCapacity(
-    override val statistics: BacterialAlgorithmStatistics,
-    val algorithmState: AlgorithmState
+    override val task: Task
 ) : CalculateCost<Meter>() {
     data class TripState(
         val takenCapacity: Stere,
         val cost: Meter,
     )
 
-    val doubleLogger: DoubleLogger by inject()
     override fun invoke(specimen: OnePartRepresentation<Meter>) {
-        statistics.fitnessCallCount++
-        algorithmState.run {
-            var tripState = TripState(Stere(0L), Meter(0L))
-            specimen.permutation
-                .sliced { it >= task.costGraph.objectives.size - 1 }
-                .forEachIndexed { sliceIndex, slice ->
-                    val salesman = task.transportUnits[sliceIndex]
-                    slice.forEachIndexed { sliceValueIndex, sliceValue ->
-                        tripState = when (sliceValueIndex) {
-                            0 -> onFirstValueOfSlice(
-                                task.costGraph,
-                                sliceValue,
-                                tripState,
-                                sliceValueIndex != slice.lastIndex
-                            )
+        var tripState = TripState(Stere(0L), Meter(0L))
+        specimen.permutation
+            .sliced { it >= task.costGraph.objectives.size - 1 }
+            .forEachIndexed { sliceIndex, slice ->
+                val salesman = task.transportUnits[sliceIndex]
+                slice.forEachIndexed { sliceValueIndex, sliceValue ->
+                    tripState = when (sliceValueIndex) {
+                        0 -> onFirstValueOfSlice(
+                            task.costGraph,
+                            sliceValue,
+                            tripState,
+                            sliceValueIndex != slice.lastIndex
+                        )
 
-                            slice.size - 1 -> onLastValueOfSlice(
-                                task.costGraph,
-                                sliceValue,
-                                tripState,
-                                salesman,
-                                slice[sliceValueIndex - 1],
-                            )
+                        slice.size - 1 -> onLastValueOfSlice(
+                            task.costGraph,
+                            sliceValue,
+                            tripState,
+                            salesman,
+                            slice[sliceValueIndex - 1],
+                        )
 
-                            else -> onOtherValuesOfSlice(
-                                task.costGraph,
-                                sliceValue,
-                                tripState,
-                                salesman,
-                                slice[sliceValueIndex - 1],
-                            )
-                        }
-
+                        else -> onOtherValuesOfSlice(
+                            task.costGraph,
+                            sliceValue,
+                            tripState,
+                            salesman,
+                            slice[sliceValueIndex - 1],
+                        )
                     }
+
                 }
-            specimen.cost = tripState.cost
-            if (tripState.cost == Meter(0L)) {
-                println("Impossible!")
             }
+        specimen.cost = tripState.cost
+        if (tripState.cost == Meter(0L)) {
+            println("Impossible!")
         }
     }
 

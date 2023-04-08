@@ -1,20 +1,17 @@
 package hu.raven.puppet.logic.step.bacterialmutationoperator
 
 import hu.raven.puppet.model.math.Fraction
-import hu.raven.puppet.model.parameters.BacterialMutationParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.solution.Segment
-import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
+import hu.raven.puppet.model.task.Task
 import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.extention.sumClever
 
 //TODO repair
 class SequentialSelectionHeuristicOnContinuousSegment<C : PhysicsUnit<C>>(
-    val algorithmState: EvolutionaryAlgorithmState<C>,
-    override val parameters: BacterialMutationParameterProvider<C>,
-) :
-    BacterialMutationOperator<C>() {
+    val task: Task
+) : BacterialMutationOperator<C>() {
 
     override fun invoke(
         clone: OnePartRepresentation<C>,
@@ -22,7 +19,7 @@ class SequentialSelectionHeuristicOnContinuousSegment<C : PhysicsUnit<C>>(
     ) {
 
         val remainingElements = selectedSegment.values.toMutableList()
-        val objectiveCount = algorithmState.task.costGraph.objectives.size
+        val objectiveCount = task.costGraph.objectives.size
         var previousElement = if (selectedSegment.positions.first() == 0) {
             objectiveCount
         } else {
@@ -71,7 +68,7 @@ class SequentialSelectionHeuristicOnContinuousSegment<C : PhysicsUnit<C>>(
     private fun calculateWeightsOfRemainingElements(
         previousElement: Int,
         remainingElements: MutableList<Int>
-    ): Array<Fraction> = algorithmState.task.run {
+    ): Array<Fraction> = task.run {
         val objectiveCount = costGraph.objectives.size
         remainingElements.map { element ->
             when {
@@ -118,7 +115,7 @@ class SequentialSelectionHeuristicOnContinuousSegment<C : PhysicsUnit<C>>(
     private fun calculateWeightsOfNeighbouringEdges(
         currentElement: Int,
         remainingElements: MutableList<Int>
-    ): Fraction = algorithmState.task.run {
+    ): Fraction = task.run {
         val objectiveCount = costGraph.objectives.size
         remainingElements
             .map { element ->

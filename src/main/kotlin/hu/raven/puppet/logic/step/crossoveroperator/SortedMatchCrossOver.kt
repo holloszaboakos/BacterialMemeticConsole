@@ -3,7 +3,7 @@ package hu.raven.puppet.logic.step.crossoveroperator
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentation
-import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
+import hu.raven.puppet.model.task.CostGraph
 import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.extention.min
 import hu.raven.puppet.utility.extention.sumClever
@@ -11,7 +11,7 @@ import kotlin.math.abs
 
 //broken
 class SortedMatchCrossOver<C : PhysicsUnit<C>>(
-    val algorithmState: EvolutionaryAlgorithmState<C>,
+    val costGraphProvider: () -> CostGraph,
     val parameters: EvolutionaryAlgorithmParameterProvider<C>
 ) : CrossOverOperator<C>() {
 
@@ -53,10 +53,11 @@ class SortedMatchCrossOver<C : PhysicsUnit<C>>(
             }
         }
         if (foundSlices.isNotEmpty()) {
+            val costGraph = costGraphProvider()
             val cheaperIndex = Array(2) { sliceIndex ->
                 (1 until foundSlices[sliceIndex].size)
                     .map { geneIndex ->
-                        algorithmState.task.costGraph
+                        costGraph
                             .getEdgeBetween(foundSlices[sliceIndex][geneIndex - 1], foundSlices[sliceIndex][geneIndex])
                             .length
                             .value
@@ -77,13 +78,5 @@ class SortedMatchCrossOver<C : PhysicsUnit<C>>(
                 child.permutation[geneIndex] = parents.toList()[0].permutation[geneIndex]
             }
         }
-        child.iteration = algorithmState.iteration
-        child.cost = null
-        child.inUse = true
-
-
-        if (!child.permutation.checkFormat())
-            throw Error("Invalid specimen!")
-
     }
 }

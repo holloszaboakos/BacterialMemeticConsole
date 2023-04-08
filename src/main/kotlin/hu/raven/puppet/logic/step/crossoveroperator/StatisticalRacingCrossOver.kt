@@ -12,6 +12,7 @@ import hu.raven.puppet.model.statistics.OperatorStatistics
 import hu.raven.puppet.utility.extention.sumClever
 import hu.raven.puppet.utility.inject
 
+//TODO
 //tegyünk bele fuzzy logikát vagy szimulált lehülést
 //pár iterációnként teljesen véletlent válasszunk
 //a mostani a méh kolónia algoritmus scout fázis menjen bele
@@ -84,20 +85,7 @@ class StatisticalRacingCrossOver<C : PhysicsUnit<C>>(
                 calculateCostOf(child)
                 /*    AuditWorkstation, ExpeditionArea*/
                 synchronized(actualStatistics) {
-                    /*if (parents.first.cost > child.cost && parents.second.cost > child.cost) {
-                        actualStatistics.success +=
-                            (algorithm.population.size - parents.first.orderInPopulation).toDouble().pow(2) *
-                                    (algorithm.population.size - parents.second.orderInPopulation).toDouble().pow(2)
-                    }
-                    else*/ if (parents.first.costOrException() > child.costOrException()) {
-                    actualStatistics.success += Fraction.new(algorithmState.iteration.toLong() - parents.first.iteration) / child.costOrException().value /
-                            Fraction.new(parents.first.orderInPopulation.toLong() + 1).let { it * it }
-
-                }
-                    /*else*/ if (parents.second.costOrException() > child.costOrException()) {
-                    actualStatistics.success += Fraction.new(algorithmState.iteration.toLong() - parents.second.iteration) / child.costOrException().value /
-                            Fraction.new(parents.second.orderInPopulation.toLong() + 1).let { it * it }
-                }
+                    //TODO increase success
                 }
             }
         }

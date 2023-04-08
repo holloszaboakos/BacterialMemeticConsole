@@ -1,26 +1,23 @@
 package hu.raven.puppet.logic.step.crossoveroperator
 
-import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.math.Permutation
-import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentation
-import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
+import hu.raven.puppet.model.task.CostGraph
 import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.extention.sumClever
 import kotlin.random.Random.Default.nextInt
 
 class HeuristicCrossOver<C : PhysicsUnit<C>>(
-    val algorithmState: EvolutionaryAlgorithmState<C>,
-    val parameters: EvolutionaryAlgorithmParameterProvider<C>,
-    val logger: DoubleLogger,
+    val costGraphProvider: () -> CostGraph
 ) : CrossOverOperator<C>() {
 
     override fun invoke(
         parents: Pair<OnePartRepresentation<C>, OnePartRepresentation<C>>,
         child: OnePartRepresentation<C>
     ) {
+        val costGraph = costGraphProvider()
         val parentsL = parents.toList()
         val parentsInverse = Array(2) {
             parentsL[it].permutation.inverse()
@@ -56,14 +53,11 @@ class HeuristicCrossOver<C : PhysicsUnit<C>>(
                     child,
                     geneIndex
                 )
-
-                if (child.permutation[geneIndex] == child.permutation.size)
-                    logger("Failed to choose at random")
-
                 continue
             }
 
             val weights = calculateWeightForNeighbours(
+                costGraph,
                 neighbours,
                 previousValue
             )
@@ -81,14 +75,6 @@ class HeuristicCrossOver<C : PhysicsUnit<C>>(
 
 
         }
-
-        child.iteration = algorithmState.iteration
-        child.cost = null
-        child.inUse = true
-
-
-        if (!child.permutation.checkFormat())
-            throw Error("Invalid specimen after heuristic crossover!")
 
     }
 
@@ -127,9 +113,10 @@ class HeuristicCrossOver<C : PhysicsUnit<C>>(
     }
 
     private fun calculateWeightForNeighbours(
+        costGraph: CostGraph,
         neighbours: List<Int>,
         previousValue: Int
-    ): Array<Fraction> = algorithmState.task.costGraph.run {
+    ): Array<Fraction> = costGraph.run {
         Array(neighbours.size) { neighbourIndex ->
             when {
                 previousValue < objectives.size && neighbours[neighbourIndex] < objectives.size -> {

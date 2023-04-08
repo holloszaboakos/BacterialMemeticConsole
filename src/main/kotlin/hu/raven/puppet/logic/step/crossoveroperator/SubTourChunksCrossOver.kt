@@ -1,15 +1,10 @@
 package hu.raven.puppet.logic.step.crossoveroperator
 
-import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentation
-import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import kotlin.random.Random.Default.nextInt
 
-class SubTourChunksCrossOver<C : PhysicsUnit<C>>(
-    val algorithmState: EvolutionaryAlgorithmState<C>,
-    val parameters: EvolutionaryAlgorithmParameterProvider<C>
-) : CrossOverOperator<C>() {
+class SubTourChunksCrossOver<C : PhysicsUnit<C>> : CrossOverOperator<C>() {
 
     class Randomizer(permutationSize: Int) {
         val randomPermutation: IntArray
@@ -77,15 +72,5 @@ class SubTourChunksCrossOver<C : PhysicsUnit<C>>(
             return@setEach result
 
         }
-
-        updateChild(child)
-    }
-
-    private fun updateChild(child: OnePartRepresentation<C>) {
-        child.iteration = algorithmState.iteration
-        child.cost = null
-        child.inUse = true
-        if (!child.permutation.checkFormat())
-            throw Error("Invalid specimen!")
     }
 }

@@ -4,66 +4,60 @@ import hu.raven.puppet.model.TakenCapacity
 import hu.raven.puppet.model.physics.Euro
 import hu.raven.puppet.model.physics.Second
 import hu.raven.puppet.model.solution.OnePartRepresentation
-import hu.raven.puppet.model.state.AlgorithmState
-import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
-import hu.raven.puppet.model.task.CostGraph
-import hu.raven.puppet.model.task.CostGraphEdge
-import hu.raven.puppet.model.task.CostGraphVertex
-import hu.raven.puppet.model.task.TransportUnit
+import hu.raven.puppet.model.task.*
 import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.extention.sumClever
 
 class CalculateCostOfACVRPWithMultipleCapacity(
-    override val statistics: BacterialAlgorithmStatistics,
-    val algorithmState: AlgorithmState
+    override val task: Task
 ) : CalculateCost<Euro>() {
     override operator fun invoke(
         specimen: OnePartRepresentation<Euro>
     ) {
-        statistics.fitnessCallCount++
-        specimen.cost = algorithmState.run {
-            specimen.mapSliceIndexed { sliceIndex, slice ->
-                val salesman = task.transportUnits[sliceIndex]
-                var takenCapacity = TakenCapacity()
+        specimen.cost =
+            specimen.permutation
+                .sliced { it >= specimen.objectiveCount }
+                .mapIndexed { sliceIndex, slice ->
+                    val salesman = task.transportUnits[sliceIndex]
+                    var takenCapacity = TakenCapacity()
 
-                slice.mapIndexed { sliceValueIndex, sliceValue ->
-                    when (sliceValueIndex) {
-                        0 -> onFirstValueOfSlice(
-                            task.costGraph,
-                            sliceValue,
-                            salesman,
-                            takenCapacity,
-                            sliceValue == slice.last(),
-                        ).let {
-                            takenCapacity = it.second
-                            it.first
-                        }
+                    slice.mapIndexed { sliceValueIndex, sliceValue ->
+                        when (sliceValueIndex) {
+                            0 -> onFirstValueOfSlice(
+                                task.costGraph,
+                                sliceValue,
+                                salesman,
+                                takenCapacity,
+                                sliceValue == slice.last(),
+                            ).let {
+                                takenCapacity = it.second
+                                it.first
+                            }
 
-                        slice.lastIndex -> onLastValueOfSlice(
-                            task.costGraph,
-                            sliceValue,
-                            salesman,
-                            takenCapacity,
-                            slice[sliceValueIndex - 1],
-                        )
+                            slice.lastIndex -> onLastValueOfSlice(
+                                task.costGraph,
+                                sliceValue,
+                                salesman,
+                                takenCapacity,
+                                slice[sliceValueIndex - 1],
+                            )
 
-                        else -> onOtherValuesOfSlice(
-                            task.costGraph,
-                            sliceValue,
-                            salesman,
-                            takenCapacity,
-                            slice[sliceValueIndex - 1],
-                        ).let {
-                            takenCapacity = it.second
-                            it.first
+                            else -> onOtherValuesOfSlice(
+                                task.costGraph,
+                                sliceValue,
+                                salesman,
+                                takenCapacity,
+                                slice[sliceValueIndex - 1],
+                            ).let {
+                                takenCapacity = it.second
+                                it.first
+                            }
                         }
                     }
-                }
-            }.flatten()
+                }.flatten()
                 .map { it.value }
                 .sumClever()
                 .let { Euro(it) }
-        }
     }
 
     private fun onFirstValueOfSlice(

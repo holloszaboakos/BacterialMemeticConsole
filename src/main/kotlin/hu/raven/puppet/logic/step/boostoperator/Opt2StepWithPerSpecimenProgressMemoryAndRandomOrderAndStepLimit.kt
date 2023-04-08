@@ -4,24 +4,19 @@ import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.math.Fraction
-import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentation
-import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.modules.AlgorithmParameters
 import hu.raven.puppet.utility.inject
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
 class Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit<C : PhysicsUnit<C>>(
-    val algorithmState: EvolutionaryAlgorithmState<C>,
-    val parameters: EvolutionaryAlgorithmParameterProvider<C>,
     override val calculateCostOf: CalculateCost<C>,
     val logger: DoubleLogger
-) :
-    BoostOperator<C>() {
+) : BoostOperator<C>() {
     private val stepLimit: Int by inject(AlgorithmParameters.OPTIMISATION_STEP_LIMIT)
-    private var lastPositionPerSpecimen = arrayOf<Pair<Int, Int>>()
+    private var lastPositionPerSpecimen = mutableMapOf<Int, Pair<Int, Int>>()
     private var shuffler = intArrayOf()
 
     @OptIn(ExperimentalTime::class)
@@ -30,11 +25,11 @@ class Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit<C : Physic
         val oldCost = specimen.costOrException()
         val spentTime = measureTime {
             logger("BOOST")
-            if (lastPositionPerSpecimen.isEmpty()) {
-                lastPositionPerSpecimen = Array(parameters.sizeOfPopulation) { Pair(0, 1) }
+            if (!lastPositionPerSpecimen.containsKey(specimen.id)) {
+                lastPositionPerSpecimen[specimen.id] = Pair(0, 1)
             }
             if (shuffler.isEmpty()) {
-                shuffler = (0 until algorithmState.population.first().permutation.size)
+                shuffler = (0 until specimen.permutation.size)
                     .shuffled()
                     .toIntArray()
             }
@@ -43,15 +38,15 @@ class Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit<C : Physic
             var improved = false
             var limitPassed = false
 
-            var lastPosition = lastPositionPerSpecimen[specimen.id]
+            var lastPosition = lastPositionPerSpecimen[specimen.id]!!
             var stepCount = 0
 
-            outer@ for (firstIndexIndex in lastPosition.first until algorithmState.task.costGraph.objectives.size - 1) {
+            outer@ for (firstIndexIndex in lastPosition.first until specimen.permutation.size - 1) {
                 val firstIndex = shuffler[firstIndexIndex]
                 val secondIndexStart =
                     if (firstIndexIndex == lastPosition.first) lastPosition.second
                     else firstIndexIndex + 1
-                for (secondIndexIndex in secondIndexStart until algorithmState.population.first().permutation.size) {
+                for (secondIndexIndex in secondIndexStart until specimen.permutation.size) {
                     if (stepCount > stepLimit) {
                         lastPosition = Pair(firstIndexIndex, secondIndexIndex)
                         limitPassed = true

@@ -23,8 +23,8 @@ class Opt2Step<C : PhysicsUnit<C>>(
         val spentTime = measureTime {
             val bestCost = specimen.costOrException()
 
-            outer@ for (firstIndex in 0 until algorithmState.population.first().permutation.size - 1) {
-                for (secondIndex in firstIndex + 1 until algorithmState.population.first().permutation.size) {
+            outer@ for (firstIndex in 0 until specimen.permutation.size - 1) {
+                for (secondIndex in firstIndex + 1 until specimen.permutation.size) {
                     specimen.permutation.swapValues(firstIndex, secondIndex)
                     calculateCostOf(specimen)
                     spentBudget++

@@ -1,14 +1,9 @@
 package hu.raven.puppet.logic.step.crossoveroperator
 
-import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentation
-import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
-class AlternatingEdgeCrossOver<C : PhysicsUnit<C>>(
-    val algorithmState: EvolutionaryAlgorithmState<C>,
-    val parameters: EvolutionaryAlgorithmParameterProvider<C>,
-) : CrossOverOperator<C>() {
+class AlternatingEdgeCrossOver<C : PhysicsUnit<C>> : CrossOverOperator<C>() {
 
     override fun invoke(
         parents: Pair<OnePartRepresentation<C>, OnePartRepresentation<C>>,
@@ -41,15 +36,5 @@ class AlternatingEdgeCrossOver<C : PhysicsUnit<C>>(
             }
             childContains[child.permutation[geneIndex]] = true
         }
-
-        child.iteration = algorithmState.iteration
-        child.cost = null
-        child.inUse = true
-
-
-        if (!child.permutation.checkFormat())
-            throw Error("Invalid specimen!")
-
-
     }
 }

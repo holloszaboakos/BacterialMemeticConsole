@@ -1,27 +1,23 @@
 package hu.raven.puppet.logic.step.calculatecost
 
-import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.Meter
 import hu.raven.puppet.model.physics.Stere
 import hu.raven.puppet.model.solution.OnePartRepresentation
-import hu.raven.puppet.model.state.AlgorithmState
-import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
+import hu.raven.puppet.model.task.Task
 import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.extention.sumClever
 
 class CalculateCostOfCVRPSolutionWithCapacityAndMaxTripLength(
-    override val statistics: BacterialAlgorithmStatistics,
-    val algorithmState: AlgorithmState,
-    val doubleLogger: DoubleLogger
+    override val task: Task
 ) : CalculateCost<Meter>() {
     override fun invoke(specimen: OnePartRepresentation<Meter>) {
-        statistics.fitnessCallCount++
-        algorithmState.run {
-            var sumCost: Fraction? = Fraction.new(0L)
-            var startCount = 0
-            var endCount = 0
-            specimen.forEachSliceIndexed { _, slice ->
+        var sumCost: Fraction? = Fraction.new(0L)
+        var startCount = 0
+        var endCount = 0
+        specimen.permutation
+            .sliced { it >= specimen.objectiveCount }
+            .forEachIndexed { _, slice ->
                 //val salesman = task.salesmen[sliceIndex]
                 var takenCapacity = Stere(0L)
                 sumCost = max(
@@ -49,6 +45,7 @@ class CalculateCostOfCVRPSolutionWithCapacityAndMaxTripLength(
                                 takenCapacity += task.costGraph.objectives[value].volume
                                 (betweenEdge.length + toCenterEdge.length)
                                 /*} else {
+                                TODO
                                     val fromPreviousToCenterEdge = task.costGraph.edgesFromCenter[slice[index - 1]]
                                     val fromCenterEdge = task.costGraph.edgesFromCenter[value]
                                     val toCenterEdge = task.costGraph.edgesFromCenter[value]
@@ -68,6 +65,7 @@ class CalculateCostOfCVRPSolutionWithCapacityAndMaxTripLength(
                                 val betweenEdge = task.costGraph.getEdgeBetween(slice[index - 1], value)
                                 betweenEdge.length
                                 /* } else{
+                                TODO
                                      val fromPreviousToCenterEdge = task.costGraph.edgesFromCenter[slice[index - 1]]
                                      val fromCenterEdge = task.costGraph.edgesFromCenter[value]
                                      (fromPreviousToCenterEdge.length_Meter + fromCenterEdge.length_Meter).toDouble() / 1000.0
@@ -83,15 +81,12 @@ class CalculateCostOfCVRPSolutionWithCapacityAndMaxTripLength(
                         .sumClever()
                 )
             }
-            if (endCount != startCount) {
-                doubleLogger("startCount: $startCount endCount: $endCount")
-            }
-            specimen.cost = Meter(sumCost!!)
-            if (sumCost == Fraction.new(0L)) {
-                println("Impossible!")
-            }
+        specimen.cost = Meter(sumCost!!)
+        if (sumCost == Fraction.new(0L)) {
+            println("Impossible!")
         }
     }
+
 
     private fun max(left: Fraction?, right: Fraction?) =
         when {

@@ -3,41 +3,36 @@ package hu.raven.puppet.logic.step.boostoperator
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.math.Fraction
-import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentation
-import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
 class Opt2StepWithPerSpecimenProgressMemory<C : PhysicsUnit<C>>(
-    val algorithmState: EvolutionaryAlgorithmState<C>,
-    val parameters: EvolutionaryAlgorithmParameterProvider<C>,
     override val calculateCostOf: CalculateCost<C>
-) :
-    BoostOperator<C>() {
+) : BoostOperator<C>() {
 
-    var lastPositionPerSpecimen = arrayOf<Pair<Int, Int>>()
+    private var lastPositionPerSpecimen = mutableMapOf<Int, Pair<Int, Int>>()
 
     @OptIn(ExperimentalTime::class)
     override fun invoke(specimen: OnePartRepresentation<C>): StepEfficiencyData {
         var spentBudget = 0L
         val oldCost = specimen.costOrException()
         val spentTime = measureTime {
-            if (lastPositionPerSpecimen.isEmpty()) {
-                lastPositionPerSpecimen = Array(parameters.sizeOfPopulation) { Pair(0, 1) }
+            if (!lastPositionPerSpecimen.containsKey(specimen.id)) {
+                lastPositionPerSpecimen[specimen.id] = Pair(0, 1)
             }
 
             val bestCost = specimen.cost
             var improved = false
 
-            var lastPosition = lastPositionPerSpecimen[specimen.id]
+            var lastPosition = lastPositionPerSpecimen[specimen.id]!!
 
-            outer@ for (firstIndex in lastPosition.first until algorithmState.population.first().permutation.size - 1) {
+            outer@ for (firstIndex in lastPosition.first until specimen.permutation.size - 1) {
                 val secondIndexStart =
                     if (firstIndex == lastPosition.first) lastPosition.second
                     else firstIndex + 1
-                for (secondIndex in secondIndexStart until algorithmState.population.first().permutation.size) {
+                for (secondIndex in secondIndexStart until specimen.permutation.size) {
                     specimen.permutation.swapValues(firstIndex, secondIndex)
                     calculateCostOf(specimen)
                     spentBudget++

@@ -22,6 +22,20 @@ class CrossOvers<C : PhysicsUnit<C>>(
         parent.forEachIndexed { index, parentPair ->
             crossoverOperator(Pair(parentPair[0], parentPair[1]), children[index][0])
             crossoverOperator(Pair(parentPair[1], parentPair[0]), children[index][1])
+            children[index][0].let {
+                it.iteration = state.iteration
+                it.cost = null
+                it.inUse = true
+                if (!it.permutation.checkFormat())
+                    throw Error("Invalid specimen!")
+            }
+            children[index][1].let {
+                it.iteration = state.iteration
+                it.cost = null
+                it.inUse = true
+                if (!it.permutation.checkFormat())
+                    throw Error("Invalid specimen!")
+            }
         }
 
     }

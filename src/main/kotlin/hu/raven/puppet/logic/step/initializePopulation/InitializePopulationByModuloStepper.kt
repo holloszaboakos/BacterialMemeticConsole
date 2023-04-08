@@ -20,7 +20,7 @@ class InitializePopulationByModuloStepper<C : PhysicsUnit<C>>(
             val basePermutation = IntArray(sizeOfPermutation) { it }
             population = if (algorithmState.task.costGraph.objectives.size != 1)
                 ArrayList(List((algorithmState.task.costGraph.objectives.size + algorithmState.task.transportUnits.size - 1)) { specimenIndex ->
-                    OnePartRepresentation<C>(
+                    OnePartRepresentation(
                         id = specimenIndex,
                         objectiveCount = algorithmState.task.costGraph.objectives.size,
                         permutation = Permutation(IntArray(
@@ -28,15 +28,23 @@ class InitializePopulationByModuloStepper<C : PhysicsUnit<C>>(
                                     algorithmState.task.costGraph.objectives.size
                         ) { index ->
                             index
-                        })
+                        }),
+                        inUse = true,
+                        cost = null,
+                        orderInPopulation = specimenIndex,
+                        iteration = 0
                     )
                 })
             else
                 arrayListOf(
-                    OnePartRepresentation<C>(
+                    OnePartRepresentation(
                         0,
                         1,
-                        intArrayOf(0).asPermutation()
+                        intArrayOf(0).asPermutation(),
+                        true,
+                        null,
+                        0,
+                        0
                     )
                 )
 
@@ -88,7 +96,6 @@ class InitializePopulationByModuloStepper<C : PhysicsUnit<C>>(
         instance.permutation.setEach { index, _ ->
             newPermutation[index]
         }
-        instance.iteration = 0
         instance.inUse = true
         instance.cost = null
     }

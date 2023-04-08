@@ -1,15 +1,10 @@
 package hu.raven.puppet.logic.step.crossoveroperator
 
-import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentation
-import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import kotlin.random.Random
 
-class PartiallyMatchedCrossOver<C : PhysicsUnit<C>>(
-    val algorithmState: EvolutionaryAlgorithmState<C>,
-    val parameters: EvolutionaryAlgorithmParameterProvider<C>
-) : CrossOverOperator<C>() {
+class PartiallyMatchedCrossOver<C : PhysicsUnit<C>> : CrossOverOperator<C>() {
 
     override fun invoke(
         parents: Pair<OnePartRepresentation<C>, OnePartRepresentation<C>>,
@@ -42,13 +37,5 @@ class PartiallyMatchedCrossOver<C : PhysicsUnit<C>>(
         seconderCopy.forEachIndexed { index, value ->
             child.permutation[cut[0] + index] = value
         }
-
-        child.iteration = algorithmState.iteration
-        child.cost = null
-        child.inUse = true
-
-
-        if (!child.permutation.checkFormat())
-            throw Error("Invalid specimen!")
     }
 }

@@ -6,7 +6,6 @@ import hu.raven.puppet.modules.AlgorithmParameters
 import hu.raven.puppet.modules.FilePathVariableNames
 import hu.raven.puppet.utility.dataset.augerat.AugeratDatasetConverter
 import hu.raven.puppet.utility.dataset.augerat.AugeratDatasetLoader
-import hu.raven.puppet.utility.extention.min
 import hu.raven.puppet.utility.extention.sumClever
 import hu.raven.puppet.utility.inject
 

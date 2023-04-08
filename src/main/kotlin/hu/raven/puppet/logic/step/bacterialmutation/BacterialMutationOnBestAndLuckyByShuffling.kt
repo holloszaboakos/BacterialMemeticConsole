@@ -24,9 +24,7 @@ class BacterialMutationOnBestAndLuckyByShuffling<C : PhysicsUnit<C>>(
                 return@forEachIndexed
             }
 
-            val improvement = mutationOnSpecimen(specimen)
-
-            return@forEachIndexed
+            mutationOnSpecimen(specimen, state.iteration)
         }
     }
 }

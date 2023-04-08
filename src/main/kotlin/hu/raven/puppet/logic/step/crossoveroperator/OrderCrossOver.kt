@@ -6,10 +6,7 @@ import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import kotlin.random.Random
 
-class OrderCrossOver<C : PhysicsUnit<C>>(
-    val algorithmState: EvolutionaryAlgorithmState<C>,
-    val parameters: EvolutionaryAlgorithmParameterProvider<C>
-) : CrossOverOperator<C>() {
+class OrderCrossOver<C : PhysicsUnit<C>> : CrossOverOperator<C>() {
 
     override fun invoke(
         parents: Pair<OnePartRepresentation<C>, OnePartRepresentation<C>>,
@@ -45,12 +42,5 @@ class OrderCrossOver<C : PhysicsUnit<C>>(
             } else
                 value
         }
-
-        child.iteration = algorithmState.iteration
-        child.cost = null
-        child.inUse = true
-        if (!child.permutation.checkFormat())
-            throw Error("Invalid specimen!")
-
     }
 }

@@ -1,7 +1,6 @@
 package hu.raven.puppet.logic.step.initializePopulation
 
 import hu.raven.puppet.logic.step.bacterialmutationonspecimen.MutationOnSpecimen
-import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.math.Permutation
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
@@ -9,11 +8,7 @@ import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.utility.extention.asPermutation
-import hu.raven.puppet.utility.extention.sum
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 
 class InitializeHugePopulationThanPreOptimizeThanSelectBest<C : PhysicsUnit<C>>(
     val algorithmState: EvolutionaryAlgorithmState<C>,
@@ -60,49 +55,34 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest<C : PhysicsUnit<C>>(
                 }
 
             population =
-                    //population
-                    //.onEach { calculateCostOf(it) }
-                    //.sortedBy { it.cost }
                 bestImprovements
-                    .map { population[it.first] }
+                    .map { it.first }
                     .slice(0 until parameters.sizeOfPopulation)
                     .mapIndexed { index, s ->
                         OnePartRepresentation<C>(
                             id = index,
                             permutation = s.permutation.clone(),
-                            objectiveCount = s.objectiveCount
+                            objectiveCount = s.objectiveCount,
+                            inUse = true,
+                            cost = null,
+                            orderInPopulation = index,
+                            iteration = 0
                         )
                     }
                     .toMutableList()
         }
     }
 
-    private suspend fun bacterialMutateEach() = withContext(Dispatchers.Default) {
-        val bestImprovement: List<Pair<Int, StepEfficiencyData>>
-        algorithmState.population
-            .map { specimen ->
-                async {
-                    mutationOperator(specimen)
-                }
-            }
-            .mapIndexed { index, job ->
-                val statistics = job.await()
-                println(index)
-                statistics
-            }
-            .also { it ->
-                bestImprovement =
-                    it.mapIndexed { index, stat -> Pair(index, stat) }
-                        .sortedBy { it.second.improvementPercentagePerBudget }
-            }
-            .sum()
-            .also {
-                synchronized(statistics) {
-                    statistics.mutationImprovement = it
-                }
-            }
-        bestImprovement
-    }
+    private fun bacterialMutateEach() = algorithmState.population
+        .map { specimen ->
+            Pair(
+                specimen.copy(),
+                specimen.apply { mutationOperator(specimen, 0) }
+            )
+        }
+        .sortedBy {
+            it.first.costOrException().value / it.second.costOrException().value
+        }
 
 
     private fun createPopulation(): MutableList<OnePartRepresentation<C>> {
@@ -116,7 +96,11 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest<C : PhysicsUnit<C>>(
                                 algorithmState.task.costGraph.objectives.size
                     ) { index ->
                         index
-                    })
+                    }),
+                    inUse = true,
+                    cost = null,
+                    orderInPopulation = specimenIndex,
+                    iteration = 0
                 )
             })
         else
@@ -124,7 +108,11 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest<C : PhysicsUnit<C>>(
                 OnePartRepresentation<C>(
                     0,
                     1,
-                    intArrayOf(0).asPermutation()
+                    intArrayOf(0).asPermutation(),
+                    inUse = true,
+                    cost = null,
+                    orderInPopulation = 0,
+                    iteration = 0
                 )
             )
     }

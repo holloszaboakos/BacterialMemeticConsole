@@ -16,7 +16,7 @@ class BacterialMutationOnBestAndLuckyByCoinFlip<C : PhysicsUnit<C>>(
                 return@forEachIndexed
             }
 
-            mutationOnSpecimen(specimen)
+            mutationOnSpecimen(specimen, state.iteration)
         }
     }
 

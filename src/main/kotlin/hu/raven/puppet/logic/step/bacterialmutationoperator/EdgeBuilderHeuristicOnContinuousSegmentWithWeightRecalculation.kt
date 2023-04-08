@@ -1,17 +1,15 @@
 package hu.raven.puppet.logic.step.bacterialmutationoperator
 
 import hu.raven.puppet.model.math.Fraction
-import hu.raven.puppet.model.parameters.BacterialMutationParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.solution.Segment
-import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
+import hu.raven.puppet.model.task.Task
 import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.extention.sumClever
 
 class EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation<C : PhysicsUnit<C>>(
-    val algorithmState: EvolutionaryAlgorithmState<C>,
-    override val parameters: BacterialMutationParameterProvider<C>,
+    val task: Task
 ) :
     BacterialMutationOperator<C>() {
     override fun invoke(
@@ -264,14 +262,14 @@ class EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation<C : Physics
     private fun calculateWeightsOfEdgesToNext(
         clone: OnePartRepresentation<C>,
         selectedSegment: Segment
-    ): Array<Fraction> = algorithmState.run {
+    ): Array<Fraction> {
         val objectiveCount = task.costGraph.objectives.size
         val nextElement = if (selectedSegment.positions.last() == clone.permutation.indices.last) {
             objectiveCount
         } else {
             clone.permutation[selectedSegment.positions.last() + 1]
         }
-        Array(selectedSegment.values.size) { fromIndex ->
+       return Array(selectedSegment.values.size) { fromIndex ->
             calculateWeightBetween(
                 selectedSegment.values[fromIndex],
                 nextElement
@@ -282,7 +280,7 @@ class EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation<C : Physics
     private fun calculateWeightsOfEdgesFromPrevious(
         clone: OnePartRepresentation<C>,
         selectedSegment: Segment
-    ): Array<Fraction> = algorithmState.run {
+    ): Array<Fraction>{
         val objectiveCount = task.costGraph.objectives.size
         val previousElement = if (selectedSegment.positions.first() == 0) {
             objectiveCount
@@ -290,7 +288,7 @@ class EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation<C : Physics
             clone.permutation[selectedSegment.positions.first() - 1]
         }
 
-        Array(selectedSegment.values.size) { toIndex ->
+        return Array(selectedSegment.values.size) { toIndex ->
             calculateWeightBetween(
                 previousElement,
                 selectedSegment.values[toIndex]
@@ -300,8 +298,8 @@ class EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation<C : Physics
 
     private fun calculateWeightsOfInnerEdges(
         selectedElements: IntArray
-    ): Array<Array<Fraction>> = algorithmState.run {
-        Array(selectedElements.size) { fromIndex ->
+    ): Array<Array<Fraction>> {
+        return Array(selectedElements.size) { fromIndex ->
             Array(selectedElements.size) { toIndex ->
                 calculateWeightBetween(
                     selectedElements[fromIndex],
@@ -315,7 +313,7 @@ class EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation<C : Physics
         fromElement: Int,
         toElement: Int
     ): Fraction {
-        algorithmState.task.apply {
+        task.apply {
             val objectiveCount = costGraph.objectives.size
             return when {
                 fromElement == toElement -> Fraction.new(0L)

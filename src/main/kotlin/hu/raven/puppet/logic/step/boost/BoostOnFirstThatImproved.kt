@@ -10,8 +10,7 @@ import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 class BoostOnFirstThatImproved<C : PhysicsUnit<C>>(
     override val boostOperator: BoostOperator<C>,
     override val statistics: BacterialAlgorithmStatistics
-) :
-    Boost<C>() {
+) : Boost<C>() {
     var costPerPermutation = mutableListOf<C?>()
 
     override fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {

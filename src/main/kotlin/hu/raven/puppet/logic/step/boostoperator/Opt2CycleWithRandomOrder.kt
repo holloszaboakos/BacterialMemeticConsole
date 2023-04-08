@@ -3,16 +3,12 @@ package hu.raven.puppet.logic.step.boostoperator
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.math.Fraction
-import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentation
-import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
 class Opt2CycleWithRandomOrder<C : PhysicsUnit<C>>(
-    val algorithmState: EvolutionaryAlgorithmState<C>,
-    val parameters: EvolutionaryAlgorithmParameterProvider<C>,
     override val calculateCostOf: CalculateCost<C>
 ) : BoostOperator<C>() {
 
@@ -24,7 +20,7 @@ class Opt2CycleWithRandomOrder<C : PhysicsUnit<C>>(
         val oldCost = specimen.costOrException()
         val spentTime = measureTime {
             if (shuffler.isEmpty()) {
-                shuffler = (0 until algorithmState.population.first().permutation.size)
+                shuffler = (0 until specimen.permutation.size)
                     .shuffled()
                     .toIntArray()
             }
@@ -32,9 +28,9 @@ class Opt2CycleWithRandomOrder<C : PhysicsUnit<C>>(
 
             var bestCost = specimen.cost
 
-            for (firstIndexIndex in 0 until algorithmState.population.first().permutation.size - 1) {
+            for (firstIndexIndex in 0 until specimen.permutation.size - 1) {
                 val firstIndex = shuffler[firstIndexIndex]
-                for (secondIndexIndex in firstIndexIndex + 1 until algorithmState.population.first().permutation.size) {
+                for (secondIndexIndex in firstIndexIndex + 1 until specimen.permutation.size) {
                     val secondIndex = shuffler[secondIndexIndex]
 
                     specimen.permutation.swapValues(firstIndex, secondIndex)

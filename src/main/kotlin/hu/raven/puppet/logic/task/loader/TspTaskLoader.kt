@@ -3,7 +3,6 @@ package hu.raven.puppet.logic.task.loader
 import hu.raven.puppet.model.task.CostGraphVertex
 import hu.raven.puppet.model.task.Task
 import hu.raven.puppet.modules.FilePathVariableNames
-import hu.raven.puppet.utility.extention.min
 import hu.raven.puppet.utility.extention.sumClever
 
 class TspTaskLoader : TaskLoader() {
