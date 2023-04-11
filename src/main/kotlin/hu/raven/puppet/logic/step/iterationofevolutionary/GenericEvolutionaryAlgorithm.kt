@@ -25,8 +25,8 @@ class GenericEvolutionaryAlgorithm<C : PhysicsUnit<C>>(
     override fun invoke() {
         steps.forEach { step -> step(algorithmState) }
         algorithmState.apply {
-            copyOfBest = population.mapActives { it }.first().copy()
-            copyOfWorst = population.mapActives { it }.last().copy()
+            copyOfBest = population.activesAsSequence().first().copy()
+            copyOfWorst = population.activesAsSequence().last().copy()
             iteration++
         }
     }

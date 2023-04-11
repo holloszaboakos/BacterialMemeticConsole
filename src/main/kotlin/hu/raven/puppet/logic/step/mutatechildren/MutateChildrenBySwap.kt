@@ -9,7 +9,7 @@ class MutateChildrenBySwap<C : PhysicsUnit<C>> : MutateChildren<C>() {
 
     override fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {
         if (task.costGraph.objectives.size > 1)
-            population.mapActives { it }.asSequence()
+            population.activesAsSequence().asSequence()
                 .filter { it.content.iterationOfCreation == iteration }
                 .shuffled()
                 .slice(0 until population.activeCount / 4)

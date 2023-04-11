@@ -9,8 +9,8 @@ class HalfElitistCrossover<C : PhysicsUnit<C>>(
 ) : CrossOverStrategy<C>() {
 
     override operator fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {
-        val children = population.mapInactive { it }.chunked(2)
-        val parent = population.mapActives { it }
+        val children = population.inactivesAsSequence().chunked(2).toList()
+        val parent = population.activesAsSequence()
             .shuffled()
             .chunked(2)
 

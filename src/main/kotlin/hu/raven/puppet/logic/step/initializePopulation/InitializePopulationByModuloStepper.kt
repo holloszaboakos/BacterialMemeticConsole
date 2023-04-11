@@ -44,7 +44,7 @@ class InitializePopulationByModuloStepper<C : PhysicsUnit<C>>(
                 ).let { PoolWithSmartActivation(it) }
 
             population.activateAll()
-            population.mapActives { it }.forEachIndexed { instanceIndex, instance ->
+            population.activesAsSequence().forEachIndexed { instanceIndex, instance ->
                 initSpecimen(
                     instanceIndex,
                     instance,

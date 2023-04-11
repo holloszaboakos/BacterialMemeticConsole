@@ -21,8 +21,8 @@ class InitializeBacterialAlgorithm<C : PhysicsUnit<C>>(
         orderPopulationByCost(algorithmState)
         logger("orderedByCost")
         algorithmState.apply {
-            copyOfBest = population.mapActives { it }.first().copy()
-            copyOfWorst = population.mapActives { it }.last().copy()
+            copyOfBest = population.activesAsSequence().first().copy()
+            copyOfWorst = population.activesAsSequence().last().copy()
         }
     }
 }

@@ -20,8 +20,8 @@ class InitializeGeneticAlgorithm<C : PhysicsUnit<C>>(
         boost(algorithmState)
 
         algorithmState.apply {
-            copyOfBest = population.mapActives { it }.first().copy()
-            copyOfWorst = population.mapActives { it }.last().copy()
+            copyOfBest = population.activesAsSequence().first().copy()
+            copyOfWorst = population.activesAsSequence().last().copy()
         }
     }
 }

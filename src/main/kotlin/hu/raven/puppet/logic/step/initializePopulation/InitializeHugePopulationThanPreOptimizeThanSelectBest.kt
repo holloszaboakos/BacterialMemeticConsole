@@ -6,6 +6,7 @@ import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentationWithIteration
 import hu.raven.puppet.model.solution.PoolWithSmartActivation
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
+import hu.raven.puppet.utility.extention.slice
 import hu.raven.puppet.utility.extention.toPermutation
 
 class InitializeHugePopulationThanPreOptimizeThanSelectBest<C : PhysicsUnit<C>>(
@@ -22,7 +23,7 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest<C : PhysicsUnit<C>>(
 
             population = createPopulation()
 
-            population.mapActives { it }.forEachIndexed { instanceIndex, instance ->
+            population.activesAsSequence().forEachIndexed { instanceIndex, instance ->
                 val step = instanceIndex % (sizeOfPermutation - 1) + 1
                 if (step == 1) {
                     basePermutation.shuffle()
@@ -65,7 +66,8 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest<C : PhysicsUnit<C>>(
     }
 
     private fun bacterialMutateEach() = algorithmState.population
-        .mapActives { specimen ->
+        .activesAsSequence()
+        .map { specimen ->
             Pair(
                 specimen.copy(),
                 specimen.apply { mutationOperator(specimen, 0) }

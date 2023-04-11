@@ -15,8 +15,8 @@ class DiversityByInnerDistanceAndSequence<C : PhysicsUnit<C>>(
     override fun invoke(): Double = runBlocking {
         var diversity = 0.0
 
-        algorithmState.population.foreachActive { firstSpecimen ->
-            algorithmState.population.foreachActive { secondSpecimen ->
+        algorithmState.population.activesAsSequence().forEach { firstSpecimen ->
+            algorithmState.population.activesAsSequence().forEach { secondSpecimen ->
                 val distance = distanceOfSpecimen(
                     firstSpecimen.content.permutation,
                     secondSpecimen.content.permutation

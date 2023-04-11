@@ -15,7 +15,7 @@ class DistancePreservingCrossOver<C : PhysicsUnit<C>> : CrossOverOperator<C>() {
                 childPermutation[index] = parentPermutations.first[index]
         }
         childPermutation.forEachIndexed { index, value ->
-            if (childPermutation[index] == -1) {
+            if (value == -1) {
                 parentPermutations.second[parentPermutations.first.indexOf(parentPermutations.second[index])]
             }
         }

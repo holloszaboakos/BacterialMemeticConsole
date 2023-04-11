@@ -22,7 +22,7 @@ class DiversityByMatrixDistanceFromBest<C : PhysicsUnit<C>>(
         val matrixOfBest = preceditionMatrixWithDistance(best)
         var diversity = 0.0
 
-        algorithmState.population.mapActives { it }
+        algorithmState.population.activesAsSequence()
             .map {
                 CoroutineScope(Dispatchers.IO).launch {
                     val matrix = preceditionMatrixWithDistance(it)

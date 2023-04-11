@@ -19,7 +19,7 @@ class DiversityBySequenceBreak<C : PhysicsUnit<C>>(
         val best = algorithmState.copyOfBest!!
         var diversity = 0.0
 
-        algorithmState.population.mapActives { it }
+        algorithmState.population.activesAsSequence()
             .map {
                 CoroutineScope(Dispatchers.Default).launch {
                     val distance = distanceOfSpecimen(best.content.permutation, it.content.permutation)

@@ -30,8 +30,8 @@ class StatisticalRacingCrossOver<C : PhysicsUnit<C>>(
     private var actualStatistics: OperatorStatistics? = null
 
     override fun invoke(state: EvolutionaryAlgorithmState<C>) = state.run {
-        val children = population.mapInactive { it }.chunked(2)
-        val parent = population.mapActives { it }
+        val children = population.inactivesAsSequence().chunked(2).toList()
+        val parent = population.activesAsSequence()
             .shuffled()
             .chunked(2)
 

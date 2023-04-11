@@ -45,33 +45,29 @@ class PoolWithSmartActivation<T>(
 
     fun isAllActive() = activeCount == pool.size
 
-    fun foreachActive(action: (PoolItem<T>) -> Unit) =
+    fun activesAsSequence() =
         (0 until activeCount)
+            .asSequence()
             .map { pool[it] }
-            .forEach(action)
 
-    fun foreachInactive(action: (PoolItem<T>) -> Unit) =
+    fun inactivesAsSequence() =
         (activeCount until pool.size)
+            .asSequence()
             .map { pool[it] }
-            .forEach(action)
-
-    fun <R> mapActives(mapper: (PoolItem<T>) -> R) =
-        (0 until activeCount)
-            .map { pool[it] }
-            .map(mapper)
-
-    fun <R> mapInactive(mapper: (PoolItem<T>) -> R) =
-        (activeCount until pool.size)
-            .map { pool[it] }
-            .map(mapper)
 
     fun <C : Comparable<C>> sortActiveBy(mapper: (PoolItem<T>) -> C) {
-        mapActives { it }
+        activesAsSequence()
             .sortedBy(mapper)
             .forEachIndexed { index, value ->
                 value.index = index
                 pool[index] = value
             }
+    }
+
+    operator fun get(index: Int): PoolItem<T> {
+        if (index !in 0 until activeCount)
+            throw IndexOutOfBoundsException("No active pool item on specified position!")
+        return pool[index]
     }
 
 
