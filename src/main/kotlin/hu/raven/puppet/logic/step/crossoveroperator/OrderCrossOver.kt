@@ -1,40 +1,41 @@
 package hu.raven.puppet.logic.step.crossoveroperator
 
+import hu.raven.puppet.model.math.Permutation
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.OnePartRepresentation
+
 import kotlin.random.Random
 
 class OrderCrossOver<C : PhysicsUnit<C>> : CrossOverOperator<C>() {
 
     override fun invoke(
-        parents: Pair<OnePartRepresentation<C>, OnePartRepresentation<C>>,
-        child: OnePartRepresentation<C>
+        parentPermutations: Pair<Permutation, Permutation>,
+        childPermutation: Permutation
     ) {
-        val parentsL = parents.toList()
-        val cut = arrayOf(Random.nextInt(parentsL.size), Random.nextInt(parentsL.size - 1))
+        val cut = arrayOf(Random.nextInt(childPermutation.size), Random.nextInt(childPermutation.size - 1))
         if (cut[0] == cut[1])
             cut[1]++
         cut.sort()
 
-        val primerParent = parents.first
-        val seconderParent = parents.second
-        val seconderCopy = seconderParent.copyOfPermutationBy(::MutableList) as MutableList
-        val seconderInverse = seconderParent.permutation.inverse()
+        val seconderCopy = parentPermutations.second.toMutableList()
 
         //clean child
         //copy parent middle to child
-        child.permutation.setEach { index, _ ->
+        childPermutation.setEach { index, _ ->
             if (index in cut[0]..cut[1]) {
-                seconderCopy[seconderInverse[primerParent.permutation[index]]] = child.permutation.size
-                primerParent.permutation[index]
+                seconderCopy[
+                    parentPermutations.second.indexOf(
+                        parentPermutations.second[index]
+                    )
+                ] = childPermutation.size
+                parentPermutations.second[index]
             } else
-                child.permutation.size
+                childPermutation.size
         }
-        seconderCopy.removeIf { it == child.permutation.size }
+        seconderCopy.removeIf { it == childPermutation.size }
         //fill missing places of child
         var counter = -1
-        child.permutation.setEach { _, value ->
-            if (value == child.permutation.size) {
+        childPermutation.setEach { _, value ->
+            if (value == childPermutation.size) {
                 counter++
                 seconderCopy[counter]
             } else

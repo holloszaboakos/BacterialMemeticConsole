@@ -3,7 +3,7 @@ package hu.raven.puppet.logic.step.calculatecost
 import hu.raven.puppet.model.TakenCapacity
 import hu.raven.puppet.model.physics.Euro
 import hu.raven.puppet.model.physics.Second
-import hu.raven.puppet.model.solution.OnePartRepresentation
+import hu.raven.puppet.model.solution.OnePartRepresentationWithIteration
 import hu.raven.puppet.model.task.*
 import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.extention.sumClever
@@ -12,7 +12,7 @@ class CalculateCostOfACVRPWithMultipleCapacity(
     override val task: Task
 ) : CalculateCost<Euro>() {
     override operator fun invoke(
-        specimen: OnePartRepresentation<Euro>
+        specimen: OnePartRepresentationWithIteration<Euro>
     ) {
         specimen.cost =
             specimen.permutation

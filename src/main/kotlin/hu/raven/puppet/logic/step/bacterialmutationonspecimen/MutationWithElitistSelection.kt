@@ -4,7 +4,9 @@ import hu.raven.puppet.logic.step.bacterialmutationoperator.BacterialMutationOpe
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.logic.step.selectsegment.SelectSegment
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.OnePartRepresentation
+import hu.raven.puppet.model.solution.OnePartRepresentationWithIteration
+import hu.raven.puppet.model.solution.PoolItem
+
 import hu.raven.puppet.model.solution.Segment
 
 class MutationWithElitistSelection<C : PhysicsUnit<C>>(
@@ -16,11 +18,11 @@ class MutationWithElitistSelection<C : PhysicsUnit<C>>(
 ) : MutationOnSpecimen<C>() {
 
     override fun invoke(
-        specimen: OnePartRepresentation<C>,
+        specimen: PoolItem<OnePartRepresentationWithIteration<C>>,
         iteration: Int
     ) {
-        if (specimen.cost == null) {
-            calculateCostOf(specimen)
+        if (specimen.content.cost == null) {
+            calculateCostOf(specimen.content)
         }
         repeat(cloneCycleCount) { cloneCycleIndex ->
             val clones = generateClones(
@@ -29,19 +31,19 @@ class MutationWithElitistSelection<C : PhysicsUnit<C>>(
             )
             calcCostOfEachAndSort(clones)
 
-            if (clones.first().cost != specimen.cost) {
-                specimen.permutation.setEach { index, _ ->
-                    clones.first().permutation[index]
+            if (clones.first().content.cost != specimen.content.cost) {
+                specimen.content.permutation.setEach { index, _ ->
+                    clones.first().content.permutation[index]
                 }
-                specimen.cost = clones.first().cost
+                specimen.content.cost = clones.first().content.cost
             }
         }
     }
 
     private fun generateClones(
-        specimen: OnePartRepresentation<C>,
+        specimen: PoolItem<OnePartRepresentationWithIteration<C>>,
         selectedSegment: Segment
-    ): MutableList<OnePartRepresentation<C>> {
+    ): MutableList<PoolItem<OnePartRepresentationWithIteration<C>>> {
         val clones = MutableList(cloneCount + 1) { specimen.copy() }
         clones
             .slice(1 until clones.size)

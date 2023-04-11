@@ -9,15 +9,15 @@ class GeneTransferByTournament<C : PhysicsUnit<C>>(
     override val geneTransferOperator: GeneTransferOperator<C>,
 ) : GeneTransfer<C>() {
     override fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {
-        if (population.size <= 1 || injectionCount == 0) {
+        if (population.mapActives { it }.size <= 1 || injectionCount == 0) {
             return
         }
 
-        val populationRandomizer = (1 until population.size)
+        val populationRandomizer = (1 until population.activeCount)
             .shuffled()
 
-        val populationInRandomPairs = List(population.size - 1) {
-            population[populationRandomizer[it]]
+        val populationInRandomPairs = List(population.activeCount - 1) {
+            population.mapActives { it }[populationRandomizer[it]]
         }
             .chunked(2)
             .toMutableList()
@@ -29,7 +29,7 @@ class GeneTransferByTournament<C : PhysicsUnit<C>>(
         (0 until injectionCount)
             .forEach { injectionCount ->
                 val specimen = populationInRandomPairs[injectionCount % populationInRandomPairs.size]
-                    .sortedBy { it.costOrException().value }
+                    .sortedBy { it.content.costOrException().value }
 
                 synchronized(populationInRandomPairs[injectionCount % populationInRandomPairs.size][0]) {
                     synchronized(populationInRandomPairs[injectionCount % populationInRandomPairs.size][1]) {

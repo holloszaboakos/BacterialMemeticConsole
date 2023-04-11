@@ -12,16 +12,12 @@ class OrderPopulationByCost<C : PhysicsUnit<C>> : EvolutionaryAlgorithmStep<C> {
 
     override operator fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {
         population
-            .filter { it.cost == null }
+            .mapActives { it }
+            .filter { it.content.cost == null }
             .forEach { specimen ->
-                calculateCostOf(specimen)
+                calculateCostOf(specimen.content)
             }
 
-        population.sortBy { it.costOrException().value }
-
-        population.forEachIndexed { index, it ->
-            it.orderInPopulation = index
-            it.inUse = false
-        }
+        population.sortActiveBy { it.content.costOrException().value }
     }
 }

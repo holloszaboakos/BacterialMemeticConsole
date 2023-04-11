@@ -15,8 +15,8 @@ class BoostOnBestLazy<C : PhysicsUnit<C>>(
     var costOfBest: C? = null
 
     override operator fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {
-        val best = population.first()
-        if (best.cost == costOfBest) {
+        val best = population.mapActives { it }.first()
+        if (best.content.cost == costOfBest) {
             val improvement = boostOperator(best)
             synchronized(statistics) {
                 statistics.boostImprovement = improvement
@@ -30,7 +30,7 @@ class BoostOnBestLazy<C : PhysicsUnit<C>>(
                 statistics.boostOnBestImprovement = improvement
             }
         }
-        costOfBest = best.cost
+        costOfBest = best.content.cost
     }
 
 }

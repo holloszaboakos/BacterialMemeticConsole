@@ -1,40 +1,37 @@
 package hu.raven.puppet.logic.step.crossoveroperator
 
+import hu.raven.puppet.model.math.Permutation
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.OnePartRepresentation
+import hu.raven.puppet.utility.extention.get
+
 
 class AlternatingEdgeCrossOver<C : PhysicsUnit<C>> : CrossOverOperator<C>() {
 
     override fun invoke(
-        parents: Pair<OnePartRepresentation<C>, OnePartRepresentation<C>>,
-        child: OnePartRepresentation<C>
+        parentPermutations: Pair<Permutation, Permutation>,
+        childPermutation: Permutation
     ) {
-        val childContains = Array(child.permutation.size) { false }
-        val randomPermutation = IntArray(child.permutation.size) { it }
-        randomPermutation.shuffle()
+        childPermutation.clear()
+        val randomPermutation = IntArray(childPermutation.size) { it }.apply(IntArray::shuffle)
         var lastIndex = 0
-        val parentsL = listOf(parents.first, parents.second)
-        val parentsNeighbouring = List(2) { parentIndex ->
-            parentsL[parentIndex].permutation.sequential()
-        }
-        child.permutation.setEach { _, _ -> child.permutation.size }
-        child.permutation[0] = (0 until child.permutation.size).random()
-        childContains[child.permutation[0]] = true
-        (1 until child.permutation.size).forEach { geneIndex ->
-            val parent = parentsNeighbouring[geneIndex % 2]
 
-            if (!childContains[parent[child.permutation[geneIndex - 1]]])
-                child.permutation[geneIndex] = parent[child.permutation[geneIndex - 1]]
-            else {
-                for (index in lastIndex until randomPermutation.size) {
-                    if (!childContains[randomPermutation[index]]) {
-                        child.permutation[geneIndex] = randomPermutation[index]
-                        lastIndex = index + 1
-                        break
-                    }
+        childPermutation[0] = (0 until childPermutation.size).random()
+        (1 until childPermutation.size).forEach { geneIndex ->
+            val parentPermutation = parentPermutations[geneIndex % 2]
+            val previousValue = childPermutation[geneIndex - 1]
+
+            if (!childPermutation.contains(parentPermutation.after(previousValue))) {
+                childPermutation[geneIndex] = parentPermutation.after(previousValue)
+                return@forEach
+            }
+
+            for (index in lastIndex until randomPermutation.size) {
+                if (!childPermutation.contains(randomPermutation[index])) {
+                    childPermutation[geneIndex] = randomPermutation[index]
+                    lastIndex = index + 1
+                    break
                 }
             }
-            childContains[child.permutation[geneIndex]] = true
         }
     }
 }

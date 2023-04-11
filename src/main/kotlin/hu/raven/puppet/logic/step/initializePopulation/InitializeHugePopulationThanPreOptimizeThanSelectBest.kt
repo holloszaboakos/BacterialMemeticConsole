@@ -1,20 +1,17 @@
 package hu.raven.puppet.logic.step.initializePopulation
 
 import hu.raven.puppet.logic.step.bacterialmutationonspecimen.MutationOnSpecimen
-import hu.raven.puppet.model.math.Permutation
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.OnePartRepresentation
+import hu.raven.puppet.model.solution.OnePartRepresentationWithIteration
+import hu.raven.puppet.model.solution.PoolWithSmartActivation
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
-import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
-import hu.raven.puppet.utility.extention.asPermutation
-import kotlinx.coroutines.runBlocking
+import hu.raven.puppet.utility.extention.toPermutation
 
 class InitializeHugePopulationThanPreOptimizeThanSelectBest<C : PhysicsUnit<C>>(
     val algorithmState: EvolutionaryAlgorithmState<C>,
     val parameters: EvolutionaryAlgorithmParameterProvider<C>,
     private val mutationOperator: MutationOnSpecimen<C>,
-    private val statistics: BacterialAlgorithmStatistics,
 ) : InitializePopulation<C>() {
 
 
@@ -25,7 +22,7 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest<C : PhysicsUnit<C>>(
 
             population = createPopulation()
 
-            population.forEachIndexed { instanceIndex, instance ->
+            population.mapActives { it }.forEachIndexed { instanceIndex, instance ->
                 val step = instanceIndex % (sizeOfPermutation - 1) + 1
                 if (step == 1) {
                     basePermutation.shuffle()
@@ -41,79 +38,66 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest<C : PhysicsUnit<C>>(
                     newContains[basePermutation[baseIndex]] = true
                     baseIndex = (baseIndex + step) % sizeOfPermutation
                 }
-                instance.permutation.setEach { index, _ ->
+                instance.content.permutation.setEach { index, _ ->
                     newPermutation[index]
                 }
-                instance.iteration = 0
-                instance.inUse = true
-                instance.cost = null
+                instance.content.iterationOfCreation = 0
+                instance.content.cost = null
             }
 
-            val bestImprovements =
-                runBlocking {
-                    bacterialMutateEach()
-                }
+            val bestImprovements = bacterialMutateEach()
 
             population =
                 bestImprovements
                     .map { it.first }
                     .slice(0 until parameters.sizeOfPopulation)
-                    .mapIndexed { index, s ->
-                        OnePartRepresentation<C>(
-                            id = index,
-                            permutation = s.permutation.clone(),
-                            objectiveCount = s.objectiveCount,
-                            inUse = true,
-                            cost = null,
-                            orderInPopulation = index,
-                            iteration = 0
+                    .map { s ->
+                        OnePartRepresentationWithIteration(
+                            iterationOfCreation = s.content.iterationOfCreation,
+                            cost = s.content.cost,
+                            objectiveCount = s.content.objectiveCount,
+                            permutation = s.content.permutation.clone()
                         )
                     }
                     .toMutableList()
+                    .let { PoolWithSmartActivation(it) }
         }
     }
 
     private fun bacterialMutateEach() = algorithmState.population
-        .map { specimen ->
+        .mapActives { specimen ->
             Pair(
                 specimen.copy(),
                 specimen.apply { mutationOperator(specimen, 0) }
             )
         }
         .sortedBy {
-            it.first.costOrException().value / it.second.costOrException().value
+            it.first.content.costOrException().value / it.second.content.costOrException().value
         }
 
 
-    private fun createPopulation(): MutableList<OnePartRepresentation<C>> {
+    private fun createPopulation(): PoolWithSmartActivation<OnePartRepresentationWithIteration<C>> {
         return if (algorithmState.task.costGraph.objectives.size != 1)
-            ArrayList(List((algorithmState.task.costGraph.objectives.size + algorithmState.task.transportUnits.size - 1)) { specimenIndex ->
-                OnePartRepresentation<C>(
-                    id = specimenIndex,
+            MutableList((algorithmState.task.costGraph.objectives.size + algorithmState.task.transportUnits.size - 1)) {
+                OnePartRepresentationWithIteration<C>(
+                    iterationOfCreation = 0,
+                    cost = null,
                     objectiveCount = algorithmState.task.costGraph.objectives.size,
-                    permutation = Permutation(IntArray(
+                    permutation = IntArray(
                         algorithmState.task.transportUnits.size +
                                 algorithmState.task.costGraph.objectives.size
-                    ) { index ->
-                        index
-                    }),
-                    inUse = true,
-                    cost = null,
-                    orderInPopulation = specimenIndex,
-                    iteration = 0
+                    ) { index -> index }
+                        .toPermutation()
                 )
-            })
+            }.let { PoolWithSmartActivation(it) }
         else
-            arrayListOf(
-                OnePartRepresentation<C>(
-                    0,
-                    1,
-                    intArrayOf(0).asPermutation(),
-                    inUse = true,
+            mutableListOf(
+                OnePartRepresentationWithIteration<C>(
+                    iterationOfCreation = 0,
                     cost = null,
-                    orderInPopulation = 0,
-                    iteration = 0
+                    1,
+                    intArrayOf(0).toPermutation()
                 )
-            )
+            ).let { PoolWithSmartActivation(it) }
     }
 }

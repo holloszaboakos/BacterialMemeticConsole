@@ -1,11 +1,12 @@
 package hu.raven.puppet.logic.step.initializePopulation
 
-import hu.raven.puppet.model.math.Permutation
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.OnePartRepresentation
+import hu.raven.puppet.model.solution.OnePartRepresentationWithIteration
+import hu.raven.puppet.model.solution.PoolItem
+import hu.raven.puppet.model.solution.PoolWithSmartActivation
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
-import hu.raven.puppet.utility.extention.asPermutation
+import hu.raven.puppet.utility.extention.toPermutation
 
 class InitializePopulationByModuloStepper<C : PhysicsUnit<C>>(
     val algorithmState: EvolutionaryAlgorithmState<C>,
@@ -18,37 +19,32 @@ class InitializePopulationByModuloStepper<C : PhysicsUnit<C>>(
             val sizeOfPermutation =
                 (task.costGraph.objectives.size + task.transportUnits.size - 1)
             val basePermutation = IntArray(sizeOfPermutation) { it }
-            population = if (algorithmState.task.costGraph.objectives.size != 1)
-                ArrayList(List((algorithmState.task.costGraph.objectives.size + algorithmState.task.transportUnits.size - 1)) { specimenIndex ->
-                    OnePartRepresentation(
-                        id = specimenIndex,
-                        objectiveCount = algorithmState.task.costGraph.objectives.size,
-                        permutation = Permutation(IntArray(
-                            algorithmState.task.transportUnits.size +
-                                    algorithmState.task.costGraph.objectives.size
+            population = if (task.costGraph.objectives.size != 1)
+                MutableList((task.costGraph.objectives.size + task.transportUnits.size - 1)) {
+                    OnePartRepresentationWithIteration<C>(
+                        iterationOfCreation = 0,
+                        cost = null,
+                        objectiveCount = task.costGraph.objectives.size,
+                        permutation = IntArray(
+                            task.transportUnits.size +
+                                    task.costGraph.objectives.size
                         ) { index ->
                             index
-                        }),
-                        inUse = true,
-                        cost = null,
-                        orderInPopulation = specimenIndex,
-                        iteration = 0
+                        }.toPermutation()
                     )
-                })
+                }.let { PoolWithSmartActivation(it) }
             else
-                arrayListOf(
-                    OnePartRepresentation(
+                mutableListOf(
+                    OnePartRepresentationWithIteration<C>(
                         0,
-                        1,
-                        intArrayOf(0).asPermutation(),
-                        true,
                         null,
-                        0,
-                        0
+                        1,
+                        intArrayOf(0).toPermutation()
                     )
-                )
+                ).let { PoolWithSmartActivation(it) }
 
-            population.forEachIndexed { instanceIndex, instance ->
+            population.activateAll()
+            population.mapActives { it }.forEachIndexed { instanceIndex, instance ->
                 initSpecimen(
                     instanceIndex,
                     instance,
@@ -61,7 +57,7 @@ class InitializePopulationByModuloStepper<C : PhysicsUnit<C>>(
 
     private fun initSpecimen(
         instanceIndex: Int,
-        instance: OnePartRepresentation<C>,
+        instance: PoolItem<OnePartRepresentationWithIteration<C>>,
         sizeOfPermutation: Int,
         basePermutation: IntArray
     ) {
@@ -93,10 +89,9 @@ class InitializePopulationByModuloStepper<C : PhysicsUnit<C>>(
 
         breakPoints.add(0, -1)
         breakPoints.add(sizeOfPermutation)
-        instance.permutation.setEach { index, _ ->
+        instance.content.permutation.setEach { index, _ ->
             newPermutation[index]
         }
-        instance.inUse = true
-        instance.cost = null
+        instance.content.cost = null
     }
 }

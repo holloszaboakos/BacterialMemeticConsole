@@ -1,5 +1,6 @@
 package hu.raven.puppet.logic.step.diversity
 
+import hu.raven.puppet.model.math.Permutation
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
@@ -16,14 +17,12 @@ class DiversityBySequenceBreak<C : PhysicsUnit<C>>(
 
     override fun invoke(): Double = runBlocking {
         val best = algorithmState.copyOfBest!!
-        val sequentialOfBest = best.permutation.sequential()
         var diversity = 0.0
 
-        algorithmState.population
+        algorithmState.population.mapActives { it }
             .map {
                 CoroutineScope(Dispatchers.Default).launch {
-                    val sequential = it.permutation.sequential()
-                    val distance = distanceOfSpecimen(sequentialOfBest, sequential)
+                    val distance = distanceOfSpecimen(best.content.permutation, it.content.permutation)
                     diversity += distance
                 }
             }
@@ -33,12 +32,12 @@ class DiversityBySequenceBreak<C : PhysicsUnit<C>>(
     }
 
     private fun distanceOfSpecimen(
-        sequentialFrom: IntArray,
-        sequentialTo: IntArray
+        bestPermutation: Permutation,
+        toPermutation: Permutation
     ): Long {
         var distance = 0L
-        for (index in sequentialFrom.indices) {
-            if (sequentialFrom[index] != sequentialTo[index])
+        for (index in 0..bestPermutation.size) {
+            if (bestPermutation.after(index) != toPermutation.after(index))
                 distance++
         }
         return distance

@@ -11,10 +11,10 @@ class GeneTransferByElitist<C : PhysicsUnit<C>>(
 ) : GeneTransfer<C>() {
 
     override fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {
-        val donorIndexRandomizer = (0 until population.size / 4)
+        val donorIndexRandomizer = (0 until population.mapActives { it }.size / 4)
             .shuffled()
             .toIntArray()
-        val acceptorIndexRandomizer = (population.size / 4 until population.size)
+        val acceptorIndexRandomizer = (population.mapActives { it }.size / 4 until population.mapActives { it }.size)
             .shuffled()
             .toIntArray()
 
@@ -23,12 +23,12 @@ class GeneTransferByElitist<C : PhysicsUnit<C>>(
                 val donorIndex = donorIndexRandomizer[
                     injectionIndex % donorIndexRandomizer.size
                 ]
-                val donor = population[donorIndex]
+                val donor = population.mapActives { it }[donorIndex]
 
                 val acceptorIndex = acceptorIndexRandomizer[
                     injectionIndex % acceptorIndexRandomizer.size
                 ]
-                val acceptor = population[acceptorIndex]
+                val acceptor = population.mapActives { it }[acceptorIndex]
 
                 synchronized(acceptor) {
                     geneTransferOperator(donor, acceptor)

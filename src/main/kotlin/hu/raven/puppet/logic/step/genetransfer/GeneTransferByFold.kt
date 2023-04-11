@@ -12,12 +12,12 @@ class GeneTransferByFold<C : PhysicsUnit<C>>(
     override fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {
         (0 until injectionCount)
             .forEach { injectionIndex ->
-                val specimenIndex = injectionIndex % (population.size / 2)
+                val specimenIndex = injectionIndex % (population.mapActives { it }.size / 2)
 
                 val donor =
-                    population[specimenIndex]
+                    population.mapActives { it }[specimenIndex]
                 val acceptor =
-                    population[population.lastIndex - specimenIndex]
+                    population.mapActives { it }[population.mapActives { it }.lastIndex - specimenIndex]
 
                 synchronized(acceptor) {
                     geneTransferOperator(donor, acceptor)

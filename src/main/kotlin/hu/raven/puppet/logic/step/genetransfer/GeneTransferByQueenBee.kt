@@ -10,16 +10,16 @@ class GeneTransferByQueenBee<C : PhysicsUnit<C>>(
 ) : GeneTransfer<C>() {
 
     override fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {
-        val populationRandomizer = (1 until population.size)
+        val populationRandomizer = (1 until population.mapActives { it }.size)
             .shuffled()
             .toIntArray()
         (0 until injectionCount)
             .map { injectionIndex ->
                 val acceptorIndex = populationRandomizer[injectionIndex % populationRandomizer.size]
-                val acceptor = population[acceptorIndex]
+                val acceptor = population.mapActives { it }[acceptorIndex]
 
                 synchronized(acceptor) {
-                    geneTransferOperator(population.first(), acceptor)
+                    geneTransferOperator(population.mapActives { it }.first(), acceptor)
                 }
             }
     }

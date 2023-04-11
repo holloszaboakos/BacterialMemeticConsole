@@ -1,36 +1,35 @@
 package hu.raven.puppet.logic.step.crossoveroperator
 
+import hu.raven.puppet.model.math.Permutation
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.OnePartRepresentation
+
 import kotlin.random.Random
 
 class OrderBasedCrossOver<C : PhysicsUnit<C>> : CrossOverOperator<C>() {
 
     override fun invoke(
-        parents: Pair<OnePartRepresentation<C>, OnePartRepresentation<C>>,
-        child: OnePartRepresentation<C>
+        parentPermutations: Pair<Permutation, Permutation>,
+        childPermutation: Permutation
     ) {
-        val primerParent = parents.first
-        val seconderParent = parents.second
-        val seconderCopy = seconderParent.copyOfPermutationBy(::MutableList) as MutableList
-        val seconderInverse = seconderParent.permutation.inverse()
+        val seconderCopy = parentPermutations.second.toMutableList()
 
         //clean child
         //copy parent middle to child
-        child.permutation.setEach { valueIndex, _ ->
+        childPermutation.setEach { valueIndex, _ ->
             if (Random.nextBoolean()) {
-                seconderCopy[seconderInverse[primerParent.permutation[valueIndex]]] = child.permutation.size
-                primerParent.permutation[valueIndex]
+                seconderCopy[parentPermutations.second.indexOf(parentPermutations.first[valueIndex])] =
+                    childPermutation.size
+                parentPermutations.first[valueIndex]
             } else
-                child.permutation.size
+                childPermutation.size
         }
 
-        seconderCopy.removeIf { it == child.permutation.size }
+        seconderCopy.removeIf { it == childPermutation.size }
 
         var counter = -1
         //fill missing places of child
-        child.permutation.setEach { _, value ->
-            if (value == child.permutation.size) {
+        childPermutation.setEach { _, value ->
+            if (value == childPermutation.size) {
                 counter++
                 seconderCopy[counter]
             } else

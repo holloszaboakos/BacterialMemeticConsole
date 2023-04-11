@@ -1,9 +1,11 @@
 package hu.raven.puppet.logic.step.crossoveroperator
 
+import hu.raven.puppet.model.math.Permutation
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.OnePartRepresentation
+
 import hu.raven.puppet.model.task.CostGraph
+import hu.raven.puppet.utility.extention.get
 import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.extention.min
 import hu.raven.puppet.utility.extention.sumClever
@@ -16,37 +18,36 @@ class SortedMatchCrossOver<C : PhysicsUnit<C>>(
 ) : CrossOverOperator<C>() {
 
     override fun invoke(
-        parents: Pair<OnePartRepresentation<C>, OnePartRepresentation<C>>,
-        child: OnePartRepresentation<C>
+        parentPermutations: Pair<Permutation, Permutation>,
+        childPermutation: Permutation
     ) {
-        val parentsInverse = listOf(
-            Array(parents.first.permutation.indices.count()) {
-                parents.first.permutation.indexOf(it)
-            },
-            Array(parents.second.permutation.indices.count()) {
-                parents.second.permutation.indexOf(it)
-            }
-        )
         var longestSliceSize = 0
         var foundSlices = listOf<IntArray>()
-        for (firstValue in 0 until parents.first.permutation.indices.count() - 1) {
-            for (secondValue in firstValue until parents.first.permutation.indices.count()) {
+        for (firstValue in 0 until parentPermutations.first.size - 1) {
+            for (secondValue in firstValue until parentPermutations.first.size) {
                 if (
-                    parentsInverse[0][firstValue] - parentsInverse[0][secondValue]
+                    parentPermutations[0].indexOf(firstValue) - parentPermutations[0].indexOf(secondValue)
                     ==
-                    parentsInverse[1][firstValue] - parentsInverse[1][secondValue]
-                    && abs(parentsInverse[0][firstValue] - parentsInverse[0][secondValue]) > longestSliceSize
+                    parentPermutations[1].indexOf(firstValue) - parentPermutations[1].indexOf(secondValue)
+                    && abs(parentPermutations[0].indexOf(firstValue) - parentPermutations[0].indexOf(secondValue)) > longestSliceSize
                 ) {
                     val firstIndices =
-                        arrayOf(parentsInverse[0][firstValue], parentsInverse[0][secondValue]).sorted()
+                        arrayOf(
+                            parentPermutations[0].indexOf(firstValue),
+                            parentPermutations[0].indexOf(secondValue)
+                        ).sorted()
                     val secondIndices =
-                        arrayOf(parentsInverse[1][firstValue], parentsInverse[1][secondValue]).sorted()
+                        arrayOf(
+                            parentPermutations[1].indexOf(firstValue),
+                            parentPermutations[1].indexOf(secondValue)
+                        ).sorted()
                     val slices = listOf(
-                        parents.first.permutation.slice(firstIndices[0]..firstIndices[1]),
-                        parents.second.permutation.slice(secondIndices[0]..secondIndices[1])
+                        parentPermutations.first.slice(firstIndices[0]..firstIndices[1]),
+                        parentPermutations.second.slice(secondIndices[0]..secondIndices[1])
                     )
                     if (slices[0].all { slices[1].contains(it) }) {
-                        longestSliceSize = abs(parentsInverse[0][firstValue] - parentsInverse[0][secondValue])
+                        longestSliceSize =
+                            abs(parentPermutations[0].indexOf(firstValue) - parentPermutations[0].indexOf(secondValue))
                         foundSlices = slices.map { it.toList().toIntArray() }.toList()
                     }
                 }
@@ -65,17 +66,20 @@ class SortedMatchCrossOver<C : PhysicsUnit<C>>(
                     .sumClever()
             }.let { costs -> costs.indexOf(costs.min()) }
             val indices = Array(2) { index ->
-                parentsInverse[index][foundSlices[index].first()]..
-                        parentsInverse[index][foundSlices[index].last()]
+                parentPermutations[index].indexOf(foundSlices[index].first())..
+                        parentPermutations[index].indexOf(foundSlices[index].last())
             }
             (0 until indices[0].first).forEach { geneIndex ->
-                child.permutation[geneIndex] = parents.toList()[0].permutation[geneIndex]
+                childPermutation[geneIndex] =
+                    parentPermutations[0][geneIndex]
             }
             indices[0].forEach { geneIndex ->
-                child.permutation[geneIndex] = foundSlices[cheaperIndex][geneIndex - indices[0].first]
+                childPermutation[geneIndex] =
+                    foundSlices[cheaperIndex][geneIndex - indices[0].first]
             }
-            (indices[0].last + 1 until parents.first.permutation.indices.count()).forEach { geneIndex ->
-                child.permutation[geneIndex] = parents.toList()[0].permutation[geneIndex]
+            (indices[0].last + 1 until parentPermutations.first.size).forEach { geneIndex ->
+                childPermutation[geneIndex] =
+                    parentPermutations.toList()[0][geneIndex]
             }
         }
     }

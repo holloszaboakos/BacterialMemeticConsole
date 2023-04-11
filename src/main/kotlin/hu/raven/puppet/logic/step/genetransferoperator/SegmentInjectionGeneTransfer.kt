@@ -5,7 +5,9 @@ import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.OnePartRepresentation
+import hu.raven.puppet.model.solution.OnePartRepresentationWithIteration
+import hu.raven.puppet.model.solution.PoolItem
+
 import hu.raven.puppet.utility.extention.nextSegmentStartPosition
 import kotlin.random.Random
 import kotlin.time.ExperimentalTime
@@ -19,15 +21,15 @@ class SegmentInjectionGeneTransfer<C : PhysicsUnit<C>>(
 
     @OptIn(ExperimentalTime::class)
     override fun invoke(
-        source: OnePartRepresentation<C>,
-        target: OnePartRepresentation<C>
+        source: PoolItem<OnePartRepresentationWithIteration<C>>,
+        target: PoolItem<OnePartRepresentationWithIteration<C>>
     ): StepEfficiencyData {
-        val oldCost = target.costOrException()
+        val oldCost = target.content.costOrException()
 
         val spentTime = measureTime {
             val startOfSegment =
                 Random.nextSegmentStartPosition(
-                    source.permutation.indices.count(),
+                    source.content.permutation.indices.count(),
                     geneTransferSegmentLength
                 )
             val rangeOfSegment = startOfSegment until startOfSegment + geneTransferSegmentLength
@@ -48,39 +50,39 @@ class SegmentInjectionGeneTransfer<C : PhysicsUnit<C>>(
             )
 
             resetFlagsOf(target)
-            calculateCostOf(target)
+            calculateCostOf(target.content)
         }
         return StepEfficiencyData(
             spentTime = spentTime,
             spentBudget = 1,
-            improvementCountPerRun = if (target.costOrException() < oldCost) 1 else 0,
+            improvementCountPerRun = if (target.content.costOrException() < oldCost) 1 else 0,
             improvementPercentagePerBudget =
-            if (target.costOrException() < oldCost)
-                Fraction.new(1) - (target.costOrException().value / oldCost.value)
+            if (target.content.costOrException() < oldCost)
+                Fraction.new(1) - (target.content.costOrException().value / oldCost.value)
             else
                 Fraction.new(0)
         )
     }
 
     private fun <C : PhysicsUnit<C>> collectElementsOfSegment(
-        source: OnePartRepresentation<C>,
+        source: PoolItem<OnePartRepresentationWithIteration<C>>,
         rangeOfSegment: IntRange
     ): IntArray {
-        return source.permutation
+        return source.content.permutation
             .slice(rangeOfSegment)
             .toList()
             .toIntArray()
     }
 
     private fun <C : PhysicsUnit<C>> collectElementsNotInSegment(
-        target: OnePartRepresentation<C>,
+        target: PoolItem<OnePartRepresentationWithIteration<C>>,
         elementsOfSegment: IntArray,
     ): IntArray {
 
-        val segmentContains = BooleanArray(target.permutation.indices.count()) { false }
+        val segmentContains = BooleanArray(target.content.permutation.indices.count()) { false }
         elementsOfSegment.forEach { segmentContains[it] = true }
 
-        return target.permutation
+        return target.content.permutation
             .map { it }
             .filter { !segmentContains[it] }
             .toList()
@@ -88,16 +90,16 @@ class SegmentInjectionGeneTransfer<C : PhysicsUnit<C>>(
     }
 
     private fun <C : PhysicsUnit<C>> loadSegmentToTarget(
-        target: OnePartRepresentation<C>,
+        target: PoolItem<OnePartRepresentationWithIteration<C>>,
         rangeOfSegment: IntRange,
         elementsOfSegment: IntArray,
         elementsOfTargetNotInSegment: IntArray,
     ) {
 
         val rangeOfBeforeSegment = 0 until rangeOfSegment.first
-        val rangeOfAfterSegment = (rangeOfSegment.last + 1) until target.permutation.size
+        val rangeOfAfterSegment = (rangeOfSegment.last + 1) until target.content.permutation.size
 
-        target.permutation.setEach { index, _ ->
+        target.content.permutation.setEach { index, _ ->
             when (index) {
                 in rangeOfBeforeSegment ->
                     elementsOfTargetNotInSegment[index]
@@ -113,7 +115,7 @@ class SegmentInjectionGeneTransfer<C : PhysicsUnit<C>>(
         }
     }
 
-    private fun <C : PhysicsUnit<C>> resetFlagsOf(specimen: OnePartRepresentation<C>) {
-        specimen.cost = null
+    private fun <C : PhysicsUnit<C>> resetFlagsOf(specimen: PoolItem<OnePartRepresentationWithIteration<C>>) {
+        specimen.content.cost = null
     }
 }

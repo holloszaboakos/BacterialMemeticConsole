@@ -10,11 +10,11 @@ class GeneTransferFromBetterToWorse<C : PhysicsUnit<C>>(
 ) : GeneTransfer<C>() {
 
     override fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {
-        val worse = population.slice(population.size / 2 until population.size)
+        val worse = population.mapActives { it }.slice(population.activeCount / 2 until population.activeCount)
 
-        (0 until population.size / 2)
+        (0 until population.activeCount / 2)
             .forEach { index ->
-                geneTransferOperator(population[index], worse[index])
+                geneTransferOperator(population.mapActives { it }[index], worse[index])
             }
     }
 }

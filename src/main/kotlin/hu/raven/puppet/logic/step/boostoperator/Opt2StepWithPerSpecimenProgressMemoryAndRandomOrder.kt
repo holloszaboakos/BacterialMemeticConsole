@@ -4,7 +4,9 @@ import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.OnePartRepresentation
+import hu.raven.puppet.model.solution.OnePartRepresentationWithIteration
+import hu.raven.puppet.model.solution.PoolItem
+
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
@@ -16,38 +18,38 @@ class Opt2StepWithPerSpecimenProgressMemoryAndRandomOrder<C : PhysicsUnit<C>>(
     var shuffler = intArrayOf()
 
     @OptIn(ExperimentalTime::class)
-    override fun invoke(specimen: OnePartRepresentation<C>): StepEfficiencyData {
+    override fun invoke(specimen: PoolItem<OnePartRepresentationWithIteration<C>>): StepEfficiencyData {
         var spentBudget = 0L
-        val oldCost = specimen.costOrException()
+        val oldCost = specimen.content.costOrException()
         val spentTime = measureTime {
             if (!lastPositionPerSpecimen.containsKey(specimen.id)) {
                 lastPositionPerSpecimen[specimen.id] = Pair(0, 1)
             }
             if (shuffler.isEmpty()) {
-                shuffler = (0 until specimen.permutation.size)
+                shuffler = (0 until specimen.content.permutation.size)
                     .shuffled()
                     .toIntArray()
             }
 
-            val bestCost = specimen.cost
+            val bestCost = specimen.content.cost
             var improved = false
 
             var lastPosition = lastPositionPerSpecimen[specimen.id]!!
 
-            outer@ for (firstIndexIndex in lastPosition.first until specimen.permutation.size - 1) {
+            outer@ for (firstIndexIndex in lastPosition.first until specimen.content.permutation.size - 1) {
                 val firstIndex = shuffler[firstIndexIndex]
                 val secondIndexStart =
                     if (firstIndexIndex == lastPosition.first) lastPosition.second
                     else firstIndexIndex + 1
-                for (secondIndexIndex in secondIndexStart until specimen.permutation.size) {
+                for (secondIndexIndex in secondIndexStart until specimen.content.permutation.size) {
                     val secondIndex = shuffler[secondIndexIndex]
-                    specimen.permutation.swapValues(firstIndex, secondIndex)
-                    calculateCostOf(specimen)
+                    specimen.content.permutation.swapValues(firstIndex, secondIndex)
+                    calculateCostOf(specimen.content)
                     spentBudget++
 
-                    if (specimen.costOrException() >= bestCost!!) {
-                        specimen.permutation.swapValues(firstIndex, secondIndex)
-                        specimen.cost = bestCost
+                    if (specimen.content.costOrException() >= bestCost!!) {
+                        specimen.content.permutation.swapValues(firstIndex, secondIndex)
+                        specimen.content.cost = bestCost
                         continue
                     }
 
@@ -66,10 +68,10 @@ class Opt2StepWithPerSpecimenProgressMemoryAndRandomOrder<C : PhysicsUnit<C>>(
         return StepEfficiencyData(
             spentTime = spentTime,
             spentBudget = spentBudget,
-            improvementCountPerRun = if (specimen.costOrException() < oldCost) 1 else 0,
+            improvementCountPerRun = if (specimen.content.costOrException() < oldCost) 1 else 0,
             improvementPercentagePerBudget =
-            if (specimen.costOrException() < oldCost)
-                (Fraction.new(1) - (specimen.costOrException().value / oldCost.value)) / spentBudget
+            if (specimen.content.costOrException() < oldCost)
+                (Fraction.new(1) - (specimen.content.costOrException().value / oldCost.value)) / spentBudget
             else
                 Fraction.new(0)
         )

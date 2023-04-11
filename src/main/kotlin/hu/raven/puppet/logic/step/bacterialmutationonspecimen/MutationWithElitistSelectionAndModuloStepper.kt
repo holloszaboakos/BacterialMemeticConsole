@@ -4,9 +4,9 @@ import hu.raven.puppet.logic.step.bacterialmutationoperator.BacterialMutationOpe
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.logic.step.selectsegment.SelectSegment
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.OnePartRepresentation
+import hu.raven.puppet.model.solution.OnePartRepresentationWithIteration
+import hu.raven.puppet.model.solution.PoolItem
 import hu.raven.puppet.model.solution.Segment
-import kotlin.time.ExperimentalTime
 
 class MutationWithElitistSelectionAndModuloStepper<C : PhysicsUnit<C>>(
     override val mutationOperator: BacterialMutationOperator<C>,
@@ -16,9 +16,8 @@ class MutationWithElitistSelectionAndModuloStepper<C : PhysicsUnit<C>>(
     override val cloneCycleCount: Int
 ) : MutationOnSpecimen<C>() {
 
-    @OptIn(ExperimentalTime::class)
-    override fun invoke(specimen: OnePartRepresentation<C>, iteration: Int) {
-        calculateCostOf(specimen)
+    override fun invoke(specimen: PoolItem<OnePartRepresentationWithIteration<C>>, iteration: Int) {
+        calculateCostOf(specimen.content)
         repeat(cloneCycleCount) { cloneCycleIndex ->
             val clones = generateClones(
                 specimen,
@@ -26,19 +25,19 @@ class MutationWithElitistSelectionAndModuloStepper<C : PhysicsUnit<C>>(
             )
             calcCostOfEachAndSort(clones)
 
-            if (clones.first().cost != specimen.cost) {
-                specimen.permutation.setEach { index, _ ->
-                    clones.first().permutation[index]
+            if (clones.first().content.cost != specimen.content.cost) {
+                specimen.content.permutation.setEach { index, _ ->
+                    clones.first().content.permutation[index]
                 }
-                specimen.cost = clones.first().cost
+                specimen.content.cost = clones.first().content.cost
             }
         }
     }
 
     private fun generateClones(
-        specimen: OnePartRepresentation<C>,
+        specimen: PoolItem<OnePartRepresentationWithIteration<C>>,
         selectedSegment: Segment
-    ): MutableList<OnePartRepresentation<C>> {
+    ): MutableList<PoolItem<OnePartRepresentationWithIteration<C>>> {
         val clones = MutableList(cloneCount + 1) { specimen.copy() }
         val moduloStepperSegments = generateModuloStepperSegments(selectedSegment.values)
 
@@ -47,7 +46,7 @@ class MutationWithElitistSelectionAndModuloStepper<C : PhysicsUnit<C>>(
             .forEachIndexed { cloneIndex, clone ->
                 moduloStepperSegments[cloneIndex]
                     .forEachIndexed { index, value ->
-                        clone.permutation[selectedSegment.positions[index]] = value
+                        clone.content.permutation[selectedSegment.positions[index]] = value
                     }
             }
 

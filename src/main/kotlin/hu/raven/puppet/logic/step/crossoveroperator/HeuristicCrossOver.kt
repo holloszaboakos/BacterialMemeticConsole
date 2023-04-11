@@ -3,8 +3,8 @@ package hu.raven.puppet.logic.step.crossoveroperator
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.math.Permutation
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.task.CostGraph
+import hu.raven.puppet.utility.extention.get
 import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.extention.sumClever
 import kotlin.random.Random.Default.nextInt
@@ -14,43 +14,33 @@ class HeuristicCrossOver<C : PhysicsUnit<C>>(
 ) : CrossOverOperator<C>() {
 
     override fun invoke(
-        parents: Pair<OnePartRepresentation<C>, OnePartRepresentation<C>>,
-        child: OnePartRepresentation<C>
+        parentPermutations: Pair<Permutation, Permutation>,
+        childPermutation: Permutation
     ) {
         val costGraph = costGraphProvider()
-        val parentsL = parents.toList()
-        val parentsInverse = Array(2) {
-            parentsL[it].permutation.inverse()
-        }
 
-        val randomPermutation = IntArray(child.permutation.size) { it }
+        val randomPermutation = IntArray(childPermutation.size) { it }
         randomPermutation.shuffle()
         var lastIndexUsed = 0
 
-        val childContains = BooleanArray(child.permutation.size) { false }
+        childPermutation.setEach { _, _ -> childPermutation.size }
+        childPermutation[0] = nextInt(childPermutation.size)
 
-        child.permutation.setEach { _, _ -> child.permutation.size }
-        child.permutation[0] = nextInt(child.permutation.size)
-        childContains[child.permutation[0]] = true
+        for (geneIndex in 1 until childPermutation.size) {
 
-        for (geneIndex in 1 until child.permutation.size) {
-
-            val previousValue = child.permutation[geneIndex - 1]
+            val previousValue = childPermutation[geneIndex - 1]
 
             val neighbours = gatherNeighbouringValues(
-                parentsL,
-                parentsInverse,
+                parentPermutations,
                 previousValue,
-                child,
-                childContains
+                childPermutation
             )
 
             if (neighbours.isEmpty()) {
                 lastIndexUsed = chooseNextValueAtRandom(
                     lastIndexUsed,
                     randomPermutation,
-                    childContains,
-                    child,
+                    childPermutation,
                     geneIndex
                 )
                 continue
@@ -64,13 +54,12 @@ class HeuristicCrossOver<C : PhysicsUnit<C>>(
 
             chooseNextValueBasedOnWeight(
                 weights,
-                child,
+                childPermutation,
                 geneIndex,
-                neighbours,
-                childContains
+                neighbours
             )
 
-            if (child.permutation[geneIndex] == child.permutation.size)
+            if (childPermutation[geneIndex] == childPermutation.size)
                 println("Failed to choose based on weights")
 
 
@@ -79,32 +68,28 @@ class HeuristicCrossOver<C : PhysicsUnit<C>>(
     }
 
     private fun gatherNeighbouringValues(
-        parentsL: List<OnePartRepresentation<C>>,
-        parentsInverse: Array<Permutation>,
+        parentPermutations: Pair<Permutation, Permutation>,
         previousValue: Int,
-        child: OnePartRepresentation<C>,
-        childContains: BooleanArray
+        child: Permutation
     ): List<Int> {
         return listOf(
-            parentsL[0].permutation[(parentsInverse[0][previousValue] + child.permutation.size - 1) % child.permutation.size],
-            parentsL[0].permutation[(parentsInverse[0][previousValue] + 1) % child.permutation.size],
-            parentsL[1].permutation[(parentsInverse[1][previousValue] + child.permutation.size - 1) % child.permutation.size],
-            parentsL[1].permutation[(parentsInverse[1][previousValue] + 1) % child.permutation.size]
-        ).filter { !childContains[it] }
+            parentPermutations[0][(parentPermutations[0].indexOf(previousValue) + child.size - 1) % child.size],
+            parentPermutations[0][(parentPermutations[0].indexOf(previousValue) + 1) % child.size],
+            parentPermutations[1][(parentPermutations[1].indexOf(previousValue) + child.size - 1) % child.size],
+            parentPermutations[1][(parentPermutations[1].indexOf(previousValue) + 1) % child.size]
+        ).filter { !child.contains(it) }
     }
 
     private fun chooseNextValueAtRandom(
         lastIndexUsed: Int,
         randomPermutation: IntArray,
-        childContains: BooleanArray,
-        child: OnePartRepresentation<C>,
+        child: Permutation,
         geneIndex: Int
     ): Int {
 
         for (index in lastIndexUsed until randomPermutation.size) {
-            if (!childContains[randomPermutation[index]]) {
-                child.permutation[geneIndex] = randomPermutation[index]
-                childContains[child.permutation[geneIndex]] = true
+            if (!child.contains(randomPermutation[index])) {
+                child[geneIndex] = randomPermutation[index]
                 return index + 1
             }
         }
@@ -148,10 +133,9 @@ class HeuristicCrossOver<C : PhysicsUnit<C>>(
 
     private fun chooseNextValueBasedOnWeight(
         weights: Array<Fraction>,
-        child: OnePartRepresentation<C>,
+        child: Permutation,
         geneIndex: Int,
-        neighbours: List<Int>,
-        childContains: BooleanArray
+        neighbours: List<Int>
     ) {
         val sum = weights.sumClever()
         //TODO stabilize
@@ -159,8 +143,7 @@ class HeuristicCrossOver<C : PhysicsUnit<C>>(
 
         for (weightIndex in weights.indices) {
             if (choice <= weights[weightIndex]) {
-                child.permutation[geneIndex] = neighbours[weightIndex]
-                childContains[child.permutation[geneIndex]] = true
+                child[geneIndex] = neighbours[weightIndex]
                 break
             }
             choice -= weights[weightIndex]

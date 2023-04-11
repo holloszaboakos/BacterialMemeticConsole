@@ -11,13 +11,13 @@ class BacterialMutationOnBestAndLuckyByShuffling<C : PhysicsUnit<C>>(
 ) : BacterialMutation<C>() {
 
     override fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {
-        val selectedCount = ((population.size - 1) * mutationPercentage).toInt()
+        val selectedCount = ((population.mapActives { it }.size - 1) * mutationPercentage).toInt()
 
-        val populationRandomized = population.slice(1 until population.size)
+        val populationRandomized = population.mapActives { it }.slice(1 until population.mapActives { it }.size)
             .shuffled()
             .slice(0 until selectedCount)
             .toMutableList()
-            .apply { add(0, population.first()) }
+            .apply { add(0, population.mapActives { it }.first()) }
 
         populationRandomized.forEachIndexed { index, specimen ->
             if (index != 0 && Random.nextFloat() > mutationPercentage) {

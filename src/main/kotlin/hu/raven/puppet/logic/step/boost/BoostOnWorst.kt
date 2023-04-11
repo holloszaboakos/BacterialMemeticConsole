@@ -12,7 +12,7 @@ class BoostOnWorst<C : PhysicsUnit<C>>(
 ) : Boost<C>() {
 
     override operator fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {
-        val worst = population.last()
+        val worst = population.mapActives { it }.last()
         val improvement = boostOperator(worst)
 
         synchronized(statistics) {

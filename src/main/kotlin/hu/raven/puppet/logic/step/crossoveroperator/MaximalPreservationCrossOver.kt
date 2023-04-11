@@ -1,31 +1,35 @@
 package hu.raven.puppet.logic.step.crossoveroperator
 
+import hu.raven.puppet.model.math.Permutation
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.OnePartRepresentation
+
 import kotlin.random.Random.Default.nextInt
 
 class MaximalPreservationCrossOver<C : PhysicsUnit<C>> : CrossOverOperator<C>() {
 
     override fun invoke(
-        parents: Pair<OnePartRepresentation<C>, OnePartRepresentation<C>>,
-        child: OnePartRepresentation<C>
+        parentPermutations: Pair<Permutation, Permutation>,
+        childPermutation: Permutation
     ) {
-        val size = child.permutation.size / 4 + nextInt(child.permutation.size / 4)
-        val start = nextInt(child.permutation.size - size)
-        val seconderCopy = parents.second.copyOfPermutationBy(::MutableList) as MutableList
-        val seconderInverse = parents.second.permutation.inverse()
+        val size = childPermutation.size / 4 + nextInt(childPermutation.size / 4)
+        val start = nextInt(childPermutation.size - size)
+        val seconderCopy = parentPermutations.second.toMutableList()
 
-        child.permutation.setEach { index, _ ->
+        childPermutation.setEach { index, _ ->
             if (index < size) {
-                seconderCopy[seconderInverse[parents.first.permutation[index + start]]] = child.permutation.size
-                parents.first.permutation[index + start]
+                seconderCopy[
+                    parentPermutations.second.indexOf(
+                        parentPermutations.first[index + start]
+                    )
+                ] = childPermutation.size
+                parentPermutations.first[index + start]
             } else
-                child.permutation.size
+                childPermutation.size
         }
-        seconderCopy.removeIf { it == child.permutation.size }
+        seconderCopy.removeIf { it == childPermutation.size }
 
         seconderCopy.forEachIndexed { index, value ->
-            child.permutation[size + index] = value
+            childPermutation[size + index] = value
         }
 
     }

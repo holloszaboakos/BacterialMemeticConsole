@@ -2,7 +2,7 @@ package hu.raven.puppet.logic.step.calculatecost
 
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.Meter
-import hu.raven.puppet.model.solution.OnePartRepresentation
+import hu.raven.puppet.model.solution.OnePartRepresentationWithIteration
 import hu.raven.puppet.model.task.Task
 import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.extention.sumClever
@@ -10,7 +10,7 @@ import hu.raven.puppet.utility.extention.sumClever
 class CalculateCostOfTspSolution(
     override val task: Task
 ) : CalculateCost<Meter>() {
-    override operator fun invoke(specimen: OnePartRepresentation<Meter>) {
+    override operator fun invoke(specimen: OnePartRepresentationWithIteration<Meter>) {
         specimen.cost = arrayOf(
             task.costGraph.edgesFromCenter[specimen.permutation[0]].length,
             task.costGraph.edgesToCenter[specimen.permutation[specimen.permutation.indices.last]].length,

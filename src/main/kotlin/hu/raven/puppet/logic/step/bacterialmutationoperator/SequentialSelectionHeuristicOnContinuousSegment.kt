@@ -2,7 +2,9 @@ package hu.raven.puppet.logic.step.bacterialmutationoperator
 
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.OnePartRepresentation
+import hu.raven.puppet.model.solution.OnePartRepresentationWithIteration
+import hu.raven.puppet.model.solution.PoolItem
+
 import hu.raven.puppet.model.solution.Segment
 import hu.raven.puppet.model.task.Task
 import hu.raven.puppet.utility.extention.getEdgeBetween
@@ -14,7 +16,7 @@ class SequentialSelectionHeuristicOnContinuousSegment<C : PhysicsUnit<C>>(
 ) : BacterialMutationOperator<C>() {
 
     override fun invoke(
-        clone: OnePartRepresentation<C>,
+        clone: PoolItem<OnePartRepresentationWithIteration<C>>,
         selectedSegment: Segment
     ) {
 
@@ -23,7 +25,7 @@ class SequentialSelectionHeuristicOnContinuousSegment<C : PhysicsUnit<C>>(
         var previousElement = if (selectedSegment.positions.first() == 0) {
             objectiveCount
         } else {
-            clone.permutation[selectedSegment.positions.first() - 1]
+            clone.content.permutation[selectedSegment.positions.first() - 1]
         }
 
         selectedSegment.positions.forEach { writeIndex ->
@@ -32,7 +34,7 @@ class SequentialSelectionHeuristicOnContinuousSegment<C : PhysicsUnit<C>>(
                 remainingElements
             )
             previousElement = selectedElement
-            clone.permutation[writeIndex] = selectedElement
+            clone.content.permutation[writeIndex] = selectedElement
             remainingElements.remove(selectedElement)
         }
     }

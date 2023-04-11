@@ -17,7 +17,9 @@ import hu.raven.puppet.model.parameters.BacterialMutationParameterProvider
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.parameters.IterativeAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.Meter
-import hu.raven.puppet.model.solution.OnePartRepresentation
+import hu.raven.puppet.model.solution.OnePartRepresentationWithIteration
+import hu.raven.puppet.model.solution.PoolItem
+
 import hu.raven.puppet.model.state.AlgorithmState
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
@@ -109,10 +111,10 @@ private val OPERATORS: Array<(
     { task: Task ->
         EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation(task)
     },
-    { task: Task ->
+    {
         OppositionOperator()
     },
-    { task: Task ->
+    {
         RandomShuffleOfContinuesSegment()
     },
     { task: Task ->
@@ -220,18 +222,19 @@ private fun runScenario(scenario: Scenario) {
 
     (0 until 25).map {
         val specimen =
-            OnePartRepresentation<Meter>(
+            PoolItem(
                 0,
-                scenario.objectiveCount,
-                Permutation((0 until scenario.objectiveCount).toList().toIntArray()),
-                true,
-                null,
                 0,
-                0
+                OnePartRepresentationWithIteration<Meter>(
+                    0,
+                    null,
+                    scenario.objectiveCount,
+                    Permutation((0 until scenario.objectiveCount).toList().toIntArray())
+                )
             )
         strategy(specimen, 0)
-        calculateCost(specimen)
-        specimen.costOrException()
+        calculateCost(specimen.content)
+        specimen.content.costOrException()
     }
         .sortedBy { it.value }
         .groupBy { it.value.numerator }

@@ -9,10 +9,10 @@ class MutateChildrenBySwap<C : PhysicsUnit<C>> : MutateChildren<C>() {
 
     override fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {
         if (task.costGraph.objectives.size > 1)
-            population.asSequence()
-                .filter { it.iteration == iteration }
+            population.mapActives { it }.asSequence()
+                .filter { it.content.iterationOfCreation == iteration }
                 .shuffled()
-                .slice(0 until population.size / 4)
+                .slice(0 until population.activeCount / 4)
                 .forEach { child ->
                     val firstCutIndex = Random.nextInt(task.costGraph.objectives.size)
                     val secondCutIndex = Random.nextInt(task.costGraph.objectives.size)
@@ -23,10 +23,10 @@ class MutateChildrenBySwap<C : PhysicsUnit<C>> : MutateChildren<C>() {
                                 it
                         }
 
-                    val tmp = child.permutation[firstCutIndex]
-                    child.permutation[firstCutIndex] = child.permutation[secondCutIndex]
-                    child.permutation[secondCutIndex] = tmp
-                    if (!child.permutation.checkFormat())
+                    val tmp = child.content.permutation[firstCutIndex]
+                    child.content.permutation[firstCutIndex] = child.content.permutation[secondCutIndex]
+                    child.content.permutation[secondCutIndex] = tmp
+                    if (!child.content.permutation.checkFormat())
                         throw Error("Invalid specimen!")
                 }
 

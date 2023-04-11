@@ -4,7 +4,9 @@ import hu.raven.puppet.logic.step.bacterialmutationoperator.BacterialMutationOpe
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.logic.step.selectsegment.SelectSegment
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.OnePartRepresentation
+import hu.raven.puppet.model.solution.OnePartRepresentationWithIteration
+import hu.raven.puppet.model.solution.PoolItem
+
 import hu.raven.puppet.model.solution.Segment
 import kotlin.math.exp
 import kotlin.random.Random
@@ -18,8 +20,8 @@ class MutationWithSimulatedAnnealingBasedSelection<C : PhysicsUnit<C>>(
     private val iterationLimit: Int,
 ) : MutationOnSpecimen<C>() {
 
-    override fun invoke(specimen: OnePartRepresentation<C>, iteration: Int) {
-        val doSimulatedAnnealing = specimen.orderInPopulation != 0
+    override fun invoke(specimen: PoolItem<OnePartRepresentationWithIteration<C>>, iteration: Int) {
+        val doSimulatedAnnealing = specimen.index != 0
         repeat(cloneCycleCount) { cycleIndex ->
 
             val clones = generateClones(
@@ -39,9 +41,9 @@ class MutationWithSimulatedAnnealingBasedSelection<C : PhysicsUnit<C>>(
     }
 
     private fun generateClones(
-        specimen: OnePartRepresentation<C>,
+        specimen: PoolItem<OnePartRepresentationWithIteration<C>>,
         selectedSegment: Segment
-    ): MutableList<OnePartRepresentation<C>> {
+    ): MutableList<PoolItem<OnePartRepresentationWithIteration<C>>> {
         val clones = MutableList(cloneCount + 1) { specimen.copy() }
         clones
             .slice(1 until clones.size)
@@ -52,8 +54,8 @@ class MutationWithSimulatedAnnealingBasedSelection<C : PhysicsUnit<C>>(
     }
 
     private fun <C : PhysicsUnit<C>> loadDataToSpecimen(
-        specimen: OnePartRepresentation<C>,
-        clones: MutableList<OnePartRepresentation<C>>,
+        specimen: PoolItem<OnePartRepresentationWithIteration<C>>,
+        clones: MutableList<PoolItem<OnePartRepresentationWithIteration<C>>>,
         iteration: Int,
         doSimulatedAnnealing: Boolean
     ) {
@@ -63,17 +65,17 @@ class MutationWithSimulatedAnnealingBasedSelection<C : PhysicsUnit<C>>(
                 iterationLimit
             )
         ) {
-            specimen.permutation.setEach { index, _ ->
-                clones.first().permutation[index]
+            specimen.content.permutation.setEach { index, _ ->
+                clones.first().content.permutation[index]
             }
-            specimen.cost = clones.first().cost
+            specimen.content.cost = clones.first().content.cost
             return
         }
 
-        specimen.permutation.setEach { index, _ ->
-            clones.first().permutation[index]
+        specimen.content.permutation.setEach { index, _ ->
+            clones.first().content.permutation[index]
         }
-        specimen.cost = clones[1].cost
+        specimen.content.cost = clones[1].content.cost
     }
 
     private fun simulatedAnnealingHeat(iteration: Int, divider: Int): Float {

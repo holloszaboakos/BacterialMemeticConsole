@@ -1,7 +1,9 @@
 package hu.raven.puppet.logic.step.selectsegment
 
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.OnePartRepresentation
+import hu.raven.puppet.model.solution.OnePartRepresentationWithIteration
+import hu.raven.puppet.model.solution.PoolItem
+
 import hu.raven.puppet.model.solution.Segment
 
 class SelectContinuesSegmentWithFullCoverage<C : PhysicsUnit<C>>(
@@ -14,7 +16,7 @@ class SelectContinuesSegmentWithFullCoverage<C : PhysicsUnit<C>>(
     }
 
     override fun invoke(
-        specimen: OnePartRepresentation<C>,
+        specimen: PoolItem<OnePartRepresentationWithIteration<C>>,
         iteration: Int,
         cycleIndex: Int,
         cycleCount: Int
@@ -22,7 +24,7 @@ class SelectContinuesSegmentWithFullCoverage<C : PhysicsUnit<C>>(
         val segmentPosition = randomizer[iteration % randomizer.size] + cycleIndex * cloneSegmentLength
         val selectedPositions = IntArray(cloneSegmentLength) { segmentPosition + it }
         val selectedElements = selectedPositions
-            .map { specimen.permutation[it] }
+            .map { specimen.content.permutation[it] }
             .toIntArray()
         return Segment(
             selectedPositions,

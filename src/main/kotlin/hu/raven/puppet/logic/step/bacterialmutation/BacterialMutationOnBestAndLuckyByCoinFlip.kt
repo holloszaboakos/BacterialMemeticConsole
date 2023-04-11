@@ -11,7 +11,7 @@ class BacterialMutationOnBestAndLuckyByCoinFlip<C : PhysicsUnit<C>>(
 ) : BacterialMutation<C>() {
 
     override fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {
-        population.forEachIndexed { index, specimen ->
+        population.mapActives { it }.forEachIndexed { index, specimen ->
             if (index != 0 && Random.nextFloat() > mutationPercentage) {
                 return@forEachIndexed
             }

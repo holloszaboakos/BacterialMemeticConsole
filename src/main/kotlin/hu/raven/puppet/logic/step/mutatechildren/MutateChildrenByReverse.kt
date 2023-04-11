@@ -9,10 +9,10 @@ class MutateChildrenByReverse<C : PhysicsUnit<C>> : MutateChildren<C>() {
 
     override fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {
         if (task.costGraph.objectives.size > 1)
-            population.asSequence()
-                .filter { it.iteration == iteration }
+            population.mapActives { it }.asSequence()
+                .filter { it.content.iterationOfCreation == iteration }
                 .shuffled()
-                .slice(0 until (population.size / 4))
+                .slice(0 until (population.activeCount / 4))
                 .forEach { child ->
                     val firstCutIndex = Random.nextInt(task.costGraph.objectives.size)
                     val secondCutIndex = Random.nextInt(task.costGraph.objectives.size)
@@ -24,15 +24,17 @@ class MutateChildrenByReverse<C : PhysicsUnit<C>> : MutateChildren<C>() {
                         }
 
                     if (secondCutIndex > firstCutIndex) {
-                        val reversed = child.permutation.slice(firstCutIndex..secondCutIndex).toList().reversed()
+                        val reversed =
+                            child.content.permutation.slice(firstCutIndex..secondCutIndex).toList().reversed()
                         for (geneIndex in firstCutIndex..secondCutIndex)
-                            child.permutation[geneIndex] = reversed[geneIndex - firstCutIndex]
+                            child.content.permutation[geneIndex] = reversed[geneIndex - firstCutIndex]
                     } else {
-                        val reversed = child.permutation.slice(secondCutIndex..firstCutIndex).toList().reversed()
+                        val reversed =
+                            child.content.permutation.slice(secondCutIndex..firstCutIndex).toList().reversed()
                         for (geneIndex in secondCutIndex..firstCutIndex)
-                            child.permutation[geneIndex] = reversed[geneIndex - secondCutIndex]
+                            child.content.permutation[geneIndex] = reversed[geneIndex - secondCutIndex]
                     }
-                    if (!child.permutation.checkFormat())
+                    if (!child.content.permutation.checkFormat())
                         throw Error("Invalid specimen!")
 
                 }

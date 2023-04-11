@@ -1,7 +1,7 @@
 package hu.raven.puppet.logic.step.calculatecost
 
 import hu.raven.puppet.model.physics.Euro
-import hu.raven.puppet.model.solution.OnePartRepresentation
+import hu.raven.puppet.model.solution.OnePartRepresentationWithIteration
 import hu.raven.puppet.model.task.CostGraphEdge
 import hu.raven.puppet.model.task.CostGraphVertex
 import hu.raven.puppet.model.task.Task
@@ -14,7 +14,7 @@ class CalculateCostOfVRPSolutionWithoutCapacity(
 ) : CalculateCost<Euro>() {
 
     override operator fun invoke(
-        specimen: OnePartRepresentation<Euro>
+        specimen: OnePartRepresentationWithIteration<Euro>
     ) {
         var sumCost = Euro(0L)
         var geneIndex = 0

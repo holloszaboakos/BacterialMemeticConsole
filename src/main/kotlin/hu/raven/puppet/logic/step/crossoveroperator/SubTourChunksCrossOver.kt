@@ -1,7 +1,9 @@
 package hu.raven.puppet.logic.step.crossoveroperator
 
+import hu.raven.puppet.model.math.Permutation
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.OnePartRepresentation
+import hu.raven.puppet.utility.extention.get
+
 import kotlin.random.Random.Default.nextInt
 
 class SubTourChunksCrossOver<C : PhysicsUnit<C>> : CrossOverOperator<C>() {
@@ -15,13 +17,12 @@ class SubTourChunksCrossOver<C : PhysicsUnit<C>> : CrossOverOperator<C>() {
             randomPermutation.shuffle()
         }
 
-        fun getRandomValue(
-            permutationSize: Int,
-            childContains: BooleanArray
+        fun getRandomAbsentValue(
+            childPermutation: Permutation
         ): Int {
-            var actualValue = permutationSize
-            for (index in lastIndex until permutationSize) {
-                if (!childContains[randomPermutation[index]]) {
+            var actualValue = childPermutation.size
+            for (index in lastIndex until childPermutation.size) {
+                if (!childPermutation.contains(randomPermutation[index])) {
                     actualValue = randomPermutation[index]
                     lastIndex = index + 1
                     break
@@ -32,44 +33,30 @@ class SubTourChunksCrossOver<C : PhysicsUnit<C>> : CrossOverOperator<C>() {
     }
 
     override fun invoke(
-        parents: Pair<OnePartRepresentation<C>, OnePartRepresentation<C>>,
-        child: OnePartRepresentation<C>
+        parentPermutations: Pair<Permutation, Permutation>,
+        childPermutation: Permutation
     ) {
-        val parentsL = parents.toList()
-        val parentsNeighbouring = List(2) { parentIndex ->
-            parentsL[parentIndex].permutation.sequential()
-        }
-        var size = nextInt(child.permutation.size / 2) + 1
+        var size = nextInt(childPermutation.size / 2) + 1
         var parentIndex = 0
-        val childContains = BooleanArray(child.permutation.size) { false }
-        child.permutation.setEach { _, _ -> child.permutation.size }
-        val randomizer = Randomizer(child.permutation.size)
+        childPermutation.clear()
+        val randomizer = Randomizer(childPermutation.size)
 
-        child.permutation.setEach { nextGeneIndex, _ ->
+        childPermutation.setEach { nextGeneIndex, _ ->
             if (nextGeneIndex == 0) {
-                childContains[parents.first.permutation[0]] = true
-                return@setEach parents.first.permutation[0]
+                return@setEach parentPermutations.first[0]
             }
 
-            val parent = parentsNeighbouring[parentIndex]
             size--
             if (size == 0) {
-                size = nextInt(nextGeneIndex, child.permutation.size)
+                size = nextInt(nextGeneIndex, childPermutation.size)
                 parentIndex = (parentIndex + 1) % 2
             }
 
-            if (!child.permutation.contains(parent[child.permutation[nextGeneIndex - 1]])) {
-                val result = parent[child.permutation[nextGeneIndex - 1]]
-                childContains[result] = true
-                return@setEach result
+            if (!childPermutation.contains(parentPermutations[parentIndex].indexOf(childPermutation[nextGeneIndex - 1]))) {
+                return@setEach parentPermutations[parentIndex].indexOf(childPermutation[nextGeneIndex - 1])
             }
 
-            val result = randomizer.getRandomValue(
-                child.permutation.size,
-                childContains
-            )
-            childContains[result] = true
-            return@setEach result
+            return@setEach randomizer.getRandomAbsentValue(childPermutation)
 
         }
     }

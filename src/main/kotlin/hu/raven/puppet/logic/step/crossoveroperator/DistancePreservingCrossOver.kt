@@ -1,24 +1,24 @@
 package hu.raven.puppet.logic.step.crossoveroperator
 
+import hu.raven.puppet.model.math.Permutation
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.OnePartRepresentation
 
-class DistancePreservingCrossOver<C : PhysicsUnit<C>>() : CrossOverOperator<C>() {
+
+class DistancePreservingCrossOver<C : PhysicsUnit<C>> : CrossOverOperator<C>() {
 
     override fun invoke(
-        parents: Pair<OnePartRepresentation<C>, OnePartRepresentation<C>>,
-        child: OnePartRepresentation<C>
+        parentPermutations: Pair<Permutation, Permutation>,
+        childPermutation: Permutation
     ) {
-        val primaryInverse = parents.first.permutation.inverse()
-        child.permutation.setEach { index, _ ->
-            if (parents.first.permutation[index] == parents.second.permutation[index])
-                parents.first.permutation[index]
+        childPermutation.setEach { index, _ ->
+            if (parentPermutations.first[index] == parentPermutations.second[index])
+                parentPermutations.first[index]
             else
                 -1
         }
-        child.permutation.setEach { index, value ->
+        childPermutation.setEach { index, value ->
             if (value == -1)
-                parents.second.permutation[primaryInverse[parents.second.permutation[index]]]
+                parentPermutations.second[parentPermutations.first.indexOf(parentPermutations.second[index])]
             else
                 value
         }

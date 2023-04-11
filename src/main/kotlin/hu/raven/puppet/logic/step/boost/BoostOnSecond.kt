@@ -12,7 +12,7 @@ class BoostOnSecond<C : PhysicsUnit<C>>(
 ) : Boost<C>() {
 
     override operator fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {
-        val secondBest = population[1]
+        val secondBest = population.mapActives { it }[1]
         val improvement = boostOperator(secondBest)
 
         synchronized(statistics) {

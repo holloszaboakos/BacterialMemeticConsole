@@ -15,18 +15,18 @@ class BoostOnFirstThatImproved<C : PhysicsUnit<C>>(
 
     override fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {
         if (costPerPermutation.isEmpty()) {
-            costPerPermutation = MutableList(population.size) { null }
+            costPerPermutation = MutableList(population.mapActives { it }.size) { null }
         }
 
-        population
+        population.mapActives { it }
             .firstOrNull {
-                costPerPermutation[it.id] != null && it.costOrException() < costPerPermutation[it.id]!!
+                costPerPermutation[it.id] != null && it.content.costOrException() < costPerPermutation[it.id]!!
             }
             ?.let {
-                costPerPermutation[it.id] = it.cost
+                costPerPermutation[it.id] = it.content.cost
                 val improvement = boostOperator(it)
                 synchronized(statistics) {
-                    if (it == population.first()) {
+                    if (it == population.mapActives { it }.first()) {
                         statistics.boostOnBestImprovement = improvement
                     } else {
                         statistics.boostOnBestImprovement = StepEfficiencyData()

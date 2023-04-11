@@ -1,10 +1,10 @@
 package hu.raven.puppet.logic.step.initializationofiterative
 
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
-import hu.raven.puppet.model.math.Permutation
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.OnePartRepresentation
+import hu.raven.puppet.model.solution.OnePartRepresentationWithIteration
 import hu.raven.puppet.model.state.LocalSearchAlgorithmState
+import hu.raven.puppet.utility.extention.toPermutation
 
 
 class InitializeByRandom<C : PhysicsUnit<C>>(
@@ -13,18 +13,19 @@ class InitializeByRandom<C : PhysicsUnit<C>>(
 ) : InitializeLocalSearch<C>() {
 
     override operator fun invoke() = algorithmState.run {
-        actualCandidate = OnePartRepresentation<C>(
-            id = 0,
+        actualCandidate = OnePartRepresentationWithIteration<C>(
             objectiveCount = task.costGraph.objectives.size,
-            permutation = Permutation(IntArray(
+            permutation = IntArray(
                 task.transportUnits.size +
                         task.costGraph.objectives.size
             ) { index ->
                 index
-            })
-        ).apply {
-            permutation.shuffle()
-        }
+            }
+                .apply(IntArray::shuffle)
+                .toPermutation(),
+            iterationOfCreation = 0,
+            cost = null
+        )
         calculateCostOf(actualCandidate)
     }
 }

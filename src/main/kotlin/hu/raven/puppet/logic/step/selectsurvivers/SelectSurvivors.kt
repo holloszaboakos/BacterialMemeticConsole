@@ -7,14 +7,15 @@ import hu.raven.puppet.utility.extention.slice
 
 class SelectSurvivors<C : PhysicsUnit<C>> : EvolutionaryAlgorithmStep<C> {
     override operator fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {
-        population.asSequence()
-            .slice(0 until population.size / 4)
-            .forEach { it.inUse = true }
+        population.deactivateAll()
+        population.mapActives { it }.withIndex().asSequence()
+            .slice(0 until population.activeCount / 4)
+            .forEach { population.activate(it.index) }
 
-        population.asSequence()
-            .slice(population.size / 4 until population.size)
+        population.mapActives { it }.withIndex().asSequence()
+            .slice(population.activeCount / 4 until population.activeCount)
             .shuffled()
-            .slice(0 until population.size / 4)
-            .forEach { it.inUse = true }
+            .slice(0 until population.activeCount / 4)
+            .forEach { population.activate(it.index) }
     }
 }

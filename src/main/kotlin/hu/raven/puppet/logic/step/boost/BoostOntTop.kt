@@ -14,7 +14,7 @@ class BoostOntTop<C : PhysicsUnit<C>>(
 ) : Boost<C>() {
 
     override operator fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {
-        population
+        population.mapActives { it }
             .slice(0 until boostedCount)
             .map {
                 boostOperator(it)

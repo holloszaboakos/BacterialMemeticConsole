@@ -15,14 +15,14 @@ class BoostOnBestAndLucky<C : PhysicsUnit<C>>(
 
     override fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {
 
-        val boostOnBestImprovement = boostOperator(population.first())
+        val boostOnBestImprovement = boostOperator(population.mapActives { it }.first())
 
         synchronized(statistics) {
             statistics.boostOnBestImprovement = boostOnBestImprovement
         }
 
-        population
-            .slice(1 until population.size)
+        population.mapActives { it }
+            .slice(1 until population.mapActives { it }.size)
             .shuffled()
             .slice(0 until luckyCount)
             .map { boostOperator(it) }

@@ -1,7 +1,8 @@
 package hu.raven.puppet.logic.step.crossoveroperator
 
+import hu.raven.puppet.model.math.Permutation
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.OnePartRepresentation
+
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
 sealed class CrossOverOperator<C : PhysicsUnit<C>> {
@@ -27,7 +28,7 @@ sealed class CrossOverOperator<C : PhysicsUnit<C>> {
     }
 
     abstract operator fun invoke(
-        parents: Pair<OnePartRepresentation<C>, OnePartRepresentation<C>>,
-        child: OnePartRepresentation<C>
+        parentPermutations: Pair<Permutation, Permutation>,
+        childPermutation: Permutation
     )
 }

@@ -4,7 +4,9 @@ import hu.raven.puppet.logic.step.bacterialmutationoperator.BacterialMutationOpe
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.logic.step.selectsegment.SelectSegment
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.OnePartRepresentation
+import hu.raven.puppet.model.solution.OnePartRepresentationWithIteration
+import hu.raven.puppet.model.solution.PoolItem
+
 
 sealed class MutationOnSpecimen<C : PhysicsUnit<C>> {
     protected abstract val mutationOperator: BacterialMutationOperator<C>
@@ -13,11 +15,11 @@ sealed class MutationOnSpecimen<C : PhysicsUnit<C>> {
     protected abstract val cloneCount: Int
     protected abstract val cloneCycleCount: Int
 
-    fun calcCostOfEachAndSort(clones: MutableList<OnePartRepresentation<C>>) {
+    fun calcCostOfEachAndSort(clones: MutableList<PoolItem<OnePartRepresentationWithIteration<C>>>) {
         clones
-            .onEach { calculateCostOf(it) }
-            .sortBy { it.costOrException().value }
+            .onEach { calculateCostOf(it.content) }
+            .sortBy { it.content.costOrException().value }
     }
 
-    abstract operator fun invoke(specimen: OnePartRepresentation<C>, iteration: Int)
+    abstract operator fun invoke(specimen: PoolItem<OnePartRepresentationWithIteration<C>>, iteration: Int)
 }
