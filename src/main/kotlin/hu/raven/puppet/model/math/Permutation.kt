@@ -142,14 +142,6 @@ class Permutation(val size: Int) {
         backwardSequential[size] = -1
     }
 
-    @Deprecated("It gives too much access to inner content making it dangerous!")
-    //TODO remove
-    fun setEach(operation: (Int, Int) -> Int) {
-        permutation.forEachIndexed { index: Int, value: Int ->
-            set(index, operation(index, value))
-        }
-    }
-
     fun before(value: Int) = backwardSequential[value]
     fun after(value: Int) = sequential[value]
     fun indexOf(value: Int): Int = inversePermutation[value]

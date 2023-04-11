@@ -20,26 +20,24 @@ class OrderCrossOver<C : PhysicsUnit<C>> : CrossOverOperator<C>() {
 
         //clean child
         //copy parent middle to child
-        childPermutation.setEach { index, _ ->
+        childPermutation.indices.forEach { index ->
             if (index in cut[0]..cut[1]) {
                 seconderCopy[
                     parentPermutations.second.indexOf(
                         parentPermutations.second[index]
                     )
                 ] = childPermutation.size
-                parentPermutations.second[index]
-            } else
-                childPermutation.size
+                childPermutation[index] = parentPermutations.second[index]
+            }
         }
         seconderCopy.removeIf { it == childPermutation.size }
         //fill missing places of child
         var counter = -1
-        childPermutation.setEach { _, value ->
+        childPermutation.forEachIndexed { index, value ->
             if (value == childPermutation.size) {
                 counter++
-                seconderCopy[counter]
-            } else
-                value
+                childPermutation[index] = seconderCopy[counter]
+            }
         }
     }
 }

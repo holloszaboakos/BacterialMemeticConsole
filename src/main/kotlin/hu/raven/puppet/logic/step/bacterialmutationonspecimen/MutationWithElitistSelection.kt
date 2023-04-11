@@ -32,8 +32,9 @@ class MutationWithElitistSelection<C : PhysicsUnit<C>>(
             calcCostOfEachAndSort(clones)
 
             if (clones.first().content.cost != specimen.content.cost) {
-                specimen.content.permutation.setEach { index, _ ->
-                    clones.first().content.permutation[index]
+                specimen.content.permutation.clear()
+                clones.first().content.permutation.forEachIndexed { index, value ->
+                    specimen.content.permutation[index] = value
                 }
                 specimen.content.cost = clones.first().content.cost
             }

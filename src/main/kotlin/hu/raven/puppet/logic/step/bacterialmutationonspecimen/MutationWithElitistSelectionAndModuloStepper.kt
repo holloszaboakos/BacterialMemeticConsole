@@ -26,8 +26,8 @@ class MutationWithElitistSelectionAndModuloStepper<C : PhysicsUnit<C>>(
             calcCostOfEachAndSort(clones)
 
             if (clones.first().content.cost != specimen.content.cost) {
-                specimen.content.permutation.setEach { index, _ ->
-                    clones.first().content.permutation[index]
+                specimen.content.permutation.indices.forEach { index ->
+                    specimen.content.permutation[index] = clones.first().content.permutation[index]
                 }
                 specimen.content.cost = clones.first().content.cost
             }

@@ -15,16 +15,15 @@ class MaximalPreservationCrossOver<C : PhysicsUnit<C>> : CrossOverOperator<C>() 
         val start = nextInt(childPermutation.size - size)
         val seconderCopy = parentPermutations.second.toMutableList()
 
-        childPermutation.setEach { index, _ ->
+        childPermutation.indices.forEach { index ->
             if (index < size) {
                 seconderCopy[
                     parentPermutations.second.indexOf(
                         parentPermutations.first[index + start]
                     )
                 ] = childPermutation.size
-                parentPermutations.first[index + start]
-            } else
-                childPermutation.size
+                childPermutation[index] = parentPermutations.first[index + start]
+            }
         }
         seconderCopy.removeIf { it == childPermutation.size }
 

@@ -23,7 +23,7 @@ class HeuristicCrossOver<C : PhysicsUnit<C>>(
         randomPermutation.shuffle()
         var lastIndexUsed = 0
 
-        childPermutation.setEach { _, _ -> childPermutation.size }
+        childPermutation.clear()
         childPermutation[0] = nextInt(childPermutation.size)
 
         for (geneIndex in 1 until childPermutation.size) {

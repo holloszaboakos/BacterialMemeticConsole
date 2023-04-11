@@ -38,8 +38,8 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest<C : PhysicsUnit<C>>(
                     newContains[basePermutation[baseIndex]] = true
                     baseIndex = (baseIndex + step) % sizeOfPermutation
                 }
-                instance.content.permutation.setEach { index, _ ->
-                    newPermutation[index]
+                newPermutation.forEachIndexed { index, value ->
+                    instance.content.permutation[index] = value
                 }
                 instance.content.iterationOfCreation = 0
                 instance.content.cost = null

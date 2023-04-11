@@ -41,9 +41,10 @@ class SubTourChunksCrossOver<C : PhysicsUnit<C>> : CrossOverOperator<C>() {
         childPermutation.clear()
         val randomizer = Randomizer(childPermutation.size)
 
-        childPermutation.setEach { nextGeneIndex, _ ->
+        childPermutation.indices.forEach { nextGeneIndex ->
             if (nextGeneIndex == 0) {
-                return@setEach parentPermutations.first[0]
+                childPermutation[nextGeneIndex] = parentPermutations.first[0]
+                return@forEach
             }
 
             size--
@@ -53,10 +54,13 @@ class SubTourChunksCrossOver<C : PhysicsUnit<C>> : CrossOverOperator<C>() {
             }
 
             if (!childPermutation.contains(parentPermutations[parentIndex].indexOf(childPermutation[nextGeneIndex - 1]))) {
-                return@setEach parentPermutations[parentIndex].indexOf(childPermutation[nextGeneIndex - 1])
+                childPermutation[nextGeneIndex] =
+                    parentPermutations[parentIndex].indexOf(childPermutation[nextGeneIndex - 1])
+                return@forEach
             }
 
-            return@setEach randomizer.getRandomAbsentValue(childPermutation)
+            childPermutation[nextGeneIndex] = randomizer.getRandomAbsentValue(childPermutation)
+            return@forEach
 
         }
     }

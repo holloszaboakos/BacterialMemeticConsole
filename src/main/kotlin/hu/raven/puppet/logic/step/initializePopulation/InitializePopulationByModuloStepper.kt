@@ -89,8 +89,8 @@ class InitializePopulationByModuloStepper<C : PhysicsUnit<C>>(
 
         breakPoints.add(0, -1)
         breakPoints.add(sizeOfPermutation)
-        instance.content.permutation.setEach { index, _ ->
-            newPermutation[index]
+        newPermutation.forEachIndexed { index, value ->
+            instance.content.permutation[index] = value
         }
         instance.content.cost = null
     }

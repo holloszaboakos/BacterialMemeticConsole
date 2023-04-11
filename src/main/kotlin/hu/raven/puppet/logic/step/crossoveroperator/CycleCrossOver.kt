@@ -30,13 +30,11 @@ class CycleCrossOver<C : PhysicsUnit<C>> : CrossOverOperator<C>() {
 
         //fill missing places of child
         var counter = -1
-        childPermutation.setEach { _, value ->
+        childPermutation.forEachIndexed { index, value ->
             if (value == childPermutation.size) {
                 counter++
-                seconderCopy[counter]
-            } else
-                value
-
+                childPermutation[index] = seconderCopy[counter]
+            }
         }
 
     }

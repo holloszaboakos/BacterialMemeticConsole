@@ -16,27 +16,27 @@ class PositionBasedCrossOver<C : PhysicsUnit<C>> : CrossOverOperator<C>() {
 
         //clean child
         //copy parent middle to child
-        childPermutation.setEach { valueIndex, _ ->
+        childPermutation.indices.forEach { valueIndex ->
             if (selected[valueIndex]) {
                 seconderCopy[
                     parentPermutations.second.indexOf(
                         parentPermutations.first[valueIndex]
                     )
                 ] = childPermutation.size
-                parentPermutations.first[valueIndex]
-            } else
-                childPermutation.size
+                childPermutation[valueIndex] = parentPermutations.first[valueIndex]
+            } else {
+                childPermutation[valueIndex] = childPermutation.size
+            }
         }
         seconderCopy.removeIf { it == childPermutation.size }
 
         //fill missing places of child
         var counter = -1
-        childPermutation.setEach { _, value ->
+        childPermutation.forEachIndexed { index, value ->
             if (value == childPermutation.size) {
                 counter++
-                seconderCopy[counter]
-            } else
-                value
+                childPermutation[index] = seconderCopy[counter]
+            }
         }
     }
 }

@@ -99,8 +99,8 @@ class SegmentInjectionGeneTransfer<C : PhysicsUnit<C>>(
         val rangeOfBeforeSegment = 0 until rangeOfSegment.first
         val rangeOfAfterSegment = (rangeOfSegment.last + 1) until target.content.permutation.size
 
-        target.content.permutation.setEach { index, _ ->
-            when (index) {
+        target.content.permutation.indices.forEach { index ->
+            target.content.permutation[index] = when (index) {
                 in rangeOfBeforeSegment ->
                     elementsOfTargetNotInSegment[index]
 

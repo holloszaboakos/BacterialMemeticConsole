@@ -22,12 +22,10 @@ class PartiallyMatchedCrossOver<C : PhysicsUnit<C>> : CrossOverOperator<C>() {
 
         //copy parent middle to child
         //start mapping
-        childPermutation.setEach { index, _ ->
-            if (index in cut[0]..cut[1])
-                childPermutation.size
-            else {
+        childPermutation.indices.forEach { index ->
+            if (index !in cut[0]..cut[1]) {
                 seconderCopy[parentPermutations.second.indexOf(parentPermutations.first[index])] = childPermutation.size
-                parentPermutations.first[index]
+                childPermutation[index] = parentPermutations.first[index]
             }
         }
         seconderCopy.removeIf { it == childPermutation.size }
