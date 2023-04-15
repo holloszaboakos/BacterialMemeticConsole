@@ -17,8 +17,7 @@ import hu.raven.puppet.model.parameters.BacterialMutationParameterProvider
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.parameters.IterativeAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.Meter
-import hu.raven.puppet.model.solution.OnePartRepresentationWithIteration
-import hu.raven.puppet.model.solution.PoolItem
+import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 
 import hu.raven.puppet.model.state.AlgorithmState
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
@@ -222,19 +221,16 @@ private fun runScenario(scenario: Scenario) {
 
     (0 until 25).map {
         val specimen =
-            PoolItem(
+            OnePartRepresentationWithCostAndIterationAndId<Meter>(
                 0,
                 0,
-                OnePartRepresentationWithIteration<Meter>(
-                    0,
-                    null,
-                    scenario.objectiveCount,
-                    Permutation((0 until scenario.objectiveCount).toList().toIntArray())
-                )
+                null,
+                scenario.objectiveCount,
+                Permutation((0 until scenario.objectiveCount).toList().toIntArray())
             )
-        strategy(specimen, 0)
-        calculateCost(specimen.content)
-        specimen.content.costOrException()
+        strategy(IndexedValue(0, specimen), 0)
+        calculateCost(specimen)
+        specimen.costOrException()
     }
         .sortedBy { it.value }
         .groupBy { it.value.numerator }

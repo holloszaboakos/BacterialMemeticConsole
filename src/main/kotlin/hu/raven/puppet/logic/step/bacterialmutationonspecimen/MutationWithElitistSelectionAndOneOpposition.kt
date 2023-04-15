@@ -5,11 +5,8 @@ import hu.raven.puppet.logic.step.bacterialmutationoperator.OppositionOperator
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.logic.step.selectsegment.SelectSegment
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.OnePartRepresentationWithIteration
-import hu.raven.puppet.model.solution.PoolItem
-
+import hu.raven.puppet.model.solution.OnePartRepresentationWithCost
 import hu.raven.puppet.model.solution.Segment
-import kotlin.time.ExperimentalTime
 
 class MutationWithElitistSelectionAndOneOpposition<C : PhysicsUnit<C>>(
     override val mutationOperator: BacterialMutationOperator<C>,
@@ -21,35 +18,37 @@ class MutationWithElitistSelectionAndOneOpposition<C : PhysicsUnit<C>>(
 
     private val oppositionOperator = OppositionOperator<C>()
 
-    @OptIn(ExperimentalTime::class)
-    override fun invoke(specimen: PoolItem<OnePartRepresentationWithIteration<C>>, iteration: Int) {
-        if (specimen.content.cost == null) {
-            calculateCostOf(specimen.content)
+    override fun <O : OnePartRepresentationWithCost<C, O>> invoke(
+        specimenWithIndex: IndexedValue<O>,
+        iteration: Int
+    ) {
+        if (specimenWithIndex.value.cost == null) {
+            specimenWithIndex.value.cost = calculateCostOf(specimenWithIndex.value)
         }
         repeat(cloneCycleCount) { cycleIndex ->
             val clones = generateClones(
-                specimen,
-                selectSegment(specimen, iteration, cycleIndex, cloneCycleCount)
+                specimenWithIndex.value,
+                selectSegment(specimenWithIndex.value, iteration, cycleIndex, cloneCycleCount)
             )
 
             calcCostOfEachAndSort(clones)
 
-            if (clones.first().content.cost != specimen.content.cost) {
-                specimen.content.permutation.indices.forEach { index ->
-                    specimen.content.permutation[index] = clones.first().content.permutation[index]
+            if (clones.first().cost != specimenWithIndex.value.cost) {
+                specimenWithIndex.value.permutation.indices.forEach { index ->
+                    specimenWithIndex.value.permutation[index] = clones.first().permutation[index]
                 }
-                specimen.content.cost = clones.first().content.cost
+                specimenWithIndex.value.cost = clones.first().cost
             }
         }
     }
 
-    private fun generateClones(
-        specimen: PoolItem<OnePartRepresentationWithIteration<C>>,
+    private fun <O : OnePartRepresentationWithCost<C, O>> generateClones(
+        specimen: O,
         selectedSegment: Segment
-    ): MutableList<PoolItem<OnePartRepresentationWithIteration<C>>> {
-        val clones = MutableList(cloneCount + 1) { specimen.copy() }
+    ): MutableList<O> {
+        val clones = MutableList(cloneCount + 1) { specimen.clone() }
 
-        oppositionOperator(clones[1], selectedSegment)
+        oppositionOperator.invoke(clones[1], selectedSegment)
 
         clones
             .slice(2 until clones.size)

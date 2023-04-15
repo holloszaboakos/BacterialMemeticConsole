@@ -2,8 +2,8 @@ package hu.raven.puppet.logic.step.initializePopulation
 
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.OnePartRepresentationWithIteration
-import hu.raven.puppet.model.solution.PoolItem
+import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
+
 import hu.raven.puppet.model.solution.PoolWithSmartActivation
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.utility.extention.toPermutation
@@ -21,7 +21,8 @@ class InitializePopulationByModuloStepper<C : PhysicsUnit<C>>(
             val basePermutation = IntArray(sizeOfPermutation) { it }
             population = if (task.costGraph.objectives.size != 1)
                 MutableList((task.costGraph.objectives.size + task.transportUnits.size - 1)) {
-                    OnePartRepresentationWithIteration<C>(
+                    OnePartRepresentationWithCostAndIterationAndId<C>(
+                        id = it,
                         iterationOfCreation = 0,
                         cost = null,
                         objectiveCount = task.costGraph.objectives.size,
@@ -35,7 +36,8 @@ class InitializePopulationByModuloStepper<C : PhysicsUnit<C>>(
                 }.let { PoolWithSmartActivation(it) }
             else
                 mutableListOf(
-                    OnePartRepresentationWithIteration<C>(
+                    OnePartRepresentationWithCostAndIterationAndId<C>(
+                        0,
                         0,
                         null,
                         1,
@@ -57,7 +59,7 @@ class InitializePopulationByModuloStepper<C : PhysicsUnit<C>>(
 
     private fun initSpecimen(
         instanceIndex: Int,
-        instance: PoolItem<OnePartRepresentationWithIteration<C>>,
+        instance: OnePartRepresentationWithCostAndIterationAndId<C>,
         sizeOfPermutation: Int,
         basePermutation: IntArray
     ) {
@@ -90,8 +92,8 @@ class InitializePopulationByModuloStepper<C : PhysicsUnit<C>>(
         breakPoints.add(0, -1)
         breakPoints.add(sizeOfPermutation)
         newPermutation.forEachIndexed { index, value ->
-            instance.content.permutation[index] = value
+            instance.permutation[index] = value
         }
-        instance.content.cost = null
+        instance.cost = null
     }
 }

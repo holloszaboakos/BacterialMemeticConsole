@@ -20,12 +20,14 @@ class BacterialMutationOnBestAndLuckyByShuffling<C : PhysicsUnit<C>>(
             .toMutableList()
             .apply { add(0, population.activesAsSequence().first()) }
 
-        populationRandomized.forEachIndexed { index, specimen ->
-            if (index != 0 && Random.nextFloat() > mutationPercentage) {
-                return@forEachIndexed
-            }
+        populationRandomized
+            .withIndex()
+            .forEach { indexedSpecimen ->
+                if (indexedSpecimen.index != 0 && Random.nextFloat() > mutationPercentage) {
+                    return@forEach
+                }
 
-            mutationOnSpecimen(specimen, state.iteration)
-        }
+                mutationOnSpecimen(indexedSpecimen, state.iteration)
+            }
     }
 }

@@ -17,28 +17,28 @@ class HalfElitistCrossover<C : PhysicsUnit<C>>(
         parent.forEachIndexed { index, parentPair ->
             crossoverOperators.first()(
                 Pair(
-                    parentPair[0].content.permutation,
-                    parentPair[1].content.permutation
+                    parentPair[0].permutation,
+                    parentPair[1].permutation
                 ),
-                children[index][0].content.permutation
+                children[index][0].permutation
             )
             crossoverOperators.first()(
                 Pair(
-                    parentPair[1].content.permutation,
-                    parentPair[0].content.permutation
+                    parentPair[1].permutation,
+                    parentPair[0].permutation
                 ),
-                children[index][1].content.permutation
+                children[index][1].permutation
             )
             children[index][0].let {
-                it.content.iterationOfCreation = state.iteration
-                it.content.cost = null
-                if (!it.content.permutation.checkFormat())
+                it.iterationOfCreation = state.iteration
+                it.cost = null
+                if (!it.permutation.checkFormat())
                     throw Error("Invalid specimen!")
             }
             children[index][1].let {
-                it.content.iterationOfCreation = state.iteration
-                it.content.cost = null
-                if (!it.content.permutation.checkFormat())
+                it.iterationOfCreation = state.iteration
+                it.cost = null
+                if (!it.permutation.checkFormat())
                     throw Error("Invalid specimen!")
             }
         }

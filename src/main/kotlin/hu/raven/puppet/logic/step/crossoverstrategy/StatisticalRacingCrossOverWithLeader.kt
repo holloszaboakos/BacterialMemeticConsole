@@ -4,8 +4,8 @@ import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.logic.step.crossoveroperator.CrossOverOperator
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.OnePartRepresentationWithIteration
-import hu.raven.puppet.model.solution.PoolItem
+import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
+
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.model.statistics.GeneticAlgorithmStatistics
 import hu.raven.puppet.model.statistics.OperatorStatistics
@@ -46,9 +46,9 @@ class StatisticalRacingCrossOverWithLeader<C : PhysicsUnit<C>>(
                 children[index][1]
             )
             children[index].forEach {
-                it.content.iterationOfCreation = state.iteration
-                it.content.cost = null
-                if (!it.content.permutation.checkFormat())
+                it.iterationOfCreation = state.iteration
+                it.cost = null
+                if (!it.permutation.checkFormat())
                     throw Error("Invalid specimen!")
             }
         }
@@ -58,10 +58,10 @@ class StatisticalRacingCrossOverWithLeader<C : PhysicsUnit<C>>(
     fun crossover(
         iteration: Int,
         parents: Pair<
-                PoolItem<OnePartRepresentationWithIteration<C>>,
-                PoolItem<OnePartRepresentationWithIteration<C>>,
+                OnePartRepresentationWithCostAndIterationAndId<C>,
+                OnePartRepresentationWithCostAndIterationAndId<C>,
                 >,
-        child: PoolItem<OnePartRepresentationWithIteration<C>>,
+        child: OnePartRepresentationWithCostAndIterationAndId<C>,
     ) {
         /*
         if (algorithm.iteration == 0 && iteration != -1){
@@ -72,7 +72,7 @@ class StatisticalRacingCrossOverWithLeader<C : PhysicsUnit<C>>(
             lastIteration = iteration
             actualStatistics?.let { statistics ->
                 synchronized(statistics) {
-                    statistics.run = (statistics.run + child.content.permutation.size) * 9 / 10
+                    statistics.run = (statistics.run + child.permutation.size) * 9 / 10
                     //statistics.improvement = statistics.improvement * 9 / 10
                     statistics.success = statistics.success * 9 / 10
                     //statistics.successRatio = statistics.improvement / statistics.run.toDouble()
@@ -96,12 +96,12 @@ class StatisticalRacingCrossOverWithLeader<C : PhysicsUnit<C>>(
             actualStatistics?.let { statistics ->
                 operator.invoke(
                     Pair(
-                        parents.first.content.permutation,
-                        parents.second.content.permutation
+                        parents.first.permutation,
+                        parents.second.permutation
                     ),
-                    child.content.permutation
+                    child.permutation
                 )
-                calculateCostOf(child.content)
+                child.cost = calculateCostOf(child)
                 synchronized(statistics) {
                     //TODO increase success
                 }

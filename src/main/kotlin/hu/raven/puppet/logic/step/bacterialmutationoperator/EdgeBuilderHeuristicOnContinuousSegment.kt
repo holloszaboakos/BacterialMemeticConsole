@@ -2,9 +2,7 @@ package hu.raven.puppet.logic.step.bacterialmutationoperator
 
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.OnePartRepresentationWithIteration
-import hu.raven.puppet.model.solution.PoolItem
-
+import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.solution.Segment
 import hu.raven.puppet.model.task.Task
 import hu.raven.puppet.utility.extention.getEdgeBetween
@@ -14,7 +12,7 @@ class EdgeBuilderHeuristicOnContinuousSegment<C : PhysicsUnit<C>>(
     val task: Task
 ) : BacterialMutationOperator<C>() {
     override fun invoke(
-        clone: PoolItem<OnePartRepresentationWithIteration<C>>,
+        clone: OnePartRepresentation,
         selectedSegment: Segment
     ) {
 
@@ -78,10 +76,10 @@ class EdgeBuilderHeuristicOnContinuousSegment<C : PhysicsUnit<C>>(
         }
 
         elementIndexes.forEachIndexed { index, elementIndex ->
-            clone.content.permutation[selectedSegment.positions[index]] = selectedSegment.values[elementIndex]
+            clone.permutation[selectedSegment.positions[index]] = selectedSegment.values[elementIndex]
         }
 
-        if (!clone.content.permutation.checkFormat()) {
+        if (!clone.permutation.checkFormat()) {
             println("AJJAJ")
         }
     }
@@ -214,14 +212,14 @@ class EdgeBuilderHeuristicOnContinuousSegment<C : PhysicsUnit<C>>(
     }
 
     private fun calculateWeightsOfEdgesToNext(
-        clone: PoolItem<OnePartRepresentationWithIteration<C>>,
+        clone: OnePartRepresentation,
         selectedSegment: Segment
     ): Array<Fraction> {
         val objectiveCount = task.costGraph.objectives.size
-        val nextElement = if (selectedSegment.positions.last() == clone.content.permutation.indices.last) {
+        val nextElement = if (selectedSegment.positions.last() == clone.permutation.indices.last) {
             objectiveCount
         } else {
-            clone.content.permutation[selectedSegment.positions.last() + 1]
+            clone.permutation[selectedSegment.positions.last() + 1]
         }
         return Array(selectedSegment.values.size) { fromIndex ->
             calculateWeightBetween(
@@ -232,14 +230,14 @@ class EdgeBuilderHeuristicOnContinuousSegment<C : PhysicsUnit<C>>(
     }
 
     private fun calculateWeightsOfEdgesFromPrevious(
-        clone: PoolItem<OnePartRepresentationWithIteration<C>>,
+        clone: OnePartRepresentation,
         selectedSegment: Segment
     ): Array<Fraction> {
         val objectiveCount = task.costGraph.objectives.size
         val previousElement = if (selectedSegment.positions.first() == 0) {
             objectiveCount
         } else {
-            clone.content.permutation[selectedSegment.positions.first() - 1]
+            clone.permutation[selectedSegment.positions.first() - 1]
         }
 
         return Array(selectedSegment.values.size) { toIndex ->

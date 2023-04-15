@@ -2,8 +2,8 @@ package hu.raven.puppet.logic.step.diversity
 
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.OnePartRepresentationWithIteration
-import hu.raven.puppet.model.solution.PoolItem
+import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
+
 
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import kotlinx.coroutines.CoroutineScope
@@ -51,9 +51,9 @@ class DiversityByMatrixDistanceFromBest<C : PhysicsUnit<C>>(
     }
 
     private fun <C : PhysicsUnit<C>> preceditionMatrixWithDistance(
-        specimen: PoolItem<OnePartRepresentationWithIteration<C>>
+        specimen: OnePartRepresentationWithCostAndIterationAndId<C>
     ): Array<IntArray> {
-        val permutation = specimen.content.permutation
+        val permutation = specimen.permutation
         return Array(permutation.size) { fromIndex ->
             IntArray(permutation.size) { toIndex ->
                 permutation.indexOf(fromIndex) - permutation.indexOf(toIndex)

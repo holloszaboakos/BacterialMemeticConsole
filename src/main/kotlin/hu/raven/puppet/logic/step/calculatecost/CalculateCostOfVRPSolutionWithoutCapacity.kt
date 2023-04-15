@@ -1,7 +1,7 @@
 package hu.raven.puppet.logic.step.calculatecost
 
 import hu.raven.puppet.model.physics.Euro
-import hu.raven.puppet.model.solution.OnePartRepresentationWithIteration
+import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.task.CostGraphEdge
 import hu.raven.puppet.model.task.CostGraphVertex
 import hu.raven.puppet.model.task.Task
@@ -9,16 +9,14 @@ import hu.raven.puppet.model.task.TransportUnit
 import hu.raven.puppet.utility.extention.getEdgeBetween
 
 
-class CalculateCostOfVRPSolutionWithoutCapacity(
+class CalculateCostOfVRPSolutionWithoutCapacity<S>(
     override val task: Task
 ) : CalculateCost<Euro>() {
 
-    override operator fun invoke(
-        specimen: OnePartRepresentationWithIteration<Euro>
-    ) {
+    override operator fun invoke(solution: OnePartRepresentation): Euro {
         var sumCost = Euro(0L)
         var geneIndex = 0
-        specimen.permutation
+        solution.permutation
             .sliced { it >= task.costGraph.objectives.size - 1 }
             .forEachIndexed { sliceIndex, slice ->
                 val salesman = task.transportUnits[sliceIndex]
@@ -68,10 +66,7 @@ class CalculateCostOfVRPSolutionWithoutCapacity(
                 sumCost += cost
 
             }
-        specimen.cost = sumCost
-        if (sumCost == Euro(0L)) {
-            println("Impossible!")
-        }
+        return sumCost
     }
 
     private fun calcCostOnEdge(salesman: TransportUnit, edge: CostGraphEdge) =

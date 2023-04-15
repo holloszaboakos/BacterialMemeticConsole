@@ -3,7 +3,7 @@ package hu.raven.puppet.logic.step.initializePopulation
 import hu.raven.puppet.logic.step.bacterialmutationonspecimen.MutationOnSpecimen
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.OnePartRepresentationWithIteration
+import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.solution.PoolWithSmartActivation
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.utility.extention.slice
@@ -40,10 +40,10 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest<C : PhysicsUnit<C>>(
                     baseIndex = (baseIndex + step) % sizeOfPermutation
                 }
                 newPermutation.forEachIndexed { index, value ->
-                    instance.content.permutation[index] = value
+                    instance.permutation[index] = value
                 }
-                instance.content.iterationOfCreation = 0
-                instance.content.cost = null
+                instance.iterationOfCreation = 0
+                instance.cost = null
             }
 
             val bestImprovements = bacterialMutateEach()
@@ -52,12 +52,13 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest<C : PhysicsUnit<C>>(
                 bestImprovements
                     .map { it.first }
                     .slice(0 until parameters.sizeOfPopulation)
-                    .map { s ->
-                        OnePartRepresentationWithIteration(
-                            iterationOfCreation = s.content.iterationOfCreation,
-                            cost = s.content.cost,
-                            objectiveCount = s.content.objectiveCount,
-                            permutation = s.content.permutation.clone()
+                    .map { specimen ->
+                        OnePartRepresentationWithCostAndIterationAndId(
+                            id = specimen.value.id,
+                            iterationOfCreation = specimen.value.iterationOfCreation,
+                            cost = specimen.value.cost,
+                            objectiveCount = specimen.value.objectiveCount,
+                            permutation = specimen.value.permutation.clone()
                         )
                     }
                     .toMutableList()
@@ -67,21 +68,23 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest<C : PhysicsUnit<C>>(
 
     private fun bacterialMutateEach() = algorithmState.population
         .activesAsSequence()
-        .map { specimen ->
+        .withIndex()
+        .map { specimenWithIndex ->
             Pair(
-                specimen.copy(),
-                specimen.apply { mutationOperator(specimen, 0) }
+                specimenWithIndex.copy(),
+                specimenWithIndex.apply { mutationOperator(specimenWithIndex, 0) }
             )
         }
         .sortedBy {
-            it.first.content.costOrException().value / it.second.content.costOrException().value
+            it.first.value.costOrException().value / it.second.value.costOrException().value
         }
 
 
-    private fun createPopulation(): PoolWithSmartActivation<OnePartRepresentationWithIteration<C>> {
+    private fun createPopulation(): PoolWithSmartActivation<OnePartRepresentationWithCostAndIterationAndId<C>> {
         return if (algorithmState.task.costGraph.objectives.size != 1)
             MutableList((algorithmState.task.costGraph.objectives.size + algorithmState.task.transportUnits.size - 1)) {
-                OnePartRepresentationWithIteration<C>(
+                OnePartRepresentationWithCostAndIterationAndId<C>(
+                    id = it,
                     iterationOfCreation = 0,
                     cost = null,
                     objectiveCount = algorithmState.task.costGraph.objectives.size,
@@ -94,7 +97,8 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest<C : PhysicsUnit<C>>(
             }.let { PoolWithSmartActivation(it) }
         else
             mutableListOf(
-                OnePartRepresentationWithIteration<C>(
+                OnePartRepresentationWithCostAndIterationAndId<C>(
+                    id = 0,
                     iterationOfCreation = 0,
                     cost = null,
                     1,

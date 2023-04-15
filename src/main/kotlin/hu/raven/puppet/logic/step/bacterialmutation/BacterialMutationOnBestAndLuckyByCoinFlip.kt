@@ -11,13 +11,15 @@ class BacterialMutationOnBestAndLuckyByCoinFlip<C : PhysicsUnit<C>>(
 ) : BacterialMutation<C>() {
 
     override fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {
-        population.activesAsSequence().forEachIndexed { index, specimen ->
-            if (index != 0 && Random.nextFloat() > mutationPercentage) {
-                return@forEachIndexed
-            }
+        population.activesAsSequence()
+            .withIndex()
+            .forEach { indexedSpecimen ->
+                if (indexedSpecimen.index != 0 && Random.nextFloat() > mutationPercentage) {
+                    return@forEach
+                }
 
-            mutationOnSpecimen(specimen, state.iteration)
-        }
+                mutationOnSpecimen(indexedSpecimen, state.iteration)
+            }
     }
 
 }

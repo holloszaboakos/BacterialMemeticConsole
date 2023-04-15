@@ -2,8 +2,8 @@ package hu.raven.puppet.logic.step.boostoperator
 
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.OnePartRepresentationWithIteration
-import hu.raven.puppet.model.solution.PoolItem
+import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
+
 
 class Opt2StepWithProgressMemory<C : PhysicsUnit<C>>(
     override val calculateCostOf: CalculateCost<C>
@@ -11,21 +11,21 @@ class Opt2StepWithProgressMemory<C : PhysicsUnit<C>>(
 
     private var lastPosition = Pair(0, 1)
 
-    override fun invoke(specimen: PoolItem<OnePartRepresentationWithIteration<C>>) {
-        val bestCost = specimen.content.cost
+    override fun invoke(specimen: OnePartRepresentationWithCostAndIterationAndId<C>) {
+        val bestCost = specimen.cost
         var improved = false
 
-        outer@ for (firstIndex in lastPosition.first until specimen.content.permutation.size - 1) {
+        outer@ for (firstIndex in lastPosition.first until specimen.permutation.size - 1) {
             val secondIndexStart =
                 if (firstIndex == lastPosition.first) lastPosition.second
                 else firstIndex + 1
-            for (secondIndex in secondIndexStart until specimen.content.objectiveCount) {
-                specimen.content.permutation.swapValues(firstIndex, secondIndex)
-                calculateCostOf(specimen.content)
+            for (secondIndex in secondIndexStart until specimen.objectiveCount) {
+                specimen.permutation.swapValues(firstIndex, secondIndex)
+                specimen.cost = calculateCostOf(specimen)
 
-                if (specimen.content.costOrException() >= bestCost!!) {
-                    specimen.content.permutation.swapValues(firstIndex, secondIndex)
-                    specimen.content.cost = bestCost
+                if (specimen.costOrException() >= bestCost!!) {
+                    specimen.permutation.swapValues(firstIndex, secondIndex)
+                    specimen.cost = bestCost
                     continue
                 }
 

@@ -18,8 +18,8 @@ class DiversityByInnerDistanceAndSequence<C : PhysicsUnit<C>>(
         algorithmState.population.activesAsSequence().forEach { firstSpecimen ->
             algorithmState.population.activesAsSequence().forEach { secondSpecimen ->
                 val distance = distanceOfSpecimen(
-                    firstSpecimen.content.permutation,
-                    secondSpecimen.content.permutation
+                    firstSpecimen.permutation,
+                    secondSpecimen.permutation
                 )
                 diversity += distance
             }

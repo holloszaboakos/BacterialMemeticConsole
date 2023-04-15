@@ -22,7 +22,7 @@ class DiversityBySequenceBreak<C : PhysicsUnit<C>>(
         algorithmState.population.activesAsSequence()
             .map {
                 CoroutineScope(Dispatchers.Default).launch {
-                    val distance = distanceOfSpecimen(best.content.permutation, it.content.permutation)
+                    val distance = distanceOfSpecimen(best.permutation, it.permutation)
                     diversity += distance
                 }
             }

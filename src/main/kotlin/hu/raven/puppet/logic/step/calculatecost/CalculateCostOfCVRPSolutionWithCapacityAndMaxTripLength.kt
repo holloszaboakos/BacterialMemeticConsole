@@ -3,7 +3,7 @@ package hu.raven.puppet.logic.step.calculatecost
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.Meter
 import hu.raven.puppet.model.physics.Stere
-import hu.raven.puppet.model.solution.OnePartRepresentationWithIteration
+import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.task.Task
 import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.extention.sumClever
@@ -11,12 +11,12 @@ import hu.raven.puppet.utility.extention.sumClever
 class CalculateCostOfCVRPSolutionWithCapacityAndMaxTripLength(
     override val task: Task
 ) : CalculateCost<Meter>() {
-    override fun invoke(specimen: OnePartRepresentationWithIteration<Meter>) {
+    override fun invoke(solution: OnePartRepresentation): Meter {
         var sumCost: Fraction? = Fraction.new(0L)
         var startCount = 0
         var endCount = 0
-        specimen.permutation
-            .sliced { it >= specimen.objectiveCount }
+        solution.permutation
+            .sliced { it >= solution.objectiveCount }
             .forEachIndexed { _, slice ->
                 //val salesman = task.salesmen[sliceIndex]
                 var takenCapacity = Stere(0L)
@@ -81,10 +81,7 @@ class CalculateCostOfCVRPSolutionWithCapacityAndMaxTripLength(
                         .sumClever()
                 )
             }
-        specimen.cost = Meter(sumCost!!)
-        if (sumCost == Fraction.new(0L)) {
-            println("Impossible!")
-        }
+        return Meter(sumCost!!)
     }
 
 

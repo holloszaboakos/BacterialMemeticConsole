@@ -1,12 +1,11 @@
 package hu.raven.puppet.logic.step.bacterialmutationonspecimen
 
+
 import hu.raven.puppet.logic.step.bacterialmutationoperator.BacterialMutationOperator
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.logic.step.selectsegment.SelectSegment
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.OnePartRepresentationWithIteration
-import hu.raven.puppet.model.solution.PoolItem
-
+import hu.raven.puppet.model.solution.OnePartRepresentationWithCost
 import hu.raven.puppet.model.solution.Segment
 import kotlin.math.exp
 import kotlin.random.Random
@@ -20,19 +19,22 @@ class MutationWithSimulatedAnnealingBasedSelection<C : PhysicsUnit<C>>(
     private val iterationLimit: Int,
 ) : MutationOnSpecimen<C>() {
 
-    override fun invoke(specimen: PoolItem<OnePartRepresentationWithIteration<C>>, iteration: Int) {
-        val doSimulatedAnnealing = specimen.index != 0
+    override fun <O : OnePartRepresentationWithCost<C, O>> invoke(
+        specimenWithIndex: IndexedValue<O>,
+        iteration: Int
+    ) {
+        val doSimulatedAnnealing = specimenWithIndex.index != 0
         repeat(cloneCycleCount) { cycleIndex ->
 
             val clones = generateClones(
-                specimen,
-                selectSegment(specimen, iteration, cycleIndex, cloneCycleCount)
+                specimenWithIndex,
+                selectSegment(specimenWithIndex.value, iteration, cycleIndex, cloneCycleCount)
             )
 
             calcCostOfEachAndSort(clones)
 
             loadDataToSpecimen(
-                specimen,
+                specimenWithIndex.value,
                 clones,
                 iteration,
                 doSimulatedAnnealing
@@ -40,11 +42,13 @@ class MutationWithSimulatedAnnealingBasedSelection<C : PhysicsUnit<C>>(
         }
     }
 
-    private fun generateClones(
-        specimen: PoolItem<OnePartRepresentationWithIteration<C>>,
+    private fun <O : OnePartRepresentationWithCost<C, O>> generateClones(
+        specimen: IndexedValue<O>,
         selectedSegment: Segment
-    ): MutableList<PoolItem<OnePartRepresentationWithIteration<C>>> {
-        val clones = MutableList(cloneCount + 1) { specimen.copy() }
+    ): MutableList<O> {
+        val clones = MutableList(cloneCount + 1) {
+            specimen.value.clone()
+        }
         clones
             .slice(1 until clones.size)
             .forEach { clone ->
@@ -53,9 +57,9 @@ class MutationWithSimulatedAnnealingBasedSelection<C : PhysicsUnit<C>>(
         return clones
     }
 
-    private fun <C : PhysicsUnit<C>> loadDataToSpecimen(
-        specimen: PoolItem<OnePartRepresentationWithIteration<C>>,
-        clones: MutableList<PoolItem<OnePartRepresentationWithIteration<C>>>,
+    private fun <O : OnePartRepresentationWithCost<C, O>> loadDataToSpecimen(
+        specimen: O,
+        clones: MutableList<O>,
         iteration: Int,
         doSimulatedAnnealing: Boolean
     ) {
@@ -65,17 +69,17 @@ class MutationWithSimulatedAnnealingBasedSelection<C : PhysicsUnit<C>>(
                 iterationLimit
             )
         ) {
-            specimen.content.permutation.indices.forEach { index ->
-                specimen.content.permutation[index] = clones.first().content.permutation[index]
+            specimen.permutation.indices.forEach { index ->
+                specimen.permutation[index] = clones.first().permutation[index]
             }
-            specimen.content.cost = clones.first().content.cost
+            specimen.cost = clones.first().cost
             return
         }
 
-        specimen.content.permutation.indices.forEach { index ->
-            specimen.content.permutation[index] = clones.first().content.permutation[index]
+        specimen.permutation.indices.forEach { index ->
+            specimen.permutation[index] = clones.first().permutation[index]
         }
-        specimen.content.cost = clones[1].content.cost
+        specimen.cost = clones[1].cost
     }
 
     private fun simulatedAnnealingHeat(iteration: Int, divider: Int): Float {

@@ -2,7 +2,7 @@ package hu.raven.puppet.logic.step.calculatecost
 
 import hu.raven.puppet.model.physics.Meter
 import hu.raven.puppet.model.physics.Stere
-import hu.raven.puppet.model.solution.OnePartRepresentationWithIteration
+import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.task.CostGraph
 import hu.raven.puppet.model.task.Task
 import hu.raven.puppet.model.task.TransportUnit
@@ -16,9 +16,9 @@ class CalculateCostOfCVRPSolutionWithCapacity(
         val cost: Meter,
     )
 
-    override fun invoke(specimen: OnePartRepresentationWithIteration<Meter>) {
+    override fun invoke(solution: OnePartRepresentation): Meter {
         var tripState = TripState(Stere(0L), Meter(0L))
-        specimen.permutation
+        solution.permutation
             .sliced { it >= task.costGraph.objectives.size - 1 }
             .forEachIndexed { sliceIndex, slice ->
                 val salesman = task.transportUnits[sliceIndex]
@@ -50,10 +50,7 @@ class CalculateCostOfCVRPSolutionWithCapacity(
 
                 }
             }
-        specimen.cost = tripState.cost
-        if (tripState.cost == Meter(0L)) {
-            println("Impossible!")
-        }
+        return tripState.cost
     }
 
     private fun onFirstValueOfSlice(

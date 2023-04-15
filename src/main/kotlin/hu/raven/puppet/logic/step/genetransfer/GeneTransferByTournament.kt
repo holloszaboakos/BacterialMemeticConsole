@@ -29,7 +29,7 @@ class GeneTransferByTournament<C : PhysicsUnit<C>>(
         (0 until injectionCount)
             .forEach { injectionCount ->
                 val specimen = populationInRandomPairs[injectionCount % populationInRandomPairs.size]
-                    .sortedBy { it.content.costOrException().value }
+                    .sortedBy { it.costOrException().value }
 
                 synchronized(populationInRandomPairs[injectionCount % populationInRandomPairs.size][0]) {
                     synchronized(populationInRandomPairs[injectionCount % populationInRandomPairs.size][1]) {

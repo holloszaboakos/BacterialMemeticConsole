@@ -5,8 +5,8 @@ import hu.raven.puppet.logic.step.crossoveroperator.CrossOverOperator
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.OnePartRepresentationWithIteration
-import hu.raven.puppet.model.solution.PoolItem
+import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
+
 
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
@@ -18,34 +18,34 @@ class GeneTransferByCrossOver<C : PhysicsUnit<C>>(
 ) : GeneTransferOperator<C>() {
     @OptIn(ExperimentalTime::class)
     override fun invoke(
-        source: PoolItem<OnePartRepresentationWithIteration<C>>,
-        target: PoolItem<OnePartRepresentationWithIteration<C>>
+        source: OnePartRepresentationWithCostAndIterationAndId<C>,
+        target: OnePartRepresentationWithCostAndIterationAndId<C>
     ): StepEfficiencyData {
-        val child = target.copy()
+        val child = target.clone()
 
         val spentTime = measureTime {
             crossOverOperator(
                 Pair(
-                    source.content.permutation,
-                    target.content.permutation
+                    source.permutation,
+                    target.permutation
                 ),
-                child.content.permutation
+                child.permutation
             )
         }
 
-        calculateCostOf(child.content)
+        child.cost = calculateCostOf(child)
 
-        if (child.content.costOrException() < target.content.costOrException()) {
-            child.content.permutation.forEachIndexed { index, value ->
-                target.content.permutation[index] = value
+        if (child.costOrException() < target.costOrException()) {
+            child.permutation.forEachIndexed { index, value ->
+                target.permutation[index] = value
             }
-            val oldCost = target.content.cost
-            target.content.cost = child.content.cost
+            val oldCost = target.cost
+            target.cost = child.cost
             return StepEfficiencyData(
                 spentTime = spentTime,
                 spentBudget = 1,
                 improvementCountPerRun = 1,
-                improvementPercentagePerBudget = Fraction.new(1) - (target.content.costOrException().value / oldCost!!.value)
+                improvementPercentagePerBudget = Fraction.new(1) - (target.costOrException().value / oldCost!!.value)
             )
         }
 

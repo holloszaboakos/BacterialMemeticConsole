@@ -29,7 +29,7 @@ class Opt2Iteration<C : PhysicsUnit<C>>(
             tempGene = best.permutation[firstIndex]
             best.permutation[firstIndex] = best.permutation[secondIndex]
             best.permutation[secondIndex] = tempGene
-            calculateCostOf(best)
+            best.cost = calculateCostOf(best)
             if (best.costOrException() < bestCost) {
                 println(best.cost)
                 bestCost = best.costOrException()

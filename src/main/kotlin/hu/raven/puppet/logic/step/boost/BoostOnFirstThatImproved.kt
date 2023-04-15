@@ -17,10 +17,10 @@ class BoostOnFirstThatImproved<C : PhysicsUnit<C>>(
 
         population.activesAsSequence()
             .firstOrNull {
-                costPerPermutation[it.id] != null && it.content.costOrException() < costPerPermutation[it.id]!!
+                costPerPermutation[it.id] != null && it.costOrException() < costPerPermutation[it.id]!!
             }
             ?.let {
-                costPerPermutation[it.id] = it.content.cost
+                costPerPermutation[it.id] = it.cost
                 boostOperator(it)
             }
     }
