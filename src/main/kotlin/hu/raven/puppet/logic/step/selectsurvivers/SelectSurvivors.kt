@@ -1,6 +1,6 @@
 package hu.raven.puppet.logic.step.selectsurvivers
 
-import hu.raven.puppet.logic.EvolutionaryAlgorithmStep
+import hu.raven.puppet.logic.step.EvolutionaryAlgorithmStep
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.utility.extention.slice
@@ -8,14 +8,14 @@ import hu.raven.puppet.utility.extention.slice
 class SelectSurvivors<C : PhysicsUnit<C>> : EvolutionaryAlgorithmStep<C> {
     override operator fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {
         population.deactivateAll()
-        population.activesAsSequence().withIndex().asSequence()
+        population.activesAsSequence()
             .slice(0 until population.activeCount / 4)
-            .forEach { population.activate(it.index) }
+            .forEach { population.activate(it.id) }
 
-        population.activesAsSequence().withIndex().asSequence()
+        population.activesAsSequence()
             .slice(population.activeCount / 4 until population.activeCount)
             .shuffled()
             .slice(0 until population.activeCount / 4)
-            .forEach { population.activate(it.index) }
+            .forEach { population.activate(it.id) }
     }
 }

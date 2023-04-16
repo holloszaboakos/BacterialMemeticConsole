@@ -21,8 +21,8 @@ class InitializeEvolutionaryAlgorithm<C : PhysicsUnit<C>>(
         )
         orderPopulationByCost(algorithmState)
         algorithmState.apply {
-            copyOfBest = algorithmState.population.activesAsSequence().first().clone()
-            copyOfWorst = algorithmState.population.activesAsSequence().last().clone()
+            copyOfBest = algorithmState.population.activesAsSequence().first().cloneRepresentationAndCost()
+            copyOfWorst = algorithmState.population.activesAsSequence().last().cloneRepresentationAndCost()
         }
         return algorithmState
     }

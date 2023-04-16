@@ -6,10 +6,10 @@ import java.time.LocalDateTime
 
 sealed class AlgorithmLogger {
     protected val outputFolderPath: String by inject(FilePathVariableNames.OUTPUT_FOLDER)
-    val creationTime: String = LocalDateTime.now()
+    private val creationTime: String = LocalDateTime.now()
         .toString()
         .split('.')[0]
         .replace(':', '-')
-    var targetFileName: String = "statistics-$creationTime"
+    protected var targetFileName: String = "statistics-$creationTime"
 
 }

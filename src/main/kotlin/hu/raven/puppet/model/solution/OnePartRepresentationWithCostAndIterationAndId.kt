@@ -10,8 +10,8 @@ data class OnePartRepresentationWithCostAndIterationAndId<C : Comparable<C>>(
     override val permutation: Permutation,
 ) : IterationProduct,
     HasId<Int>,
-    OnePartRepresentationWithCost<C, OnePartRepresentationWithCostAndIterationAndId<C>> {
-    override fun clone(): OnePartRepresentationWithCostAndIterationAndId<C> {
+    OnePartRepresentationWithCost<C> {
+    override fun cloneRepresentationAndCost(): OnePartRepresentationWithCostAndIterationAndId<C> {
         return copy(permutation = permutation.clone())
     }
 }

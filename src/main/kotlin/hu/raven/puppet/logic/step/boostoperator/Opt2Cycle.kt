@@ -2,14 +2,14 @@ package hu.raven.puppet.logic.step.boostoperator
 
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
+import hu.raven.puppet.model.solution.OnePartRepresentationWithCost
 
 
-class Opt2Cycle<C : PhysicsUnit<C>>(
+class Opt2Cycle<C : PhysicsUnit<C>, O : OnePartRepresentationWithCost<C>>(
     override val calculateCostOf: CalculateCost<C>
-) : BoostOperator<C>() {
+) : BoostOperator<C, O>() {
 
-    override fun invoke(specimen: OnePartRepresentationWithCostAndIterationAndId<C>) {
+    override fun invoke(specimen: O) {
         var bestCost = specimen.cost
 
         for (firstIndex in 0 until specimen.permutation.size - 1) {

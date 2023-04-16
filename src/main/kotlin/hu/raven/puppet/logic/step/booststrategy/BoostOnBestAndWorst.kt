@@ -1,14 +1,15 @@
-package hu.raven.puppet.logic.step.boost
+package hu.raven.puppet.logic.step.booststrategy
 
 import hu.raven.puppet.logic.step.boostoperator.BoostOperator
 import hu.raven.puppet.model.physics.PhysicsUnit
+import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
 
 class BoostOnBestAndWorst<C : PhysicsUnit<C>>(
-    override val boostOperator: BoostOperator<C>
+    override val boostOperator: BoostOperator<C, OnePartRepresentationWithCostAndIterationAndId<C>>
 ) :
-    Boost<C>() {
+    BoostStrategy<C>() {
 
     override operator fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {
 

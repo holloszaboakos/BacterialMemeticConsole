@@ -194,11 +194,6 @@ private fun runScenario(scenario: Scenario) {
                         get(CLONE_SEGMENT_LENGTH)
                     )
                 }
-                single<EvolutionaryAlgorithmState<*>> {
-                    EvolutionaryAlgorithmState<Meter>(
-                        get()
-                    )
-                }
                 single<AlgorithmState> {
                     get<EvolutionaryAlgorithmState<*>>()
                 }

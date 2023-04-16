@@ -1,6 +1,6 @@
 package hu.raven.puppet.logic.step.orderpopulationbycost
 
-import hu.raven.puppet.logic.EvolutionaryAlgorithmStep
+import hu.raven.puppet.logic.step.EvolutionaryAlgorithmStep
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState

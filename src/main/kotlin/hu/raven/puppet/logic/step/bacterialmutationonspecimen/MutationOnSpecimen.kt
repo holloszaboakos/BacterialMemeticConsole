@@ -14,14 +14,14 @@ sealed class MutationOnSpecimen<C : PhysicsUnit<C>> {
     protected abstract val cloneCount: Int
     protected abstract val cloneCycleCount: Int
 
-    fun <O : OnePartRepresentationWithCost<C, O>> calcCostOfEachAndSort(clones: MutableList<O>) {
+    fun calcCostOfEachAndSort(clones: MutableList<OnePartRepresentationWithCost<C>>) {
         clones
             .onEach { it.cost = calculateCostOf(it) }
             .sortBy { it.costOrException() }
     }
 
-    abstract operator fun <O : OnePartRepresentationWithCost<C, O>> invoke(
-        specimenWithIndex: IndexedValue<O>,
+    abstract operator fun invoke(
+        specimenWithIndex: IndexedValue<OnePartRepresentationWithCost<C>>,
         iteration: Int
     )
 }

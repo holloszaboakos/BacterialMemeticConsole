@@ -4,7 +4,10 @@ import hu.raven.puppet.logic.logging.CSVLineBuilderUtility.appendDuration
 import hu.raven.puppet.logic.logging.CSVLineBuilderUtility.appendField
 import hu.raven.puppet.logic.logging.CSVLineBuilderUtility.appendString
 import hu.raven.puppet.logic.logging.CSVLineBuilderUtility.buildCsvLine
-import hu.raven.puppet.model.logging.*
+import hu.raven.puppet.model.logging.BacterialMemeticAlgorithmLogLine
+import hu.raven.puppet.model.logging.PopulationData
+import hu.raven.puppet.model.logging.ProgressData
+import hu.raven.puppet.model.logging.SpecimenData
 import hu.raven.puppet.model.physics.PhysicsUnit
 import java.io.File
 
@@ -80,12 +83,13 @@ class CSVLogger : AlgorithmLogger() {
         return buildCsvLine {
             appendProgressData(message.progressData)
             appendPopulationData(message.populationData)
-
-            appendStepEfficiencyData(message.mutationImprovement)
-            appendStepEfficiencyData(message.mutationOnBestImprovement)
-            appendStepEfficiencyData(message.geneTransferImprovement)
-            appendStepEfficiencyData(message.boostImprovement)
-            appendStepEfficiencyData(message.boostOnBestImprovement)
+            /*
+                        appendStepEfficiencyData(message.mutationImprovement)
+                        appendStepEfficiencyData(message.mutationOnBestImprovement)
+                        appendStepEfficiencyData(message.geneTransferImprovement)
+                        appendStepEfficiencyData(message.boostImprovement)
+                        appendStepEfficiencyData(message.boostOnBestImprovement)
+             */
         }
     }
 
@@ -113,6 +117,7 @@ class CSVLogger : AlgorithmLogger() {
         appendField(specimenData?.cost)
     }
 
+    /*
     private fun StringBuilder.appendStepEfficiencyData(stepEfficiencyData: StepEfficiencyData) {
         appendField(stepEfficiencyData.spentTime)
         appendField(stepEfficiencyData.spentBudget)
@@ -120,6 +125,7 @@ class CSVLogger : AlgorithmLogger() {
         appendField(stepEfficiencyData.improvementCountPerRun)
         appendField(stepEfficiencyData.improvementPercentagePerBudget)
     }
+     */
 
 
 }

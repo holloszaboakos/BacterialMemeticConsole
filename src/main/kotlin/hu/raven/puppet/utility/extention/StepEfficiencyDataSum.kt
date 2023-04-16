@@ -1,7 +1,6 @@
 package hu.raven.puppet.utility.extention
 
-import hu.raven.puppet.model.logging.StepEfficiencyData
-
+/*
 fun List<StepEfficiencyData>.sum(): StepEfficiencyData {
     return stream()
         .map {
@@ -39,3 +38,4 @@ fun List<StepEfficiencyData>.sum(): StepEfficiencyData {
             )
         }
 }
+ */

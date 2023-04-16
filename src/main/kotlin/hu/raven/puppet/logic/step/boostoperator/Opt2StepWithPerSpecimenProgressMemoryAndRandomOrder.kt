@@ -4,16 +4,13 @@ import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 
-import kotlin.time.ExperimentalTime
-
 class Opt2StepWithPerSpecimenProgressMemoryAndRandomOrder<C : PhysicsUnit<C>>(
     override val calculateCostOf: CalculateCost<C>
-) : BoostOperator<C>() {
+) : BoostOperator<C, OnePartRepresentationWithCostAndIterationAndId<C>>() {
 
     private var lastPositionPerSpecimen = mutableMapOf<Int, Pair<Int, Int>>()
     private var shuffler = intArrayOf()
 
-    @OptIn(ExperimentalTime::class)
     override fun invoke(specimen: OnePartRepresentationWithCostAndIterationAndId<C>) {
         if (!lastPositionPerSpecimen.containsKey(specimen.id)) {
             lastPositionPerSpecimen[specimen.id] = Pair(0, 1)

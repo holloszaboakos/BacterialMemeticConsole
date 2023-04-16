@@ -2,16 +2,16 @@ package hu.raven.puppet.logic.step.boostoperator
 
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
+import hu.raven.puppet.model.solution.OnePartRepresentationWithCost
 
 
-class Opt2StepWithProgressMemory<C : PhysicsUnit<C>>(
+class Opt2StepWithProgressMemory<C : PhysicsUnit<C>, O : OnePartRepresentationWithCost<C>>(
     override val calculateCostOf: CalculateCost<C>
-) : BoostOperator<C>() {
+) : BoostOperator<C, O>() {
 
     private var lastPosition = Pair(0, 1)
 
-    override fun invoke(specimen: OnePartRepresentationWithCostAndIterationAndId<C>) {
+    override fun invoke(specimen: O) {
         val bestCost = specimen.cost
         var improved = false
 

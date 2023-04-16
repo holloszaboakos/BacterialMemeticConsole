@@ -3,7 +3,6 @@ package hu.raven.puppet.utility.extention
 import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.model.logging.ProgressData
 import hu.raven.puppet.model.logging.SpecimenData
-import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.physics.PhysicsUnit
 
 
@@ -21,11 +20,12 @@ fun <C : PhysicsUnit<C>> DoubleLogger.logSpecimen(name: String, specimenData: Sp
     invoke("$name: id: ${specimenData.id} cost: ${specimenData.cost.value}")
 }
 
+/*
 fun DoubleLogger.logStepEfficiency(name: String, stepEfficiencyData: StepEfficiencyData) {
     stepEfficiencyData.apply {
         invoke("$name:")
         invoke("spentTime: $spentTime spentBudget: $spentBudget")
         invoke("improvement: count: $improvementCountPerRun percentage: $improvementPercentagePerBudget")
     }
-
 }
+*/

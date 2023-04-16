@@ -15,8 +15,8 @@ class MutationWithElitistSelectionAndModuloStepper<C : PhysicsUnit<C>>(
     override val cloneCycleCount: Int
 ) : MutationOnSpecimen<C>() {
 
-    override fun <O : OnePartRepresentationWithCost<C, O>> invoke(
-        specimenWithIndex: IndexedValue<O>,
+    override fun invoke(
+        specimenWithIndex: IndexedValue<OnePartRepresentationWithCost<C>>,
         iteration: Int
     ) {
         specimenWithIndex.value.cost = calculateCostOf(specimenWithIndex.value)
@@ -36,11 +36,11 @@ class MutationWithElitistSelectionAndModuloStepper<C : PhysicsUnit<C>>(
         }
     }
 
-    private fun <O : OnePartRepresentationWithCost<C, O>> generateClones(
-        specimen: O,
+    private fun generateClones(
+        specimen: OnePartRepresentationWithCost<C>,
         selectedSegment: Segment
-    ): MutableList<O> {
-        val clones = MutableList(cloneCount + 1) { specimen.clone() }
+    ): MutableList<OnePartRepresentationWithCost<C>> {
+        val clones = MutableList(cloneCount + 1) { specimen.cloneRepresentationAndCost() }
         val moduloStepperSegments = generateModuloStepperSegments(selectedSegment.values)
 
         clones

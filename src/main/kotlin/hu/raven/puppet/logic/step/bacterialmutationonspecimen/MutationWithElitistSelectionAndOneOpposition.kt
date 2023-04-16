@@ -18,8 +18,8 @@ class MutationWithElitistSelectionAndOneOpposition<C : PhysicsUnit<C>>(
 
     private val oppositionOperator = OppositionOperator<C>()
 
-    override fun <O : OnePartRepresentationWithCost<C, O>> invoke(
-        specimenWithIndex: IndexedValue<O>,
+    override fun invoke(
+        specimenWithIndex: IndexedValue<OnePartRepresentationWithCost<C>>,
         iteration: Int
     ) {
         if (specimenWithIndex.value.cost == null) {
@@ -42,11 +42,11 @@ class MutationWithElitistSelectionAndOneOpposition<C : PhysicsUnit<C>>(
         }
     }
 
-    private fun <O : OnePartRepresentationWithCost<C, O>> generateClones(
-        specimen: O,
+    private fun generateClones(
+        specimen: OnePartRepresentationWithCost<C>,
         selectedSegment: Segment
-    ): MutableList<O> {
-        val clones = MutableList(cloneCount + 1) { specimen.clone() }
+    ): MutableList<OnePartRepresentationWithCost<C>> {
+        val clones = MutableList(cloneCount + 1) { specimen.cloneRepresentationAndCost() }
 
         oppositionOperator.invoke(clones[1], selectedSegment)
 

@@ -2,18 +2,15 @@ package hu.raven.puppet.logic.step.boostoperator
 
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
+import hu.raven.puppet.model.solution.OnePartRepresentationWithCost
 
-import kotlin.time.ExperimentalTime
-
-class Opt2CycleWithRandomOrder<C : PhysicsUnit<C>>(
+class Opt2CycleWithRandomOrder<C : PhysicsUnit<C>, O : OnePartRepresentationWithCost<C>>(
     override val calculateCostOf: CalculateCost<C>
-) : BoostOperator<C>() {
+) : BoostOperator<C, O>() {
 
     private var shuffler = intArrayOf()
 
-    @OptIn(ExperimentalTime::class)
-    override fun invoke(specimen: OnePartRepresentationWithCostAndIterationAndId<C>) {
+    override fun invoke(specimen: O) {
         if (shuffler.isEmpty()) {
             shuffler = (0 until specimen.permutation.size)
                 .shuffled()

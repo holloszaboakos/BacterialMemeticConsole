@@ -5,8 +5,7 @@ import hu.raven.puppet.model.solution.OnePartRepresentation
 
 import hu.raven.puppet.model.solution.Segment
 
-class OppositionOperator<C : PhysicsUnit<C>> :
-    BacterialMutationOperator<C>() {
+class OppositionOperator<C : PhysicsUnit<C>> : BacterialMutationOperator<C>() {
     override fun invoke(
         clone: OnePartRepresentation,
         selectedSegment: Segment

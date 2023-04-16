@@ -1,6 +1,6 @@
 package hu.raven.puppet.logic.step.mutatechildren
 
-import hu.raven.puppet.logic.EvolutionaryAlgorithmStep
+import hu.raven.puppet.logic.step.EvolutionaryAlgorithmStep
 import hu.raven.puppet.model.physics.PhysicsUnit
 
 sealed class MutateChildren<C : PhysicsUnit<C>> : EvolutionaryAlgorithmStep<C>

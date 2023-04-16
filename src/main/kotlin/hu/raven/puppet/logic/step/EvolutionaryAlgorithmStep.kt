@@ -1,4 +1,4 @@
-package hu.raven.puppet.logic
+package hu.raven.puppet.logic.step
 
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState

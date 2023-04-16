@@ -11,8 +11,7 @@ import hu.raven.puppet.utility.extention.sumClever
 
 class EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation<C : PhysicsUnit<C>>(
     val task: Task
-) :
-    BacterialMutationOperator<C>() {
+) : BacterialMutationOperator<C>() {
     override fun invoke(
         clone: OnePartRepresentation,
         selectedSegment: Segment

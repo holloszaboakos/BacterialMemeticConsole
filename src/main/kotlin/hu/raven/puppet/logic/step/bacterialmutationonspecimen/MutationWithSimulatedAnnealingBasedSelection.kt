@@ -19,8 +19,8 @@ class MutationWithSimulatedAnnealingBasedSelection<C : PhysicsUnit<C>>(
     private val iterationLimit: Int,
 ) : MutationOnSpecimen<C>() {
 
-    override fun <O : OnePartRepresentationWithCost<C, O>> invoke(
-        specimenWithIndex: IndexedValue<O>,
+    override fun invoke(
+        specimenWithIndex: IndexedValue<OnePartRepresentationWithCost<C>>,
         iteration: Int
     ) {
         val doSimulatedAnnealing = specimenWithIndex.index != 0
@@ -42,12 +42,12 @@ class MutationWithSimulatedAnnealingBasedSelection<C : PhysicsUnit<C>>(
         }
     }
 
-    private fun <O : OnePartRepresentationWithCost<C, O>> generateClones(
-        specimen: IndexedValue<O>,
+    private fun generateClones(
+        specimen: IndexedValue<OnePartRepresentationWithCost<C>>,
         selectedSegment: Segment
-    ): MutableList<O> {
+    ): MutableList<OnePartRepresentationWithCost<C>> {
         val clones = MutableList(cloneCount + 1) {
-            specimen.value.clone()
+            specimen.value.cloneRepresentationAndCost()
         }
         clones
             .slice(1 until clones.size)
@@ -57,9 +57,9 @@ class MutationWithSimulatedAnnealingBasedSelection<C : PhysicsUnit<C>>(
         return clones
     }
 
-    private fun <O : OnePartRepresentationWithCost<C, O>> loadDataToSpecimen(
-        specimen: O,
-        clones: MutableList<O>,
+    private fun loadDataToSpecimen(
+        specimen: OnePartRepresentationWithCost<C>,
+        clones: MutableList<OnePartRepresentationWithCost<C>>,
         iteration: Int,
         doSimulatedAnnealing: Boolean
     ) {

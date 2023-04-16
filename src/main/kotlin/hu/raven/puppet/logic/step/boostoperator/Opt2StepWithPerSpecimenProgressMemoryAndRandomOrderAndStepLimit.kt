@@ -4,14 +4,13 @@ import hu.raven.puppet.logic.logging.DoubleLogger
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
-
 import hu.raven.puppet.modules.AlgorithmParameters
 import hu.raven.puppet.utility.inject
 
 class Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit<C : PhysicsUnit<C>>(
     override val calculateCostOf: CalculateCost<C>,
     val logger: DoubleLogger
-) : BoostOperator<C>() {
+) : BoostOperator<C, OnePartRepresentationWithCostAndIterationAndId<C>>() {
     private val stepLimit: Int by inject(AlgorithmParameters.OPTIMISATION_STEP_LIMIT)
     private var lastPositionPerSpecimen = mutableMapOf<Int, Pair<Int, Int>>()
     private var shuffler = intArrayOf()

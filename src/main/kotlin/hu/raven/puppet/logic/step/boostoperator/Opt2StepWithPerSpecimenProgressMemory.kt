@@ -7,7 +7,7 @@ import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationA
 
 class Opt2StepWithPerSpecimenProgressMemory<C : PhysicsUnit<C>>(
     override val calculateCostOf: CalculateCost<C>
-) : BoostOperator<C>() {
+) : BoostOperator<C, OnePartRepresentationWithCostAndIterationAndId<C>>() {
 
     private var lastPositionPerSpecimen = mutableMapOf<Int, Pair<Int, Int>>()
 

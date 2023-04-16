@@ -2,67 +2,48 @@ package hu.raven.puppet.logic.step.genetransferoperator
 
 
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
-import hu.raven.puppet.model.logging.StepEfficiencyData
-import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCost
 import hu.raven.puppet.utility.extention.nextSegmentStartPosition
 import kotlin.random.Random
-import kotlin.time.ExperimentalTime
-import kotlin.time.measureTime
 
 class SegmentInjectionGeneTransfer<C : PhysicsUnit<C>>(
     override val calculateCostOf: CalculateCost<C>,
     override val geneTransferSegmentLength: Int
 ) : GeneTransferOperator<C>() {
 
-    @OptIn(ExperimentalTime::class)
-    override fun <O : OnePartRepresentationWithCost<C, O>> invoke(
-        source: O,
-        target: O
-    ): StepEfficiencyData {
-        val oldCost = target.costOrException()
-
-        val spentTime = measureTime {
-            val startOfSegment =
-                Random.nextSegmentStartPosition(
-                    source.permutation.indices.count(),
-                    geneTransferSegmentLength
-                )
-            val rangeOfSegment = startOfSegment until startOfSegment + geneTransferSegmentLength
-            val elementsOfSegment = collectElementsOfSegment(
-                target,
-                rangeOfSegment
+    override fun invoke(
+        source: OnePartRepresentationWithCost<C>,
+        target: OnePartRepresentationWithCost<C>
+    ) {
+        val startOfSegment =
+            Random.nextSegmentStartPosition(
+                source.permutation.indices.count(),
+                geneTransferSegmentLength
             )
-            val elementsOfTargetNotInSegment = collectElementsNotInSegment(
-                target,
-                elementsOfSegment
-            )
-
-            loadSegmentToTarget(
-                target,
-                rangeOfSegment,
-                elementsOfSegment,
-                elementsOfTargetNotInSegment
-            )
-
-            resetFlagsOf(target)
-            target.cost = calculateCostOf(target)
-        }
-        return StepEfficiencyData(
-            spentTime = spentTime,
-            spentBudget = 1,
-            improvementCountPerRun = if (target.costOrException() < oldCost) 1 else 0,
-            improvementPercentagePerBudget =
-            if (target.costOrException() < oldCost)
-                Fraction.new(1) - (target.costOrException().value / oldCost.value)
-            else
-                Fraction.new(0)
+        val rangeOfSegment = startOfSegment until startOfSegment + geneTransferSegmentLength
+        val elementsOfSegment = collectElementsOfSegment(
+            target,
+            rangeOfSegment
         )
+        val elementsOfTargetNotInSegment = collectElementsNotInSegment(
+            target,
+            elementsOfSegment
+        )
+
+        loadSegmentToTarget(
+            target,
+            rangeOfSegment,
+            elementsOfSegment,
+            elementsOfTargetNotInSegment
+        )
+
+        resetFlagsOf(target)
+        target.cost = calculateCostOf(target)
     }
 
-    private fun <O : OnePartRepresentationWithCost<C, O>> collectElementsOfSegment(
-        source: O,
+    private fun collectElementsOfSegment(
+        source: OnePartRepresentationWithCost<C>,
         rangeOfSegment: IntRange
     ): IntArray {
         return source.permutation
@@ -71,8 +52,8 @@ class SegmentInjectionGeneTransfer<C : PhysicsUnit<C>>(
             .toIntArray()
     }
 
-    private fun <O : OnePartRepresentationWithCost<C, O>> collectElementsNotInSegment(
-        target: O,
+    private fun collectElementsNotInSegment(
+        target: OnePartRepresentationWithCost<C>,
         elementsOfSegment: IntArray,
     ): IntArray {
 
@@ -86,8 +67,8 @@ class SegmentInjectionGeneTransfer<C : PhysicsUnit<C>>(
             .toIntArray()
     }
 
-    private fun <O : OnePartRepresentationWithCost<C, O>> loadSegmentToTarget(
-        target: O,
+    private fun loadSegmentToTarget(
+        target: OnePartRepresentationWithCost<C>,
         rangeOfSegment: IntRange,
         elementsOfSegment: IntArray,
         elementsOfTargetNotInSegment: IntArray,
@@ -112,7 +93,7 @@ class SegmentInjectionGeneTransfer<C : PhysicsUnit<C>>(
         }
     }
 
-    private fun <O : OnePartRepresentationWithCost<C, O>> resetFlagsOf(specimen: O) {
+    private fun resetFlagsOf(specimen: OnePartRepresentationWithCost<C>) {
         specimen.cost = null
     }
 }
