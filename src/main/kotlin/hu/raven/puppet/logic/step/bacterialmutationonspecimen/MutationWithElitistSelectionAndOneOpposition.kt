@@ -28,7 +28,7 @@ class MutationWithElitistSelectionAndOneOpposition<C : PhysicsUnit<C>>(
         repeat(cloneCycleCount) { cycleIndex ->
             val clones = generateClones(
                 specimenWithIndex.value,
-                selectSegment(specimenWithIndex.value, iteration, cycleIndex, cloneCycleCount)
+                selectSegment(specimenWithIndex.value.permutation, iteration, cycleIndex, cloneCycleCount)
             )
 
             calcCostOfEachAndSort(clones)

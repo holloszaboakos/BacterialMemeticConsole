@@ -1,7 +1,7 @@
 package hu.raven.puppet.logic.step.selectsegment
 
+import hu.raven.puppet.model.math.Permutation
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.solution.Segment
 
 class SelectSpreadSegmentWithFullCoverage<C : PhysicsUnit<C>>(
@@ -11,14 +11,14 @@ class SelectSpreadSegmentWithFullCoverage<C : PhysicsUnit<C>>(
     private var randomPermutation: IntArray? = null
 
     override fun invoke(
-        specimen: OnePartRepresentation,
+        specimen: Permutation,
         iteration: Int,
         cycleIndex: Int,
         cycleCount: Int
     ): Segment {
         if (randomPermutation == null) {
             randomPermutation =
-                IntArray(specimen.permutation.size) { it }
+                IntArray(specimen.size) { it }
                     .apply { shuffle() }
         }
         val segmentStart = cycleIndex * cloneSegmentLength
@@ -28,7 +28,7 @@ class SelectSpreadSegmentWithFullCoverage<C : PhysicsUnit<C>>(
             .sortedBy { it }
             .toIntArray()
         val selectedElements = selectedPositions
-            .map { specimen.permutation[it] }
+            .map { specimen[it] }
             .toIntArray()
         return Segment(selectedPositions, selectedElements)
     }

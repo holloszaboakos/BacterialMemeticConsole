@@ -23,7 +23,7 @@ class MutationWithElitistSelectionAndModuloStepper<C : PhysicsUnit<C>>(
         repeat(cloneCycleCount) { cloneCycleIndex ->
             val clones = generateClones(
                 specimenWithIndex.value,
-                selectSegment(specimenWithIndex.value, iteration, cloneCycleCount, cloneCycleIndex)
+                selectSegment(specimenWithIndex.value.permutation, iteration, cloneCycleCount, cloneCycleIndex)
             )
             calcCostOfEachAndSort(clones)
 

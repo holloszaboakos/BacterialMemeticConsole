@@ -28,7 +28,7 @@ class MutationWithSimulatedAnnealingBasedSelection<C : PhysicsUnit<C>>(
 
             val clones = generateClones(
                 specimenWithIndex,
-                selectSegment(specimenWithIndex.value, iteration, cycleIndex, cloneCycleCount)
+                selectSegment(specimenWithIndex.value.permutation, iteration, cycleIndex, cloneCycleCount)
             )
 
             calcCostOfEachAndSort(clones)
