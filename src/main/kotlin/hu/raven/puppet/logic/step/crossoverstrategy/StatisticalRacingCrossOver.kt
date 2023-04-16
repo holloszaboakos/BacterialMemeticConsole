@@ -20,9 +20,9 @@ import hu.raven.puppet.utility.extention.sumClever
 //cinti
 class StatisticalRacingCrossOver<C : PhysicsUnit<C>>(
     override val crossoverOperators: List<CrossOverOperator<C>>,
-    val logger: DoubleLogger,
-    val calculateCostOf: CalculateCost<C>,
-    val statistics: GeneticAlgorithmStatistics<C>
+    private val logger: DoubleLogger,
+    private val calculateCostOf: CalculateCost<C>,
+    private val statistics: GeneticAlgorithmStatistics<C>
 ) : CrossOverStrategy<C>() {
     private var lastIteration = -1
     private var iterationLock = Object()

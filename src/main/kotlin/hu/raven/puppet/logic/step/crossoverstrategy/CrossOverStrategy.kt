@@ -6,5 +6,5 @@ import hu.raven.puppet.model.physics.PhysicsUnit
 
 
 abstract class CrossOverStrategy<C : PhysicsUnit<C>> : EvolutionaryAlgorithmStep<C> {
-    abstract val crossoverOperators: List<CrossOverOperator<C>>
+    protected abstract val crossoverOperators: List<CrossOverOperator<C>>
 }
