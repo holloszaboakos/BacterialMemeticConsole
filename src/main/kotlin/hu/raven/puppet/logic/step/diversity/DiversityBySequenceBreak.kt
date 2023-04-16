@@ -1,7 +1,6 @@
 package hu.raven.puppet.logic.step.diversity
 
 import hu.raven.puppet.model.math.Permutation
-import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import kotlinx.coroutines.CoroutineScope
@@ -10,12 +9,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 
-class DiversityBySequenceBreak<C : PhysicsUnit<C>>(
-    val algorithmState: EvolutionaryAlgorithmState<C>,
-    val parameters: EvolutionaryAlgorithmParameterProvider<C>
-) : Diversity<C>() {
+class DiversityBySequenceBreak<C : PhysicsUnit<C>> : Diversity<C>() {
 
-    override fun invoke(): Double = runBlocking {
+    override fun invoke(algorithmState: EvolutionaryAlgorithmState<C>): Double = runBlocking {
         val best = algorithmState.copyOfBest!!
         var diversity = 0.0
 

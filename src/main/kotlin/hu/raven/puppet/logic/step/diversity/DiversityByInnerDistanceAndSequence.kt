@@ -1,22 +1,17 @@
 package hu.raven.puppet.logic.step.diversity
 
 import hu.raven.puppet.model.math.Permutation
-import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
-import kotlinx.coroutines.runBlocking
 
 
-class DiversityByInnerDistanceAndSequence<C : PhysicsUnit<C>>(
-    val algorithmState: EvolutionaryAlgorithmState<C>,
-    val parameters: EvolutionaryAlgorithmParameterProvider<C>,
-) : Diversity<C>() {
+class DiversityByInnerDistanceAndSequence<C : PhysicsUnit<C>> : Diversity<C>() {
 
-    override fun invoke(): Double = runBlocking {
+    override fun invoke(algorithmState: EvolutionaryAlgorithmState<C>): Double = algorithmState.run {
         var diversity = 0.0
 
-        algorithmState.population.activesAsSequence().forEach { firstSpecimen ->
-            algorithmState.population.activesAsSequence().forEach { secondSpecimen ->
+        population.activesAsSequence().forEach { firstSpecimen ->
+            population.activesAsSequence().forEach { secondSpecimen ->
                 val distance = distanceOfSpecimen(
                     firstSpecimen.permutation,
                     secondSpecimen.permutation
@@ -25,7 +20,7 @@ class DiversityByInnerDistanceAndSequence<C : PhysicsUnit<C>>(
             }
         }
 
-        diversity /= (parameters.sizeOfPopulation * parameters.sizeOfPopulation)
+        diversity /= (population.activeCount * population.activeCount)
         diversity
     }
 
