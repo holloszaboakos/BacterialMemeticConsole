@@ -3,58 +3,53 @@ package hu.raven.puppet.logic.step.initializePopulation
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
-
-import hu.raven.puppet.model.solution.PoolWithSmartActivation
-import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
+import hu.raven.puppet.model.task.Task
 import hu.raven.puppet.utility.extention.toPermutation
 
 class InitializePopulationByModuloStepper<C : PhysicsUnit<C>>(
-    val algorithmState: EvolutionaryAlgorithmState<C>,
     val parameters: EvolutionaryAlgorithmParameterProvider<C>,
 ) :
     InitializePopulation<C>() {
 
-    override fun invoke() {
-        algorithmState.run {
-            val sizeOfPermutation =
-                (task.costGraph.objectives.size + task.transportUnits.size - 1)
-            val basePermutation = IntArray(sizeOfPermutation) { it }
-            population = if (task.costGraph.objectives.size != 1)
-                MutableList((task.costGraph.objectives.size + task.transportUnits.size - 1)) {
-                    OnePartRepresentationWithCostAndIterationAndId<C>(
-                        id = it,
-                        iterationOfCreation = 0,
-                        cost = null,
-                        objectiveCount = task.costGraph.objectives.size,
-                        permutation = IntArray(
-                            task.transportUnits.size +
-                                    task.costGraph.objectives.size
-                        ) { index ->
-                            index
-                        }.toPermutation()
-                    )
-                }.let { PoolWithSmartActivation(it) }
-            else
-                mutableListOf(
-                    OnePartRepresentationWithCostAndIterationAndId<C>(
-                        0,
-                        0,
-                        null,
-                        1,
-                        intArrayOf(0).toPermutation()
-                    )
-                ).let { PoolWithSmartActivation(it) }
-
-            population.activateAll()
-            population.activesAsSequence().forEachIndexed { instanceIndex, instance ->
-                initSpecimen(
-                    instanceIndex,
-                    instance,
-                    sizeOfPermutation,
-                    basePermutation
+    override fun invoke(task: Task): List<OnePartRepresentationWithCostAndIterationAndId<C>> {
+        val sizeOfPermutation =
+            (task.costGraph.objectives.size + task.transportUnits.size - 1)
+        val basePermutation = IntArray(sizeOfPermutation) { it }
+        val population = if (task.costGraph.objectives.size != 1)
+            MutableList((task.costGraph.objectives.size + task.transportUnits.size - 1)) {
+                OnePartRepresentationWithCostAndIterationAndId<C>(
+                    id = it,
+                    iterationOfCreation = 0,
+                    cost = null,
+                    objectiveCount = task.costGraph.objectives.size,
+                    permutation = IntArray(
+                        task.transportUnits.size +
+                                task.costGraph.objectives.size
+                    ) { index ->
+                        index
+                    }.toPermutation()
                 )
             }
+        else
+            mutableListOf(
+                OnePartRepresentationWithCostAndIterationAndId<C>(
+                    0,
+                    0,
+                    null,
+                    1,
+                    intArrayOf(0).toPermutation()
+                )
+            )
+
+        population.forEachIndexed { instanceIndex, instance ->
+            initSpecimen(
+                instanceIndex,
+                instance,
+                sizeOfPermutation,
+                basePermutation
+            )
         }
+        return population
     }
 
     private fun initSpecimen(
@@ -79,18 +74,6 @@ class InitializePopulationByModuloStepper<C : PhysicsUnit<C>>(
             baseIndex = (baseIndex + step) % sizeOfPermutation
         }
 
-        val breakPoints = newPermutation
-            .mapIndexed { index, value ->
-                if (value < algorithmState.task.costGraph.objectives.size)
-                    -1
-                else
-                    index
-            }
-            .filter { it != -1 }
-            .toMutableList()
-
-        breakPoints.add(0, -1)
-        breakPoints.add(sizeOfPermutation)
         newPermutation.forEachIndexed { index, value ->
             instance.permutation[index] = value
         }
