@@ -5,7 +5,7 @@ import hu.raven.puppet.logic.step.crossoveroperator.CrossOverOperator
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
+import hu.raven.puppet.model.solution.OnePartRepresentationWithCost
 
 
 import kotlin.time.ExperimentalTime
@@ -17,9 +17,9 @@ class GeneTransferByCrossOver<C : PhysicsUnit<C>>(
     val crossOverOperator: CrossOverOperator<C>,
 ) : GeneTransferOperator<C>() {
     @OptIn(ExperimentalTime::class)
-    override fun invoke(
-        source: OnePartRepresentationWithCostAndIterationAndId<C>,
-        target: OnePartRepresentationWithCostAndIterationAndId<C>
+    override fun <O : OnePartRepresentationWithCost<C, O>> invoke(
+        source: O,
+        target: O
     ): StepEfficiencyData {
         val child = target.clone()
 

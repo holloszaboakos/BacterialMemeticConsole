@@ -1,13 +1,11 @@
 package hu.raven.puppet.logic.step.genetransferoperator
 
-import hu.raven.puppet.logic.logging.DoubleLogger
+
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.model.logging.StepEfficiencyData
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.PhysicsUnit
-import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
-
-
+import hu.raven.puppet.model.solution.OnePartRepresentationWithCost
 import hu.raven.puppet.utility.extention.nextSegmentStartPosition
 import kotlin.random.Random
 import kotlin.time.ExperimentalTime
@@ -15,14 +13,13 @@ import kotlin.time.measureTime
 
 class SegmentInjectionGeneTransfer<C : PhysicsUnit<C>>(
     override val calculateCostOf: CalculateCost<C>,
-    override val geneTransferSegmentLength: Int,
-    val logger: DoubleLogger,
+    override val geneTransferSegmentLength: Int
 ) : GeneTransferOperator<C>() {
 
     @OptIn(ExperimentalTime::class)
-    override fun invoke(
-        source: OnePartRepresentationWithCostAndIterationAndId<C>,
-        target: OnePartRepresentationWithCostAndIterationAndId<C>
+    override fun <O : OnePartRepresentationWithCost<C, O>> invoke(
+        source: O,
+        target: O
     ): StepEfficiencyData {
         val oldCost = target.costOrException()
 
@@ -64,8 +61,8 @@ class SegmentInjectionGeneTransfer<C : PhysicsUnit<C>>(
         )
     }
 
-    private fun <C : PhysicsUnit<C>> collectElementsOfSegment(
-        source: OnePartRepresentationWithCostAndIterationAndId<C>,
+    private fun <O : OnePartRepresentationWithCost<C, O>> collectElementsOfSegment(
+        source: O,
         rangeOfSegment: IntRange
     ): IntArray {
         return source.permutation
@@ -74,8 +71,8 @@ class SegmentInjectionGeneTransfer<C : PhysicsUnit<C>>(
             .toIntArray()
     }
 
-    private fun <C : PhysicsUnit<C>> collectElementsNotInSegment(
-        target: OnePartRepresentationWithCostAndIterationAndId<C>,
+    private fun <O : OnePartRepresentationWithCost<C, O>> collectElementsNotInSegment(
+        target: O,
         elementsOfSegment: IntArray,
     ): IntArray {
 
@@ -89,8 +86,8 @@ class SegmentInjectionGeneTransfer<C : PhysicsUnit<C>>(
             .toIntArray()
     }
 
-    private fun <C : PhysicsUnit<C>> loadSegmentToTarget(
-        target: OnePartRepresentationWithCostAndIterationAndId<C>,
+    private fun <O : OnePartRepresentationWithCost<C, O>> loadSegmentToTarget(
+        target: O,
         rangeOfSegment: IntRange,
         elementsOfSegment: IntArray,
         elementsOfTargetNotInSegment: IntArray,
@@ -115,7 +112,7 @@ class SegmentInjectionGeneTransfer<C : PhysicsUnit<C>>(
         }
     }
 
-    private fun <C : PhysicsUnit<C>> resetFlagsOf(specimen: OnePartRepresentationWithCostAndIterationAndId<C>) {
+    private fun <O : OnePartRepresentationWithCost<C, O>> resetFlagsOf(specimen: O) {
         specimen.cost = null
     }
 }
