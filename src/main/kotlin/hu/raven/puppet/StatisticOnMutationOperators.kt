@@ -1,6 +1,6 @@
 package hu.raven.puppet
 
-import hu.raven.puppet.logic.logging.DoubleLogger
+import hu.raven.puppet.logic.logging.ObjectLoggerService
 import hu.raven.puppet.logic.step.bacterialmutationonspecimen.MutationOnSpecimen
 import hu.raven.puppet.logic.step.bacterialmutationonspecimen.MutationWithElitistSelection
 import hu.raven.puppet.logic.step.bacterialmutationonspecimen.MutationWithElitistSelectionAndModuloStepper
@@ -10,8 +10,8 @@ import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.logic.step.calculatecost.CalculateCostOfTspSolution
 import hu.raven.puppet.logic.step.selectsegment.SelectContinuesSegment
 import hu.raven.puppet.logic.step.selectsegment.SelectSegment
-import hu.raven.puppet.logic.task.loader.TaskLoader
-import hu.raven.puppet.logic.task.loader.TspTaskLoader
+import hu.raven.puppet.logic.task.loader.TaskLoaderService
+import hu.raven.puppet.logic.task.loader.TspTaskLoaderService
 import hu.raven.puppet.model.math.Permutation
 import hu.raven.puppet.model.parameters.BacterialMutationParameterProvider
 import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
@@ -25,13 +25,14 @@ import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.model.task.Task
 import hu.raven.puppet.modules.AlgorithmParameters.*
 import hu.raven.puppet.modules.FilePathVariableNames.*
-import hu.raven.puppet.utility.get
-import hu.raven.puppet.utility.inject
+import hu.raven.puppet.utility.KoinUtil.get
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import java.io.File
+import java.time.LocalDateTime
+import kotlin.io.path.Path
 
 //max 13 oldal
 private data class Scenario(
@@ -181,9 +182,16 @@ private fun runScenario(scenario: Scenario) {
                     )
                 }
                 single { BacterialAlgorithmStatistics() }
-                single { DoubleLogger() }
-                single<TaskLoader> { TspTaskLoader() }
-                single { get<TaskLoader>().loadTask(get(INPUT_FOLDER)) }
+                single {
+                    ObjectLoggerService<String>(
+                        Path(
+                            get(OUTPUT_FOLDER),
+                            LocalDateTime.now().let { "statistics-$it" }
+                        )
+                    )
+                }
+                single<TaskLoaderService> { TspTaskLoaderService(get(), get(SINGLE_FILE)) }
+                single { get<TaskLoaderService>().loadTask(get(INPUT_FOLDER)) }
                 single<BacterialMutationOperator<*>> {
                     scenario.mutationOperator(
                         get(),
@@ -201,8 +209,8 @@ private fun runScenario(scenario: Scenario) {
         )
     }
 
-    val task: Task by inject()
-    val calculateCost: CalculateCost<Meter> by inject()
+    val task: Task = get()
+    val calculateCost: CalculateCost<Meter> = get()
     task.costGraph.edgesFromCenter.forEach { println(it.length) }
     task.costGraph.edgesToCenter.forEach { println(it.length) }
     task.costGraph.edgesBetween.flatten().forEach { println(it.length) }

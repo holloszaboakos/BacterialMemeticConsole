@@ -4,6 +4,7 @@ import hu.raven.puppet.model.physics.Meter
 import hu.raven.puppet.model.task.CostGraph
 import hu.raven.puppet.model.task.CostGraphEdge
 import hu.raven.puppet.model.task.Task
+import hu.raven.puppet.utility.ImmutableArray.Companion.asImmutable
 import kotlin.random.Random
 import kotlin.random.nextInt
 
@@ -57,16 +58,20 @@ class TspGeneratorService {
                         }
                         .filterNotNull()
                         .toTypedArray()
+                        .asImmutable()
                 }
-                .toTypedArray(),
+                .toTypedArray()
+                .asImmutable(),
             edgesFromCenter = this[0]
                 .slice(1 until this[0].size)
                 .map { CostGraphEdge(Meter(it.toLong())) }
-                .toTypedArray(),
+                .toTypedArray()
+                .asImmutable(),
             edgesToCenter = this
                 .slice(1 until this.size)
                 .map { CostGraphEdge(Meter(it[0].toLong())) }
                 .toTypedArray()
+                .asImmutable()
         )
     }
 

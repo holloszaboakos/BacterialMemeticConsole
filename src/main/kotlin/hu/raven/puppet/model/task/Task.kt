@@ -11,8 +11,11 @@
  */
 package hu.raven.puppet.model.task
 
+import hu.raven.puppet.utility.ImmutableArray
+import hu.raven.puppet.utility.ImmutableArray.Companion.immutableArrayOf
+
 data class Task(
-    val transportUnits: Array<TransportUnit> = arrayOf(),
+    val transportUnits: ImmutableArray<out TransportUnit> = immutableArrayOf(),
     val costGraph: CostGraph = CostGraph()
 ) {
     override fun equals(other: Any?): Boolean {

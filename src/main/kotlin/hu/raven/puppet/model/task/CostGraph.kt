@@ -11,12 +11,15 @@
  */
 package hu.raven.puppet.model.task
 
+import hu.raven.puppet.utility.ImmutableArray
+import hu.raven.puppet.utility.ImmutableArray.Companion.immutableArrayOf
+
 data class CostGraph(
     val center: Gps = Gps(),
-    val objectives: Array<CostGraphVertex> = arrayOf(),
-    val edgesBetween: Array<Array<CostGraphEdge>> = arrayOf(),
-    val edgesFromCenter: Array<CostGraphEdge> = arrayOf(),
-    val edgesToCenter: Array<CostGraphEdge> = arrayOf()
+    val objectives: ImmutableArray<CostGraphVertex> = immutableArrayOf(),
+    val edgesBetween: ImmutableArray<ImmutableArray<CostGraphEdge>> = immutableArrayOf(),
+    val edgesFromCenter: ImmutableArray<CostGraphEdge> = immutableArrayOf(),
+    val edgesToCenter: ImmutableArray<CostGraphEdge> = immutableArrayOf()
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

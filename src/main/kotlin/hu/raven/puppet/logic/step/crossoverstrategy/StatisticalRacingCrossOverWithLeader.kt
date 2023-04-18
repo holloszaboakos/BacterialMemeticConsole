@@ -1,6 +1,6 @@
 package hu.raven.puppet.logic.step.crossoverstrategy
 
-import hu.raven.puppet.logic.logging.DoubleLogger
+import hu.raven.puppet.logic.logging.ObjectLoggerService
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.logic.step.crossoveroperator.CrossOverOperator
 import hu.raven.puppet.model.physics.PhysicsUnit
@@ -12,7 +12,7 @@ import hu.raven.puppet.model.statistics.OperatorStatistics
 
 class StatisticalRacingCrossOverWithLeader<C : PhysicsUnit<C>>(
     override val crossoverOperators: List<CrossOverOperator<C>>,
-    private val logger: DoubleLogger,
+    private val logger: ObjectLoggerService<String>,
     private val calculateCostOf: CalculateCost<C>,
     private val statistics: GeneticAlgorithmStatistics<C>
 ) : CrossOverStrategy<C>() {
@@ -83,11 +83,11 @@ class StatisticalRacingCrossOverWithLeader<C : PhysicsUnit<C>>(
             if (lastIteration < 10 * statistics.operatorsWithStatistics.size) {
                 operator =
                     statistics.operatorsWithStatistics.keys.toList()[lastIteration % statistics.operatorsWithStatistics.size]
-                logger(operator.toString())
+                logger.log(operator.toString())
                 actualStatistics = statistics.operatorsWithStatistics[operator]
             } else {
                 operator = statistics.operatorsWithStatistics.maxByOrNull { it.value.successRatio }?.key
-                logger(operator.toString())
+                logger.log(operator.toString())
                 actualStatistics = statistics.operatorsWithStatistics[operator]
             }
         }

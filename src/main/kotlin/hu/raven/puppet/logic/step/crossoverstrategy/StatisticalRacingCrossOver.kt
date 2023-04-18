@@ -1,6 +1,6 @@
 package hu.raven.puppet.logic.step.crossoverstrategy
 
-import hu.raven.puppet.logic.logging.DoubleLogger
+import hu.raven.puppet.logic.logging.ObjectLoggerService
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.logic.step.crossoveroperator.CrossOverOperator
 import hu.raven.puppet.model.math.Fraction
@@ -20,7 +20,7 @@ import hu.raven.puppet.utility.extention.sumClever
 //cinti
 class StatisticalRacingCrossOver<C : PhysicsUnit<C>>(
     override val crossoverOperators: List<CrossOverOperator<C>>,
-    private val logger: DoubleLogger,
+    private val logger: ObjectLoggerService<String>,
     private val calculateCostOf: CalculateCost<C>,
     private val statistics: GeneticAlgorithmStatistics<C>
 ) : CrossOverStrategy<C>() {
@@ -90,7 +90,7 @@ class StatisticalRacingCrossOver<C : PhysicsUnit<C>>(
             if (iteration < 10 * statistics.operatorsWithStatistics.size) {
                 operator =
                     statistics.operatorsWithStatistics.keys.toList()[iteration % statistics.operatorsWithStatistics.size]
-                logger(operator!!::class.java.simpleName)
+                logger.log(operator!!::class.java.simpleName)
                 actualStatistics = statistics.operatorsWithStatistics[operator]
             } else {
                 val sumOfSuccessRatio =
@@ -104,7 +104,7 @@ class StatisticalRacingCrossOver<C : PhysicsUnit<C>>(
                     if (!found && fill >= choice) {
                         found = true
                         operator = type
-                        logger(type.toString())
+                        logger.log(type.toString())
                         actualStatistics = value
                     }
                 }
