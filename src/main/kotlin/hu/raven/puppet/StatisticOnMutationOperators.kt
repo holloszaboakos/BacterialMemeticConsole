@@ -26,6 +26,7 @@ import hu.raven.puppet.model.task.Task
 import hu.raven.puppet.modules.AlgorithmParameters.*
 import hu.raven.puppet.modules.FilePathVariableNames.*
 import hu.raven.puppet.utility.KoinUtil.get
+import hu.raven.puppet.utility.flatten
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.core.qualifier.named
@@ -214,6 +215,7 @@ private fun runScenario(scenario: Scenario) {
     task.costGraph.edgesFromCenter.forEach { println(it.length) }
     task.costGraph.edgesToCenter.forEach { println(it.length) }
     task.costGraph.edgesBetween.flatten().forEach { println(it.length) }
+    arrayOf(arrayOf(0)).flatten()
     val strategy: MutationOnSpecimen<Meter> = scenario.mutationStrategy(
         get(),
         get(),

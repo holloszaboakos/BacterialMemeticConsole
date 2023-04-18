@@ -12,6 +12,7 @@ class ImmutableArray<T>(private val array: Array<T>) {
     fun <R> contentEquals(other: ImmutableArray<R>) = array.contentEquals(other.array)
     fun contentHashCode() = array.contentHashCode()
     fun <R> map(mapper: (T) -> R) = array.map(mapper)
+    fun <R> flatMap(mapper: (T) -> Sequence<R>) = array.flatMap(mapper)
     fun <R> mapIndexed(mapper: (Int, T) -> R) = array.mapIndexed(mapper)
     fun <R : Comparable<R>> minOfOrNull(mapper: (T) -> R) = array.minOfOrNull(mapper)
     fun first() = array.first()
@@ -21,4 +22,8 @@ class ImmutableArray<T>(private val array: Array<T>) {
     fun filter(predicate: (T) -> Boolean) = array.filter(predicate)
     fun indexOfFirst(predicate: (T) -> Boolean) = array.indexOfFirst(predicate)
     fun withIndex() = array.withIndex()
+    fun asSequence() = array.asSequence()
+    fun forEach(function: (T) -> Unit) = array.forEach(function)
 }
+
+fun <R> ImmutableArray<ImmutableArray<R>>.flatten() = flatMap { row -> row.asSequence() }
