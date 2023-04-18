@@ -12,6 +12,7 @@ class RandomShuffleOfContinuesSegment<C : PhysicsUnit<C>> : BacterialMutationOpe
         clone: OnePartRepresentation,
         selectedSegment: Segment
     ) {
+        selectedSegment.positions.forEach { clone.permutation.deletePosition(it) }
         selectedSegment.positions
             .toPermutation()
             .shuffled()

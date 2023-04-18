@@ -18,6 +18,7 @@ class SequentialSelectionHeuristicOnContinuousSegment<C : PhysicsUnit<C>>(
         clone: OnePartRepresentation,
         selectedSegment: Segment
     ) {
+        selectedSegment.positions.forEach { clone.permutation.deletePosition(it) }
         val remainingElements = selectedSegment.values.toMutableList()
         val objectiveCount = task.costGraph.objectives.size
         var previousElement = if (selectedSegment.positions.first() == 0) {

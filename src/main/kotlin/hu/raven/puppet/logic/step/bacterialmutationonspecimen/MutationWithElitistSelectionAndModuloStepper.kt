@@ -28,6 +28,7 @@ class MutationWithElitistSelectionAndModuloStepper<C : PhysicsUnit<C>>(
             calcCostOfEachAndSort(clones)
 
             if (clones.first().cost != specimenWithIndex.value.cost) {
+                specimenWithIndex.value.permutation.clear()
                 specimenWithIndex.value.permutation.indices.forEach { index ->
                     specimenWithIndex.value.permutation[index] = clones.first().permutation[index]
                 }
@@ -46,6 +47,7 @@ class MutationWithElitistSelectionAndModuloStepper<C : PhysicsUnit<C>>(
         clones
             .slice(1..moduloStepperSegments.size)
             .forEachIndexed { cloneIndex, clone ->
+                selectedSegment.positions.forEach { clone.permutation.deletePosition(it) }
                 moduloStepperSegments[cloneIndex]
                     .forEachIndexed { index, value ->
                         clone.permutation[selectedSegment.positions[index]] = value

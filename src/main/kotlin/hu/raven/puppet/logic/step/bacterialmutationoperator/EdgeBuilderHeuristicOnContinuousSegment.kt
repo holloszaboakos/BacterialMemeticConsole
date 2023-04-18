@@ -15,6 +15,9 @@ class EdgeBuilderHeuristicOnContinuousSegment<C : PhysicsUnit<C>>(
         clone: OnePartRepresentation,
         selectedSegment: Segment
     ) {
+        selectedSegment.positions.forEach {
+            clone.permutation.deletePosition(it)
+        }
 
         val weightsOfInnerEdges = calculateWeightsOfInnerEdges(
             selectedSegment.values

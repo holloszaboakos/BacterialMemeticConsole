@@ -11,30 +11,30 @@ class Permutation(val size: Int) {
     private val sequential: IntArray = IntArray(size + 1) { -1 }
     private val backwardSequential: IntArray = IntArray(size + 1) { -1 }
 
-    constructor(permutation: IntArray) : this(permutation.size) {
-        permutation.forEachIndexed { index, value ->
+    constructor(initialPermutation: IntArray) : this(initialPermutation.size) {
+        initialPermutation.forEachIndexed { index, value ->
             permutation[index] = value
             inversePermutation[value] = index
         }
 
-        sequential[size] = permutation[0]
-        sequential[permutation.last()] = size
-        backwardSequential[size] = permutation.last()
-        backwardSequential[permutation.first()] = size
+        sequential[size] = initialPermutation[0]
+        sequential[initialPermutation.last()] = size
+        backwardSequential[size] = initialPermutation.last()
+        backwardSequential[initialPermutation.first()] = size
 
-        permutation.forEachIndexed { index, value ->
+        initialPermutation.forEachIndexed { index, value ->
             if (index == size - 1) {
                 return@forEachIndexed
             }
 
-            sequential[value] = permutation[index + 1]
+            sequential[value] = initialPermutation[index + 1]
         }
-        permutation.forEachIndexed { index, value ->
+        initialPermutation.forEachIndexed { index, value ->
             if (index == 0) {
                 return@forEachIndexed
             }
 
-            backwardSequential[value] = permutation[index - 1]
+            backwardSequential[value] = initialPermutation[index - 1]
         }
     }
 

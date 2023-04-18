@@ -105,7 +105,6 @@ private val STRATEGIES: Array<(
 private val OPERATORS: Array<(
     task: Task
 ) -> BacterialMutationOperator<Meter>> = arrayOf(
-
     { task: Task ->
         EdgeBuilderHeuristicOnContinuousSegment(task)
     },
@@ -151,7 +150,7 @@ private fun runScenario(scenario: Scenario) {
     startKoin {
         modules(
             module {
-                single(named(CLONE_COUNT)) { 40 }
+                single(named(CLONE_COUNT)) { scenario.objectiveCount * 10 }
                 single(named(CLONE_SEGMENT_LENGTH)) { scenario.objectiveCount }
                 single(named(CLONE_CYCLE_COUNT)) { 5 }
                 single(named(SIZE_OF_POPULATION)) { 1 }
@@ -174,7 +173,7 @@ private fun runScenario(scenario: Scenario) {
                 single<IterativeAlgorithmParameterProvider> {
                     get<BacterialMutationParameterProvider<Meter>>()
                 }
-                single(named(INPUT_FOLDER)) { "input/tsp" }
+                single(named(INPUT_FOLDER)) { "\\input\\tsp" }
                 single(named(OUTPUT_FOLDER)) { "output" }
                 single(named(SINGLE_FILE)) { scenario.fileName }
                 single<CalculateCost<*>> {
@@ -187,7 +186,13 @@ private fun runScenario(scenario: Scenario) {
                     ObjectLoggerService<String>(
                         Path(
                             get(OUTPUT_FOLDER),
-                            LocalDateTime.now().let { "statistics-$it" }
+                            LocalDateTime.now()
+                                .let {
+                                    it.toString()
+                                        .replace(":", "-")
+                                        .replace(".", "-")
+                                }
+                                .let { "statistics-$it.csv" }
                         )
                     )
                 }

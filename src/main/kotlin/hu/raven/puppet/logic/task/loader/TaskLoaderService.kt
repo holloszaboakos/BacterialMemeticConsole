@@ -21,7 +21,8 @@ sealed class TaskLoaderService {
     protected inline fun <reified T : Any> loadFromResourceFile(
         filePath: Path
     ): T {
-        val resourceURL = this::class.java.getResource(filePath.toString()) ?: throw Exception("File not found")
+        val resourceURL =
+            this::class.java.getResource(filePath.toString().replace("\\", "/")) ?: throw Exception("File not found")
         val gson = Gson()
         return gson.fromJson(resourceURL.readText(), T::class.java)
     }
