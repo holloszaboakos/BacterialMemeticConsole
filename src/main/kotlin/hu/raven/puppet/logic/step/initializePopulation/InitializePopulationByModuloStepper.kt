@@ -1,19 +1,18 @@
 package hu.raven.puppet.logic.step.initializePopulation
 
-import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
 import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.task.Task
 import hu.raven.puppet.utility.extention.toPermutation
 
-class InitializePopulationByModuloStepper<C : PhysicsUnit<C>>(
-    val parameters: EvolutionaryAlgorithmParameterProvider<C>,
-) :
-    InitializePopulation<C>() {
+class InitializePopulationByModuloStepper<C : PhysicsUnit<C>> : InitializePopulation<C>() {
 
     override fun invoke(task: Task): List<OnePartRepresentationWithCostAndIterationAndId<C>> {
         val sizeOfPermutation =
-            (task.costGraph.objectives.size + task.transportUnits.size - 1)
+            if (task.transportUnits.size != 0)
+                (task.costGraph.objectives.size + task.transportUnits.size - 1)
+            else
+                task.costGraph.objectives.size
         val basePermutation = IntArray(sizeOfPermutation) { it }
         val population = if (task.costGraph.objectives.size != 1)
             MutableList((task.costGraph.objectives.size + task.transportUnits.size - 1)) {
@@ -74,6 +73,7 @@ class InitializePopulationByModuloStepper<C : PhysicsUnit<C>>(
             baseIndex = (baseIndex + step) % sizeOfPermutation
         }
 
+        instance.permutation.clear()
         newPermutation.forEachIndexed { index, value ->
             instance.permutation[index] = value
         }

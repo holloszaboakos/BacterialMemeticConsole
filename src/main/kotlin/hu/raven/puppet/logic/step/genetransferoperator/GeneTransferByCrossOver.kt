@@ -9,7 +9,7 @@ import hu.raven.puppet.model.solution.OnePartRepresentationWithCost
 class GeneTransferByCrossOver<C : PhysicsUnit<C>>(
     override val calculateCostOf: CalculateCost<C>,
     override val geneTransferSegmentLength: Int,
-    val crossOverOperator: CrossOverOperator<C>,
+    val crossOverOperator: CrossOverOperator,
 ) : GeneTransferOperator<C>() {
 
     override fun invoke(

@@ -1,11 +1,9 @@
 package hu.raven.puppet.logic.step.crossoveroperator
 
 import hu.raven.puppet.model.math.Permutation
-import hu.raven.puppet.model.physics.PhysicsUnit
-
 import kotlin.random.Random
 
-class OrderBasedCrossOver<C : PhysicsUnit<C>> : CrossOverOperator<C>() {
+class OrderBasedCrossOver : CrossOverOperator() {
 
     override fun invoke(
         parentPermutations: Pair<Permutation, Permutation>,

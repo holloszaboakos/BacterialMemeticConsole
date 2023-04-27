@@ -14,7 +14,8 @@ class BacterialMutationOnBestAndLuckyByShuffling<C : PhysicsUnit<C>>(
     override fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {
         val selectedCount = ((population.activeCount - 1) * mutationPercentage).toInt()
 
-        val populationRandomized = population.activesAsSequence().slice(1 until population.activeCount)
+        val populationRandomized = population.activesAsSequence()
+            .slice(1 until population.activeCount)
             .shuffled()
             .slice(0 until selectedCount)
             .toMutableList()

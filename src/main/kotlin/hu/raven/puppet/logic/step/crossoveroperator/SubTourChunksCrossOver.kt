@@ -1,16 +1,14 @@
 package hu.raven.puppet.logic.step.crossoveroperator
 
 import hu.raven.puppet.model.math.Permutation
-import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.utility.extention.get
-
 import kotlin.random.Random.Default.nextInt
 
-class SubTourChunksCrossOver<C : PhysicsUnit<C>> : CrossOverOperator<C>() {
+class SubTourChunksCrossOver : CrossOverOperator() {
 
     class Randomizer(permutationSize: Int) {
-        val randomPermutation: IntArray
-        var lastIndex = 0
+        private val randomPermutation: IntArray
+        private var lastIndex = 0
 
         init {
             randomPermutation = IntArray(permutationSize) { it }

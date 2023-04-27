@@ -1,12 +1,10 @@
 package hu.raven.puppet.logic.step.crossoveroperator
 
 import hu.raven.puppet.model.math.Permutation
-import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.utility.extention.get
 
 
-class GeneticEdgeRecombinationCrossOver<C : PhysicsUnit<C>> :
-    CrossOverOperator<C>() {
+class GeneticEdgeRecombinationCrossOver : CrossOverOperator() {
 
     override fun invoke(
         parentPermutations: Pair<Permutation, Permutation>,

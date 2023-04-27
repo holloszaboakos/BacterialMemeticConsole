@@ -5,7 +5,7 @@ import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
 class HalfElitistCrossover<C : PhysicsUnit<C>>(
-    override val crossoverOperators: List<CrossOverOperator<C>>
+    override val crossoverOperators: List<CrossOverOperator>
 ) : CrossOverStrategy<C>() {
 
     override operator fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {

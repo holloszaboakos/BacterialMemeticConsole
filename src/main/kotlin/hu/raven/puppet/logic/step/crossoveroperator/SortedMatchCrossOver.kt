@@ -1,9 +1,6 @@
 package hu.raven.puppet.logic.step.crossoveroperator
 
 import hu.raven.puppet.model.math.Permutation
-import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
-import hu.raven.puppet.model.physics.PhysicsUnit
-
 import hu.raven.puppet.model.task.CostGraph
 import hu.raven.puppet.utility.extention.get
 import hu.raven.puppet.utility.extention.getEdgeBetween
@@ -11,10 +8,9 @@ import hu.raven.puppet.utility.extention.sumClever
 import kotlin.math.abs
 
 //broken
-class SortedMatchCrossOver<C : PhysicsUnit<C>>(
-    val costGraphProvider: () -> CostGraph,
-    val parameters: EvolutionaryAlgorithmParameterProvider<C>
-) : CrossOverOperator<C>() {
+class SortedMatchCrossOver(
+    val costGraphProvider: () -> CostGraph
+) : CrossOverOperator() {
 
     override fun invoke(
         parentPermutations: Pair<Permutation, Permutation>,

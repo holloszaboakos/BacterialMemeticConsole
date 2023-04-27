@@ -19,14 +19,14 @@ import hu.raven.puppet.utility.extention.sumClever
 //abc: artificial bee colony
 //cinti
 class StatisticalRacingCrossOver<C : PhysicsUnit<C>>(
-    override val crossoverOperators: List<CrossOverOperator<C>>,
+    override val crossoverOperators: List<CrossOverOperator>,
     private val logger: ObjectLoggerService<String>,
     private val calculateCostOf: CalculateCost<C>,
     private val statistics: GeneticAlgorithmStatistics<C>
 ) : CrossOverStrategy<C>() {
     private var lastIteration = -1
     private var iterationLock = Object()
-    private var operator: CrossOverOperator<C>? = null
+    private var operator: CrossOverOperator? = null
     private var actualStatistics: OperatorStatistics? = null
 
     override fun invoke(state: EvolutionaryAlgorithmState<C>) = state.run {

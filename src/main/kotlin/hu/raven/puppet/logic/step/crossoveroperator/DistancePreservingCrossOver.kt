@@ -1,10 +1,9 @@
 package hu.raven.puppet.logic.step.crossoveroperator
 
 import hu.raven.puppet.model.math.Permutation
-import hu.raven.puppet.model.physics.PhysicsUnit
 
 
-class DistancePreservingCrossOver<C : PhysicsUnit<C>> : CrossOverOperator<C>() {
+class DistancePreservingCrossOver : CrossOverOperator() {
 
     override fun invoke(
         parentPermutations: Pair<Permutation, Permutation>,

@@ -4,7 +4,7 @@ import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIteration
 import hu.raven.puppet.model.task.Task
 
-class LocalSearchAlgorithmState<C : PhysicsUnit<C>>(
+data class LocalSearchAlgorithmState<C : PhysicsUnit<C>>(
     override val task: Task
 ) : IterativeAlgorithmState {
     lateinit var actualCandidate: OnePartRepresentationWithCostAndIteration<C>

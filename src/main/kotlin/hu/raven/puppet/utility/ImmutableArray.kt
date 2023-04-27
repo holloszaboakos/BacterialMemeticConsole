@@ -1,6 +1,6 @@
 package hu.raven.puppet.utility
 
-class ImmutableArray<T>(private val array: Array<T>) {
+data class ImmutableArray<T>(private val array: Array<T>) {
     val size: Int get() = array.size
 
     companion object {
@@ -24,6 +24,20 @@ class ImmutableArray<T>(private val array: Array<T>) {
     fun withIndex() = array.withIndex()
     fun asSequence() = array.asSequence()
     fun forEach(function: (T) -> Unit) = array.forEach(function)
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as ImmutableArray<*>
+
+        if (!array.contentEquals(other.array)) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return array.contentHashCode()
+    }
 }
 
 fun <R> ImmutableArray<ImmutableArray<R>>.flatten() = flatMap { row -> row.asSequence() }

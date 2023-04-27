@@ -1,21 +1,19 @@
 package hu.raven.puppet.logic.step.crossoveroperator
 
 import hu.raven.puppet.model.math.Permutation
-import hu.raven.puppet.model.physics.PhysicsUnit
+import hu.raven.puppet.model.task.CostGraph
 
-import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
-
-sealed class CrossOverOperator<C : PhysicsUnit<C>> {
+sealed class CrossOverOperator {
     companion object {
-        fun <C : PhysicsUnit<C>> getVariants(
-            algorithmState: EvolutionaryAlgorithmState<C>,
-        ) = listOf<CrossOverOperator<C>>(
+        fun getVariants(
+            costGraph: CostGraph
+        ) = listOf(
             AlternatingEdgeCrossOver(),
             AlternatingPositionCrossOver(),
             CycleCrossOver(),
             DistancePreservingCrossOver(),
             GeneticEdgeRecombinationCrossOver(),
-            HeuristicCrossOver { algorithmState.task.costGraph }, //TODO provider
+            HeuristicCrossOver { costGraph }, //TODO provider
             MaximalPreservationCrossOver(),
             OrderBasedCrossOver(),
             OrderCrossOver(),

@@ -11,14 +11,14 @@ import hu.raven.puppet.model.statistics.GeneticAlgorithmStatistics
 import hu.raven.puppet.model.statistics.OperatorStatistics
 
 class StatisticalRacingCrossOverWithLeader<C : PhysicsUnit<C>>(
-    override val crossoverOperators: List<CrossOverOperator<C>>,
+    override val crossoverOperators: List<CrossOverOperator>,
     private val logger: ObjectLoggerService<String>,
     private val calculateCostOf: CalculateCost<C>,
     private val statistics: GeneticAlgorithmStatistics<C>
 ) : CrossOverStrategy<C>() {
 
     private var lastIteration = -1
-    private var operator: CrossOverOperator<C>? = null
+    private var operator: CrossOverOperator? = null
     private var actualStatistics: OperatorStatistics? = null
 
 

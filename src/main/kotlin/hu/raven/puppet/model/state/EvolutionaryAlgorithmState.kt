@@ -5,7 +5,7 @@ import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationA
 import hu.raven.puppet.model.solution.PoolWithSmartActivation
 import hu.raven.puppet.model.task.Task
 
-class EvolutionaryAlgorithmState<C : PhysicsUnit<C>>(
+data class EvolutionaryAlgorithmState<C : PhysicsUnit<C>>(
     override val task: Task,
     val population: PoolWithSmartActivation<OnePartRepresentationWithCostAndIterationAndId<C>>
 ) : IterativeAlgorithmState {

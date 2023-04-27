@@ -2,16 +2,15 @@ package hu.raven.puppet.logic.step.crossoveroperator
 
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.math.Permutation
-import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.task.CostGraph
 import hu.raven.puppet.utility.extention.get
 import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.extention.sumClever
 import kotlin.random.Random.Default.nextInt
 
-class HeuristicCrossOver<C : PhysicsUnit<C>>(
+class HeuristicCrossOver(
     val costGraphProvider: () -> CostGraph
-) : CrossOverOperator<C>() {
+) : CrossOverOperator() {
 
     override fun invoke(
         parentPermutations: Pair<Permutation, Permutation>,

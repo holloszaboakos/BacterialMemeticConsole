@@ -7,7 +7,7 @@ import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
 class GeneticAlgorithmStatistics<C : PhysicsUnit<C>>(val state: EvolutionaryAlgorithmState<C>) {
     val operatorsWithStatistics =
-        CrossOverOperator.getVariants(state).associateWith {
+        CrossOverOperator.getVariants(state.task.costGraph).associateWith {
             OperatorStatistics(Fraction.new(0), 1, Fraction.new(Int.MAX_VALUE.toLong()))
         }.toMutableMap()
 

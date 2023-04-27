@@ -125,9 +125,12 @@ class Permutation(val size: Int) {
     }
 
     fun swapValues(firstIndex: Int, secondIndex: Int) {
-        val tempGene = permutation[firstIndex]
-        set(firstIndex, permutation[secondIndex])
-        set(secondIndex, tempGene)
+        val firstValue = permutation[firstIndex]
+        val secondValue = permutation[secondIndex]
+        deletePosition(firstIndex)
+        deletePosition(secondIndex)
+        set(firstIndex, secondValue)
+        set(secondIndex, firstValue)
     }
 
     fun clear() {
