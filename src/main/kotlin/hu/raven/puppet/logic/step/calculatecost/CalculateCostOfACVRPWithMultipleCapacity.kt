@@ -1,6 +1,7 @@
 package hu.raven.puppet.logic.step.calculatecost
 
 import hu.raven.puppet.model.TakenCapacity
+import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.Euro
 import hu.raven.puppet.model.physics.Second
 import hu.raven.puppet.model.solution.OnePartRepresentation
@@ -10,10 +11,10 @@ import hu.raven.puppet.utility.extention.sumClever
 
 class CalculateCostOfACVRPWithMultipleCapacity(
     override val task: Task
-) : CalculateCost<Euro>() {
+) : CalculateCost() {
     override operator fun invoke(
         solution: OnePartRepresentation
-    ): Euro {
+    ): Fraction {
         return solution.permutation
             .sliced { it >= solution.objectiveCount }
             .mapIndexed { sliceIndex, slice ->
@@ -56,7 +57,6 @@ class CalculateCostOfACVRPWithMultipleCapacity(
             }.flatten()
             .map { it.value }
             .sumClever()
-            .let { Euro(it) }
     }
 
     private fun onFirstValueOfSlice(

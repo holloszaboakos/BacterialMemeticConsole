@@ -1,14 +1,13 @@
 package hu.raven.puppet.logic.step.crossoverstrategy
 
 import hu.raven.puppet.logic.step.crossoveroperator.CrossOverOperator
-import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
-class HalfElitistCrossover<C : PhysicsUnit<C>>(
+class HalfElitistCrossover(
     override val crossoverOperators: List<CrossOverOperator>
-) : CrossOverStrategy<C>() {
+) : CrossOverStrategy() {
 
-    override operator fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {
+    override operator fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
         val children = population.inactivesAsSequence().chunked(2).toList()
         val parent = population.activesAsSequence()
             .shuffled()

@@ -1,13 +1,11 @@
 package hu.raven.puppet.model.logging
 
-import hu.raven.puppet.model.physics.PhysicsUnit
-
-data class PopulationData<C : PhysicsUnit<C>>(
-    val best: SpecimenData<C>,
-    val second: SpecimenData<C>?,
-    val third: SpecimenData<C>?,
-    val worst: SpecimenData<C>,
-    val median: SpecimenData<C>,
+data class PopulationData(
+    val best: SpecimenData,
+    val second: SpecimenData?,
+    val third: SpecimenData?,
+    val worst: SpecimenData,
+    val median: SpecimenData,
     val diversity: Double,
     val geneBalance: Double
 )

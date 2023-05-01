@@ -1,16 +1,15 @@
 package hu.raven.puppet.logic.step.genetransfer
 
 import hu.raven.puppet.logic.step.genetransferoperator.GeneTransferOperator
-import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.utility.extention.slice
 
-class GeneTransferFromBetterToWorse<C : PhysicsUnit<C>>(
+class GeneTransferFromBetterToWorse(
     override val injectionCount: Int,
-    override val geneTransferOperator: GeneTransferOperator<C>,
-) : GeneTransfer<C>() {
+    override val geneTransferOperator: GeneTransferOperator,
+) : GeneTransfer() {
 
-    override fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {
+    override fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
         val worse = population
             .activesAsSequence()
             .slice(population.activeCount / 2 until population.activeCount)

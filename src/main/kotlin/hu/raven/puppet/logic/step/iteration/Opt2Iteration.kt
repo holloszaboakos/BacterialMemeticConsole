@@ -1,19 +1,18 @@
 package hu.raven.puppet.logic.step.iteration
 
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
-import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.state.LocalSearchAlgorithmState
 
 
-class Opt2Iteration<C : PhysicsUnit<C>>(
-    val calculateCostOf: CalculateCost<C>,
-    val algorithmState: LocalSearchAlgorithmState<C>,
-) : AlgorithmIteration<LocalSearchAlgorithmState<C>> {
+class Opt2Iteration(
+    val calculateCostOf: CalculateCost,
+    val algorithmState: LocalSearchAlgorithmState,
+) : AlgorithmIteration<LocalSearchAlgorithmState> {
 
     var sourceIndex = 0
     var permutation = listOf<Int>()
 
-    override fun invoke(algorithmState: LocalSearchAlgorithmState<C>) = algorithmState.run {
+    override fun invoke(algorithmState: LocalSearchAlgorithmState) = algorithmState.run {
         val best = actualCandidate
         var bestCost = best.costOrException()
         var tempGene: Int

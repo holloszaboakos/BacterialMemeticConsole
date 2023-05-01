@@ -4,9 +4,7 @@ import hu.raven.puppet.logic.logging.ObjectLoggerService
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.logic.step.crossoveroperator.CrossOverOperator
 import hu.raven.puppet.model.math.Fraction
-import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
-
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.model.statistics.GeneticAlgorithmStatistics
 import hu.raven.puppet.model.statistics.OperatorStatistics
@@ -18,18 +16,18 @@ import hu.raven.puppet.utility.extention.sumClever
 //a mostani a méh kolónia algoritmus scout fázis menjen bele
 //abc: artificial bee colony
 //cinti
-class StatisticalRacingCrossOver<C : PhysicsUnit<C>>(
+class StatisticalRacingCrossOver(
     override val crossoverOperators: List<CrossOverOperator>,
     private val logger: ObjectLoggerService<String>,
-    private val calculateCostOf: CalculateCost<C>,
-    private val statistics: GeneticAlgorithmStatistics<C>
-) : CrossOverStrategy<C>() {
+    private val calculateCostOf: CalculateCost,
+    private val statistics: GeneticAlgorithmStatistics
+) : CrossOverStrategy() {
     private var lastIteration = -1
     private var iterationLock = Object()
     private var operator: CrossOverOperator? = null
     private var actualStatistics: OperatorStatistics? = null
 
-    override fun invoke(state: EvolutionaryAlgorithmState<C>) = state.run {
+    override fun invoke(state: EvolutionaryAlgorithmState) = state.run {
         val children = population.inactivesAsSequence().chunked(2).toList()
         val parent = population.activesAsSequence()
             .shuffled()
@@ -65,10 +63,10 @@ class StatisticalRacingCrossOver<C : PhysicsUnit<C>>(
     private fun crossover(
         iteration: Int,
         parents: Pair<
-                OnePartRepresentationWithCostAndIterationAndId<C>,
-                OnePartRepresentationWithCostAndIterationAndId<C>,
+                OnePartRepresentationWithCostAndIterationAndId,
+                OnePartRepresentationWithCostAndIterationAndId,
                 >,
-        child: OnePartRepresentationWithCostAndIterationAndId<C>,
+        child: OnePartRepresentationWithCostAndIterationAndId,
     ) {
         var newIteration: Boolean
         synchronized(iterationLock) {

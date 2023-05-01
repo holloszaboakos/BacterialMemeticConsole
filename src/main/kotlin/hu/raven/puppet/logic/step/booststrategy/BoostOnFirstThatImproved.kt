@@ -1,17 +1,17 @@
 package hu.raven.puppet.logic.step.booststrategy
 
 import hu.raven.puppet.logic.step.boostoperator.BoostOperator
-import hu.raven.puppet.model.physics.PhysicsUnit
+import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
 
-class BoostOnFirstThatImproved<C : PhysicsUnit<C>>(
-    override val boostOperator: BoostOperator<C, OnePartRepresentationWithCostAndIterationAndId<C>>
-) : BoostStrategy<C>() {
-    var costPerPermutation = mutableListOf<C?>()
+class BoostOnFirstThatImproved(
+    override val boostOperator: BoostOperator<OnePartRepresentationWithCostAndIterationAndId>
+) : BoostStrategy() {
+    var costPerPermutation = mutableListOf<Fraction?>()
 
-    override fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {
+    override fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
         if (costPerPermutation.isEmpty()) {
             costPerPermutation = MutableList(population.activeCount) { null }
         }

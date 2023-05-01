@@ -1,15 +1,13 @@
 package hu.raven.puppet.logic.step.mutatechildren
 
 import hu.raven.puppet.model.math.Permutation
-import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
-
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.utility.extention.slice
 
-class MutateChildrenByReset<C : PhysicsUnit<C>> : MutateChildren<C>() {
+class MutateChildrenByReset : MutateChildren() {
 
-    override fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {
+    override fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
         val basePermutation =
             List(copyOfBest?.permutation?.indices?.count() ?: 0) { it }.shuffled().toIntArray()
 
@@ -28,7 +26,7 @@ class MutateChildrenByReset<C : PhysicsUnit<C>> : MutateChildren<C>() {
 
     private fun onChild(
         instanceIndex: Int,
-        child: OnePartRepresentationWithCostAndIterationAndId<C>,
+        child: OnePartRepresentationWithCostAndIterationAndId,
         basePermutation: IntArray
     ) {
 

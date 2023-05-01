@@ -4,23 +4,22 @@ package hu.raven.puppet.logic.step.bacterialmutationonspecimen
 import hu.raven.puppet.logic.step.bacterialmutationoperator.BacterialMutationOperator
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.logic.step.selectsegment.SelectSegment
-import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCost
 import hu.raven.puppet.model.solution.Segment
 import kotlin.math.exp
 import kotlin.random.Random
 
-class MutationWithSimulatedAnnealingBasedSelection<C : PhysicsUnit<C>>(
-    override val mutationOperator: BacterialMutationOperator<C>,
-    override val calculateCostOf: CalculateCost<C>,
-    override val selectSegment: SelectSegment<C>,
+class MutationWithSimulatedAnnealingBasedSelection(
+    override val mutationOperator: BacterialMutationOperator,
+    override val calculateCostOf: CalculateCost,
+    override val selectSegment: SelectSegment,
     override val cloneCount: Int,
     override val cloneCycleCount: Int,
     private val iterationLimit: Int,
-) : MutationOnSpecimen<C>() {
+) : MutationOnSpecimen() {
 
     override fun invoke(
-        specimenWithIndex: IndexedValue<OnePartRepresentationWithCost<C>>,
+        specimenWithIndex: IndexedValue<OnePartRepresentationWithCost>,
         iteration: Int
     ) {
         val doSimulatedAnnealing = specimenWithIndex.index != 0
@@ -43,9 +42,9 @@ class MutationWithSimulatedAnnealingBasedSelection<C : PhysicsUnit<C>>(
     }
 
     private fun generateClones(
-        specimen: IndexedValue<OnePartRepresentationWithCost<C>>,
+        specimen: IndexedValue<OnePartRepresentationWithCost>,
         selectedSegment: Segment
-    ): MutableList<OnePartRepresentationWithCost<C>> {
+    ): MutableList<OnePartRepresentationWithCost> {
         val clones = MutableList(cloneCount + 1) {
             specimen.value.cloneRepresentationAndCost()
         }
@@ -58,8 +57,8 @@ class MutationWithSimulatedAnnealingBasedSelection<C : PhysicsUnit<C>>(
     }
 
     private fun loadDataToSpecimen(
-        specimen: OnePartRepresentationWithCost<C>,
-        clones: MutableList<OnePartRepresentationWithCost<C>>,
+        specimen: OnePartRepresentationWithCost,
+        clones: MutableList<OnePartRepresentationWithCost>,
         iteration: Int,
         doSimulatedAnnealing: Boolean
     ) {

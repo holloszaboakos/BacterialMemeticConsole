@@ -1,5 +1,6 @@
 package hu.raven.puppet.logic.step.calculatecost
 
+import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.physics.Meter
 import hu.raven.puppet.model.physics.Stere
 import hu.raven.puppet.model.solution.OnePartRepresentation
@@ -10,13 +11,13 @@ import hu.raven.puppet.utility.extention.getEdgeBetween
 
 class CalculateCostOfCVRPSolutionWithCapacity(
     override val task: Task
-) : CalculateCost<Meter>() {
+) : CalculateCost() {
     data class TripState(
         val takenCapacity: Stere,
         val cost: Meter,
     )
 
-    override fun invoke(solution: OnePartRepresentation): Meter {
+    override fun invoke(solution: OnePartRepresentation): Fraction {
         var tripState = TripState(Stere(0L), Meter(0L))
         solution.permutation
             .sliced { it >= task.costGraph.objectives.size - 1 }
@@ -50,7 +51,7 @@ class CalculateCostOfCVRPSolutionWithCapacity(
 
                 }
             }
-        return tripState.cost
+        return tripState.cost.value
     }
 
     private fun onFirstValueOfSlice(

@@ -1,13 +1,12 @@
 package hu.raven.puppet.logic.step.initializePopulation
 
-import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.task.Task
 import hu.raven.puppet.utility.extention.toPermutation
 
-class InitializePopulationByModuloStepper<C : PhysicsUnit<C>> : InitializePopulation<C>() {
+class InitializePopulationByModuloStepper : InitializePopulation() {
 
-    override fun invoke(task: Task): List<OnePartRepresentationWithCostAndIterationAndId<C>> {
+    override fun invoke(task: Task): List<OnePartRepresentationWithCostAndIterationAndId> {
         val sizeOfPermutation =
             if (task.transportUnits.size != 0)
                 (task.costGraph.objectives.size + task.transportUnits.size - 1)
@@ -16,7 +15,7 @@ class InitializePopulationByModuloStepper<C : PhysicsUnit<C>> : InitializePopula
         val basePermutation = IntArray(sizeOfPermutation) { it }
         val population = if (task.costGraph.objectives.size != 1)
             MutableList((task.costGraph.objectives.size + task.transportUnits.size - 1)) {
-                OnePartRepresentationWithCostAndIterationAndId<C>(
+                OnePartRepresentationWithCostAndIterationAndId(
                     id = it,
                     iterationOfCreation = 0,
                     cost = null,
@@ -31,7 +30,7 @@ class InitializePopulationByModuloStepper<C : PhysicsUnit<C>> : InitializePopula
             }
         else
             mutableListOf(
-                OnePartRepresentationWithCostAndIterationAndId<C>(
+                OnePartRepresentationWithCostAndIterationAndId(
                     0,
                     0,
                     null,
@@ -53,7 +52,7 @@ class InitializePopulationByModuloStepper<C : PhysicsUnit<C>> : InitializePopula
 
     private fun initSpecimen(
         instanceIndex: Int,
-        instance: OnePartRepresentationWithCostAndIterationAndId<C>,
+        instance: OnePartRepresentationWithCostAndIterationAndId,
         sizeOfPermutation: Int,
         basePermutation: IntArray
     ) {

@@ -1,7 +1,6 @@
 package hu.raven.puppet.logic.step.diversity
 
 
-import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import kotlinx.coroutines.CoroutineScope
@@ -10,9 +9,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlin.math.abs
 
-class DiversityByMatrixDistanceFromBest<C : PhysicsUnit<C>> : Diversity<C>() {
+class DiversityByMatrixDistanceFromBest : Diversity() {
 
-    override fun invoke(algorithmState: EvolutionaryAlgorithmState<C>): Double = runBlocking {
+    override fun invoke(algorithmState: EvolutionaryAlgorithmState): Double = runBlocking {
         val best = algorithmState.copyOfBest!!
         val matrixOfBest = preceditionMatrixWithDistance(best)
         var diversity = 0.0
@@ -41,8 +40,8 @@ class DiversityByMatrixDistanceFromBest<C : PhysicsUnit<C>> : Diversity<C>() {
         return distance
     }
 
-    private fun <C : PhysicsUnit<C>> preceditionMatrixWithDistance(
-        specimen: OnePartRepresentationWithCostAndIterationAndId<C>
+    private fun preceditionMatrixWithDistance(
+        specimen: OnePartRepresentationWithCostAndIterationAndId
     ): Array<IntArray> {
         val permutation = specimen.permutation
         return Array(permutation.size) { fromIndex ->

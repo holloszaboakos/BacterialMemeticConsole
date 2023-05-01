@@ -1,10 +1,9 @@
 package hu.raven.puppet.logic.step.selectsegment
 
 import hu.raven.puppet.model.math.Permutation
-import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.Segment
 
-sealed class SelectSegment<C : PhysicsUnit<C>> {
+sealed class SelectSegment {
     abstract val cloneSegmentLength: Int
 
     abstract operator fun invoke(

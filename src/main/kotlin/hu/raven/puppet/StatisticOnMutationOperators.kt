@@ -14,9 +14,6 @@ import hu.raven.puppet.logic.task.loader.TaskLoaderService
 import hu.raven.puppet.logic.task.loader.TspTaskLoaderService
 import hu.raven.puppet.model.math.Permutation
 import hu.raven.puppet.model.parameters.BacterialMutationParameterProvider
-import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
-import hu.raven.puppet.model.parameters.IterativeAlgorithmParameterProvider
-import hu.raven.puppet.model.physics.Meter
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 
 import hu.raven.puppet.model.state.AlgorithmState
@@ -40,26 +37,26 @@ private data class Scenario(
     val fileName: String,
     val objectiveCount: Int,
     val mutationStrategy: (
-        mutationOperator: BacterialMutationOperator<Meter>,
-        calculateCostOf: CalculateCost<Meter>,
-        selectSegment: SelectSegment<Meter>,
+        mutationOperator: BacterialMutationOperator,
+        calculateCostOf: CalculateCost,
+        selectSegment: SelectSegment,
         cloneCount: Int,
         cloneCycleCount: Int,
-    ) -> MutationOnSpecimen<Meter>,
-    val mutationOperator: (task: Task) -> BacterialMutationOperator<Meter>,
+    ) -> MutationOnSpecimen,
+    val mutationOperator: (task: Task) -> BacterialMutationOperator,
 )
 
 private val TASK_SIZES = arrayOf(4, 8, 16, 32, 64, 128, 256, 512, 1024)
 private val STRATEGIES: Array<(
-    mutationOperator: BacterialMutationOperator<Meter>,
-    calculateCostOf: CalculateCost<Meter>,
-    selectSegment: SelectSegment<Meter>,
+    mutationOperator: BacterialMutationOperator,
+    calculateCostOf: CalculateCost,
+    selectSegment: SelectSegment,
     cloneCount: Int,
     cloneCycleCount: Int
-) -> MutationOnSpecimen<Meter>> = arrayOf(
-    { mutationOperator: BacterialMutationOperator<Meter>,
-      calculateCostOf: CalculateCost<Meter>,
-      selectSegment: SelectSegment<Meter>,
+) -> MutationOnSpecimen> = arrayOf(
+    { mutationOperator: BacterialMutationOperator,
+      calculateCostOf: CalculateCost,
+      selectSegment: SelectSegment,
       cloneCount: Int,
       cloneCycleCount: Int ->
 
@@ -71,9 +68,9 @@ private val STRATEGIES: Array<(
             cloneCycleCount
         )
     },
-    { mutationOperator: BacterialMutationOperator<Meter>,
-      calculateCostOf: CalculateCost<Meter>,
-      selectSegment: SelectSegment<Meter>,
+    { mutationOperator: BacterialMutationOperator,
+      calculateCostOf: CalculateCost,
+      selectSegment: SelectSegment,
       cloneCount: Int,
       cloneCycleCount: Int ->
 
@@ -85,9 +82,9 @@ private val STRATEGIES: Array<(
             cloneCycleCount
         )
     },
-    { mutationOperator: BacterialMutationOperator<Meter>,
-      calculateCostOf: CalculateCost<Meter>,
-      selectSegment: SelectSegment<Meter>,
+    { mutationOperator: BacterialMutationOperator,
+      calculateCostOf: CalculateCost,
+      selectSegment: SelectSegment,
       cloneCount: Int,
       cloneCycleCount: Int ->
 
@@ -104,7 +101,7 @@ private val STRATEGIES: Array<(
 )
 private val OPERATORS: Array<(
     task: Task
-) -> BacterialMutationOperator<Meter>> = arrayOf(
+) -> BacterialMutationOperator> = arrayOf(
     { task: Task ->
         EdgeBuilderHeuristicOnContinuousSegment(task)
     },
@@ -155,8 +152,8 @@ private fun runScenario(scenario: Scenario) {
                 single(named(CLONE_CYCLE_COUNT)) { 5 }
                 single(named(SIZE_OF_POPULATION)) { 1 }
                 single(named(ITERATION_LIMIT)) { Int.MAX_VALUE }
-                single<BacterialMutationParameterProvider<*>> {
-                    BacterialMutationParameterProvider<Meter>(
+                single<BacterialMutationParameterProvider> {
+                    BacterialMutationParameterProvider(
                         cloneCount = 40,
                         cloneSegmentLength = scenario.objectiveCount,
                         cloneCycleCount = 5,
@@ -167,16 +164,10 @@ private fun runScenario(scenario: Scenario) {
                         mutationPercentage = 0f
                     )
                 }
-                single<EvolutionaryAlgorithmParameterProvider<*>> {
-                    get<BacterialMutationParameterProvider<Meter>>()
-                }
-                single<IterativeAlgorithmParameterProvider> {
-                    get<BacterialMutationParameterProvider<Meter>>()
-                }
                 single(named(INPUT_FOLDER)) { "\\input\\tsp" }
                 single(named(OUTPUT_FOLDER)) { "output" }
                 single(named(SINGLE_FILE)) { scenario.fileName }
-                single<CalculateCost<*>> {
+                single<CalculateCost> {
                     CalculateCostOfTspSolution(
                         get()
                     )
@@ -198,30 +189,30 @@ private fun runScenario(scenario: Scenario) {
                 }
                 single<TaskLoaderService> { TspTaskLoaderService(get(), get(SINGLE_FILE)) }
                 single { get<TaskLoaderService>().loadTask(get(INPUT_FOLDER)) }
-                single<BacterialMutationOperator<*>> {
+                single<BacterialMutationOperator> {
                     scenario.mutationOperator(
                         get(),
                     )
                 }
-                single<SelectSegment<*>> {
-                    SelectContinuesSegment<Meter>(
+                single<SelectSegment> {
+                    SelectContinuesSegment(
                         get(CLONE_SEGMENT_LENGTH)
                     )
                 }
                 single<AlgorithmState> {
-                    get<EvolutionaryAlgorithmState<*>>()
+                    get<EvolutionaryAlgorithmState>()
                 }
             }
         )
     }
 
     val task: Task = get()
-    val calculateCost: CalculateCost<Meter> = get()
+    val calculateCost: CalculateCost = get()
     task.costGraph.edgesFromCenter.forEach { println(it.length) }
     task.costGraph.edgesToCenter.forEach { println(it.length) }
     task.costGraph.edgesBetween.flatten().forEach { println(it.length) }
     arrayOf(arrayOf(0)).flatten()
-    val strategy: MutationOnSpecimen<Meter> = scenario.mutationStrategy(
+    val strategy: MutationOnSpecimen = scenario.mutationStrategy(
         get(),
         get(),
         get(),
@@ -231,7 +222,7 @@ private fun runScenario(scenario: Scenario) {
 
     (0 until 25).map {
         val specimen =
-            OnePartRepresentationWithCostAndIterationAndId<Meter>(
+            OnePartRepresentationWithCostAndIterationAndId(
                 0,
                 0,
                 null,
@@ -242,8 +233,8 @@ private fun runScenario(scenario: Scenario) {
         calculateCost(specimen)
         specimen.costOrException()
     }
-        .sortedBy { it.value }
-        .groupBy { it.value.numerator }
+        .sortedBy { it }
+        .groupBy { it.numerator }
         .forEach { (value, values) ->
             output.appendText("value: $value  count: ${values.size}\n")
         }

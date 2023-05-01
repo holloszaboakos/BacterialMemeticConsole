@@ -1,13 +1,12 @@
 package hu.raven.puppet.logic.step.diversity
 
 import hu.raven.puppet.model.math.Permutation
-import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
 
-class DiversityByInnerDistanceAndSequence<C : PhysicsUnit<C>> : Diversity<C>() {
+class DiversityByInnerDistanceAndSequence : Diversity() {
 
-    override fun invoke(algorithmState: EvolutionaryAlgorithmState<C>): Double = algorithmState.run {
+    override fun invoke(algorithmState: EvolutionaryAlgorithmState): Double = algorithmState.run {
         var diversity = 0.0
 
         population.activesAsSequence().forEach { firstSpecimen ->

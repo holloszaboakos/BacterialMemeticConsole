@@ -11,7 +11,7 @@ class Fraction private constructor(
     val numerator: Int,
     val denominator: Int,
     val exponential: Int
-) : Comparable<Fraction>, Number() {
+) : Comparable<Fraction> {
 
     companion object {
         private const val MAX_LOG = Int.SIZE_BITS - 1
@@ -251,33 +251,5 @@ class Fraction private constructor(
 
     override fun hashCode(): Int {
         throw Exception("Should not be used")
-    }
-
-    override fun toByte(): Byte {
-        TODO("Not yet implemented")
-    }
-
-    override fun toChar(): Char {
-        TODO("Not yet implemented")
-    }
-
-    override fun toDouble(): Double {
-        TODO("Not yet implemented")
-    }
-
-    override fun toFloat(): Float {
-        TODO("Not yet implemented")
-    }
-
-    override fun toInt(): Int {
-        TODO("Not yet implemented")
-    }
-
-    override fun toLong(): Long {
-        TODO("Not yet implemented")
-    }
-
-    override fun toShort(): Short {
-        TODO("Not yet implemented")
     }
 }

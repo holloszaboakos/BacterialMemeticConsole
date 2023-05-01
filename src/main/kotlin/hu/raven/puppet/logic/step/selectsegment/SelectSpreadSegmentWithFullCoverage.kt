@@ -1,12 +1,11 @@
 package hu.raven.puppet.logic.step.selectsegment
 
 import hu.raven.puppet.model.math.Permutation
-import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.Segment
 
-class SelectSpreadSegmentWithFullCoverage<C : PhysicsUnit<C>>(
+class SelectSpreadSegmentWithFullCoverage(
     override val cloneSegmentLength: Int,
-) : SelectSegment<C>() {
+) : SelectSegment() {
 
     private var randomPermutation: IntArray? = null
 

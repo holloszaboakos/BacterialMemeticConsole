@@ -1,13 +1,12 @@
 package hu.raven.puppet.logic.step.selectsegment
 
 import hu.raven.puppet.model.math.Permutation
-import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.Segment
 import hu.raven.puppet.utility.extention.selectRandomPositions
 
-class SelectSpreadSegment<C : PhysicsUnit<C>>(
+class SelectSpreadSegment(
     override val cloneSegmentLength: Int,
-) : SelectSegment<C>() {
+) : SelectSegment() {
 
     override fun invoke(
         specimen: Permutation,

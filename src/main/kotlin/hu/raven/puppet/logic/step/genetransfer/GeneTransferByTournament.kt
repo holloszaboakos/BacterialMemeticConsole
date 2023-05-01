@@ -1,14 +1,13 @@
 package hu.raven.puppet.logic.step.genetransfer
 
 import hu.raven.puppet.logic.step.genetransferoperator.GeneTransferOperator
-import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
-class GeneTransferByTournament<C : PhysicsUnit<C>>(
+class GeneTransferByTournament(
     override val injectionCount: Int,
-    override val geneTransferOperator: GeneTransferOperator<C>,
-) : GeneTransfer<C>() {
-    override fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {
+    override val geneTransferOperator: GeneTransferOperator,
+) : GeneTransfer() {
+    override fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
         if (population.activeCount <= 1 || injectionCount == 0) {
             return
         }
@@ -29,7 +28,7 @@ class GeneTransferByTournament<C : PhysicsUnit<C>>(
         (0 until injectionCount)
             .forEach { injectionCount ->
                 val specimen = populationInRandomPairs[injectionCount % populationInRandomPairs.size]
-                    .sortedBy { it.costOrException().value }
+                    .sortedBy { it.costOrException() }
 
                 synchronized(populationInRandomPairs[injectionCount % populationInRandomPairs.size][0]) {
                     synchronized(populationInRandomPairs[injectionCount % populationInRandomPairs.size][1]) {

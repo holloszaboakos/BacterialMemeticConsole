@@ -1,20 +1,18 @@
 package hu.raven.puppet.logic.step.initializePopulation
 
 import hu.raven.puppet.logic.step.bacterialmutationonspecimen.MutationOnSpecimen
-import hu.raven.puppet.model.parameters.EvolutionaryAlgorithmParameterProvider
-import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.task.Task
 import hu.raven.puppet.utility.extention.slice
 import hu.raven.puppet.utility.extention.toPermutation
 
-class InitializeHugePopulationThanPreOptimizeThanSelectBest<C : PhysicsUnit<C>>(
-    val parameters: EvolutionaryAlgorithmParameterProvider<C>,
-    private val mutationOperator: MutationOnSpecimen<C>,
-) : InitializePopulation<C>() {
+class InitializeHugePopulationThanPreOptimizeThanSelectBest(
+    private val sizeOfPopulation: Int,
+    private val mutationOperator: MutationOnSpecimen,
+) : InitializePopulation() {
 
 
-    override fun invoke(task: Task): List<OnePartRepresentationWithCostAndIterationAndId<C>> {
+    override fun invoke(task: Task): List<OnePartRepresentationWithCostAndIterationAndId> {
         val sizeOfPermutation = task.costGraph.objectives.size + task.transportUnits.size - 1
         val basePermutation = IntArray(sizeOfPermutation) { it }
 
@@ -48,7 +46,7 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest<C : PhysicsUnit<C>>(
         population =
             bestImprovements
                 .map { it.first }
-                .slice(0 until parameters.sizeOfPopulation)
+                .slice(0 until sizeOfPopulation)
                 .map { specimen ->
                     OnePartRepresentationWithCostAndIterationAndId(
                         id = specimen.value.id,
@@ -61,7 +59,7 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest<C : PhysicsUnit<C>>(
         return population
     }
 
-    private fun bacterialMutateEach(population: List<OnePartRepresentationWithCostAndIterationAndId<C>>) = population
+    private fun bacterialMutateEach(population: List<OnePartRepresentationWithCostAndIterationAndId>) = population
         .asSequence()
         .withIndex()
         .map { specimenWithIndex ->
@@ -71,14 +69,14 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest<C : PhysicsUnit<C>>(
             )
         }
         .sortedBy {
-            it.first.value.costOrException().value / it.second.value.costOrException().value
+            it.first.value.costOrException() / it.second.value.costOrException()
         }
 
 
-    private fun createPopulation(task: Task): List<OnePartRepresentationWithCostAndIterationAndId<C>> {
+    private fun createPopulation(task: Task): List<OnePartRepresentationWithCostAndIterationAndId> {
         return if (task.costGraph.objectives.size != 1)
             MutableList((task.costGraph.objectives.size + task.transportUnits.size - 1)) {
-                OnePartRepresentationWithCostAndIterationAndId<C>(
+                OnePartRepresentationWithCostAndIterationAndId(
                     id = it,
                     iterationOfCreation = 0,
                     cost = null,
@@ -92,7 +90,7 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest<C : PhysicsUnit<C>>(
             }
         else
             mutableListOf(
-                OnePartRepresentationWithCostAndIterationAndId<C>(
+                OnePartRepresentationWithCostAndIterationAndId(
                     id = 0,
                     iterationOfCreation = 0,
                     cost = null,

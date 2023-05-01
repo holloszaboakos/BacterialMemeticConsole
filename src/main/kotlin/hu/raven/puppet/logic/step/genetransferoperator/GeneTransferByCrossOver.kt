@@ -3,18 +3,17 @@ package hu.raven.puppet.logic.step.genetransferoperator
 
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.logic.step.crossoveroperator.CrossOverOperator
-import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCost
 
-class GeneTransferByCrossOver<C : PhysicsUnit<C>>(
-    override val calculateCostOf: CalculateCost<C>,
+class GeneTransferByCrossOver(
+    override val calculateCostOf: CalculateCost,
     override val geneTransferSegmentLength: Int,
     val crossOverOperator: CrossOverOperator,
-) : GeneTransferOperator<C>() {
+) : GeneTransferOperator() {
 
     override fun invoke(
-        source: OnePartRepresentationWithCost<C>,
-        target: OnePartRepresentationWithCost<C>
+        source: OnePartRepresentationWithCost,
+        target: OnePartRepresentationWithCost
     ) {
         val child = target.cloneRepresentationAndCost()
 

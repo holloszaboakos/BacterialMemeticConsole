@@ -24,25 +24,46 @@ class TspGeneratorService {
     private fun Array<IntArray>.optimizeDistanceMatrixByFloyd() {
         var improved = true
         while (improved) {
-            improved = false
-            for (fromIndex in indices) {
-                for (toIndex in indices) {
-                    if (fromIndex == toIndex) {
+            improved = floydIteration()
+        }
+    }
+
+    private fun Array<IntArray>.floydIteration(): Boolean {
+        var improvement = false
+        for (fromIndex in indices) {
+            for (toIndex in indices) {
+                if (fromIndex == toIndex) {
+                    continue
+                }
+
+                for (throughIndex in indices) {
+                    if (fromIndex == throughIndex || toIndex == throughIndex) {
                         continue
                     }
 
-                    for (throughIndex in indices) {
-                        if (fromIndex == throughIndex || toIndex == throughIndex) {
-                            continue
-                        }
-                        if (this[fromIndex][throughIndex] + this[throughIndex][toIndex] < this[fromIndex][toIndex]) {
-                            this[fromIndex][toIndex] = this[fromIndex][throughIndex] + this[throughIndex][toIndex]
-                            improved = true
-                        }
-                    }
+                    improvement = floydOnCombination(
+                        fromIndex,
+                        toIndex,
+                        throughIndex,
+                        improvement
+                    )
                 }
             }
         }
+        return improvement
+    }
+
+    private fun Array<IntArray>.floydOnCombination(
+        fromIndex: Int,
+        toIndex: Int,
+        throughIndex: Int,
+        improvement: Boolean
+    ): Boolean {
+        if (this[fromIndex][throughIndex] + this[throughIndex][toIndex] < this[fromIndex][toIndex]) {
+            this[fromIndex][toIndex] = this[fromIndex][throughIndex] + this[throughIndex][toIndex]
+            return true
+        }
+        return improvement
     }
 
     private fun Array<IntArray>.toGraph(): CostGraph {

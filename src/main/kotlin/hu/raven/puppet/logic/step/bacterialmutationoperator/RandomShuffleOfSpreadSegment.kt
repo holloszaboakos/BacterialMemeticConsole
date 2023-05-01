@@ -1,11 +1,9 @@
 package hu.raven.puppet.logic.step.bacterialmutationoperator
 
-import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentation
-
 import hu.raven.puppet.model.solution.Segment
 
-class RandomShuffleOfSpreadSegment<C : PhysicsUnit<C>> : BacterialMutationOperator<C>() {
+class RandomShuffleOfSpreadSegment : BacterialMutationOperator() {
 
     override fun invoke(
         clone: OnePartRepresentation,

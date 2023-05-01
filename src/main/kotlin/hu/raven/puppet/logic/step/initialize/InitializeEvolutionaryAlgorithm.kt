@@ -2,18 +2,17 @@ package hu.raven.puppet.logic.step.initialize
 
 import hu.raven.puppet.logic.step.initializePopulation.InitializePopulation
 import hu.raven.puppet.logic.step.orderpopulationbycost.OrderPopulationByCost
-import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.PoolWithSmartActivation
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.model.task.Task
 
 
-class InitializeEvolutionaryAlgorithm<C : PhysicsUnit<C>>(
-    val initializePopulation: InitializePopulation<C>,
-    val orderPopulationByCost: OrderPopulationByCost<C>
-) : InitializeAlgorithm<EvolutionaryAlgorithmState<C>>() {
+class InitializeEvolutionaryAlgorithm(
+    val initializePopulation: InitializePopulation,
+    val orderPopulationByCost: OrderPopulationByCost
+) : InitializeAlgorithm<EvolutionaryAlgorithmState>() {
 
-    override fun invoke(task: Task): EvolutionaryAlgorithmState<C> {
+    override fun invoke(task: Task): EvolutionaryAlgorithmState {
         val population = initializePopulation(task)
         val algorithmState = EvolutionaryAlgorithmState(
             task = task,

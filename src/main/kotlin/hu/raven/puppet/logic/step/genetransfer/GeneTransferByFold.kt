@@ -1,15 +1,14 @@
 package hu.raven.puppet.logic.step.genetransfer
 
 import hu.raven.puppet.logic.step.genetransferoperator.GeneTransferOperator
-import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
-class GeneTransferByFold<C : PhysicsUnit<C>>(
+class GeneTransferByFold(
     override val injectionCount: Int,
-    override val geneTransferOperator: GeneTransferOperator<C>
-) : GeneTransfer<C>() {
+    override val geneTransferOperator: GeneTransferOperator
+) : GeneTransfer() {
 
-    override fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {
+    override fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
         (0 until injectionCount)
             .forEach { injectionIndex ->
                 val specimenIndex = injectionIndex % (population.activeCount / 2)

@@ -1,10 +1,8 @@
 package hu.raven.puppet.model.logging
 
-import hu.raven.puppet.model.physics.PhysicsUnit
-
-data class BacterialMemeticAlgorithmLogLine<C : PhysicsUnit<C>>(
+data class BacterialMemeticAlgorithmLogLine(
     val progressData: ProgressData,
-    val populationData: PopulationData<C>,
+    val populationData: PopulationData,
     /*
     val mutationImprovement: StepEfficiencyData,
     val mutationOnBestImprovement: StepEfficiencyData,

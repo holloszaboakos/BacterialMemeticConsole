@@ -2,16 +2,15 @@ package hu.raven.puppet.logic.step.bacterialmutationoperator
 
 
 import hu.raven.puppet.model.math.Fraction
-import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.solution.Segment
 import hu.raven.puppet.model.task.Task
 import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.extention.sumClever
 
-class EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation<C : PhysicsUnit<C>>(
+class EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation(
     val task: Task
-) : BacterialMutationOperator<C>() {
+) : BacterialMutationOperator() {
     override fun invoke(
         clone: OnePartRepresentation,
         selectedSegment: Segment

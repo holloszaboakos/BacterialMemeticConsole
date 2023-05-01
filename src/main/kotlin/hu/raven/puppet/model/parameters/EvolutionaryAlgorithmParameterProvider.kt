@@ -1,10 +1,9 @@
 package hu.raven.puppet.model.parameters
 
-import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
-open class EvolutionaryAlgorithmParameterProvider<C : PhysicsUnit<C>>(
-    override val algorithmState: EvolutionaryAlgorithmState<C>,
+open class EvolutionaryAlgorithmParameterProvider(
+    override val algorithmState: EvolutionaryAlgorithmState,
     iterationLimit: Int,
     val sizeOfPopulation: Int,
     val geneCount: Int,

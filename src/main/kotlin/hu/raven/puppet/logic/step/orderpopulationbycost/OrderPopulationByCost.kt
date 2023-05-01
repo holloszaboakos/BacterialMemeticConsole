@@ -2,15 +2,14 @@ package hu.raven.puppet.logic.step.orderpopulationbycost
 
 import hu.raven.puppet.logic.step.EvolutionaryAlgorithmStep
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
-import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
 
-class OrderPopulationByCost<C : PhysicsUnit<C>>(
-    val calculateCostOf: CalculateCost<C>
-) : EvolutionaryAlgorithmStep<C> {
+class OrderPopulationByCost(
+    val calculateCostOf: CalculateCost
+) : EvolutionaryAlgorithmStep {
 
-    override operator fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {
+    override operator fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
         population
             .activesAsSequence()
             .filter { it.cost == null }
@@ -18,6 +17,6 @@ class OrderPopulationByCost<C : PhysicsUnit<C>>(
                 specimen.cost = calculateCostOf(specimen)
             }
 
-        population.sortActiveBy { it.costOrException().value }
+        population.sortActiveBy { it.costOrException() }
     }
 }

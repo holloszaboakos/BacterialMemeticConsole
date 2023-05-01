@@ -1,16 +1,14 @@
 package hu.raven.puppet.logic.step.mutatechildren
 
-import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
-
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.model.task.Task
 import hu.raven.puppet.utility.extention.slice
 import kotlin.random.Random
 
-class MutateChildrenByReverse<C : PhysicsUnit<C>> : MutateChildren<C>() {
+class MutateChildrenByReverse : MutateChildren() {
 
-    override fun invoke(state: EvolutionaryAlgorithmState<C>): Unit = state.run {
+    override fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
         if (task.costGraph.objectives.size > 1)
             population.activesAsSequence()
                 .filter { it.iterationOfCreation == iteration }
@@ -20,7 +18,7 @@ class MutateChildrenByReverse<C : PhysicsUnit<C>> : MutateChildren<C>() {
     }
 
     private fun onChild(
-        child: OnePartRepresentationWithCostAndIterationAndId<C>,
+        child: OnePartRepresentationWithCostAndIterationAndId,
         task: Task,
     ) {
 

@@ -4,22 +4,21 @@ import hu.raven.puppet.logic.step.bacterialmutationoperator.BacterialMutationOpe
 import hu.raven.puppet.logic.step.bacterialmutationoperator.OppositionOperator
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.logic.step.selectsegment.SelectSegment
-import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCost
 import hu.raven.puppet.model.solution.Segment
 
-class MutationWithElitistSelectionAndOneOpposition<C : PhysicsUnit<C>>(
-    override val mutationOperator: BacterialMutationOperator<C>,
-    override val calculateCostOf: CalculateCost<C>,
-    override val selectSegment: SelectSegment<C>,
+class MutationWithElitistSelectionAndOneOpposition(
+    override val mutationOperator: BacterialMutationOperator,
+    override val calculateCostOf: CalculateCost,
+    override val selectSegment: SelectSegment,
     override val cloneCount: Int,
     override val cloneCycleCount: Int
-) : MutationOnSpecimen<C>() {
+) : MutationOnSpecimen() {
 
-    private val oppositionOperator = OppositionOperator<C>()
+    private val oppositionOperator = OppositionOperator()
 
     override fun invoke(
-        specimenWithIndex: IndexedValue<OnePartRepresentationWithCost<C>>,
+        specimenWithIndex: IndexedValue<OnePartRepresentationWithCost>,
         iteration: Int
     ) {
         if (specimenWithIndex.value.cost == null) {
@@ -44,9 +43,9 @@ class MutationWithElitistSelectionAndOneOpposition<C : PhysicsUnit<C>>(
     }
 
     private fun generateClones(
-        specimen: OnePartRepresentationWithCost<C>,
+        specimen: OnePartRepresentationWithCost,
         selectedSegment: Segment
-    ): MutableList<OnePartRepresentationWithCost<C>> {
+    ): MutableList<OnePartRepresentationWithCost> {
         val clones = MutableList(cloneCount + 1) { specimen.cloneRepresentationAndCost() }
 
         oppositionOperator.invoke(clones[1], selectedSegment)

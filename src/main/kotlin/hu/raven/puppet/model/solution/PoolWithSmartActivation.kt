@@ -1,5 +1,6 @@
 package hu.raven.puppet.model.solution
 
+import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.utility.extention.swap
 import java.util.concurrent.locks.ReentrantReadWriteLock
 import kotlin.concurrent.read
@@ -64,7 +65,7 @@ class PoolWithSmartActivation<T : HasId<Int>>(
             .map { pool[it] }
     }
 
-    fun <C : Comparable<C>> sortActiveBy(mapper: (T) -> C): Unit = lock.write {
+    fun sortActiveBy(mapper: (T) -> Fraction): Unit = lock.write {
         activesAsSequence()
             .sortedBy(mapper)
             .forEachIndexed { index, value ->

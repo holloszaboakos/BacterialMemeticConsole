@@ -1,8 +1,8 @@
 package hu.raven.puppet.model.logging
 
-import hu.raven.puppet.model.physics.PhysicsUnit
+import hu.raven.puppet.model.math.Fraction
 
-data class SpecimenData<C : PhysicsUnit<C>>(
+data class SpecimenData(
     val id: Int,
-    val cost: C
+    val cost: Fraction
 )

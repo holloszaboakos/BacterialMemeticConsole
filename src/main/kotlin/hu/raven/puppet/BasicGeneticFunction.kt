@@ -23,7 +23,6 @@ import hu.raven.puppet.logic.step.orderpopulationbycost.OrderPopulationByCost
 import hu.raven.puppet.logic.step.selectsurvivers.SelectSurvivors
 import hu.raven.puppet.logic.task.loader.TaskLoaderService
 import hu.raven.puppet.logic.task.loader.TspTaskLoaderService
-import hu.raven.puppet.model.physics.Meter
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCost
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.modules.FilePathVariableNames.*
@@ -40,18 +39,18 @@ fun main() {
             single(named(INPUT_FOLDER)) { "\\input\\tsp" }
             single(named(OUTPUT_FOLDER)) { Path.of("output\\default\\output.txt") }
             single<InitializeAlgorithm<*>> {
-                InitializeEvolutionaryAlgorithm<Meter>(
+                InitializeEvolutionaryAlgorithm(
                     initializePopulation = get(),
                     orderPopulationByCost = get()
                 )
             }
-            single<InitializePopulation<*>> {
-                InitializePopulationByModuloStepper<Meter>()
+            single<InitializePopulation> {
+                InitializePopulationByModuloStepper()
             }
             single {
-                OrderPopulationByCost<Meter>(calculateCostOf = get())
+                OrderPopulationByCost(calculateCostOf = get())
             }
-            single<CalculateCost<*>> {
+            single<CalculateCost> {
                 CalculateCostOfTspSolution(task = get())
             }
             single<TaskLoaderService> {
@@ -69,41 +68,41 @@ fun main() {
             single<AlgorithmIteration<*>> {
                 EvolutionaryAlgorithmIteration(
                     steps = arrayOf(
-                        get<BoostStrategy<Meter>>(),
-                        get<SelectSurvivors<Meter>>(),
-                        get<CrossOverStrategy<Meter>>(),
-                        get<MutateChildren<Meter>>(),
-                        get<OrderPopulationByCost<Meter>>(),
+                        get<BoostStrategy>(),
+                        get<SelectSurvivors>(),
+                        get<CrossOverStrategy>(),
+                        get<MutateChildren>(),
+                        get<OrderPopulationByCost>(),
                     )
                 )
             }
-            single<BoostStrategy<*>> {
-                BoostOnBestLazy<Meter>(
+            single<BoostStrategy> {
+                BoostOnBestLazy(
                     boostOperator = get()
                 )
             }
-            single<BoostOperator<*, *>> {
-                Opt2Cycle<Meter, OnePartRepresentationWithCost<Meter>>(
+            single<BoostOperator<*>> {
+                Opt2Cycle<OnePartRepresentationWithCost>(
                     calculateCostOf = get()
                 )
             }
-            single<SelectSurvivors<Meter>> {
+            single {
                 SelectSurvivors()
             }
-            single<CrossOverStrategy<*>> {
-                HalfElitistCrossover<Meter>(
+            single<CrossOverStrategy> {
+                HalfElitistCrossover(
                     crossoverOperators = listOf(get())
                 )
             }
             single<CrossOverOperator> {
                 OrderCrossOver()
             }
-            single<MutateChildren<*>> {
-                MutateChildrenByReverse<Meter>()
+            single<MutateChildren> {
+                MutateChildrenByReverse()
             }
         })
-        val initialization: InitializeAlgorithm<EvolutionaryAlgorithmState<Meter>> = get()
-        val iteration: AlgorithmIteration<EvolutionaryAlgorithmState<Meter>> = get()
+        val initialization: InitializeAlgorithm<EvolutionaryAlgorithmState> = get()
+        val iteration: AlgorithmIteration<EvolutionaryAlgorithmState> = get()
         val state = initialization(get())
         repeat(100) {
             iteration(state)

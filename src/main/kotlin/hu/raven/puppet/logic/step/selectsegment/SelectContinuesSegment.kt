@@ -1,14 +1,13 @@
 package hu.raven.puppet.logic.step.selectsegment
 
 import hu.raven.puppet.model.math.Permutation
-import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.Segment
 import hu.raven.puppet.utility.extention.nextSegmentStartPosition
 import kotlin.random.Random
 
-class SelectContinuesSegment<C : PhysicsUnit<C>>(
+class SelectContinuesSegment(
     override val cloneSegmentLength: Int,
-) : SelectSegment<C>() {
+) : SelectSegment() {
     override fun invoke(
         specimen: Permutation,
         iteration: Int,

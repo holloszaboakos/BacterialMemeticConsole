@@ -3,26 +3,24 @@ package hu.raven.puppet.logic.step.crossoverstrategy
 import hu.raven.puppet.logic.logging.ObjectLoggerService
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.logic.step.crossoveroperator.CrossOverOperator
-import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
-
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.model.statistics.GeneticAlgorithmStatistics
 import hu.raven.puppet.model.statistics.OperatorStatistics
 
-class StatisticalRacingCrossOverWithLeader<C : PhysicsUnit<C>>(
+class StatisticalRacingCrossOverWithLeader(
     override val crossoverOperators: List<CrossOverOperator>,
     private val logger: ObjectLoggerService<String>,
-    private val calculateCostOf: CalculateCost<C>,
-    private val statistics: GeneticAlgorithmStatistics<C>
-) : CrossOverStrategy<C>() {
+    private val calculateCostOf: CalculateCost,
+    private val statistics: GeneticAlgorithmStatistics
+) : CrossOverStrategy() {
 
     private var lastIteration = -1
     private var operator: CrossOverOperator? = null
     private var actualStatistics: OperatorStatistics? = null
 
 
-    override fun invoke(state: EvolutionaryAlgorithmState<C>) = state.run {
+    override fun invoke(state: EvolutionaryAlgorithmState) = state.run {
         val children = population.inactivesAsSequence().chunked(2).toList()
         val parent = population.activesAsSequence()
             .shuffled()
@@ -58,16 +56,11 @@ class StatisticalRacingCrossOverWithLeader<C : PhysicsUnit<C>>(
     fun crossover(
         iteration: Int,
         parents: Pair<
-                OnePartRepresentationWithCostAndIterationAndId<C>,
-                OnePartRepresentationWithCostAndIterationAndId<C>,
+                OnePartRepresentationWithCostAndIterationAndId,
+                OnePartRepresentationWithCostAndIterationAndId,
                 >,
-        child: OnePartRepresentationWithCostAndIterationAndId<C>,
+        child: OnePartRepresentationWithCostAndIterationAndId,
     ) {
-        /*
-        if (algorithm.iteration == 0 && iteration != -1){
-            iteration = -1
-        }
-         */
         if (lastIteration != iteration) {
             lastIteration = iteration
             actualStatistics?.let { statistics ->

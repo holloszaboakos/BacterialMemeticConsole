@@ -38,6 +38,8 @@ data class ImmutableArray<T>(private val array: Array<T>) {
     override fun hashCode(): Int {
         return array.contentHashCode()
     }
+
+    override fun toString(): String = array.toString()
 }
 
 fun <R> ImmutableArray<ImmutableArray<R>>.flatten() = flatMap { row -> row.asSequence() }

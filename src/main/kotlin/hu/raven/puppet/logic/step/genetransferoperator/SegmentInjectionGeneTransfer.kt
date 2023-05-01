@@ -2,19 +2,18 @@ package hu.raven.puppet.logic.step.genetransferoperator
 
 
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
-import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCost
 import hu.raven.puppet.utility.extention.nextSegmentStartPosition
 import kotlin.random.Random
 
-class SegmentInjectionGeneTransfer<C : PhysicsUnit<C>>(
-    override val calculateCostOf: CalculateCost<C>,
+class SegmentInjectionGeneTransfer(
+    override val calculateCostOf: CalculateCost,
     override val geneTransferSegmentLength: Int
-) : GeneTransferOperator<C>() {
+) : GeneTransferOperator() {
 
     override fun invoke(
-        source: OnePartRepresentationWithCost<C>,
-        target: OnePartRepresentationWithCost<C>
+        source: OnePartRepresentationWithCost,
+        target: OnePartRepresentationWithCost
     ) {
         val startOfSegment =
             Random.nextSegmentStartPosition(
@@ -43,7 +42,7 @@ class SegmentInjectionGeneTransfer<C : PhysicsUnit<C>>(
     }
 
     private fun collectElementsOfSegment(
-        source: OnePartRepresentationWithCost<C>,
+        source: OnePartRepresentationWithCost,
         rangeOfSegment: IntRange
     ): IntArray {
         return source.permutation
@@ -53,7 +52,7 @@ class SegmentInjectionGeneTransfer<C : PhysicsUnit<C>>(
     }
 
     private fun collectElementsNotInSegment(
-        target: OnePartRepresentationWithCost<C>,
+        target: OnePartRepresentationWithCost,
         elementsOfSegment: IntArray,
     ): IntArray {
 
@@ -68,7 +67,7 @@ class SegmentInjectionGeneTransfer<C : PhysicsUnit<C>>(
     }
 
     private fun loadSegmentToTarget(
-        target: OnePartRepresentationWithCost<C>,
+        target: OnePartRepresentationWithCost,
         rangeOfSegment: IntRange,
         elementsOfSegment: IntArray,
         elementsOfTargetNotInSegment: IntArray,
@@ -93,7 +92,7 @@ class SegmentInjectionGeneTransfer<C : PhysicsUnit<C>>(
         }
     }
 
-    private fun resetFlagsOf(specimen: OnePartRepresentationWithCost<C>) {
+    private fun resetFlagsOf(specimen: OnePartRepresentationWithCost) {
         specimen.cost = null
     }
 }

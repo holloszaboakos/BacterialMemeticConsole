@@ -1,12 +1,11 @@
 package hu.raven.puppet.logic.step.boostoperator
 
 import hu.raven.puppet.logic.step.calculatecost.CalculateCost
-import hu.raven.puppet.model.physics.PhysicsUnit
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCost
 
-class Opt2CycleWithRandomOrder<C : PhysicsUnit<C>, O : OnePartRepresentationWithCost<C>>(
-    override val calculateCostOf: CalculateCost<C>
-) : BoostOperator<C, O>() {
+class Opt2CycleWithRandomOrder<O : OnePartRepresentationWithCost>(
+    override val calculateCostOf: CalculateCost
+) : BoostOperator<O>() {
 
     private var shuffler = intArrayOf()
 
