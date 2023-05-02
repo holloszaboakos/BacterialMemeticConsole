@@ -13,9 +13,7 @@ import hu.raven.puppet.logic.operator.selectsegment.SelectSegment
 import hu.raven.puppet.logic.task.loader.TaskLoaderService
 import hu.raven.puppet.logic.task.loader.TspTaskLoaderService
 import hu.raven.puppet.model.math.Permutation
-import hu.raven.puppet.model.parameters.BacterialMutationParameterProvider
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
-
 import hu.raven.puppet.model.state.AlgorithmState
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
@@ -32,7 +30,10 @@ import java.io.File
 import java.time.LocalDateTime
 import kotlin.io.path.Path
 
-//max 13 oldal
+//TODO:
+// other operator for each or more complex
+// random + modulo stepper
+// bigger examples
 private data class Scenario(
     val fileName: String,
     val objectiveCount: Int,
@@ -96,8 +97,6 @@ private val STRATEGIES: Array<(
             cloneCycleCount
         )
     },
-    //other operator for each or more complex
-    //random + modulo stepper
 )
 private val OPERATORS: Array<(
     task: Task
@@ -152,18 +151,6 @@ private fun runScenario(scenario: Scenario) {
                 single(named(CLONE_CYCLE_COUNT)) { 5 }
                 single(named(SIZE_OF_POPULATION)) { 1 }
                 single(named(ITERATION_LIMIT)) { Int.MAX_VALUE }
-                single<BacterialMutationParameterProvider> {
-                    BacterialMutationParameterProvider(
-                        cloneCount = 40,
-                        cloneSegmentLength = scenario.objectiveCount,
-                        cloneCycleCount = 5,
-                        algorithmState = get(),
-                        sizeOfPopulation = 1,
-                        geneCount = scenario.objectiveCount,
-                        iterationLimit = Int.MAX_VALUE,
-                        mutationPercentage = 0f
-                    )
-                }
                 single(named(INPUT_FOLDER)) { "\\input\\tsp" }
                 single(named(OUTPUT_FOLDER)) { "output" }
                 single(named(SINGLE_FILE)) { scenario.fileName }
@@ -177,12 +164,9 @@ private fun runScenario(scenario: Scenario) {
                     ObjectLoggerService<String>(
                         Path(
                             get(OUTPUT_FOLDER),
-                            LocalDateTime.now()
-                                .let {
-                                    it.toString()
-                                        .replace(":", "-")
-                                        .replace(".", "-")
-                                }
+                            LocalDateTime.now().toString()
+                                .replace(":", "-")
+                                .replace(".", "-")
                                 .let { "statistics-$it.csv" }
                         )
                     )
