@@ -2,16 +2,13 @@ package hu.raven.puppet.model.task.augerat
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-data class Vehicle_profileBean(
+data class VehicleProfileBean(
     @JsonProperty("arrival_node")
-    var arrival_node: String,
-
+    val arrivalNode: String,
     @JsonProperty("capacity")
-    var capacity: String,
-
+    val capacity: String,
     @JsonProperty("departure_node")
-    var departure_node: String,
-
+    val departureNode: String,
     @JsonProperty("type")
-    var type: String,
+    val type: String,
 )

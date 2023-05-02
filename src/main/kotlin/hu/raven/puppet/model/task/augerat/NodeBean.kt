@@ -4,14 +4,11 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 data class NodeBean(
     @JsonProperty("cx")
-    var cx: String,
-
+    val cx: String,
     @JsonProperty("cy")
-    var cy: String,
-
+    val cy: String,
     @JsonProperty("id")
-    var id: String,
-
+    val id: String,
     @JsonProperty("type")
-    var type: String,
+    val type: String,
 )

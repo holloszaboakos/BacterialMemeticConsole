@@ -4,11 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 data class NetworkBean(
     @JsonProperty("decimals")
-    var decimals: String,
-
+    val decimals: String,
     @JsonProperty("euclidean")
-    var euclidean: Boolean,
-
+    val euclidean: Boolean,
     @JsonProperty("nodes")
-    var nodeBeanList: List<NodeBean>,
+    val nodeBeanList: List<NodeBean>,
 )

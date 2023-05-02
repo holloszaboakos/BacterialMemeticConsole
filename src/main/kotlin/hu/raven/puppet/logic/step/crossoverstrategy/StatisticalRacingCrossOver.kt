@@ -6,8 +6,8 @@ import hu.raven.puppet.logic.operator.crossoveroperator.CrossOverOperator
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
-import hu.raven.puppet.model.statistics.GeneticAlgorithmStatistics
-import hu.raven.puppet.model.statistics.OperatorStatistics
+import hu.raven.puppet.model.step.crossoverstrategy.GeneticAlgorithmStatistics
+import hu.raven.puppet.model.step.crossoverstrategy.OperatorStatistics
 import hu.raven.puppet.utility.extention.sumClever
 
 //TODO
@@ -76,13 +76,13 @@ class StatisticalRacingCrossOver(
         }
 
         if (newIteration) {
-            actualStatistics?.let { statistics ->
-                synchronized(statistics) {
-                    statistics.run = (statistics.run + child.permutation.size) * 8 / 10
-                    //statistics.improvement = statistics.improvement * 9 / 10
-                    statistics.success = statistics.success * 8 / 10
-                    //statistics.successRatio = statistics.improvement / statistics.run.toDouble()
-                    statistics.successRatio = statistics.success / statistics.run.toLong()
+            synchronized(statistics) {
+                actualStatistics?.let { oldStatistics ->
+                    actualStatistics = OperatorStatistics(
+                        run = (oldStatistics.run + child.permutation.size) * 8 / 10,
+                        success = oldStatistics.success * 8 / 10,
+                        successRatio = oldStatistics.success / oldStatistics.run.toLong()
+                    )
                 }
             }
             if (iteration < 10 * statistics.operatorsWithStatistics.size) {

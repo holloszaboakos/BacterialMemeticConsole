@@ -1,12 +1,12 @@
-package hu.raven.puppet.model.statistics
+package hu.raven.puppet.model.step.crossoverstrategy
 
 import hu.raven.puppet.logic.operator.crossoveroperator.CrossOverOperator
 import hu.raven.puppet.model.math.Fraction
-import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
+import hu.raven.puppet.model.task.CostGraph
 
-class GeneticAlgorithmStatistics(val state: EvolutionaryAlgorithmState) {
+class GeneticAlgorithmStatistics(val costGraph: CostGraph) {
     val operatorsWithStatistics =
-        CrossOverOperator.getVariants(state.task.costGraph).associateWith {
+        CrossOverOperator.getVariants(costGraph).associateWith {
             OperatorStatistics(Fraction.new(0), 1, Fraction.new(Int.MAX_VALUE.toLong()))
         }.toMutableMap()
 

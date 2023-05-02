@@ -4,11 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 data class RequestBean(
     @JsonProperty("id")
-    var id: String,
-
+    val id: String,
     @JsonProperty("node")
-    var node: String,
-
+    val node: String,
     @JsonProperty("quantity")
-    var quantity: String,
+    val quantity: String,
 )

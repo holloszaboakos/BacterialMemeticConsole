@@ -1,7 +1,7 @@
 package hu.raven.puppet.model.task.desmet
 
 @JvmInline
-value class DesmetDataFileLine(val line: String) {
+value class DesmetDataFileLine(private val line: String) {
 
     fun toNodeCoordinate(): NodeCoordinate {
         val lineParts = line

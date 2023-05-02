@@ -20,7 +20,7 @@ class PoolWithSmartActivation<T : HasId<Int>>(
         private set
     val maxSize: Int get() = pool.size
 
-    fun activate() {
+    fun activate(): Unit = lock.write {
         if (activeCount == pool.size) return
         activeCount++
     }

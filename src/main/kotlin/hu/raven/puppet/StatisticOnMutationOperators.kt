@@ -16,7 +16,6 @@ import hu.raven.puppet.model.math.Permutation
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.state.AlgorithmState
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
-import hu.raven.puppet.model.statistics.BacterialAlgorithmStatistics
 import hu.raven.puppet.model.task.Task
 import hu.raven.puppet.modules.AlgorithmParameters.*
 import hu.raven.puppet.modules.FilePathVariableNames.*
@@ -159,7 +158,6 @@ private fun runScenario(scenario: Scenario) {
                         get()
                     )
                 }
-                single { BacterialAlgorithmStatistics() }
                 single {
                     ObjectLoggerService<String>(
                         Path(

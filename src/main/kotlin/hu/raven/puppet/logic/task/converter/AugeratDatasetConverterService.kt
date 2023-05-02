@@ -15,11 +15,11 @@ class AugeratDatasetConverterService(override val vehicleCount: Int) : TaskConve
     override fun toStandardTask(task: InstanceBean): Task = task.run {
         Task(
             transportUnits = Array(vehicleCount) {
-                TransportUnit(volumeCapacity = Stere(task.fleetBean.vehicle_profileBean.capacity.toDouble().toLong()))
+                TransportUnit(volumeCapacity = Stere(task.fleetBean.vehicleProfileBean.capacity.toDouble().toLong()))
             }.asImmutable(),
             costGraph = CostGraph(
                 center = task.networkBean.nodeBeanList
-                    .first { it.id == task.fleetBean.vehicle_profileBean.arrival_node }
+                    .first { it.id == task.fleetBean.vehicleProfileBean.arrivalNode }
                     .toGPS(),
                 objectives = constructObjectives(
                     task.requestBeanList,
@@ -27,18 +27,18 @@ class AugeratDatasetConverterService(override val vehicleCount: Int) : TaskConve
                 ).asImmutable(),
                 edgesBetween = constructEdgesBetweenClients(
                     task.networkBean.nodeBeanList,
-                    task.fleetBean.vehicle_profileBean.arrival_node
+                    task.fleetBean.vehicleProfileBean.arrivalNode
                 )
                     .map { it.asImmutable() }
                     .toTypedArray()
                     .asImmutable(),
                 edgesFromCenter = constructEdgesWithCenter(
                     task.networkBean.nodeBeanList,
-                    task.fleetBean.vehicle_profileBean.arrival_node
+                    task.fleetBean.vehicleProfileBean.arrivalNode
                 ).asImmutable(),
                 edgesToCenter = constructEdgesWithCenter(
                     task.networkBean.nodeBeanList,
-                    task.fleetBean.vehicle_profileBean.arrival_node
+                    task.fleetBean.vehicleProfileBean.arrivalNode
                 ).asImmutable()
             )
         )

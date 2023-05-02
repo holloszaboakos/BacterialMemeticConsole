@@ -1,9 +1,11 @@
 package hu.raven.puppet.logic.operator.calculatecost
 
-import hu.raven.puppet.model.TakenCapacity
 import hu.raven.puppet.model.math.Fraction
+import hu.raven.puppet.model.operator.calculatecost.TakenCapacity
 import hu.raven.puppet.model.physics.Euro
+import hu.raven.puppet.model.physics.Gramm
 import hu.raven.puppet.model.physics.Second
+import hu.raven.puppet.model.physics.Stere
 import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.task.*
 import hu.raven.puppet.utility.extention.getEdgeBetween
@@ -19,7 +21,11 @@ class CalculateCostOfACVRPWithMultipleCapacity(
             .sliced { it >= solution.objectiveCount }
             .mapIndexed { sliceIndex, slice ->
                 val salesman = task.transportUnits[sliceIndex]
-                var takenCapacity = TakenCapacity()
+                var takenCapacity = TakenCapacity(
+                    volume = Stere(0),
+                    weight = Gramm(0),
+                    time = Second(0)
+                )
 
                 slice.mapIndexed { sliceValueIndex, sliceValue ->
                     when (sliceValueIndex) {
