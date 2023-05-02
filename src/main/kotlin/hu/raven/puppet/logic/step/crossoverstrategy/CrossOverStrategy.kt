@@ -1,7 +1,7 @@
 package hu.raven.puppet.logic.step.crossoverstrategy
 
+import hu.raven.puppet.logic.operator.crossoveroperator.CrossOverOperator
 import hu.raven.puppet.logic.step.EvolutionaryAlgorithmStep
-import hu.raven.puppet.logic.step.crossoveroperator.CrossOverOperator
 
 
 abstract class CrossOverStrategy : EvolutionaryAlgorithmStep {

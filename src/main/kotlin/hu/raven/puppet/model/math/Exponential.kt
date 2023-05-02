@@ -6,13 +6,11 @@ import hu.raven.puppet.utility.extention.timesTwoToThePowerOf
 import kotlin.math.pow
 
 data class Exponential private constructor(
-    val numerator: Long,
+    val numerator: Int,
     val exponential: Int
 ) {
 
     companion object {
-        private const val MAX_LOG = 31
-        private val MAX = 1L.timesTwoToThePowerOf(MAX_LOG)
 
         fun new(
             numeratorInitialValue: Long,
@@ -23,19 +21,19 @@ data class Exponential private constructor(
             }
 
             if (
-                numeratorInitialValue <= MAX
+                numeratorInitialValue <= Int.MAX_VALUE
             ) {
-                return Exponential(numeratorInitialValue, exponentialInitialValue)
+                return Exponential(numeratorInitialValue.toInt(), exponentialInitialValue)
             }
 
             var numerator = numeratorInitialValue
             var exponential = exponentialInitialValue
 
-            val logDiff = numerator.log2() - MAX_LOG + 1
+            val logDiff = numerator.log2() - Int.SIZE_BITS + 1
             numerator = numerator.divByTwoToThePowerOf(logDiff)
             exponential += logDiff
 
-            return Exponential(numerator, exponential)
+            return Exponential(numerator.toInt(), exponential)
         }
 
         fun new(numerator: Long) = new(numerator, 0)
@@ -45,67 +43,43 @@ data class Exponential private constructor(
     operator fun plus(other: Exponential): Exponential {
         return when {
             exponential == other.exponential -> {
-                new(numerator + other.numerator, exponential)
+                new(
+                    numerator.toLong() + other.numerator,
+                    exponential
+                )
             }
+
+            numerator == 0 -> other
+
+            other.numerator == 0 -> this
 
             exponential > other.exponential -> {
                 val expDiff = exponential - other.exponential
-                if (expDiff > 20) {
-                    return this
-                }
-                val maxIncrease = numerator.countLeadingZeroBits() - 2
-
-                val newNumerator = if (expDiff <= maxIncrease) {
-                    numerator.timesTwoToThePowerOf(expDiff)
-                } else {
-                    numerator.timesTwoToThePowerOf(maxIncrease)
-                }
-
-                val otherNumerator = if (expDiff <= maxIncrease) {
-                    other.numerator
-                } else {
-                    other.numerator.divByTwoToThePowerOf(expDiff - maxIncrease)
-                }
-
-                val newExponential = if (expDiff <= maxIncrease) {
-                    other.exponential
-                } else {
-                    other.exponential + expDiff - maxIncrease
-                }
-
+                val maxShift =
+                    Integer.min(
+                        numerator.countLeadingZeroBits() - 1,
+                        expDiff
+                    )
+                val newNumerator = numerator.toLong().timesTwoToThePowerOf(maxShift)
+                val newOtherNumerator = other.numerator.toLong().divByTwoToThePowerOf(expDiff - maxShift)
                 new(
-                    newNumerator + otherNumerator,
-                    newExponential
+                    newNumerator + newOtherNumerator,
+                    exponential - maxShift
                 )
             }
 
             else -> {
                 val expDiff = other.exponential - exponential
-                if (expDiff > 20) {
-                    return this
-                }
-                val maxIncrease = other.numerator.countLeadingZeroBits() - 2
-
-                val otherNumerator = if (expDiff <= maxIncrease) {
-                    other.numerator.timesTwoToThePowerOf(expDiff)
-                } else {
-                    other.numerator.timesTwoToThePowerOf(maxIncrease)
-                }
-
-                val newNumerator = if (expDiff <= maxIncrease) {
-                    numerator
-                } else {
-                    numerator.divByTwoToThePowerOf(expDiff - maxIncrease)
-                }
-                val newExponential = if (expDiff <= maxIncrease) {
-                    exponential
-                } else {
-                    exponential + expDiff - maxIncrease
-                }
-
+                val maxShift =
+                    Integer.min(
+                        other.numerator.countLeadingZeroBits() - 1,
+                        expDiff
+                    )
+                val newOtherNumerator = other.numerator.toLong().timesTwoToThePowerOf(maxShift)
+                val newNumerator = numerator.toLong().divByTwoToThePowerOf(expDiff - maxShift)
                 new(
-                    newNumerator + otherNumerator,
-                    newExponential
+                    newNumerator + newOtherNumerator,
+                    other.exponential - maxShift
                 )
             }
         }
@@ -114,67 +88,43 @@ data class Exponential private constructor(
     operator fun minus(other: Exponential): Exponential {
         return when {
             exponential == other.exponential -> {
-                new(numerator - other.numerator, exponential)
+                new(
+                    numerator.toLong() - other.numerator.toLong(),
+                    exponential
+                )
             }
+
+            numerator == 0 -> other * (-1L)
+
+            other.numerator == 0 -> this
 
             exponential > other.exponential -> {
                 val expDiff = exponential - other.exponential
-                if (expDiff > 20) {
-                    return this
-                }
-                val maxIncrease = numerator.countLeadingZeroBits() - 2
-
-                val newNumerator = if (expDiff <= maxIncrease) {
-                    numerator.timesTwoToThePowerOf(expDiff)
-                } else {
-                    numerator.timesTwoToThePowerOf(maxIncrease)
-                }
-
-                val otherNumerator = if (expDiff <= maxIncrease) {
-                    other.numerator
-                } else {
-                    other.numerator.divByTwoToThePowerOf(expDiff - maxIncrease)
-                }
-
-                val newExponential = if (expDiff <= maxIncrease) {
-                    other.exponential
-                } else {
-                    other.exponential + expDiff - maxIncrease
-                }
-
+                val maxShift =
+                    Integer.min(
+                        numerator.countLeadingZeroBits() - 1,
+                        expDiff
+                    )
+                val newNumerator = numerator.toLong().timesTwoToThePowerOf(maxShift)
+                val newOtherNumerator = other.numerator.toLong().divByTwoToThePowerOf(expDiff - maxShift)
                 new(
-                    newNumerator - otherNumerator,
-                    newExponential
+                    newNumerator - newOtherNumerator,
+                    exponential - maxShift
                 )
             }
 
             else -> {
                 val expDiff = other.exponential - exponential
-                if (expDiff > 20) {
-                    return this
-                }
-                val maxIncrease = other.numerator.countLeadingZeroBits() - 2
-
-                val otherNumerator = if (expDiff <= maxIncrease) {
-                    other.numerator.timesTwoToThePowerOf(expDiff)
-                } else {
-                    other.numerator.timesTwoToThePowerOf(maxIncrease)
-                }
-
-                val newNumerator = if (expDiff <= maxIncrease) {
-                    numerator
-                } else {
-                    numerator.divByTwoToThePowerOf(expDiff - maxIncrease)
-                }
-                val newExponential = if (expDiff <= maxIncrease) {
-                    exponential
-                } else {
-                    exponential + expDiff - maxIncrease
-                }
-
+                val maxShift =
+                    Integer.min(
+                        other.numerator.countLeadingZeroBits() - 1,
+                        expDiff
+                    )
+                val newOtherNumerator = other.numerator.toLong().timesTwoToThePowerOf(maxShift)
+                val newNumerator = numerator.toLong().divByTwoToThePowerOf(expDiff - maxShift)
                 new(
-                    newNumerator - otherNumerator,
-                    newExponential
+                    newNumerator - newOtherNumerator,
+                    other.exponential - maxShift
                 )
             }
         }
@@ -182,7 +132,7 @@ data class Exponential private constructor(
 
     operator fun times(other: Exponential): Exponential {
         return new(
-            numerator * other.numerator,
+            numerator.toLong() * other.numerator,
             exponential + other.exponential
         )
     }
@@ -194,7 +144,7 @@ data class Exponential private constructor(
     operator fun div(other: Exponential): Exponential {
         //TODO minimal loss div
         return new(
-            numerator / other.numerator,
+            numerator.toLong() / other.numerator,
             exponential - other.exponential
         )
     }
@@ -208,7 +158,7 @@ data class Exponential private constructor(
 
     operator fun compareTo(other: Exponential): Int {
         return when {
-            numerator == 0L && other.numerator == 0L -> 0
+            numerator == 0 && other.numerator == 0 -> 0
 
             exponential == other.exponential -> {
                 numerator.compareTo(other.numerator)
@@ -218,7 +168,7 @@ data class Exponential private constructor(
                 numerator >= other.numerator -> 1
                 else -> {
                     val exponentialDif = exponential - other.exponential
-                    val newNumerator = numerator.timesTwoToThePowerOf(exponentialDif)
+                    val newNumerator = numerator.toLong().timesTwoToThePowerOf(exponentialDif)
                     (newNumerator).compareTo(other.numerator)
                 }
             }
@@ -227,7 +177,7 @@ data class Exponential private constructor(
                 numerator <= other.numerator -> -1
                 else -> {
                     val exponentialDif = other.exponential - exponential
-                    val otherNumerator = other.numerator.timesTwoToThePowerOf(exponentialDif)
+                    val otherNumerator = other.numerator.toLong().timesTwoToThePowerOf(exponentialDif)
                     numerator.compareTo(otherNumerator)
                 }
             }

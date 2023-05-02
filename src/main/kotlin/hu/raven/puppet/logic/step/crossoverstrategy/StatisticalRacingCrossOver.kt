@@ -1,8 +1,8 @@
 package hu.raven.puppet.logic.step.crossoverstrategy
 
 import hu.raven.puppet.logic.logging.ObjectLoggerService
-import hu.raven.puppet.logic.step.calculatecost.CalculateCost
-import hu.raven.puppet.logic.step.crossoveroperator.CrossOverOperator
+import hu.raven.puppet.logic.operator.calculatecost.CalculateCost
+import hu.raven.puppet.logic.operator.crossoveroperator.CrossOverOperator
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState

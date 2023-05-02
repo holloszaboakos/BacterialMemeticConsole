@@ -1,6 +1,6 @@
 package hu.raven.puppet.logic.step.bacterialmutation
 
-import hu.raven.puppet.logic.step.bacterialmutationonspecimen.MutationOnSpecimen
+import hu.raven.puppet.logic.operator.bacterialmutationonspecimen.MutationOnSpecimen
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import kotlin.random.Random
 

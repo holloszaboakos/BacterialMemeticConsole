@@ -1,15 +1,15 @@
 package hu.raven.puppet
 
 import hu.raven.puppet.logic.logging.ObjectLoggerService
-import hu.raven.puppet.logic.step.bacterialmutationonspecimen.MutationOnSpecimen
-import hu.raven.puppet.logic.step.bacterialmutationonspecimen.MutationWithElitistSelection
-import hu.raven.puppet.logic.step.bacterialmutationonspecimen.MutationWithElitistSelectionAndModuloStepper
-import hu.raven.puppet.logic.step.bacterialmutationonspecimen.MutationWithElitistSelectionAndOneOpposition
-import hu.raven.puppet.logic.step.bacterialmutationoperator.*
-import hu.raven.puppet.logic.step.calculatecost.CalculateCost
-import hu.raven.puppet.logic.step.calculatecost.CalculateCostOfTspSolution
-import hu.raven.puppet.logic.step.selectsegment.SelectContinuesSegment
-import hu.raven.puppet.logic.step.selectsegment.SelectSegment
+import hu.raven.puppet.logic.operator.bacterialmutationonspecimen.MutationOnSpecimen
+import hu.raven.puppet.logic.operator.bacterialmutationonspecimen.MutationWithElitistSelection
+import hu.raven.puppet.logic.operator.bacterialmutationonspecimen.MutationWithElitistSelectionAndModuloStepper
+import hu.raven.puppet.logic.operator.bacterialmutationonspecimen.MutationWithElitistSelectionAndOneOpposition
+import hu.raven.puppet.logic.operator.bacterialmutationoperator.*
+import hu.raven.puppet.logic.operator.calculatecost.CalculateCost
+import hu.raven.puppet.logic.operator.calculatecost.CalculateCostOfTspSolution
+import hu.raven.puppet.logic.operator.selectsegment.SelectContinuesSegment
+import hu.raven.puppet.logic.operator.selectsegment.SelectSegment
 import hu.raven.puppet.logic.task.loader.TaskLoaderService
 import hu.raven.puppet.logic.task.loader.TspTaskLoaderService
 import hu.raven.puppet.model.math.Permutation

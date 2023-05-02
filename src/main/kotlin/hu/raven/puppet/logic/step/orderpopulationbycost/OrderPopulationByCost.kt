@@ -1,7 +1,7 @@
 package hu.raven.puppet.logic.step.orderpopulationbycost
 
+import hu.raven.puppet.logic.operator.calculatecost.CalculateCost
 import hu.raven.puppet.logic.step.EvolutionaryAlgorithmStep
-import hu.raven.puppet.logic.step.calculatecost.CalculateCost
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
 

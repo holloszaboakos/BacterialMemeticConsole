@@ -1,6 +1,6 @@
 package hu.raven.puppet.logic.step.crossoverstrategy
 
-import hu.raven.puppet.logic.step.crossoveroperator.CrossOverOperator
+import hu.raven.puppet.logic.operator.crossoveroperator.CrossOverOperator
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
 class HalfElitistCrossover(
