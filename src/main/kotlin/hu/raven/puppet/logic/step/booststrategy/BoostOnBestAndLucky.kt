@@ -7,12 +7,11 @@ import hu.raven.puppet.utility.extention.slice
 
 
 class BoostOnBestAndLucky(
-    val luckyCount: Int,
+    private val luckyCount: Int,
     override val boostOperator: BoostOperator<OnePartRepresentationWithCostAndIterationAndId>
 ) : BoostStrategy() {
 
     override fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
-
         boostOperator(population.activesAsSequence().first())
 
         population.activesAsSequence()

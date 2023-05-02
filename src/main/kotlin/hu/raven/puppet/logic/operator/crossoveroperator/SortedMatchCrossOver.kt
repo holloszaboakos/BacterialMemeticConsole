@@ -9,7 +9,7 @@ import kotlin.math.abs
 
 //broken
 class SortedMatchCrossOver(
-    val costGraphProvider: () -> CostGraph
+    val costGraph: CostGraph
 ) : CrossOverOperator() {
 
     override fun invoke(
@@ -49,7 +49,7 @@ class SortedMatchCrossOver(
             }
         }
         if (foundSlices.isNotEmpty()) {
-            val costGraph = costGraphProvider()
+            val costGraph = costGraph
             val cheaperIndex = Array(2) { sliceIndex ->
                 (1 until foundSlices[sliceIndex].size)
                     .map { geneIndex ->

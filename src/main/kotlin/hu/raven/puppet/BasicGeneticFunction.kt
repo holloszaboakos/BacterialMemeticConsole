@@ -45,7 +45,7 @@ fun main() {
                 )
             }
             single<InitializePopulation> {
-                InitializePopulationByModuloStepper()
+                InitializePopulationByModuloStepper
             }
             single {
                 OrderPopulationByCost(calculateCostOf = get())
@@ -95,7 +95,7 @@ fun main() {
                 )
             }
             single<CrossOverOperator> {
-                OrderCrossOver()
+                OrderCrossOver
             }
             single<MutateChildren> {
                 MutateChildrenByReverse()

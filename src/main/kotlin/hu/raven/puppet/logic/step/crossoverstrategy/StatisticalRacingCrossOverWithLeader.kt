@@ -28,7 +28,7 @@ class StatisticalRacingCrossOverWithLeader(
 
         parent.forEachIndexed { index, parentPair ->
             crossover(
-                iteration,
+                state,
                 Pair(
                     parentPair[0],
                     parentPair[1]
@@ -36,7 +36,7 @@ class StatisticalRacingCrossOverWithLeader(
                 children[index][0]
             )
             crossover(
-                iteration,
+                state,
                 Pair(
                     parentPair[1],
                     parentPair[0]
@@ -53,14 +53,14 @@ class StatisticalRacingCrossOverWithLeader(
         population.activateAll()
     }
 
-    fun crossover(
-        iteration: Int,
+    private fun crossover(
+        state: EvolutionaryAlgorithmState,
         parents: Pair<
                 OnePartRepresentationWithCostAndIterationAndId,
                 OnePartRepresentationWithCostAndIterationAndId,
                 >,
         child: OnePartRepresentationWithCostAndIterationAndId,
-    ) {
+    ): Unit = state.run {
         if (lastIteration != iteration) {
             lastIteration = iteration
             synchronized(statistics) {
@@ -86,7 +86,7 @@ class StatisticalRacingCrossOverWithLeader(
         }
 
         operator?.let { operator ->
-            actualStatistics?.let { statistics ->
+            actualStatistics?.let { oldStatistics ->
                 operator.invoke(
                     Pair(
                         parents.first.permutation,
@@ -96,10 +96,43 @@ class StatisticalRacingCrossOverWithLeader(
                 )
                 child.cost = calculateCostOf(child)
                 synchronized(statistics) {
-                    //TODO increase success
+                    increaseSuccess(
+                        oldStatistics,
+                        parents,
+                        child,
+                        state
+                    )
                 }
             }
         }
 
+    }
+
+    private fun increaseSuccess(
+        oldStatistics: OperatorStatistics,
+        parents: Pair<
+                OnePartRepresentationWithCostAndIterationAndId,
+                OnePartRepresentationWithCostAndIterationAndId,
+                >,
+        child: OnePartRepresentationWithCostAndIterationAndId,
+        state: EvolutionaryAlgorithmState,
+    ): Unit = state.run {
+        var newSuccess = oldStatistics.success
+        if (parents.first.costOrException() > child.costOrException()) {
+            newSuccess +=
+                hu.raven.puppet.model.math.Fraction.new(iteration.toLong() - parents.first.iterationOfCreation) /
+                        child.costOrException() /
+                        hu.raven.puppet.model.math.Fraction.new(population.imdexOf(parents.first).toLong() + 1)
+                            .let { it * it }
+        }
+
+        if (parents.second.costOrException() > child.costOrException()) {
+            newSuccess +=
+                hu.raven.puppet.model.math.Fraction.new(iteration.toLong() - parents.second.iterationOfCreation) /
+                        child.costOrException() /
+                        hu.raven.puppet.model.math.Fraction.new(population.imdexOf(parents.second).toLong() + 1)
+                            .let { it * it }
+        }
+        actualStatistics = oldStatistics.copy(success = newSuccess)
     }
 }

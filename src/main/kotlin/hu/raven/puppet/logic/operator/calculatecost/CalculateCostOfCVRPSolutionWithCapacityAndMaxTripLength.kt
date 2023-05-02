@@ -1,94 +1,140 @@
 package hu.raven.puppet.logic.operator.calculatecost
 
 import hu.raven.puppet.model.math.Fraction
+import hu.raven.puppet.model.physics.Meter
 import hu.raven.puppet.model.physics.Stere
 import hu.raven.puppet.model.solution.OnePartRepresentation
+import hu.raven.puppet.model.task.CostGraph
 import hu.raven.puppet.model.task.Task
+import hu.raven.puppet.model.task.TransportUnit
 import hu.raven.puppet.utility.extention.getEdgeBetween
-import hu.raven.puppet.utility.extention.sumClever
 
 class CalculateCostOfCVRPSolutionWithCapacityAndMaxTripLength(
     override val task: Task
 ) : CalculateCost() {
+    private data class TripState(
+        val takenCapacity: Stere,
+        val cost: Meter,
+    )
+
     override fun invoke(solution: OnePartRepresentation): Fraction {
-        var sumCost: Fraction? = Fraction.new(0L)
-        var startCount = 0
-        var endCount = 0
-        solution.permutation
-            .sliced { it >= solution.objectiveCount }
-            .forEachIndexed { _, slice ->
-                //val salesman = task.salesmen[sliceIndex]
-                var takenCapacity = Stere(0L)
-                sumCost = max(
-                    sumCost,
-                    slice.mapIndexed { index, value ->
-                        when (index) {
-                            0 -> {
-                                startCount++
-                                val fromCenterEdge = task.costGraph.edgesFromCenter[value]
-                                takenCapacity += task.costGraph.objectives[value].volume
-                                if (index != slice.size - 1) {
-                                    fromCenterEdge.length
-                                } else {
-                                    endCount++
-                                    val toCenterEdge = task.costGraph.edgesToCenter[value]
-                                    fromCenterEdge.length + toCenterEdge.length
-                                }
-                            }
+        return solution.permutation
+            .sliced { it >= task.costGraph.objectives.size - 1 }
+            .mapIndexed { sliceIndex, slice ->
+                val salesman = task.transportUnits[sliceIndex]
+                var tripState = TripState(Stere(0L), Meter(0L))
+                slice.forEachIndexed { sliceValueIndex, sliceValue ->
+                    tripState = when (sliceValueIndex) {
+                        0 -> onFirstValueOfSlice(
+                            task.costGraph,
+                            sliceValue,
+                            tripState,
+                            0 != slice.lastIndex
+                        )
 
-                            slice.size - 1 -> {
-                                endCount++
-                                //if (takenCapacity + task.costGraph.objectives[value].volume_Stere < salesman.volumeCapacity_Stere) {
-                                val betweenEdge = task.costGraph.getEdgeBetween(slice[index - 1], value)
-                                val toCenterEdge = task.costGraph.edgesToCenter[value]
-                                takenCapacity += task.costGraph.objectives[value].volume
-                                (betweenEdge.length + toCenterEdge.length)
-                                /*} else {
-                                TODO
-                                    val fromPreviousToCenterEdge = task.costGraph.edgesFromCenter[slice[index - 1]]
-                                    val fromCenterEdge = task.costGraph.edgesFromCenter[value]
-                                    val toCenterEdge = task.costGraph.edgesFromCenter[value]
-                                    takenCapacity += task.costGraph.objectives[value].volume_Stere
-                                    (
-                                            fromPreviousToCenterEdge.length_Meter +
-                                                    fromCenterEdge.length_Meter +
-                                                    toCenterEdge.length_Meter
-                                            ).toDouble() / 1000.0
-                                }
+                        slice.size - 1 -> onLastValueOfSlice(
+                            task.costGraph,
+                            sliceValue,
+                            tripState,
+                            salesman,
+                            slice[sliceValueIndex - 1],
+                        )
 
-                                 */
-                            }
-
-                            else -> {
-                                //if (takenCapacity + task.costGraph.objectives[value].volume_Stere < salesman.volumeCapacity_Stere) {
-                                val betweenEdge = task.costGraph.getEdgeBetween(slice[index - 1], value)
-                                betweenEdge.length
-                                /* } else{
-                                TODO
-                                     val fromPreviousToCenterEdge = task.costGraph.edgesFromCenter[slice[index - 1]]
-                                     val fromCenterEdge = task.costGraph.edgesFromCenter[value]
-                                     (fromPreviousToCenterEdge.length_Meter + fromCenterEdge.length_Meter).toDouble() / 1000.0
-                                 }
-
-                                 */
-                            }
-                        }
-
+                        else -> onOtherValuesOfSlice(
+                            task.costGraph,
+                            sliceValue,
+                            tripState,
+                            salesman,
+                            slice[sliceValueIndex - 1],
+                        )
                     }
-                        .map { it.value }
-                        .toTypedArray()
-                        .sumClever()
-                )
+
+                }
+                tripState
             }
-        return sumCost!!
+            .maxOf { it.cost.value }
     }
 
-
-    private fun max(left: Fraction?, right: Fraction?) =
-        when {
-            left == null || right == null -> null
-            left > right -> left
-            left < right -> right
-            else -> null
+    private fun onFirstValueOfSlice(
+        costGraph: CostGraph,
+        sliceValue: Int,
+        tripState: TripState,
+        isLastValueOfSlice: Boolean
+    ): TripState {
+        val fromCenterEdge = costGraph.edgesFromCenter[sliceValue]
+        val newTakenCapacity = tripState.takenCapacity + costGraph.objectives[sliceValue].volume
+        if (isLastValueOfSlice) {
+            return TripState(
+                takenCapacity = newTakenCapacity,
+                cost = tripState.cost + fromCenterEdge.length,
+            )
         }
+
+        val toCenterEdge = costGraph.edgesToCenter[sliceValue]
+
+        return TripState(
+            takenCapacity = newTakenCapacity,
+            cost = tripState.cost +
+                    fromCenterEdge.length +
+                    toCenterEdge.length,
+        )
+    }
+
+    private fun onLastValueOfSlice(
+        costGraph: CostGraph,
+        sliceValue: Int,
+        tripState: TripState,
+        salesman: TransportUnit,
+        previousSliceValue: Int,
+    ): TripState {
+        if (tripState.takenCapacity + costGraph.objectives[sliceValue].volume < salesman.volumeCapacity) {
+            val betweenEdge = costGraph.getEdgeBetween(previousSliceValue, sliceValue)
+            val toCenterEdge = costGraph.edgesToCenter[sliceValue]
+            return TripState(
+                tripState.takenCapacity + costGraph.objectives[sliceValue].volume,
+                betweenEdge.length + toCenterEdge.length
+            )
+
+
+        }
+
+        val fromPreviousToCenterEdge =
+            costGraph.edgesFromCenter[previousSliceValue]
+        val fromCenterEdge = costGraph.edgesFromCenter[sliceValue]
+        val toCenterEdge = costGraph.edgesFromCenter[sliceValue]
+
+        return TripState(
+            tripState.takenCapacity + costGraph.objectives[sliceValue].volume,
+            tripState.cost +
+                    fromPreviousToCenterEdge.length +
+                    fromCenterEdge.length +
+                    toCenterEdge.length
+        )
+    }
+
+    private fun onOtherValuesOfSlice(
+        costGraph: CostGraph,
+        sliceValue: Int,
+        tripState: TripState,
+        salesman: TransportUnit,
+        previousSliceValue: Int
+    ): TripState {
+        if (tripState.takenCapacity + costGraph.objectives[sliceValue].volume < salesman.volumeCapacity) {
+            val betweenEdge = costGraph.getEdgeBetween(previousSliceValue, sliceValue)
+
+            return tripState.copy(
+                cost = tripState.cost + betweenEdge.length
+            )
+        }
+
+        val fromPreviousToCenterEdge =
+            costGraph.edgesFromCenter[previousSliceValue]
+        val fromCenterEdge = costGraph.edgesFromCenter[sliceValue]
+
+        return tripState.copy(
+            cost = tripState.cost +
+                    fromPreviousToCenterEdge.length +
+                    fromCenterEdge.length
+        )
+    }
 }

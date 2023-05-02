@@ -3,7 +3,7 @@ package hu.raven.puppet.logic.operator.crossoveroperator
 import hu.raven.puppet.model.math.Permutation
 import kotlin.random.Random.Default.nextInt
 
-class MaximalPreservationCrossOver : CrossOverOperator() {
+object MaximalPreservationCrossOver : CrossOverOperator() {
 
     override fun invoke(
         parentPermutations: Pair<Permutation, Permutation>,

@@ -8,20 +8,20 @@ sealed class CrossOverOperator {
         fun getVariants(
             costGraph: CostGraph
         ) = listOf(
-            AlternatingEdgeCrossOver(),
-            AlternatingPositionCrossOver(),
-            CycleCrossOver(),
-            DistancePreservingCrossOver(),
-            GeneticEdgeRecombinationCrossOver(),
-            HeuristicCrossOver { costGraph }, //TODO provider
-            MaximalPreservationCrossOver(),
-            OrderBasedCrossOver(),
-            OrderCrossOver(),
-            PartiallyMatchedCrossOver(),
-            PositionBasedCrossOver(),
-            //broken SortedMatchCrossOver,
-            SubTourChunksCrossOver(),
-            VotingRecombinationCrossOver(),
+            AlternatingEdgeCrossOver,
+            AlternatingPositionCrossOver,
+            CycleCrossOver,
+            DistancePreservingCrossOver,
+            GeneticEdgeRecombinationCrossOver,
+            HeuristicCrossOver(costGraph),
+            MaximalPreservationCrossOver,
+            OrderBasedCrossOver,
+            OrderCrossOver,
+            PartiallyMatchedCrossOver,
+            PositionBasedCrossOver,
+            SortedMatchCrossOver(costGraph),
+            SubTourChunksCrossOver,
+            VotingRecombinationCrossOver,
         )
     }
 

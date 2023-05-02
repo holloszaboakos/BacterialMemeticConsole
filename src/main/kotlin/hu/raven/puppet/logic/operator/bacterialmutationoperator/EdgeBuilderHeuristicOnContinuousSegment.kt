@@ -80,10 +80,6 @@ class EdgeBuilderHeuristicOnContinuousSegment(
         elementIndexes.forEachIndexed { index, elementIndex ->
             clone.permutation[selectedSegment.positions[index]] = selectedSegment.values[elementIndex]
         }
-
-        if (!clone.permutation.checkFormat()) {
-            println("AJJAJ")
-        }
     }
 
     private fun nullOutWeightOfExclusionaryEdges(

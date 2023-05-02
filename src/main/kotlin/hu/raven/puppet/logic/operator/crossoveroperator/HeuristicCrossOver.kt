@@ -1,22 +1,23 @@
 package hu.raven.puppet.logic.operator.crossoveroperator
 
+import hu.raven.puppet.logic.operator.weightedselection.RouletteWheelSelection
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.math.Permutation
 import hu.raven.puppet.model.task.CostGraph
 import hu.raven.puppet.utility.extention.get
 import hu.raven.puppet.utility.extention.getEdgeBetween
-import hu.raven.puppet.utility.extention.sumClever
 import kotlin.random.Random.Default.nextInt
 
 class HeuristicCrossOver(
-    val costGraphProvider: () -> CostGraph
+    val costGraph: CostGraph
 ) : CrossOverOperator() {
+
+    private val rouletteWheelSelection = RouletteWheelSelection<Int>()
 
     override fun invoke(
         parentPermutations: Pair<Permutation, Permutation>,
         childPermutation: Permutation
     ) {
-        val costGraph = costGraphProvider()
 
         val randomPermutation = IntArray(childPermutation.size) { it }
         randomPermutation.shuffle()
@@ -57,11 +58,6 @@ class HeuristicCrossOver(
                 geneIndex,
                 neighbours
             )
-
-            if (childPermutation[geneIndex] == childPermutation.size)
-                println("Failed to choose based on weights")
-
-
         }
 
     }
@@ -136,16 +132,9 @@ class HeuristicCrossOver(
         geneIndex: Int,
         neighbours: List<Int>
     ) {
-        val sum = weights.sumClever()
-        //TODO stabilize
-        var choice = Fraction.randomUntil(sum)
-
-        for (weightIndex in weights.indices) {
-            if (choice <= weights[weightIndex]) {
-                child[geneIndex] = neighbours[weightIndex]
-                break
-            }
-            choice -= weights[weightIndex]
-        }
+        val candidatesWithWeight = neighbours
+            .mapIndexed { index, value -> Pair(weights[index], value) }
+            .toTypedArray()
+        child[geneIndex] = rouletteWheelSelection(candidatesWithWeight)
     }
 }

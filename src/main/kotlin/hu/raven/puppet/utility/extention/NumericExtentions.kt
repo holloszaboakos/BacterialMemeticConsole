@@ -1,5 +1,15 @@
 package hu.raven.puppet.utility.extention
 
+import hu.raven.puppet.model.math.Fraction
+
+
+fun max(left: Fraction?, right: Fraction?) =
+    when {
+        left == null || right == null -> null
+        left > right -> left
+        left < right -> right
+        else -> null
+    }
 
 fun Long.log2(): Int {
     return 63 - java.lang.Long.numberOfLeadingZeros(this)

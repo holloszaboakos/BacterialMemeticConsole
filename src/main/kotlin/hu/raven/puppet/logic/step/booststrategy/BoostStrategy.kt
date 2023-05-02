@@ -5,5 +5,5 @@ import hu.raven.puppet.logic.step.EvolutionaryAlgorithmStep
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 
 sealed class BoostStrategy : EvolutionaryAlgorithmStep {
-    abstract val boostOperator: BoostOperator<OnePartRepresentationWithCostAndIterationAndId>
+    protected abstract val boostOperator: BoostOperator<OnePartRepresentationWithCostAndIterationAndId>
 }

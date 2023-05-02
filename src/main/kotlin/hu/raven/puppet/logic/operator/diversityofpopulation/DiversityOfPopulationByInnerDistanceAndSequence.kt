@@ -1,10 +1,10 @@
-package hu.raven.puppet.logic.operator.diversity
+package hu.raven.puppet.logic.operator.diversityofpopulation
 
 import hu.raven.puppet.model.math.Permutation
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
 
-class DiversityByInnerDistanceAndSequence : Diversity() {
+object DiversityOfPopulationByInnerDistanceAndSequence : DiversityOfPopulation() {
 
     override fun invoke(algorithmState: EvolutionaryAlgorithmState): Double = algorithmState.run {
         var diversity = 0.0

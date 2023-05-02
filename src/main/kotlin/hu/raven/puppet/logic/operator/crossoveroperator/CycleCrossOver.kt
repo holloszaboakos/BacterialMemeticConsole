@@ -3,7 +3,7 @@ package hu.raven.puppet.logic.operator.crossoveroperator
 import hu.raven.puppet.model.math.Permutation
 
 
-class CycleCrossOver : CrossOverOperator() {
+object CycleCrossOver : CrossOverOperator() {
 
     override fun invoke(
         parentPermutations: Pair<Permutation, Permutation>,

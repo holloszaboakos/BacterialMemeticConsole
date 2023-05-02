@@ -7,7 +7,7 @@ import hu.raven.puppet.utility.extention.slice
 
 
 class BoostOntTop(
-    val boostedCount: Int,
+    private val boostedCount: Int,
     override val boostOperator: BoostOperator<OnePartRepresentationWithCostAndIterationAndId>,
 ) : BoostStrategy() {
 

@@ -15,7 +15,7 @@ class MutationWithElitistSelectionAndOneOpposition(
     override val cloneCycleCount: Int
 ) : MutationOnSpecimen() {
 
-    private val oppositionOperator = OppositionOperator()
+    private val oppositionOperator = OppositionOperator
 
     override fun invoke(
         specimenWithIndex: IndexedValue<OnePartRepresentationWithCost>,

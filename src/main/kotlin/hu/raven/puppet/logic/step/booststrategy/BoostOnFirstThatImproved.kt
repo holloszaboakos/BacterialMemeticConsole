@@ -9,7 +9,7 @@ import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 class BoostOnFirstThatImproved(
     override val boostOperator: BoostOperator<OnePartRepresentationWithCostAndIterationAndId>
 ) : BoostStrategy() {
-    var costPerPermutation = mutableListOf<Fraction?>()
+    private var costPerPermutation = mutableListOf<Fraction?>()
 
     override fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
         if (costPerPermutation.isEmpty()) {

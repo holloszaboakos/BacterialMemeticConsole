@@ -12,7 +12,7 @@ import hu.raven.puppet.utility.extention.getEdgeBetween
 class CalculateCostOfCVRPSolutionWithCapacity(
     override val task: Task
 ) : CalculateCost() {
-    data class TripState(
+    private data class TripState(
         val takenCapacity: Stere,
         val cost: Meter,
     )
@@ -29,7 +29,7 @@ class CalculateCostOfCVRPSolutionWithCapacity(
                             task.costGraph,
                             sliceValue,
                             tripState,
-                            sliceValueIndex != slice.lastIndex
+                            0 != slice.lastIndex
                         )
 
                         slice.size - 1 -> onLastValueOfSlice(

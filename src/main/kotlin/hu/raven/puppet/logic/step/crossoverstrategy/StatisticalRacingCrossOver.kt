@@ -3,19 +3,13 @@ package hu.raven.puppet.logic.step.crossoverstrategy
 import hu.raven.puppet.logic.logging.ObjectLoggerService
 import hu.raven.puppet.logic.operator.calculatecost.CalculateCost
 import hu.raven.puppet.logic.operator.crossoveroperator.CrossOverOperator
+import hu.raven.puppet.logic.operator.weightedselection.RouletteWheelSelection
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.model.step.crossoverstrategy.GeneticAlgorithmStatistics
 import hu.raven.puppet.model.step.crossoverstrategy.OperatorStatistics
-import hu.raven.puppet.utility.extention.sumClever
 
-//TODO
-//tegyünk bele fuzzy logikát vagy szimulált lehülést
-//pár iterációnként teljesen véletlent válasszunk
-//a mostani a méh kolónia algoritmus scout fázis menjen bele
-//abc: artificial bee colony
-//cinti
 class StatisticalRacingCrossOver(
     override val crossoverOperators: List<CrossOverOperator>,
     private val logger: ObjectLoggerService<String>,
@@ -26,6 +20,7 @@ class StatisticalRacingCrossOver(
     private var iterationLock = Object()
     private var operator: CrossOverOperator? = null
     private var actualStatistics: OperatorStatistics? = null
+    private var rouletteWheelSelection = RouletteWheelSelection<CrossOverOperator>()
 
     override fun invoke(state: EvolutionaryAlgorithmState) = state.run {
         val children = population.inactivesAsSequence().chunked(2).toList()
@@ -35,7 +30,7 @@ class StatisticalRacingCrossOver(
 
         parent.forEachIndexed { index, parentPair ->
             crossover(
-                iteration,
+                state,
                 Pair(
                     parentPair[0],
                     parentPair[1]
@@ -43,7 +38,7 @@ class StatisticalRacingCrossOver(
                 children[index][0]
             )
             crossover(
-                iteration,
+                state,
                 Pair(
                     parentPair[1],
                     parentPair[0]
@@ -61,58 +56,25 @@ class StatisticalRacingCrossOver(
     }
 
     private fun crossover(
-        iteration: Int,
+        state: EvolutionaryAlgorithmState,
         parents: Pair<
                 OnePartRepresentationWithCostAndIterationAndId,
                 OnePartRepresentationWithCostAndIterationAndId,
                 >,
         child: OnePartRepresentationWithCostAndIterationAndId,
-    ) {
+    ): Unit = state.run {
         var newIteration: Boolean
         synchronized(iterationLock) {
             newIteration = iteration / 5 != lastIteration / 5
-            if (newIteration)
-                lastIteration = iteration
+            if (newIteration) lastIteration = iteration
         }
 
-        if (newIteration) {
-            synchronized(statistics) {
-                actualStatistics?.let { oldStatistics ->
-                    actualStatistics = OperatorStatistics(
-                        run = (oldStatistics.run + child.permutation.size) * 8 / 10,
-                        success = oldStatistics.success * 8 / 10,
-                        successRatio = oldStatistics.success / oldStatistics.run.toLong()
-                    )
-                }
-            }
-            if (iteration < 10 * statistics.operatorsWithStatistics.size) {
-                operator =
-                    statistics.operatorsWithStatistics.keys.toList()[iteration % statistics.operatorsWithStatistics.size]
-                logger.log(operator!!::class.java.simpleName)
-                actualStatistics = statistics.operatorsWithStatistics[operator]
-            } else {
-                val sumOfSuccessRatio =
-                    statistics.operatorsWithStatistics.values.map { it.successRatio.let { it * it } }.sumClever()
-                //TODO stabilize
-                val choice = Fraction.randomUntil(Fraction.new(1))
-                var fill = Fraction.new(0)
-                var found = false
-                statistics.operatorsWithStatistics.forEach { (type, value) ->
-                    fill += value.successRatio.let { it * it } / sumOfSuccessRatio
-                    if (!found && fill >= choice) {
-                        found = true
-                        operator = type
-                        logger.log(type.toString())
-                        actualStatistics = value
-                    }
-                }
-            }
-        }
+        if (newIteration) onNewIteration(iteration, child)
 
         operator?.let { operator ->
-            actualStatistics?.let { actualStatistics ->
+            actualStatistics?.let { oldStatistics ->
                 synchronized(statistics.operatorsWithStatistics) {
-                    operator.invoke(
+                    operator(
                         Pair(
                             parents.first.permutation,
                             parents.second.permutation,
@@ -122,10 +84,57 @@ class StatisticalRacingCrossOver(
                 }
                 child.cost = calculateCostOf(child)
                 /*    AuditWorkstation, ExpeditionArea*/
-                synchronized(actualStatistics) {
-                    //TODO increase success
+                synchronized(oldStatistics) {
+                    var newSuccess = oldStatistics.success
+                    if (parents.first.costOrException() > child.costOrException()) {
+                        newSuccess +=
+                            Fraction.new(iteration.toLong() - parents.first.iterationOfCreation) /
+                                    child.costOrException() /
+                                    Fraction.new(population.imdexOf(parents.first).toLong() + 1).let { it * it }
+                    }
+
+                    if (parents.second.costOrException() > child.costOrException()) {
+                        newSuccess +=
+                            Fraction.new(iteration.toLong() - parents.second.iterationOfCreation) /
+                                    child.costOrException() /
+                                    Fraction.new(population.imdexOf(parents.second).toLong() + 1).let { it * it }
+                    }
+                    actualStatistics = oldStatistics.copy(success = newSuccess)
                 }
             }
+        }
+    }
+
+    private fun onNewIteration(
+        iteration: Int,
+        child: OnePartRepresentationWithCostAndIterationAndId
+    ) {
+        synchronized(statistics) {
+            actualStatistics?.let { oldStatistics ->
+                actualStatistics = OperatorStatistics(
+                    run = (oldStatistics.run + child.permutation.size) * 8 / 10,
+                    success = oldStatistics.success * 8 / 10,
+                    successRatio = oldStatistics.success / oldStatistics.run.toLong()
+                )
+            }
+        }
+        if (iteration < 10 * statistics.operatorsWithStatistics.size) {
+            operator =
+                statistics.operatorsWithStatistics.keys.toList()[iteration % statistics.operatorsWithStatistics.size]
+            logger.log(operator!!::class.java.simpleName)
+            actualStatistics = statistics.operatorsWithStatistics[operator]
+        } else {
+            val operatorsWithWeight = statistics.operatorsWithStatistics.entries
+                .map { entry ->
+                    Pair(
+                        entry.value.successRatio.let { it * it },
+                        entry.key
+                    )
+                }
+                .toTypedArray()
+            operator = rouletteWheelSelection(operatorsWithWeight)
+            logger.log(operator.toString())
+            actualStatistics = statistics.operatorsWithStatistics[operator]
         }
     }
 }

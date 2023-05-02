@@ -3,14 +3,14 @@ package hu.raven.puppet.logic.operator.crossoveroperator
 import hu.raven.puppet.model.math.Permutation
 import kotlin.random.Random
 
-class PositionBasedCrossOver : CrossOverOperator() {
+object PositionBasedCrossOver : CrossOverOperator() {
 
     override fun invoke(
         parentPermutations: Pair<Permutation, Permutation>,
         childPermutation: Permutation
     ) {
         val seconderCopy = parentPermutations.second.toMutableList()
-        val selected = BooleanArray(childPermutation.size) { Random.nextBoolean() && Random.nextBoolean() }
+        val selected = BooleanArray(childPermutation.size) { Random.nextInt() % 4 == 0 }
 
         //clean child
         //copy parent middle to child

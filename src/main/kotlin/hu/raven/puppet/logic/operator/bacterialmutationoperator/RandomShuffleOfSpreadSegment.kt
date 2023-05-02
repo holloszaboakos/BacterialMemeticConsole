@@ -3,7 +3,7 @@ package hu.raven.puppet.logic.operator.bacterialmutationoperator
 import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.solution.Segment
 
-class RandomShuffleOfSpreadSegment : BacterialMutationOperator() {
+object RandomShuffleOfSpreadSegment : BacterialMutationOperator() {
 
     override fun invoke(
         clone: OnePartRepresentation,

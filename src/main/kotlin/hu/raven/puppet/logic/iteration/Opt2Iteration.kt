@@ -5,12 +5,11 @@ import hu.raven.puppet.model.state.LocalSearchAlgorithmState
 
 
 class Opt2Iteration(
-    val calculateCostOf: CalculateCost,
-    val algorithmState: LocalSearchAlgorithmState,
+    private val calculateCostOf: CalculateCost,
 ) : AlgorithmIteration<LocalSearchAlgorithmState> {
 
-    var sourceIndex = 0
-    var permutation = listOf<Int>()
+    private var sourceIndex = 0
+    private var permutation = listOf<Int>()
 
     override fun invoke(algorithmState: LocalSearchAlgorithmState) = algorithmState.run {
         val best = actualCandidate

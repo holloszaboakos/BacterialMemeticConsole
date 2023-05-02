@@ -84,5 +84,9 @@ class PoolWithSmartActivation<T : HasId<Int>>(
         return pool[index]
     }
 
+    fun imdexOf(item: T): Int = lock.read {
+        indexById[item.id]
+    }
+
 
 }

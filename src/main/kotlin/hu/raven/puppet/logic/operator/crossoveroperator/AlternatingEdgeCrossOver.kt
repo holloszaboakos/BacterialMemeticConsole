@@ -4,7 +4,7 @@ import hu.raven.puppet.model.math.Permutation
 import hu.raven.puppet.utility.extention.get
 
 
-class AlternatingEdgeCrossOver : CrossOverOperator() {
+object AlternatingEdgeCrossOver : CrossOverOperator() {
 
     override fun invoke(
         parentPermutations: Pair<Permutation, Permutation>,

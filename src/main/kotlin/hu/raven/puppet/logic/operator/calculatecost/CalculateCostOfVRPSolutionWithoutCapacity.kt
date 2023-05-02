@@ -10,7 +10,7 @@ import hu.raven.puppet.model.task.TransportUnit
 import hu.raven.puppet.utility.extention.getEdgeBetween
 
 
-class CalculateCostOfVRPSolutionWithoutCapacity<S>(
+class CalculateCostOfVRPSolutionWithoutCapacity(
     override val task: Task
 ) : CalculateCost() {
 
@@ -25,7 +25,7 @@ class CalculateCostOfVRPSolutionWithoutCapacity<S>(
                 slice.map { it }.forEachIndexed { index, value ->
                     cost += when (index) {
                         0 -> {
-                            if (index != slice.size - 1) {
+                            if (slice.size != 1) {
                                 val fromCenterEdge = task.costGraph.edgesFromCenter[value]
                                 val objective = task.costGraph.objectives[value]
 

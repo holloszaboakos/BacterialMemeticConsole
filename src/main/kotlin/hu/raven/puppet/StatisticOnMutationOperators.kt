@@ -107,10 +107,10 @@ private val OPERATORS: Array<(
         EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation(task)
     },
     {
-        OppositionOperator()
+        OppositionOperator
     },
     {
-        RandomShuffleOfContinuesSegment()
+        RandomShuffleOfContinuesSegment
     },
     { task: Task ->
         SequentialSelectionHeuristicOnContinuousSegment(task)

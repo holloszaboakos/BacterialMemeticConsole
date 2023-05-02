@@ -5,7 +5,7 @@ import hu.raven.puppet.model.solution.Segment
 import hu.raven.puppet.utility.extention.toPermutation
 
 
-class RandomShuffleOfContinuesSegment : BacterialMutationOperator() {
+object RandomShuffleOfContinuesSegment : BacterialMutationOperator() {
     override fun invoke(
         clone: OnePartRepresentation,
         selectedSegment: Segment

@@ -1,4 +1,4 @@
-package hu.raven.puppet.logic.operator.diversity
+package hu.raven.puppet.logic.operator.diversityofpopulation
 
 
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlin.math.abs
 
-class DiversityByMatrixDistanceFromBest : Diversity() {
+object DiversityOfPopulationByMatrixDistanceFromBest : DiversityOfPopulation() {
 
     override fun invoke(algorithmState: EvolutionaryAlgorithmState): Double = runBlocking {
         val best = algorithmState.copyOfBest!!

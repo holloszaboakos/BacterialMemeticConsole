@@ -1,5 +1,6 @@
 package hu.raven.puppet.logic.operator.bacterialmutationoperator
 
+import hu.raven.puppet.logic.operator.weightedselection.RouletteWheelSelection
 import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.solution.Segment
@@ -7,11 +8,11 @@ import hu.raven.puppet.model.task.Task
 import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.extention.sumClever
 
-//TODO repair
 class SequentialSelectionHeuristicOnContinuousSegment(
     val task: Task
 ) : BacterialMutationOperator() {
 
+    private val rouletteWheelSelection = RouletteWheelSelection<Int>()
     override fun invoke(
         clone: OnePartRepresentation,
         selectedSegment: Segment
@@ -57,11 +58,13 @@ class SequentialSelectionHeuristicOnContinuousSegment(
                 weights[weightIndex] = weight / (sumWeightOfEdgesLost * remainingElements.size.toLong())
         }
 
-        return selectElementByWeightedRandom(
-            remainingElements,
-            weights
-        )
+        val candidatesWithWeight = remainingElements
+            .mapIndexed { index, value ->
+                Pair(weights[index], value)
+            }
+            .toTypedArray()
 
+        return rouletteWheelSelection(candidatesWithWeight)
     }
 
     private fun calculateWeightsOfRemainingElements(
@@ -92,23 +95,6 @@ class SequentialSelectionHeuristicOnContinuousSegment(
                 else -> Fraction.new(1L)
             }
         }.toTypedArray()
-    }
-
-    private fun selectElementByWeightedRandom(
-        remainingElements: MutableList<Int>,
-        weights: Array<Fraction>
-    ): Int {
-        val sumOfWeights = weights.sumClever()
-        //TODO stabilize
-        var randomPoint = Fraction.randomUntil(sumOfWeights)
-        for (elementIndex in weights.indices) {
-            val weight = weights[elementIndex]
-            if (randomPoint <= weight) {
-                return remainingElements[elementIndex]
-            }
-            randomPoint -= weight
-        }
-        throw Exception("No element selected!")
     }
 
     private fun calculateWeightsOfNeighbouringEdges(

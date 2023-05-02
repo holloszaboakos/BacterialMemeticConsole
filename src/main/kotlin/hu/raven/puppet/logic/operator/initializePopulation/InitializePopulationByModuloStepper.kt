@@ -4,7 +4,7 @@ import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationA
 import hu.raven.puppet.model.task.Task
 import hu.raven.puppet.utility.extention.toPermutation
 
-class InitializePopulationByModuloStepper : InitializePopulation() {
+object InitializePopulationByModuloStepper : InitializePopulation() {
 
     override fun invoke(task: Task): List<OnePartRepresentationWithCostAndIterationAndId> {
         val sizeOfPermutation =

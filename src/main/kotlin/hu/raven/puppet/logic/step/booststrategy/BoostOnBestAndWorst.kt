@@ -7,11 +7,9 @@ import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
 class BoostOnBestAndWorst(
     override val boostOperator: BoostOperator<OnePartRepresentationWithCostAndIterationAndId>
-) :
-    BoostStrategy() {
+) : BoostStrategy() {
 
     override operator fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
-
         val best = population.activesAsSequence().first()
         boostOperator(best)
         val worst = population.activesAsSequence().last()

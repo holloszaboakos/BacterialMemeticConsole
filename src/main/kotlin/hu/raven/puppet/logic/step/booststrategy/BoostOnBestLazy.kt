@@ -9,7 +9,7 @@ import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 class BoostOnBestLazy(
     override val boostOperator: BoostOperator<OnePartRepresentationWithCostAndIterationAndId>
 ) : BoostStrategy() {
-    var costOfBest: Fraction? = null
+    private var costOfBest: Fraction? = null
 
     override operator fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
         val best = population.activesAsSequence().first()

@@ -4,7 +4,7 @@ import hu.raven.puppet.model.math.Permutation
 import hu.raven.puppet.utility.extention.get
 
 
-class GeneticEdgeRecombinationCrossOver : CrossOverOperator() {
+object GeneticEdgeRecombinationCrossOver : CrossOverOperator() {
 
     override fun invoke(
         parentPermutations: Pair<Permutation, Permutation>,
@@ -16,18 +16,7 @@ class GeneticEdgeRecombinationCrossOver : CrossOverOperator() {
         randomPermutation.shuffle()
         var lastIndex = 0
 
-        //O(n2)
-        val table = Array(parentPermutations.first.indices.count()) { valueIndex ->
-            val neighbours = mutableSetOf<Int>()
-
-            for (parentIndex in 0 until 2) {
-                if (parentPermutations[parentIndex].indexOf(valueIndex) != 0)
-                    neighbours += parentPermutations[parentIndex][parentPermutations[parentIndex].indexOf(valueIndex) - 1]
-                if (parentPermutations[parentIndex].indexOf(valueIndex) != childPermutation.size - 1)
-                    neighbours += parentPermutations[parentIndex][parentPermutations[parentIndex].indexOf(valueIndex) + 1]
-            }
-            neighbours
-        }
+        val table = createTable(parentPermutations)
 
         val neighbourCounts = Array(childPermutation.size) { valueIndex ->
             table[valueIndex].size
@@ -58,13 +47,26 @@ class GeneticEdgeRecombinationCrossOver : CrossOverOperator() {
                     }
                 }
             }
-            if (childPermutation[geneIndex] == childPermutation.size)
-                println("FUCK")
             table[childPermutation[geneIndex]].forEach { neighbour ->
                 table[neighbour].remove(childPermutation[geneIndex])
                 neighbourCounts[neighbour]--
             }
             neighborsOfPrevious.clear()
         }
+    }
+
+    private fun createTable(parentPermutations: Pair<Permutation, Permutation>): Array<MutableSet<Int>> {
+        return Array(parentPermutations.first.indices.count()) { valueIndex ->
+            val neighbours = mutableSetOf<Int>()
+
+            for (parentIndex in 0 until 2) {
+                if (parentPermutations[parentIndex].indexOf(valueIndex) != 0)
+                    neighbours += parentPermutations[parentIndex][parentPermutations[parentIndex].indexOf(valueIndex) - 1]
+                if (parentPermutations[parentIndex].indexOf(valueIndex) != parentPermutations.first.size - 1)
+                    neighbours += parentPermutations[parentIndex][parentPermutations[parentIndex].indexOf(valueIndex) + 1]
+            }
+            neighbours
+        }
+
     }
 }

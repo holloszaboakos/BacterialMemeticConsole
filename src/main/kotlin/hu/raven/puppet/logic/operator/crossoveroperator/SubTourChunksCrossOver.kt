@@ -4,7 +4,7 @@ import hu.raven.puppet.model.math.Permutation
 import hu.raven.puppet.utility.extention.get
 import kotlin.random.Random.Default.nextInt
 
-class SubTourChunksCrossOver : CrossOverOperator() {
+object SubTourChunksCrossOver : CrossOverOperator() {
 
     class Randomizer(permutationSize: Int) {
         private val randomPermutation: IntArray

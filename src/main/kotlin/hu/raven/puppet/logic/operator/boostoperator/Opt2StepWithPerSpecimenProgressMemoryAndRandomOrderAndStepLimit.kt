@@ -1,33 +1,25 @@
 package hu.raven.puppet.logic.operator.boostoperator
 
-import hu.raven.puppet.logic.logging.ObjectLoggerService
 import hu.raven.puppet.logic.operator.calculatecost.CalculateCost
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 
 class Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit(
     override val calculateCostOf: CalculateCost,
-    private val logger: ObjectLoggerService<String>,
     private val stepLimit: Int,
+    populationSize: Int,
+    permutationSize: Int,
 ) : BoostOperator<OnePartRepresentationWithCostAndIterationAndId>() {
-    private var lastPositionPerSpecimen = mutableMapOf<Int, Pair<Int, Int>>()
-    private var shuffler = intArrayOf()
+    private var lastPositionPerSpecimen = Array(populationSize) { Pair(0, 1) }
+    private var shuffler = (0 until permutationSize)
+        .shuffled()
+        .toIntArray()
 
     override fun invoke(specimen: OnePartRepresentationWithCostAndIterationAndId) {
-        logger.log("BOOST")
-        if (!lastPositionPerSpecimen.containsKey(specimen.id)) {
-            lastPositionPerSpecimen[specimen.id] = Pair(0, 1)
-        }
-        if (shuffler.isEmpty()) {
-            shuffler = (0 until specimen.permutation.size)
-                .shuffled()
-                .toIntArray()
-        }
-
         val bestCost = specimen.cost
         var improved = false
         var limitPassed = false
 
-        var lastPosition = lastPositionPerSpecimen[specimen.id]!!
+        var lastPosition = lastPositionPerSpecimen[specimen.id]
         var stepCount = 0
 
         outer@ for (firstIndexIndex in lastPosition.first until specimen.permutation.size - 1) {
