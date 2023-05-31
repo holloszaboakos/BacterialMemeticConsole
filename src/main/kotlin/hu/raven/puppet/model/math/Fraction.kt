@@ -88,6 +88,7 @@ class Fraction private constructor(
         )
 
         fun randomUntil(fraction: Fraction): Fraction {
+            if (fraction.numerator == 0) return new(0)
             val maxShift = fraction.numerator.countLeadingZeroBits() - 1
             val numeratorLimit = fraction.numerator.toLong().timesTwoToThePowerOf(maxShift)
             val randomNumerator = Random.nextLong(numeratorLimit)

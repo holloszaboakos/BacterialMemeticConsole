@@ -11,7 +11,8 @@ class MutationWithElitistSelectionAndModuloStepper(
     override val calculateCostOf: CalculateCost,
     override val selectSegment: SelectSegment,
     override val cloneCount: Int,
-    override val cloneCycleCount: Int
+    override val cloneCycleCount: Int,
+    val determinismRatio: Float,
 ) : MutationOnSpecimen() {
 
     override fun invoke(
@@ -41,10 +42,15 @@ class MutationWithElitistSelectionAndModuloStepper(
         selectedSegment: Segment
     ): MutableList<OnePartRepresentationWithCost> {
         val clones = MutableList(cloneCount + 1) { specimen.cloneRepresentationAndCost() }
-        val moduloStepperSegments = generateModuloStepperSegments(selectedSegment.values)
+        val deterministicCount = (cloneCount * determinismRatio).toInt()
+        val moduloStepperSegments = buildList {
+            while (size < deterministicCount) {
+                addAll(generateModuloStepperSegments(selectedSegment.values))
+            }
+        }.slice(0 until deterministicCount)
 
         clones
-            .slice(1..moduloStepperSegments.size)
+            .slice(1 until moduloStepperSegments.size + 1)
             .forEachIndexed { cloneIndex, clone ->
                 selectedSegment.positions.forEach { clone.permutation.deletePosition(it) }
                 moduloStepperSegments[cloneIndex]
@@ -54,7 +60,7 @@ class MutationWithElitistSelectionAndModuloStepper(
             }
 
         clones
-            .slice((moduloStepperSegments.size + 1) until clones.size)
+            .slice(moduloStepperSegments.size + 1 until clones.size)
             .forEach { clone ->
                 mutationOperator(
                     clone,
@@ -68,7 +74,7 @@ class MutationWithElitistSelectionAndModuloStepper(
         val baseOrder = values.clone()
         baseOrder.shuffle()
 
-        return (1 until values.size)
+        return (2 until values.size)
             .map { shiftSize ->
                 val newSegment = IntArray(baseOrder.size) { -1 }
                 val contains = BooleanArray(baseOrder.size) { false }

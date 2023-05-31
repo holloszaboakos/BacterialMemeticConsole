@@ -5,16 +5,16 @@ import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.utility.extention.slice
 
 class SelectSurvivors : EvolutionaryAlgorithmStep {
-    override operator fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
-        population.deactivateAll()
-        population.activesAsSequence()
-            .slice(0 until population.activeCount / 4)
-            .forEach { population.activate(it.id) }
-
-        population.activesAsSequence()
-            .slice(population.activeCount / 4 until population.activeCount)
+    override operator fun invoke(state: EvolutionaryAlgorithmState): Unit = state.population.run {
+        activateAll()
+        sortActiveBy { it.costOrException() }
+        deactivateAll()
+        inactivesAsSequence()
+            .slice(0 until activeCount / 4)
+            .forEach { activate(it.id) }
+        inactivesAsSequence()
             .shuffled()
-            .slice(0 until population.activeCount / 4)
-            .forEach { population.activate(it.id) }
+            .slice(0 until activeCount / 3)
+            .forEach { activate(it.id) }
     }
 }
