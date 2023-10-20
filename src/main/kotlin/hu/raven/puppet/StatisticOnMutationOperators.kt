@@ -20,7 +20,9 @@ import hu.raven.puppet.model.task.Task
 import hu.raven.puppet.modules.AlgorithmParameters.*
 import hu.raven.puppet.modules.FilePathVariableNames.*
 import hu.raven.puppet.utility.KoinUtil.get
-import hu.raven.puppet.utility.flatten
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.core.qualifier.named
@@ -46,7 +48,7 @@ private data class Scenario(
     val mutationOperator: (task: Task) -> BacterialMutationOperator,
 )
 
-private val TASK_SIZES = arrayOf(4, 8, 16, 32, 64, 128, 256, 512, 1024)
+private val TASK_SIZES = arrayOf(32, 64, 128, 256, 512, 1024)
 private val STRATEGIES: Array<(
     mutationOperator: BacterialMutationOperator,
     calculateCostOf: CalculateCost,
@@ -93,7 +95,8 @@ private val STRATEGIES: Array<(
             calculateCostOf,
             selectSegment,
             cloneCount,
-            cloneCycleCount
+            cloneCycleCount,
+            determinismRatio = 0.1f
         )
     },
 )
@@ -106,12 +109,8 @@ private val OPERATORS: Array<(
     { task: Task ->
         EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation(task)
     },
-    {
-        OppositionOperator
-    },
-    {
-        RandomShuffleOfContinuesSegment
-    },
+    { OppositionOperator },
+    { RandomShuffleOfContinuesSegment },
     { task: Task ->
         SequentialSelectionHeuristicOnContinuousSegment(task)
     }
@@ -140,12 +139,11 @@ fun main() {
 
 }
 
-private fun runScenario(scenario: Scenario) {
-    output.appendText("scenario: $scenario\n")
+private fun runScenario(scenario: Scenario) = runBlocking {
     startKoin {
         modules(
             module {
-                single(named(CLONE_COUNT)) { scenario.objectiveCount * 10 }
+                single(named(CLONE_COUNT)) { scenario.objectiveCount * 5 }
                 single(named(CLONE_SEGMENT_LENGTH)) { scenario.objectiveCount }
                 single(named(CLONE_CYCLE_COUNT)) { 5 }
                 single(named(SIZE_OF_POPULATION)) { 1 }
@@ -165,7 +163,7 @@ private fun runScenario(scenario: Scenario) {
                             LocalDateTime.now().toString()
                                 .replace(":", "-")
                                 .replace(".", "-")
-                                .let { "statistics-$it.csv" }
+                                .let { "statistics-$it.txt" }
                         )
                     )
                 }
@@ -188,11 +186,11 @@ private fun runScenario(scenario: Scenario) {
         )
     }
 
-    val task: Task = get()
+//    val task: Task = get()
     val calculateCost: CalculateCost = get()
-    task.costGraph.edgesFromCenter.forEach { println(it.length) }
-    task.costGraph.edgesToCenter.forEach { println(it.length) }
-    task.costGraph.edgesBetween.flatten().forEach { println(it.length) }
+//    task.costGraph.edgesFromCenter.forEach { println(it.length) }
+//    task.costGraph.edgesToCenter.forEach { println(it.length) }
+//    task.costGraph.edgesBetween.flatten().forEach { println(it.length) }
     arrayOf(arrayOf(0)).flatten()
     val strategy: MutationOnSpecimen = scenario.mutationStrategy(
         get(),
@@ -201,20 +199,25 @@ private fun runScenario(scenario: Scenario) {
         get(CLONE_COUNT),
         get(CLONE_CYCLE_COUNT),
     )
+    output.appendText("scenario: ${scenario.fileName} ${scenario.objectiveCount} ${strategy::class} ${get<BacterialMutationOperator>()::class}\n")
 
-    (0 until 25).map {
-        val specimen =
-            OnePartRepresentationWithCostAndIterationAndId(
-                0,
-                0,
-                null,
-                scenario.objectiveCount,
-                Permutation((0 until scenario.objectiveCount).toList().toIntArray())
-            )
-        strategy(IndexedValue(0, specimen), 0)
-        calculateCost(specimen)
-        specimen.costOrException()
-    }
+    (0 until 25)
+        .map {
+            async(Dispatchers.Default) {
+                val specimen =
+                    OnePartRepresentationWithCostAndIterationAndId(
+                        0,
+                        0,
+                        null,
+                        scenario.objectiveCount,
+                        Permutation((0 until scenario.objectiveCount).toList().toIntArray())
+                    )
+                strategy(IndexedValue(0, specimen), 0)
+                calculateCost(specimen)
+                specimen.costOrException()
+            }
+        }
+        .map { it.await() }
         .sortedBy { it }
         .groupBy { it.numerator }
         .forEach { (value, values) ->

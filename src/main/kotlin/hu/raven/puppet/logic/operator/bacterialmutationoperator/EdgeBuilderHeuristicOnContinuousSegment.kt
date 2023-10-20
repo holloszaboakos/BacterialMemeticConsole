@@ -1,6 +1,7 @@
 package hu.raven.puppet.logic.operator.bacterialmutationoperator
 
 import hu.raven.puppet.model.math.Fraction
+import hu.raven.puppet.model.math.WithWeight
 import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.solution.Segment
 import hu.raven.puppet.model.task.Task
@@ -147,21 +148,27 @@ class EdgeBuilderHeuristicOnContinuousSegment(
     private fun selectEdgeBasedOnWeights(
         finalWeightMatrix: Array<Array<Fraction>>
     ): Pair<Int, Int> {
-        val sumOfWeights = finalWeightMatrix.map { it.sumClever() }.sumClever()
-
-        var randomPoint = Fraction.randomUntil(sumOfWeights)
-
-        for (columnIndex in finalWeightMatrix.indices) {
-            for (rowIndex in finalWeightMatrix.indices) {
-                if (randomPoint <= finalWeightMatrix[columnIndex][rowIndex]) {
-                    return Pair(columnIndex, rowIndex)
-                }
-
-                randomPoint -= finalWeightMatrix[columnIndex][rowIndex]
+        var weightsWithCoordinate = finalWeightMatrix.withIndex()
+            .flatMap { row ->
+                row.value.withIndex()
+                    .map {
+                        WithWeight(it.value, Pair(row.index, it.index))
+                    }
             }
+
+        while (weightsWithCoordinate.size != 1) {
+            weightsWithCoordinate = weightsWithCoordinate
+                .shuffled()
+                .chunked(2)
+                .map { Pair(it.first(), it.last()) }
+                .map {
+                    val sum = it.first.weight + it.second.weight
+                    val random = Fraction.randomUntil(sum)
+                    if (random < it.first.weight) it.first else if (random <= sum) it.second else throw Exception("Random util bug!")
+                }
         }
 
-        throw Exception("No edge selected!")
+        return weightsWithCoordinate.first().element
     }
 
     private fun Array<Array<Fraction>>.weightDownByRowAndColumn(): Array<Array<Fraction>> =
