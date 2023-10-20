@@ -1,15 +1,14 @@
 package hu.raven.puppet.logic.operator.calculatecost
 
-import hu.raven.puppet.model.math.Fraction
 import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.task.Task
 import hu.raven.puppet.utility.extention.getEdgeBetween
-import hu.raven.puppet.utility.extention.sumClever
+import hu.raven.puppet.utility.extention.FloatSumExtensions.sumClever
 
 class CalculateCostOfTspSolution(
     override val task: Task
 ) : CalculateCost() {
-    override operator fun invoke(solution: OnePartRepresentation): Fraction {
+    override operator fun invoke(solution: OnePartRepresentation): Float {
         return arrayOf(
             task.costGraph.edgesFromCenter[solution.permutation[0]].length.value,
             task.costGraph.edgesToCenter[solution.permutation[solution.permutation.indices.last]].length.value,
@@ -17,7 +16,7 @@ class CalculateCostOfTspSolution(
                 .map { it }
                 .mapIndexed { index, value ->
                     if (index == 0) {
-                        return@mapIndexed Fraction.new(0)
+                        return@mapIndexed 0f
                     }
 
                     task.costGraph.getEdgeBetween(solution.permutation[index - 1], value).length.value

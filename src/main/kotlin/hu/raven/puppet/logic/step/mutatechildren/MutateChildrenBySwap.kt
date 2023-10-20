@@ -4,7 +4,7 @@ import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.utility.extention.slice
 import kotlin.random.Random
 
-class MutateChildrenBySwap : MutateChildren() {
+data object MutateChildrenBySwap : MutateChildren() {
 
     override fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
         if (task.costGraph.objectives.size > 1)

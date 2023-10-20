@@ -1,9 +1,9 @@
 package hu.raven.puppet.utility.extention
 
-import hu.raven.puppet.model.math.Fraction
 
 
-fun max(left: Fraction?, right: Fraction?) =
+
+fun max(left: Float?, right: Float?) =
     when {
         left == null || right == null -> null
         left > right -> left

@@ -1,35 +1,34 @@
 package hu.raven.puppet.logic.operator.bacterialmutationoperator
 
-
-import hu.raven.puppet.model.math.Fraction
-import hu.raven.puppet.model.math.WithWeight
+import hu.raven.puppet.logic.operator.selectsegments.ContinuousSegment
 import hu.raven.puppet.model.solution.OnePartRepresentation
-import hu.raven.puppet.model.solution.Segment
 import hu.raven.puppet.model.task.Task
+import hu.raven.puppet.utility.extention.FloatSumExtensions.sumClever
 import hu.raven.puppet.utility.extention.getEdgeBetween
-import hu.raven.puppet.utility.extention.sumClever
+import hu.raven.puppet.utility.extention.multiplicativeInverse
+import kotlin.random.Random
 
 class EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation(
     val task: Task
 ) : BacterialMutationOperator() {
     override fun invoke(
         clone: OnePartRepresentation,
-        selectedSegment: Segment
+        selectedSegments: Array<ContinuousSegment>
     ) {
-        selectedSegment.positions.forEach { clone.permutation.deletePosition(it) }
 
+        val segmentsToMove = selectedSegments.filter { it.keepInPlace.not() }
         val rawWeightsOfInnerEdges = calculateWeightsOfInnerEdges(
-            selectedSegment.values
+            segmentsToMove
         )
 
         val rawWeightsOfEdgesFromPrevious = calculateWeightsOfEdgesFromPrevious(
             clone,
-            selectedSegment
+            segmentsToMove
         )
 
         val rawWeightsOfEdgesToNext = calculateWeightsOfEdgesToNext(
             clone,
-            selectedSegment
+            segmentsToMove
         )
 
         val unitedRawWeightMatrix = uniteWeightMatrices(
@@ -38,14 +37,24 @@ class EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation(
             rawWeightsOfEdgesToNext
         )
 
-        val weightMatrix = weightDownByRowAndColumn(unitedRawWeightMatrix)
+        val availabilityMatrix = Array(unitedRawWeightMatrix.size) {
+            BooleanArray(unitedRawWeightMatrix.size) {
+                true
+            }
+        }
 
-        val sequentialRepresentationOfSequence = IntArray(weightMatrix.size) { -1 }
+        var weightedDownMatrix = unitedRawWeightMatrix.weightDownByRowAndColumn()
+        var finalWeightMatrix = weightedDownMatrix.normalize()
+
+        clone.permutation.clear()
+
+        val sequentialRepresentationOfSequence = IntArray(finalWeightMatrix.size) { -1 }
         val segmentsOfEdges: MutableList<Pair<Int, Int>> = mutableListOf()
 
-        repeat(selectedSegment.positions.size) {
+        repeat(segmentsToMove.size) {
             try {
-                val selectedEdge = selectEdgeBasedOnWeights(weightMatrix)
+                val selectedEdge = selectEdgeBasedOnWeights(finalWeightMatrix)
+
                 sequentialRepresentationOfSequence[selectedEdge.first] = selectedEdge.second
 
                 val newSegment = createNewSegment(
@@ -53,14 +62,19 @@ class EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation(
                     selectedEdge
                 )
 
-                nullOutWeightOfExclusionaryEdges(
-                    weightMatrix,
+                removeWeightOfExclusionaryEdges(
+                    unitedRawWeightMatrix,
+                    availabilityMatrix,
                     newSegment,
                     selectedEdge
                 )
-                weightMatrix.recalculateWeights(unitedRawWeightMatrix)
-            } catch (e: IllegalArgumentException) {
+
+                weightedDownMatrix = unitedRawWeightMatrix.weightDownByRowAndColumn()
+                finalWeightMatrix = weightedDownMatrix.normalize()
+
+            } catch (e: Exception) {
                 e.printStackTrace()
+                throw e
             }
         }
 
@@ -71,31 +85,51 @@ class EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation(
             sequentialRepresentationOfSequence[it.first] = it.second
         }
 
-        val elementIndexes = IntArray(selectedSegment.values.size) { -1 }
-        var lastElement = selectedSegment.values.size
+        val elementIndexes = IntArray(segmentsToMove.size) { -1 }
+        var lastElement = segmentsToMove.size
         repeat(elementIndexes.size) { index ->
-            elementIndexes[index] = sequentialRepresentationOfSequence[lastElement]
-            lastElement = elementIndexes[index]
+            try {
+                elementIndexes[index] = sequentialRepresentationOfSequence[lastElement]
+                lastElement = elementIndexes[index]
+            } catch (e: ArrayIndexOutOfBoundsException) {
+                e.printStackTrace()
+                throw e
+            }
         }
 
-        elementIndexes.forEachIndexed { index, elementIndex ->
-            clone.permutation[selectedSegment.positions[index]] = selectedSegment.values[elementIndex]
-        }
+        var counter = -1
+        selectedSegments
+            .map {
+                if (it.keepInPlace) {
+                    it
+                } else {
+                    counter++
+                    segmentsToMove[elementIndexes[counter]]
+                }
+            }
+            .flatMap { it.values.asIterable() }
+            .forEachIndexed { index, value ->
+                clone.permutation[index] = value
+            }
     }
 
-    private fun nullOutWeightOfExclusionaryEdges(
-        finalWeightMatrix: Array<Array<Fraction>>,
+    private fun removeWeightOfExclusionaryEdges(
+        finalWeightMatrix: Array<FloatArray>,
+        availabilityMatrix: Array<BooleanArray>,
         newSegment: Pair<Int, Int>,
         selectedEdge: Pair<Int, Int>
     ) {
-        finalWeightMatrix[newSegment.second][newSegment.first] = Fraction.new(0)
+        finalWeightMatrix[newSegment.second][newSegment.first] = 0f
+        availabilityMatrix[newSegment.second][newSegment.first] = false
 
         finalWeightMatrix.indices.forEach { columnIndex ->
-            finalWeightMatrix[columnIndex][selectedEdge.second] = Fraction.new(0)
+            finalWeightMatrix[columnIndex][selectedEdge.second] = 0f
+            availabilityMatrix[columnIndex][selectedEdge.second] = false
         }
 
         finalWeightMatrix.first().indices.forEach { rowIndex ->
-            finalWeightMatrix[selectedEdge.first][rowIndex] = Fraction.new(0)
+            finalWeightMatrix[selectedEdge.first][rowIndex] = 0f
+            availabilityMatrix[selectedEdge.first][rowIndex] = false
         }
     }
 
@@ -146,157 +180,143 @@ class EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation(
     }
 
     private fun selectEdgeBasedOnWeights(
-        finalWeightMatrix: Array<Array<Fraction>>
+        finalWeightMatrix: Array<LongArray>
     ): Pair<Int, Int> {
-        var weightsWithCoordinate = finalWeightMatrix.withIndex()
-            .flatMap { row ->
-                row.value.withIndex()
-                    .map {
-                        WithWeight(it.value, Pair(row.index, it.index))
-                    }
-            }
-            .filter { it.weight != Fraction.new(0) }
+        val sumOfWeights = finalWeightMatrix.sumOf { it.sum() }
 
-        while (weightsWithCoordinate.size != 1) {
-            weightsWithCoordinate = weightsWithCoordinate
-                .shuffled()
-                .chunked(2)
-                .map { Pair(it.first(), it.last()) }
-                .map {
-                    val sum = it.first.weight + it.second.weight
-                    val random = Fraction.randomUntil(sum)
-                    if (random < it.first.weight) it.first else if (random <= sum) it.second else throw Exception("Random util bug!")
-                }
+        if (sumOfWeights == 0L) {
+            throw Exception("No edge selected! Sum is Zero!")
         }
 
-        return weightsWithCoordinate.first().element
-    }
+        val randomPoint = 1 + Random.nextLong(sumOfWeights)
 
-    private fun weightDownByRowAndColumn(
-        weightMatrix: Array<Array<Fraction>>
-    ): Array<Array<Fraction>> = Array(weightMatrix.size) { columnIndex ->
-        Array(weightMatrix[columnIndex].size) { rowIndex ->
-            val weightsOfExclusionaryEdges =
-                Array(weightMatrix[columnIndex].size) { index ->
-                    if (index == rowIndex)
-                        Fraction.new(0L)
-                    else
-                        weightMatrix[columnIndex][index]
-                }.run { this.sumClever() / size.toLong() } +
-                        Array(weightMatrix[columnIndex].size) { index ->
-                            if (index == columnIndex)
-                                Fraction.new(0L)
-                            else
-                                weightMatrix[index][rowIndex]
-                        }.run { sumClever() / size.toLong() }
+        var sum = 0L
 
+        for (columnIndex in finalWeightMatrix.indices) {
+            for (rowIndex in finalWeightMatrix.indices) {
+                if (columnIndex == rowIndex) continue
 
-            weightMatrix[columnIndex][rowIndex] / weightsOfExclusionaryEdges
-        }
-    }
+                sum += finalWeightMatrix[columnIndex][rowIndex]
 
-    private fun Array<Array<Fraction>>.recalculateWeights(
-        rawWeightMatrix: Array<Array<Fraction>>
-    ) {
-        rawWeightMatrix.indices.forEach { rowIndex ->
-            rawWeightMatrix[rowIndex].indices.forEach { index ->
-                if (this[rowIndex][index].numerator == 0) {
-                    rawWeightMatrix[rowIndex][index] = Fraction.new(0)
+                if (randomPoint <= sum) {
+                    return Pair(columnIndex, rowIndex)
                 }
             }
         }
 
-        Array(rawWeightMatrix.size) { rowIndex ->
-            Array(rawWeightMatrix[rowIndex].size) innerArray@{ columnIndex ->
-                if (rawWeightMatrix[rowIndex][columnIndex].numerator == 0) {
-                    return@innerArray Fraction.new(0)
+        throw Exception("No edge selected!")
+    }
+
+    private fun Array<FloatArray>.weightDownByRowAndColumn(): Array<FloatArray> {
+        val sumOfColumns = this.map { it.sumClever() }.toFloatArray()
+        val sumOfRows = FloatArray(size) { rowIndex -> map { it[rowIndex] }.sumClever() }
+
+        return Array(size) { columnIndex ->
+            FloatArray(size) { rowIndex ->
+                if (this[columnIndex][rowIndex] == 0f) return@FloatArray 0f
+
+                val weightsOfExclusionaryEdges =
+                    sumOfColumns[columnIndex] + sumOfRows[rowIndex] - 2 * this[columnIndex][rowIndex]
+                this[columnIndex][rowIndex] / weightsOfExclusionaryEdges
+            }
+        }
+    }
+
+    private fun Array<FloatArray>.normalize(): Array<LongArray> {
+        val minNotZero =
+            mapNotNull { column ->
+                column
+                    .filter { it != 0f }
+                    .minOrNull()
+            }
+                .minOrNull()
+                ?: return Array(size) {
+                    LongArray(size) { 0L }
                 }
 
-                val weightsOfOtherEdgesInRow = calculateWeightsOfOtherEdgesInRow(
-                    rawWeightMatrix,
-                    rowIndex,
-                    columnIndex
-                )
-                val weightsOfOtherEdgesInColumn = calculateWeightsOfOtherEdgesInColumn(
-                    rawWeightMatrix,
-                    rowIndex
-                )
+        if (minNotZero == Float.POSITIVE_INFINITY) {
+            return Array(size) { columnIndex ->
+                LongArray(size) { rowIndex ->
+                    if (get(columnIndex)[rowIndex] == Float.POSITIVE_INFINITY) 1 else 0
+                }
+            }
+        }
 
 
-                rawWeightMatrix[rowIndex][columnIndex] /
-                        if (weightsOfOtherEdgesInRow.numerator != 0 || weightsOfOtherEdgesInColumn.numerator != 0)
-                            weightsOfOtherEdgesInRow + weightsOfOtherEdgesInColumn
-                        else
-                            Fraction.new(1)
+        return Array(size) { columnIndex ->
+            LongArray(size) { rowIndex ->
+                get(columnIndex)[rowIndex]
+                    .times(1024)
+                    .div(minNotZero)
+                    .times(1024)
+                    .toLong()
             }
         }
     }
 
     private fun calculateWeightsOfOtherEdgesInRow(
-        rawWeightMatrix: Array<Array<Fraction>>,
+        rawWeightMatrix: Array<FloatArray>,
         rowIndex: Int,
         columnIndex: Int,
-    ): Fraction {
+    ): Float {
         return Array(rawWeightMatrix[rowIndex].size) { index ->
             if (index == columnIndex)
-                Fraction.new(0L)
+                0f
             else
                 rawWeightMatrix[rowIndex][index]
         }
-            .filter { it.numerator != 0 }
-            .run { if (isNotEmpty()) sumClever() / size.toLong() else Fraction.new(0) }
+            .filter { it != 0f }
+            .run { if (isNotEmpty()) sumClever() / size.toLong() else 0f }
     }
 
     private fun calculateWeightsOfOtherEdgesInColumn(
-        rawWeightMatrix: Array<Array<Fraction>>,
+        rawWeightMatrix: Array<FloatArray>,
         rowIndex: Int,
-    ): Fraction {
+    ): Float {
         return Array(rawWeightMatrix[rowIndex].size) { index ->
             if (index == rowIndex)
-                Fraction.new(0L)
+                0f
             else
                 rawWeightMatrix[index][index]
         }
-            .filter { it.numerator != 0 }
-            .run { if (isNotEmpty()) sumClever() / size.toLong() else Fraction.new(0) }
+            .filter { it != 0f }
+            .run { if (isNotEmpty()) sumClever() / size.toLong() else 0f }
     }
 
     private fun uniteWeightMatrices(
-        weightsOfInnerEdges: Array<Array<Fraction>>,
-        weightsOfEdgesFromPrevious: Array<Fraction>,
-        weightsOfEdgesToNext: Array<Fraction>
-    ): Array<Array<Fraction>> = Array(weightsOfEdgesFromPrevious.size + 1) { fromIndex ->
-        Array(weightsOfEdgesToNext.size + 1) { toIndex ->
-            when {
-                fromIndex == toIndex -> Fraction.new(0L)
+        weightsOfInnerEdges: Array<FloatArray>,
+        weightsOfEdgesFromPrevious: FloatArray,
+        weightsOfEdgesToNext: FloatArray
+    ): Array<FloatArray> =
+        Array(weightsOfEdgesFromPrevious.size + 1) { fromIndex ->
+            FloatArray(weightsOfEdgesToNext.size + 1) { toIndex ->
+                when {
+                    fromIndex == toIndex -> 0f
 
-                fromIndex == weightsOfEdgesFromPrevious.size ->
-                    weightsOfEdgesFromPrevious[toIndex]
+                    fromIndex == weightsOfEdgesFromPrevious.size ->
+                        weightsOfEdgesFromPrevious[toIndex]
 
-                toIndex == weightsOfEdgesToNext.size ->
-                    weightsOfEdgesToNext[fromIndex]
+                    toIndex == weightsOfEdgesToNext.size ->
+                        weightsOfEdgesToNext[fromIndex]
 
-                else -> weightsOfInnerEdges[fromIndex][toIndex]
+                    else -> weightsOfInnerEdges[fromIndex][toIndex]
+                }
             }
         }
-    }.run {
-        val maximalDenominator = maxOf { it.maxOf { fraction -> fraction.denominator } }.toLong()
-        map { row -> row.map { it * maximalDenominator }.toTypedArray() }.toTypedArray()
-    }
 
     private fun calculateWeightsOfEdgesToNext(
         clone: OnePartRepresentation,
-        selectedSegment: Segment
-    ): Array<Fraction> {
+        selectedSegment: List<ContinuousSegment>
+    ): FloatArray {
         val objectiveCount = task.costGraph.objectives.size
-        val nextElement = if (selectedSegment.positions.last() == clone.permutation.indices.last) {
+        val nextElement = if (selectedSegment.last().indices.last == clone.permutation.indices.last) {
             objectiveCount
         } else {
-            clone.permutation[selectedSegment.positions.last() + 1]
+            clone.permutation[selectedSegment.last().indices.last + 1]
         }
-        return Array(selectedSegment.values.size) { fromIndex ->
+        return FloatArray(selectedSegment.size) { fromIndex ->
             calculateWeightBetween(
-                selectedSegment.values[fromIndex],
+                selectedSegment[fromIndex].indices.last,
                 nextElement
             )
         }
@@ -304,31 +324,31 @@ class EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation(
 
     private fun calculateWeightsOfEdgesFromPrevious(
         clone: OnePartRepresentation,
-        selectedSegment: Segment
-    ): Array<Fraction> {
+        selectedSegment: List<ContinuousSegment>
+    ): FloatArray {
         val objectiveCount = task.costGraph.objectives.size
-        val previousElement = if (selectedSegment.positions.first() == 0) {
+        val previousElement = if (selectedSegment.first().indices.first == 0) {
             objectiveCount
         } else {
-            clone.permutation[selectedSegment.positions.first() - 1]
+            clone.permutation[selectedSegment.first().indices.first - 1]
         }
 
-        return Array(selectedSegment.values.size) { toIndex ->
+        return FloatArray(selectedSegment.size) { toIndex ->
             calculateWeightBetween(
                 previousElement,
-                selectedSegment.values[toIndex]
+                selectedSegment[toIndex].indices.first
             )
         }
     }
 
     private fun calculateWeightsOfInnerEdges(
-        selectedElements: IntArray
-    ): Array<Array<Fraction>> {
+        selectedElements: List<ContinuousSegment>
+    ): Array<FloatArray> {
         return Array(selectedElements.size) { fromIndex ->
-            Array(selectedElements.size) { toIndex ->
+            FloatArray(selectedElements.size) { toIndex ->
                 calculateWeightBetween(
-                    selectedElements[fromIndex],
-                    selectedElements[toIndex]
+                    selectedElements[fromIndex].indices.last,
+                    selectedElements[toIndex].indices.first
                 )
             }
         }
@@ -337,11 +357,11 @@ class EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation(
     private fun calculateWeightBetween(
         fromElement: Int,
         toElement: Int
-    ): Fraction {
+    ): Float {
         task.apply {
             val objectiveCount = costGraph.objectives.size
             return when {
-                fromElement == toElement -> Fraction.new(0L)
+                fromElement == toElement -> 0f
                 fromElement < objectiveCount && toElement < objectiveCount -> costGraph
                     .getEdgeBetween(fromElement, toElement)
                     .length
@@ -360,7 +380,7 @@ class EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation(
                     .value
                     .multiplicativeInverse()
 
-                else -> Fraction.new(1L)
+                else -> 1f
             }
         }
     }

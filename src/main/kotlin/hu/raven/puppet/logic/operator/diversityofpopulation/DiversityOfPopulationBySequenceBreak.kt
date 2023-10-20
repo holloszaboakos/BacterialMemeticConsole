@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 
-object DiversityOfPopulationBySequenceBreak : DiversityOfPopulation() {
+data object DiversityOfPopulationBySequenceBreak : DiversityOfPopulation() {
 
     override fun invoke(algorithmState: EvolutionaryAlgorithmState): Double = runBlocking {
         val best = algorithmState.copyOfBest!!

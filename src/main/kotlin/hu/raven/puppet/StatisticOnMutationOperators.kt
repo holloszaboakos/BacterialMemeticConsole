@@ -8,8 +8,8 @@ import hu.raven.puppet.logic.operator.bacterialmutationonspecimen.MutationWithEl
 import hu.raven.puppet.logic.operator.bacterialmutationoperator.*
 import hu.raven.puppet.logic.operator.calculatecost.CalculateCost
 import hu.raven.puppet.logic.operator.calculatecost.CalculateCostOfTspSolution
-import hu.raven.puppet.logic.operator.selectsegment.SelectContinuesSegment
-import hu.raven.puppet.logic.operator.selectsegment.SelectSegment
+import hu.raven.puppet.logic.operator.selectsegments.SelectSegments
+import hu.raven.puppet.logic.operator.selectsegments.SelectSingleValuesContinuouslyWithFullCoverage
 import hu.raven.puppet.logic.task.loader.TaskLoaderService
 import hu.raven.puppet.logic.task.loader.TspTaskLoaderService
 import hu.raven.puppet.model.math.Permutation
@@ -41,7 +41,7 @@ private data class Scenario(
     val mutationStrategy: (
         mutationOperator: BacterialMutationOperator,
         calculateCostOf: CalculateCost,
-        selectSegment: SelectSegment,
+        selectSegments: SelectSegments,
         cloneCount: Int,
         cloneCycleCount: Int,
     ) -> MutationOnSpecimen,
@@ -52,48 +52,48 @@ private val TASK_SIZES = arrayOf(32, 64, 128, 256, 512, 1024)
 private val STRATEGIES: Array<(
     mutationOperator: BacterialMutationOperator,
     calculateCostOf: CalculateCost,
-    selectSegment: SelectSegment,
+    selectSegments: SelectSegments,
     cloneCount: Int,
     cloneCycleCount: Int
 ) -> MutationOnSpecimen> = arrayOf(
     { mutationOperator: BacterialMutationOperator,
       calculateCostOf: CalculateCost,
-      selectSegment: SelectSegment,
+      selectSegments: SelectSegments,
       cloneCount: Int,
       cloneCycleCount: Int ->
 
         MutationWithElitistSelection(
             mutationOperator,
             calculateCostOf,
-            selectSegment,
+            selectSegments,
             cloneCount,
             cloneCycleCount
         )
     },
     { mutationOperator: BacterialMutationOperator,
       calculateCostOf: CalculateCost,
-      selectSegment: SelectSegment,
+      selectSegments: SelectSegments,
       cloneCount: Int,
       cloneCycleCount: Int ->
 
         MutationWithElitistSelectionAndOneOpposition(
             mutationOperator,
             calculateCostOf,
-            selectSegment,
+            selectSegments,
             cloneCount,
             cloneCycleCount
         )
     },
     { mutationOperator: BacterialMutationOperator,
       calculateCostOf: CalculateCost,
-      selectSegment: SelectSegment,
+      selectSegments: SelectSegments,
       cloneCount: Int,
       cloneCycleCount: Int ->
 
         MutationWithElitistSelectionAndModuloStepper(
             mutationOperator,
             calculateCostOf,
-            selectSegment,
+            selectSegments,
             cloneCount,
             cloneCycleCount,
             determinismRatio = 0.1f
@@ -110,7 +110,7 @@ private val OPERATORS: Array<(
         EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation(task)
     },
     { OppositionOperator },
-    { RandomShuffleOfContinuesSegment },
+    { RandomShuffleOperator },
     { task: Task ->
         SequentialSelectionHeuristicOnContinuousSegment(task)
     }
@@ -174,8 +174,8 @@ private fun runScenario(scenario: Scenario) = runBlocking {
                         get(),
                     )
                 }
-                single<SelectSegment> {
-                    SelectContinuesSegment(
+                single<SelectSegments> {
+                    SelectSingleValuesContinuouslyWithFullCoverage(
                         get(CLONE_SEGMENT_LENGTH)
                     )
                 }
@@ -219,7 +219,7 @@ private fun runScenario(scenario: Scenario) = runBlocking {
         }
         .map { it.await() }
         .sortedBy { it }
-        .groupBy { it.numerator }
+        .groupBy { it }
         .forEach { (value, values) ->
             output.appendText("value: $value  count: ${values.size}\n")
         }

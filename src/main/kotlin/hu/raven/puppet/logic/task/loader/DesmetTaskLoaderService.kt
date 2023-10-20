@@ -7,7 +7,7 @@ import hu.raven.puppet.model.task.desmet.*
 import hu.raven.puppet.model.task.desmet.DesmetFileHeader.*
 import hu.raven.puppet.model.task.desmet.DesmetFileSection.*
 import hu.raven.puppet.utility.ImmutableArray.Companion.asImmutable
-import hu.raven.puppet.utility.extention.sumClever
+import hu.raven.puppet.utility.extention.FloatSumExtensions.sumClever
 import java.nio.file.Path
 
 class DesmetTaskLoaderService(
@@ -33,7 +33,7 @@ class DesmetTaskLoaderService(
     override fun logEstimates(task: Task) {
         task.costGraph.apply {
             logger.log(
-                "OVERASTIMATE: ${
+                "OVERESTIMATE: ${
                     (
                             edgesFromCenter.map { it.length.value }.sumClever()
                                     + edgesToCenter.map { it.length.value }.sumClever()
@@ -42,7 +42,7 @@ class DesmetTaskLoaderService(
             )
 
             logger.log(
-                "UNDERASTIMATE: ${
+                "UNDERESTIMATE: ${
                     (
                             edgesFromCenter.map { it.length.value }.min() +
                                     edgesBetween.mapIndexed { index, edge ->
@@ -68,7 +68,10 @@ class DesmetTaskLoaderService(
                     NODE_COORDINATES -> onNodeCoordinates(line, mutableTask)
                     WEIGHT_MATRIX -> onWeightMatrix(line, mutableTask)
                     NODE_DEMAND -> onNodeDemand(line, mutableTask)
-                    DEPOT -> onDepot(line, mutableTask)
+                    DEPOT -> {
+                        onDepot(line, mutableTask)
+                        DEPOT
+                    }
                 }
             }
 
@@ -80,12 +83,10 @@ class DesmetTaskLoaderService(
     private fun onDepot(
         line: String,
         mutableTask: DesmetTaskMutable,
-    ): DesmetFileSection {
-        if (line == "-1" || line == "EOF") {
-            return DEPOT
+    ) {
+        if (line != "-1" && line != "EOF") {
+            mutableTask.depotId = line.toInt()
         }
-        mutableTask.depotId = line.toInt()
-        return DEPOT
     }
 
     private fun onNodeDemand(

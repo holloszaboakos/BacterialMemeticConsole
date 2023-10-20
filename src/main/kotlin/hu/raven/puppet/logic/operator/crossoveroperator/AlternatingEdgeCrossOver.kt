@@ -1,36 +1,44 @@
 package hu.raven.puppet.logic.operator.crossoveroperator
 
 import hu.raven.puppet.model.math.Permutation
+import hu.raven.puppet.model.math.RandomPermutationValueSelector
 import hu.raven.puppet.utility.extention.get
 
-
-object AlternatingEdgeCrossOver : CrossOverOperator() {
+//random start point
+//select always the edge of the other parent
+//random element on miss
+data object AlternatingEdgeCrossOver : CrossOverOperator {
 
     override fun invoke(
         parentPermutations: Pair<Permutation, Permutation>,
         childPermutation: Permutation
     ) {
+        //clear children for stability
         childPermutation.clear()
-        val randomPermutation = IntArray(childPermutation.size) { it }.apply(IntArray::shuffle)
-        var lastIndex = 0
 
-        childPermutation[0] = (0 until childPermutation.size).random()
+        //for optimization of random element selection
+        val randomSelector = RandomPermutationValueSelector(childPermutation.size)
+
+        //random starting value for first position
+        childPermutation[0] = randomSelector.getNextExcludingIf { false } ?: throw Exception("No values to select!")
+
+        //on other positions
         (1 until childPermutation.size).forEach { geneIndex ->
             val parentPermutation = parentPermutations[geneIndex % 2]
-            val previousValue = childPermutation[geneIndex - 1]
 
-            if (!childPermutation.contains(parentPermutation.after(previousValue))) {
-                childPermutation[geneIndex] = parentPermutation.after(previousValue)
+            //select edge from parent
+            val lastValueOfChild = childPermutation[geneIndex - 1]
+            val followingValueOfParent = parentPermutation.after(lastValueOfChild)
+            if (!childPermutation.contains(followingValueOfParent)) {
+                childPermutation[geneIndex] = parentPermutation.after(lastValueOfChild)
                 return@forEach
             }
 
-            for (index in lastIndex until randomPermutation.size) {
-                if (!childPermutation.contains(randomPermutation[index])) {
-                    childPermutation[geneIndex] = randomPermutation[index]
-                    lastIndex = index + 1
-                    break
-                }
-            }
+            //select randomly if edge can not be selected
+            childPermutation[geneIndex] =
+                randomSelector.getNextExcludingIf { value ->
+                    childPermutation.contains(value)
+                } ?: throw Exception("No values to select!")
         }
     }
 }

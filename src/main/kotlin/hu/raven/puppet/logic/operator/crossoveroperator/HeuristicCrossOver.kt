@@ -1,16 +1,21 @@
 package hu.raven.puppet.logic.operator.crossoveroperator
 
 import hu.raven.puppet.logic.operator.weightedselection.RouletteWheelSelection
-import hu.raven.puppet.model.math.Fraction
+
 import hu.raven.puppet.model.math.Permutation
 import hu.raven.puppet.model.task.CostGraph
 import hu.raven.puppet.utility.extention.get
 import hu.raven.puppet.utility.extention.getEdgeBetween
+import hu.raven.puppet.utility.extention.multiplicativeInverse
 import kotlin.random.Random.Default.nextInt
 
+//random first value
+//iterate:
+// gather neighbour
+//distance based random selection
 class HeuristicCrossOver(
     val costGraph: CostGraph
-) : CrossOverOperator() {
+) : CrossOverOperator {
 
     private val rouletteWheelSelection = RouletteWheelSelection<Int>()
 
@@ -96,7 +101,7 @@ class HeuristicCrossOver(
         costGraph: CostGraph,
         neighbours: List<Int>,
         previousValue: Int
-    ): Array<Fraction> = costGraph.run {
+    ): Array<Float> = costGraph.run {
         Array(neighbours.size) { neighbourIndex ->
             when {
                 previousValue < objectives.size && neighbours[neighbourIndex] < objectives.size -> {
@@ -120,14 +125,14 @@ class HeuristicCrossOver(
                         .multiplicativeInverse()
                 }
 
-                else -> Fraction.new(1)
+                else -> 1f
             }
         }
     }
 
 
     private fun chooseNextValueBasedOnWeight(
-        weights: Array<Fraction>,
+        weights: Array<Float>,
         child: Permutation,
         geneIndex: Int,
         neighbours: List<Int>

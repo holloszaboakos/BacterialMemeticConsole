@@ -5,7 +5,7 @@ import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationA
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.utility.extention.slice
 
-class MutateChildrenByReset : MutateChildren() {
+data object MutateChildrenByReset : MutateChildren() {
 
     override fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
         val basePermutation =

@@ -7,7 +7,7 @@ import hu.raven.puppet.utility.extention.timesTwoToThePowerOf
 import java.lang.Integer.min
 import kotlin.random.Random
 
-class Fraction private constructor(
+private class Fraction private constructor(
     val numerator: Int,
     val denominator: Int,
     val exponential: Int

@@ -5,7 +5,7 @@ import hu.raven.puppet.utility.extention.log2
 import hu.raven.puppet.utility.extention.timesTwoToThePowerOf
 import kotlin.math.pow
 
-data class Exponential private constructor(
+private class Exponential private constructor(
     val numerator: Int,
     val exponential: Int
 ) {

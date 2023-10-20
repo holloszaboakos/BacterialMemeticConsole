@@ -1,7 +1,7 @@
 package hu.raven.puppet.logic.task.converter
 
 import hu.raven.puppet.model.physics.Meter
-import hu.raven.puppet.model.physics.Stere
+import hu.raven.puppet.model.physics.CubicMeter
 import hu.raven.puppet.model.task.*
 import hu.raven.puppet.model.task.augerat.InstanceBean
 import hu.raven.puppet.model.task.augerat.NodeBean
@@ -15,7 +15,7 @@ class AugeratDatasetConverterService(override val vehicleCount: Int) : TaskConve
     override fun toStandardTask(task: InstanceBean): Task = task.run {
         Task(
             transportUnits = Array(vehicleCount) {
-                TransportUnit(volumeCapacity = Stere(task.fleetBean.vehicleProfileBean.capacity.toDouble().toLong()))
+                TransportUnit(volumeCapacity = CubicMeter(task.fleetBean.vehicleProfileBean.capacity.toDouble().toFloat()))
             }.asImmutable(),
             costGraph = CostGraph(
                 center = task.networkBean.nodeBeanList
@@ -53,7 +53,7 @@ class AugeratDatasetConverterService(override val vehicleCount: Int) : TaskConve
                 location = nodes
                     .first { node -> node.id == it.node }
                     .toGPS(),
-                volume = Stere(it.quantity.toDouble().toLong())
+                volume = CubicMeter(it.quantity.toDouble().toFloat())
             )
         }
             .toTypedArray()
@@ -67,7 +67,7 @@ class AugeratDatasetConverterService(override val vehicleCount: Int) : TaskConve
         val clients = nodes - center
         return clients.map {
             CostGraphEdge(
-                length = Meter((it.toGPS() euclideanDist center.toGPS()).toLong())
+                length = Meter(it.toGPS() euclideanDist center.toGPS())
             )
         }.toTypedArray()
     }
@@ -83,7 +83,7 @@ class AugeratDatasetConverterService(override val vehicleCount: Int) : TaskConve
                 .filter { it != nodeFrom }
                 .map { nodeTo ->
                     CostGraphEdge(
-                        length = Meter((nodeFrom.toGPS() euclideanDist nodeTo.toGPS()).toLong())
+                        length = Meter(nodeFrom.toGPS() euclideanDist nodeTo.toGPS())
                     )
                 }
                 .toTypedArray()

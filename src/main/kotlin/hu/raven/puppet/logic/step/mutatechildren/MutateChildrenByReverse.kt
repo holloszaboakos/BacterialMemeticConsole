@@ -6,7 +6,7 @@ import hu.raven.puppet.model.task.Task
 import hu.raven.puppet.utility.extention.slice
 import kotlin.random.Random
 
-class MutateChildrenByReverse : MutateChildren() {
+data object MutateChildrenByReverse : MutateChildren() {
 
     override fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
         if (task.costGraph.objectives.size > 1)

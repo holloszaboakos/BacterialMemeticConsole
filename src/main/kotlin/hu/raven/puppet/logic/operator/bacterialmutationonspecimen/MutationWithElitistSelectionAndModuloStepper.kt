@@ -2,14 +2,14 @@ package hu.raven.puppet.logic.operator.bacterialmutationonspecimen
 
 import hu.raven.puppet.logic.operator.bacterialmutationoperator.BacterialMutationOperator
 import hu.raven.puppet.logic.operator.calculatecost.CalculateCost
-import hu.raven.puppet.logic.operator.selectsegment.SelectSegment
+import hu.raven.puppet.logic.operator.selectsegments.ContinuousSegment
+import hu.raven.puppet.logic.operator.selectsegments.SelectSegments
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCost
-import hu.raven.puppet.model.solution.Segment
 
 class MutationWithElitistSelectionAndModuloStepper(
     override val mutationOperator: BacterialMutationOperator,
     override val calculateCostOf: CalculateCost,
-    override val selectSegment: SelectSegment,
+    override val selectSegments: SelectSegments,
     override val cloneCount: Int,
     override val cloneCycleCount: Int,
     val determinismRatio: Float,
@@ -23,7 +23,7 @@ class MutationWithElitistSelectionAndModuloStepper(
         repeat(cloneCycleCount) { cloneCycleIndex ->
             val clones = generateClones(
                 specimenWithIndex.value,
-                selectSegment(specimenWithIndex.value.permutation, iteration, cloneCycleCount, cloneCycleIndex)
+                selectSegments(specimenWithIndex.value.permutation, iteration, cloneCycleCount, cloneCycleIndex)
             )
             calcCostOfEachAndSort(clones)
 
@@ -39,28 +39,48 @@ class MutationWithElitistSelectionAndModuloStepper(
 
     private fun generateClones(
         specimen: OnePartRepresentationWithCost,
-        selectedSegment: Segment
+        selectedSegment: Array<ContinuousSegment>
     ): MutableList<OnePartRepresentationWithCost> {
         val clones = MutableList(cloneCount + 1) { specimen.cloneRepresentationAndCost() }
         val deterministicCount = (cloneCount * determinismRatio).toInt()
-        val moduloStepperSegments = buildList {
+
+        val segmentsToMove = selectedSegment.filter { it.keepInPlace.not() }
+
+        val moduloStepperPermutations = buildList {
             while (size < deterministicCount) {
-                addAll(generateModuloStepperSegments(selectedSegment.values))
+                addAll(generateModuloStepperSegments(segmentsToMove.indices.toList().toIntArray()))
             }
-        }.slice(0 until deterministicCount)
+        }
+            .slice(0 until deterministicCount)
 
         clones
-            .slice(1 until moduloStepperSegments.size + 1)
+            .slice(1 until moduloStepperPermutations.size + 1)
             .forEachIndexed { cloneIndex, clone ->
-                selectedSegment.positions.forEach { clone.permutation.deletePosition(it) }
-                moduloStepperSegments[cloneIndex]
+                clone.permutation.clear()
+                val segmentPermutation = moduloStepperPermutations[cloneIndex]
+                val segmentsOrdered = segmentsToMove.withIndex()
+                    .sortedBy { segmentPermutation[it.index] }
+                    .map { it.value }
+
+
+                var counter = -1
+                selectedSegment
+                    .map {
+                        if (it.keepInPlace) {
+                            it
+                        } else {
+                            counter++
+                            segmentsOrdered[counter]
+                        }
+                    }
+                    .flatMap { it.values.asIterable() }
                     .forEachIndexed { index, value ->
-                        clone.permutation[selectedSegment.positions[index]] = value
+                        clone.permutation[index] = value
                     }
             }
 
         clones
-            .slice(moduloStepperSegments.size + 1 until clones.size)
+            .slice(moduloStepperPermutations.size + 1 ..< clones.size)
             .forEach { clone ->
                 mutationOperator(
                     clone,

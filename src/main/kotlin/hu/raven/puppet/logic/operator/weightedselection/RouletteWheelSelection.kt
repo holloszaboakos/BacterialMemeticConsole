@@ -1,17 +1,16 @@
 package hu.raven.puppet.logic.operator.weightedselection
 
-import hu.raven.puppet.model.math.Fraction
-import hu.raven.puppet.utility.extention.sumClever
+import kotlin.random.Random
 
 class RouletteWheelSelection<T : Any> {
-    operator fun invoke(candidatesWithWeight: Array<Pair<Fraction, T>>): T {
-        val sumOfWeights = candidatesWithWeight.map { it.first }.sumClever()
-        val choice = Fraction.randomUntil(sumOfWeights)
-        var fill = Fraction.new(0)
+    operator fun invoke(candidatesWithWeight: Array<Pair<Float, T>>): T {
+        val sumOfWeights = candidatesWithWeight.map { it.first }.sum()
+        val choice = Random.nextFloat() * sumOfWeights
+        var fill = 0f
         val selectedIndex = candidatesWithWeight
             .map { it.first }
             .indexOfFirst {
-                fill += sumOfWeights
+                fill += it
                 fill >= choice
             }
         return candidatesWithWeight[selectedIndex].second

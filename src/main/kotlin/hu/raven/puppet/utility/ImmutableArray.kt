@@ -30,9 +30,7 @@ data class ImmutableArray<T>(private val array: Array<T>) {
 
         other as ImmutableArray<*>
 
-        if (!array.contentEquals(other.array)) return false
-
-        return true
+        return array.contentEquals(other.array)
     }
 
     override fun hashCode(): Int {

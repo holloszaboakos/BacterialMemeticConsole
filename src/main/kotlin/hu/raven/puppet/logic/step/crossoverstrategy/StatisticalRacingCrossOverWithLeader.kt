@@ -5,14 +5,14 @@ import hu.raven.puppet.logic.operator.calculatecost.CalculateCost
 import hu.raven.puppet.logic.operator.crossoveroperator.CrossOverOperator
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
-import hu.raven.puppet.model.step.crossoverstrategy.GeneticAlgorithmStatistics
+import hu.raven.puppet.model.step.crossoverstrategy.CrossoverOperatorStatistic
 import hu.raven.puppet.model.step.crossoverstrategy.OperatorStatistics
 
 class StatisticalRacingCrossOverWithLeader(
     override val crossoverOperators: List<CrossOverOperator>,
     private val logger: ObjectLoggerService<String>,
     private val calculateCostOf: CalculateCost,
-    private val statistics: GeneticAlgorithmStatistics
+    private val statistics: CrossoverOperatorStatistic
 ) : CrossOverStrategy() {
 
     private var lastIteration = -1
@@ -120,17 +120,17 @@ class StatisticalRacingCrossOverWithLeader(
         var newSuccess = oldStatistics.success
         if (parents.first.costOrException() > child.costOrException()) {
             newSuccess +=
-                hu.raven.puppet.model.math.Fraction.new(iteration.toLong() - parents.first.iterationOfCreation) /
+                (iteration.toLong() - parents.first.iterationOfCreation).toFloat() /
                         child.costOrException() /
-                        hu.raven.puppet.model.math.Fraction.new(population.imdexOf(parents.first).toLong() + 1)
+                        (population.indexOf(parents.first).toLong() + 1).toFloat()
                             .let { it * it }
         }
 
         if (parents.second.costOrException() > child.costOrException()) {
             newSuccess +=
-                hu.raven.puppet.model.math.Fraction.new(iteration.toLong() - parents.second.iterationOfCreation) /
+                (iteration.toLong() - parents.second.iterationOfCreation).toFloat() /
                         child.costOrException() /
-                        hu.raven.puppet.model.math.Fraction.new(population.imdexOf(parents.second).toLong() + 1)
+                        (population.indexOf(parents.second).toLong() + 1).toFloat()
                             .let { it * it }
         }
         actualStatistics = oldStatistics.copy(success = newSuccess)

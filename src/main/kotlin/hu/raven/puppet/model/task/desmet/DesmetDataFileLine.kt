@@ -41,7 +41,7 @@ value class DesmetDataFileLine(private val line: String) {
             .map { it.trim() }
 
         return Pair(
-            DesmetFileHeader.values()
+            DesmetFileHeader.entries
                 .first { it.tag == lineParts[0] },
             lineParts[1]
         )

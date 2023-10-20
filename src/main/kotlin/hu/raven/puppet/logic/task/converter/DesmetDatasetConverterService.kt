@@ -1,7 +1,7 @@
 package hu.raven.puppet.logic.task.converter
 
 import hu.raven.puppet.model.physics.Meter
-import hu.raven.puppet.model.physics.Stere
+import hu.raven.puppet.model.physics.CubicMeter
 import hu.raven.puppet.model.task.*
 import hu.raven.puppet.model.task.desmet.DesmetTask
 import hu.raven.puppet.model.task.desmet.NodeCoordinate
@@ -15,7 +15,7 @@ class DesmetDatasetConverterService(override val vehicleCount: Int) : TaskConver
         return Task(
             transportUnits = Array(vehicleCount) {
                 TransportUnit(
-                    volumeCapacity = Stere(capacity.toLong())
+                    volumeCapacity = CubicMeter(capacity)
                 )
             }.asImmutable(),
             costGraph = CostGraph(
@@ -45,7 +45,7 @@ class DesmetDatasetConverterService(override val vehicleCount: Int) : TaskConver
             .map {
                 CostGraphVertex(
                     location = it.toGPS(),
-                    volume = Stere(nodeDemands.getValue(it.nodeId).demand.toLong())
+                    volume = CubicMeter(nodeDemands.getValue(it.nodeId).demand)
                 )
             }.toTypedArray()
     }
@@ -60,7 +60,7 @@ class DesmetDatasetConverterService(override val vehicleCount: Int) : TaskConver
         return targetNodesWithIndex
             .map { indexValuePair ->
                 val weight = distanceMatrix.distances[indexValuePair.index][depotIndex]
-                CostGraphEdge(length = Meter(weight.times(1000).toLong()))
+                CostGraphEdge(length = Meter(weight.times(1000).toFloat()))
             }
             .toTypedArray()
     }
@@ -75,7 +75,7 @@ class DesmetDatasetConverterService(override val vehicleCount: Int) : TaskConver
         return targetNodesWithIndex
             .map { indexValuePair ->
                 val weight = distanceMatrix.distances[depotIndex][indexValuePair.index]
-                CostGraphEdge(length = Meter(weight.toLong()))
+                CostGraphEdge(length = Meter(weight.toFloat()))
             }
             .toTypedArray()
 
@@ -92,7 +92,7 @@ class DesmetDatasetConverterService(override val vehicleCount: Int) : TaskConver
                     .filter { it.index != fromNodeIndexed.index }
                     .map { toNodeIndexed ->
                         val weight = distanceMatrix.distances[fromNodeIndexed.index][toNodeIndexed.index]
-                        CostGraphEdge(length = Meter(weight.times(1000).toLong()))
+                        CostGraphEdge(length = Meter(weight.times(1000).toFloat()))
                     }
                     .toTypedArray()
             }

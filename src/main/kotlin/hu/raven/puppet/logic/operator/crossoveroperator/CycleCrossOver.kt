@@ -2,38 +2,41 @@ package hu.raven.puppet.logic.operator.crossoveroperator
 
 import hu.raven.puppet.model.math.Permutation
 
-
-object CycleCrossOver : CrossOverOperator() {
+//start with first element of primary
+//select the position of the last inserted element in the secondary parent
+//insert the value of the position to its position in the primary parent
+data object CycleCrossOver : CrossOverOperator {
 
     override fun invoke(
         parentPermutations: Pair<Permutation, Permutation>,
         childPermutation: Permutation
     ) {
-        val seconderCopy = parentPermutations.second.toMutableList()
+        val seconderCopy = parentPermutations.second.clone()
 
         //clean child
         //copy parent middle to child
         childPermutation.clear()
 
-        childPermutation[0] = parentPermutations.first[0]
-        var actualIndex = parentPermutations.second.indexOf(childPermutation[0])
-        seconderCopy[actualIndex] = childPermutation.size
+        val firstValue = parentPermutations.first[0]
+        childPermutation[0] = firstValue
+        var actualIndex = parentPermutations.second.indexOf(firstValue)
+        seconderCopy.deleteValue(firstValue)
+
         //fill missing places of child
-        if (actualIndex != 0)
-            while (actualIndex != 0) {
-                childPermutation[actualIndex] = parentPermutations.first[actualIndex]
-                actualIndex = parentPermutations.second.indexOf(parentPermutations.first[actualIndex])
-                seconderCopy[actualIndex] = childPermutation.size
-            }
-        seconderCopy.removeIf { it == childPermutation.size }
+        while (actualIndex != 0) {
+            val actualValue = parentPermutations.first[actualIndex]
+            childPermutation[actualIndex] = actualValue
+            actualIndex = parentPermutations.second.indexOf(actualValue)
+            seconderCopy.deleteValue(actualValue)
+        }
+
+        val remainingValues = seconderCopy.filter { it != -1 }.toIntArray()
 
         //fill missing places of child
         var counter = -1
-        childPermutation.forEachIndexed { index, value ->
-            if (value == childPermutation.size) {
-                counter++
-                childPermutation[index] = seconderCopy[counter]
-            }
+        childPermutation.forEachEmptyIndex { index ->
+            counter++
+            childPermutation[index] = remainingValues[counter]
         }
 
     }

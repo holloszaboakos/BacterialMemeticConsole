@@ -4,7 +4,7 @@ import hu.raven.puppet.logic.logging.ObjectLoggerService
 import hu.raven.puppet.model.task.*
 import hu.raven.puppet.utility.ImmutableArray
 import hu.raven.puppet.utility.ImmutableArray.Companion.asImmutable
-import hu.raven.puppet.utility.extention.sumClever
+import hu.raven.puppet.utility.extention.FloatSumExtensions.sumClever
 import java.nio.file.Path
 
 //TODO fix json structures
@@ -59,7 +59,7 @@ class DefaultTaskLoaderService(
             val salesman = task.transportUnits.first()
 
             logger.log(
-                "OVERASTIMATE: ${
+                "OVERESTIMATE: ${
                     (edgesFromCenter.map { calcCostOnEdge(salesman, it).value }.sumClever()
                             + edgesToCenter.map { calcCostOnEdge(salesman, it).value }.sumClever()
                             + objectives.map { calcCostOnNode(salesman, it).value }.sumClever())
@@ -67,7 +67,7 @@ class DefaultTaskLoaderService(
             )
 
             logger.log(
-                "UNDERASTIMATE: ${
+                "UNDERESTIMATE: ${
                     (edgesFromCenter.map { calcCostOnEdge(salesman, it).value }.min()
                             + edgesBetween.mapIndexed { index, edgeArray ->
                         arrayOf(

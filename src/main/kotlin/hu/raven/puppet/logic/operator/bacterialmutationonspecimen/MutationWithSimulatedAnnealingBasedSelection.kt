@@ -3,16 +3,16 @@ package hu.raven.puppet.logic.operator.bacterialmutationonspecimen
 
 import hu.raven.puppet.logic.operator.bacterialmutationoperator.BacterialMutationOperator
 import hu.raven.puppet.logic.operator.calculatecost.CalculateCost
-import hu.raven.puppet.logic.operator.selectsegment.SelectSegment
+import hu.raven.puppet.logic.operator.selectsegments.ContinuousSegment
+import hu.raven.puppet.logic.operator.selectsegments.SelectSegments
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCost
-import hu.raven.puppet.model.solution.Segment
 import kotlin.math.exp
 import kotlin.random.Random
 
 class MutationWithSimulatedAnnealingBasedSelection(
     override val mutationOperator: BacterialMutationOperator,
     override val calculateCostOf: CalculateCost,
-    override val selectSegment: SelectSegment,
+    override val selectSegments: SelectSegments,
     override val cloneCount: Int,
     override val cloneCycleCount: Int,
     private val iterationLimit: Int,
@@ -27,7 +27,7 @@ class MutationWithSimulatedAnnealingBasedSelection(
 
             val clones = generateClones(
                 specimenWithIndex,
-                selectSegment(specimenWithIndex.value.permutation, iteration, cycleIndex, cloneCycleCount)
+                selectSegments(specimenWithIndex.value.permutation, iteration, cycleIndex, cloneCycleCount)
             )
 
             calcCostOfEachAndSort(clones)
@@ -43,7 +43,7 @@ class MutationWithSimulatedAnnealingBasedSelection(
 
     private fun generateClones(
         specimen: IndexedValue<OnePartRepresentationWithCost>,
-        selectedSegment: Segment
+        selectedSegment: Array<ContinuousSegment>
     ): MutableList<OnePartRepresentationWithCost> {
         val clones = MutableList(cloneCount + 1) {
             specimen.value.cloneRepresentationAndCost()

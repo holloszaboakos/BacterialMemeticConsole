@@ -85,12 +85,12 @@ class TspGeneratorService {
                 .asImmutable(),
             edgesFromCenter = this[0]
                 .slice(1 until this[0].size)
-                .map { CostGraphEdge(Meter(it.toLong())) }
+                .map { CostGraphEdge(Meter(it)) }
                 .toTypedArray()
                 .asImmutable(),
             edgesToCenter = this
                 .slice(1 until this.size)
-                .map { CostGraphEdge(Meter(it[0].toLong())) }
+                .map { CostGraphEdge(Meter(it[0])) }
                 .toTypedArray()
                 .asImmutable()
         )
@@ -98,5 +98,5 @@ class TspGeneratorService {
 
     private fun CostGraph.toTask() = Task(costGraph = this)
 
-    private fun Int.toCostGraphEdge() = CostGraphEdge(Meter(toLong()))
+    private fun Int.toCostGraphEdge() = CostGraphEdge(Meter(this))
 }

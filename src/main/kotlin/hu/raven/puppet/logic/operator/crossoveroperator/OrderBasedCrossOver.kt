@@ -3,33 +3,40 @@ package hu.raven.puppet.logic.operator.crossoveroperator
 import hu.raven.puppet.model.math.Permutation
 import kotlin.random.Random
 
-object OrderBasedCrossOver : CrossOverOperator() {
+//select positions by 50% chance
+//copy to child from primary
+//fill the rest from secondary
+data object OrderBasedCrossOver : CrossOverOperator {
 
     override fun invoke(
         parentPermutations: Pair<Permutation, Permutation>,
         childPermutation: Permutation
     ) {
-        val seconderCopy = parentPermutations.second.toMutableList()
+        childPermutation.clear()
+        //copy second parent
+        val seconderCopy = parentPermutations.second.clone()
 
-        //clean child
-        //copy parent middle to child
+        //for each child position
         childPermutation.indices.forEach { valueIndex ->
+
+            //by a fifty percent chance
             if (Random.nextBoolean()) {
-                seconderCopy[parentPermutations.second.indexOf(parentPermutations.first[valueIndex])] =
-                    childPermutation.size
-                childPermutation[valueIndex] = parentPermutations.first[valueIndex]
+                //select value of primary parent in same position
+                val selectedValue = parentPermutations.first[valueIndex]
+                //remove value from copy of seconder
+                seconderCopy.deleteValue(selectedValue)
+                //copy value to child
+                childPermutation[valueIndex] = selectedValue
             }
         }
 
-        seconderCopy.removeIf { it == childPermutation.size }
+        val remainingValuesInSeconderOrder = seconderCopy.filter { it != -1 }.toTypedArray()
 
         var counter = -1
         //fill missing places of child
-        childPermutation.forEachIndexed { index, value ->
-            if (value == childPermutation.size) {
-                counter++
-                childPermutation[index] = seconderCopy[counter]
-            }
+        childPermutation.forEachEmptyIndex { index ->
+            counter++
+            childPermutation[index] = remainingValuesInSeconderOrder[counter]
         }
     }
 }

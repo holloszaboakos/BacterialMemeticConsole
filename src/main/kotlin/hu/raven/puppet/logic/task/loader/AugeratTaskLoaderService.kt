@@ -6,7 +6,7 @@ import hu.raven.puppet.logic.task.converter.AugeratDatasetConverterService
 import hu.raven.puppet.model.physics.Meter
 import hu.raven.puppet.model.task.Task
 import hu.raven.puppet.model.task.augerat.InstanceBean
-import hu.raven.puppet.utility.extention.sumClever
+import hu.raven.puppet.utility.extention.FloatSumExtensions.sumClever
 import java.nio.file.Path
 
 class AugeratTaskLoaderService(
@@ -36,7 +36,7 @@ class AugeratTaskLoaderService(
     override fun logEstimates(task: Task) {
         task.costGraph.apply {
             logger.log(
-                "OVERASTIMATE: ${
+                "OVERESTIMATE: ${
                     (
                             edgesFromCenter.map { it.length.value }.sumClever()
                                     + edgesToCenter.map { it.length.value }.sumClever()
@@ -45,7 +45,7 @@ class AugeratTaskLoaderService(
             )
 
             logger.log(
-                "UNDERASTIMATE: ${
+                "UNDERESTIMATE: ${
                     ((
                             edgesFromCenter.map { it.length.value }.sumClever() +
                                     edgesBetween.mapIndexed { index, edge ->

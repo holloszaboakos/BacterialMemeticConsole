@@ -1,29 +1,29 @@
 package hu.raven.puppet.logic.operator.calculatecost
 
-import hu.raven.puppet.model.math.Fraction
+
 import hu.raven.puppet.model.operator.calculatecost.TakenCapacity
 import hu.raven.puppet.model.physics.Euro
-import hu.raven.puppet.model.physics.Gramm
+import hu.raven.puppet.model.physics.Gram
 import hu.raven.puppet.model.physics.Second
-import hu.raven.puppet.model.physics.Stere
+import hu.raven.puppet.model.physics.CubicMeter
 import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.task.*
+import hu.raven.puppet.utility.extention.FloatSumExtensions.sumClever
 import hu.raven.puppet.utility.extention.getEdgeBetween
-import hu.raven.puppet.utility.extention.sumClever
 
 class CalculateCostOfACVRPWithMultipleCapacity(
     override val task: Task
 ) : CalculateCost() {
     override operator fun invoke(
         solution: OnePartRepresentation
-    ): Fraction {
+    ): Float {
         return solution.permutation
             .sliced { it >= solution.objectiveCount }
             .mapIndexed { sliceIndex, slice ->
                 val salesman = task.transportUnits[sliceIndex]
                 var takenCapacity = TakenCapacity(
-                    volume = Stere(0),
-                    weight = Gramm(0),
+                    volume = CubicMeter(0),
+                    weight = Gram(0),
                     time = Second(0)
                 )
 

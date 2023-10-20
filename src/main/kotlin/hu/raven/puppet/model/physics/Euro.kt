@@ -1,11 +1,11 @@
 package hu.raven.puppet.model.physics
 
-import hu.raven.puppet.model.math.Fraction
+
 
 @JvmInline
-value class Euro(override val value: Fraction) : PhysicsUnit<Euro> {
-    constructor(value: Long) : this(Fraction.new(value))
-    constructor(first: Long, second: Long) : this(Fraction.new(first, second))
+value class Euro(override val value: Float) : PhysicsUnit<Euro> {
+    constructor(value: Int) : this(value.toFloat())
+    constructor(first: Int, second: Int) : this(first/second.toFloat())
 
     override operator fun plus(other: Euro) = Euro(value + other.value)
     override operator fun minus(other: Euro) = Euro(value - other.value)

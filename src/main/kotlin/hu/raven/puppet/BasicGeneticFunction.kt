@@ -98,7 +98,7 @@ fun main() {
                 OrderCrossOver
             }
             single<MutateChildren> {
-                MutateChildrenByReverse()
+                MutateChildrenByReverse
             }
         })
         val initialization: InitializeAlgorithm<EvolutionaryAlgorithmState> = get()

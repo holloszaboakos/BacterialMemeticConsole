@@ -1,10 +1,18 @@
 package hu.raven.puppet.logic.operator.crossoveroperator
 
 import hu.raven.puppet.model.math.Permutation
-import hu.raven.puppet.utility.extention.get
+import hu.raven.puppet.model.math.RandomPermutationValueSelector
 
-
-object GeneticEdgeRecombinationCrossOver : CrossOverOperator() {
+//collect all edges to table
+//copy first element of primary
+//remove from table
+//iterate:
+//select neighbours of last value
+//select the neighbour with the least remaining neighbours
+//remove selected value from each row
+//random value on miss
+//
+data object GeneticEdgeRecombinationCrossOver : CrossOverOperator {
 
     override fun invoke(
         parentPermutations: Pair<Permutation, Permutation>,
@@ -12,61 +20,62 @@ object GeneticEdgeRecombinationCrossOver : CrossOverOperator() {
     ) {
         childPermutation.clear()
 
-        val randomPermutation = IntArray(childPermutation.size) { it }
-        randomPermutation.shuffle()
-        var lastIndex = 0
+        val randomSelector = RandomPermutationValueSelector(childPermutation.size)
 
         val table = createTable(parentPermutations)
 
-        val neighbourCounts = Array(childPermutation.size) { valueIndex ->
-            table[valueIndex].size
-        }
-
         childPermutation[0] = parentPermutations.first[0]
-        table[childPermutation[0]].forEach { neighbour ->
-            table[neighbour].remove(childPermutation[0])
-            neighbourCounts[neighbour]--
-        }
-        //O(n2)
+        table[childPermutation[0]]
+            .forEach { neighbour ->
+                table[neighbour].remove(childPermutation[0])
+            }
+
         for (geneIndex in 1 until childPermutation.size) {
             val previousGene = childPermutation[geneIndex - 1]
             val neighborsOfPrevious = table[previousGene]
-            if (neighborsOfPrevious.isNotEmpty()) {
-                val neighbourCountsOfNeighbours = neighborsOfPrevious.map { neighbourCounts[it] }
-                val minCount = neighbourCountsOfNeighbours.minOf { it }
-                childPermutation[geneIndex] = neighborsOfPrevious
-                    .filterIndexed { index, _ ->
-                        neighbourCountsOfNeighbours[index] == minCount
+
+            val selectedValue = if (neighborsOfPrevious.isNotEmpty()) {
+                val leastNeighborCount = neighborsOfPrevious.minOf { table[it].size }
+
+                neighborsOfPrevious
+                    .filter { value ->
+                        table[value].size == leastNeighborCount
                     }.random()
             } else {
-                for (index in lastIndex until randomPermutation.size) {
-                    if (!childPermutation.contains(randomPermutation[index])) {
-                        childPermutation[geneIndex] = randomPermutation[index]
-                        lastIndex = index + 1
-                        break
-                    }
-                }
+                randomSelector.getNextExcludingIf { value ->
+                    childPermutation.contains(value)
+                } ?: throw Exception("No values to select")
             }
-            table[childPermutation[geneIndex]].forEach { neighbour ->
-                table[neighbour].remove(childPermutation[geneIndex])
-                neighbourCounts[neighbour]--
+
+            table[selectedValue].forEach { neighbour ->
+                table[neighbour].remove(selectedValue)
             }
-            neighborsOfPrevious.clear()
+
+            childPermutation[geneIndex] = selectedValue
         }
     }
 
-    private fun createTable(parentPermutations: Pair<Permutation, Permutation>): Array<MutableSet<Int>> {
-        return Array(parentPermutations.first.indices.count()) { valueIndex ->
-            val neighbours = mutableSetOf<Int>()
+    private fun createTable(parentPermutations: Pair<Permutation, Permutation>): Array<MutableList<Int>> =
+        Array(parentPermutations.first.size) { valueIndex ->
+            val neighbours = mutableListOf<Int>()
 
-            for (parentIndex in 0 until 2) {
-                if (parentPermutations[parentIndex].indexOf(valueIndex) != 0)
-                    neighbours += parentPermutations[parentIndex][parentPermutations[parentIndex].indexOf(valueIndex) - 1]
-                if (parentPermutations[parentIndex].indexOf(valueIndex) != parentPermutations.first.size - 1)
-                    neighbours += parentPermutations[parentIndex][parentPermutations[parentIndex].indexOf(valueIndex) + 1]
+            if (parentPermutations.first.indexOf(valueIndex) != 0) {
+                neighbours.add(parentPermutations.first.before(valueIndex))
             }
+
+            if (parentPermutations.first.indexOf(valueIndex) != parentPermutations.first.size - 1) {
+                neighbours.add(parentPermutations.first.after(valueIndex))
+            }
+
+            if (parentPermutations.second.indexOf(valueIndex) != 0) {
+                neighbours.add(parentPermutations.second.before(valueIndex))
+            }
+
+            if (parentPermutations.second.indexOf(valueIndex) != parentPermutations.first.size - 1) {
+                neighbours.add(parentPermutations.second.after(valueIndex))
+            }
+
             neighbours
         }
 
-    }
 }

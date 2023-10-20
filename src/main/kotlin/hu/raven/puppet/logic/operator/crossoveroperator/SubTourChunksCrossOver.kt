@@ -1,34 +1,12 @@
 package hu.raven.puppet.logic.operator.crossoveroperator
 
 import hu.raven.puppet.model.math.Permutation
+import hu.raven.puppet.model.math.RandomPermutationValueSelector
 import hu.raven.puppet.utility.extention.get
 import kotlin.random.Random.Default.nextInt
 
-object SubTourChunksCrossOver : CrossOverOperator() {
-
-    class Randomizer(permutationSize: Int) {
-        private val randomPermutation: IntArray
-        private var lastIndex = 0
-
-        init {
-            randomPermutation = IntArray(permutationSize) { it }
-            randomPermutation.shuffle()
-        }
-
-        fun getRandomAbsentValue(
-            childPermutation: Permutation
-        ): Int {
-            var actualValue = childPermutation.size
-            for (index in lastIndex until childPermutation.size) {
-                if (!childPermutation.contains(randomPermutation[index])) {
-                    actualValue = randomPermutation[index]
-                    lastIndex = index + 1
-                    break
-                }
-            }
-            return actualValue
-        }
-    }
+//TODO: check if implementation is wrong!
+data object SubTourChunksCrossOver : CrossOverOperator {
 
     override fun invoke(
         parentPermutations: Pair<Permutation, Permutation>,
@@ -37,7 +15,7 @@ object SubTourChunksCrossOver : CrossOverOperator() {
         var size = nextInt(childPermutation.size / 2) + 1
         var parentIndex = 0
         childPermutation.clear()
-        val randomizer = Randomizer(childPermutation.size)
+        val randomSelector = RandomPermutationValueSelector(childPermutation.size)
 
         childPermutation.indices.forEach { nextGeneIndex ->
             if (nextGeneIndex == 0) {
@@ -51,15 +29,15 @@ object SubTourChunksCrossOver : CrossOverOperator() {
                 parentIndex = (parentIndex + 1) % 2
             }
 
-            if (!childPermutation.contains(parentPermutations[parentIndex].indexOf(childPermutation[nextGeneIndex - 1]))) {
+            val precedingValue = childPermutation[nextGeneIndex - 1]
+            val indexInCurrentParent = parentPermutations[parentIndex].indexOf(precedingValue)
+            if (!childPermutation.contains(indexInCurrentParent)) {
+                childPermutation[nextGeneIndex] = indexInCurrentParent
+            } else {
                 childPermutation[nextGeneIndex] =
-                    parentPermutations[parentIndex].indexOf(childPermutation[nextGeneIndex - 1])
-                return@forEach
+                    randomSelector.getNextExcludingIf { value -> childPermutation.contains(value) }
+                        ?: throw Exception("No value can be selected!")
             }
-
-            childPermutation[nextGeneIndex] = randomizer.getRandomAbsentValue(childPermutation)
-            return@forEach
-
         }
     }
 }

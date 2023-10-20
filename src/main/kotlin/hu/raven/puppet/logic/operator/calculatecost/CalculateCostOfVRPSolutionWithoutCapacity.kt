@@ -1,6 +1,6 @@
 package hu.raven.puppet.logic.operator.calculatecost
 
-import hu.raven.puppet.model.math.Fraction
+
 import hu.raven.puppet.model.physics.Euro
 import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.task.CostGraphEdge
@@ -14,8 +14,8 @@ class CalculateCostOfVRPSolutionWithoutCapacity(
     override val task: Task
 ) : CalculateCost() {
 
-    override operator fun invoke(solution: OnePartRepresentation): Fraction {
-        var sumCost = Euro(0L)
+    override operator fun invoke(solution: OnePartRepresentation): Float {
+        var sumCost = Euro(0)
         var geneIndex = 0
         solution.permutation
             .sliced { it >= task.costGraph.objectives.size - 1 }

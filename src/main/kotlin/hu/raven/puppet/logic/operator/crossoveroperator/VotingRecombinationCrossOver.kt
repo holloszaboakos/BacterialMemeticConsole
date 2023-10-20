@@ -1,17 +1,19 @@
 package hu.raven.puppet.logic.operator.crossoveroperator
 
 import hu.raven.puppet.model.math.Permutation
+import hu.raven.puppet.model.math.RandomPermutationValueSelector
 
-
-object VotingRecombinationCrossOver : CrossOverOperator() {
+//copy matching values of parents
+//fill the rest randomly
+data object VotingRecombinationCrossOver : CrossOverOperator {
 
     override fun invoke(
         parentPermutations: Pair<Permutation, Permutation>,
         childPermutation: Permutation
     ) {
-        val randomPermutation = IntArray(childPermutation.size) { it }
-        randomPermutation.shuffle()
-        var lastIndex = 0
+        childPermutation.clear()
+
+        val randomSelector = RandomPermutationValueSelector(childPermutation.size)
 
         parentPermutations.first.forEachIndexed { index, value ->
             if (value == parentPermutations.second[index]) {
@@ -19,18 +21,10 @@ object VotingRecombinationCrossOver : CrossOverOperator() {
             }
         }
 
-        childPermutation.forEachIndexed { index, value ->
-            if (value == childPermutation.size) {
-                var actualValue = childPermutation.size
-                for (actualIndex in lastIndex until childPermutation.size) {
-                    if (!childPermutation.contains(randomPermutation[actualIndex])) {
-                        actualValue = randomPermutation[actualIndex]
-                        lastIndex = actualIndex + 1
-                        break
-                    }
-                }
-                childPermutation[index] = actualValue
-            }
+        childPermutation.forEachEmptyIndex { index ->
+            childPermutation[index] =
+                randomSelector.getNextExcludingIf { randomValue -> childPermutation.contains(randomValue) }
+                    ?: throw Exception("No value can be selected")
         }
     }
 }

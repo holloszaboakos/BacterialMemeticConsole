@@ -1,9 +1,7 @@
 package hu.raven.puppet.model.step.crossoverstrategy
 
-import hu.raven.puppet.model.math.Fraction
-
 data class OperatorStatistics(
-    val success: Fraction,
+    val success: Float,
     val run: Int,
-    val successRatio: Fraction
+    val successRatio: Float
 )
