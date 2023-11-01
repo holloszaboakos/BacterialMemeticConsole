@@ -12,10 +12,10 @@ class GeneTransferFromBetterToWorse(
     override fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
         val worse = population
             .activesAsSequence()
-            .slice(population.activeCount / 2 until population.activeCount)
+            .slice(population.activeCount / 2 ..<population.activeCount)
             .toList()
 
-        (0 until population.activeCount / 2)
+        (0 ..<population.activeCount / 2)
             .forEach { index ->
                 geneTransferOperator(population[index], worse[index])
             }

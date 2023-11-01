@@ -2,7 +2,7 @@ package hu.raven.puppet.logic.step.mutatechildren
 
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
-class MutateChildrenByReverseOrReset : MutateChildren() {
+class MutateChildrenByReverseOrReset : MutateChildren {
     val mutateChildrenByReset = MutateChildrenByReset
     val mutateChildrenByReverse = MutateChildrenByReverse
 

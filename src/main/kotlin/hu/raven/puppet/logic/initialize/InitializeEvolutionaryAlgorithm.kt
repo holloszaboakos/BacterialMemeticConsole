@@ -10,7 +10,7 @@ import hu.raven.puppet.model.task.Task
 class InitializeEvolutionaryAlgorithm(
     val initializePopulation: InitializePopulation,
     val orderPopulationByCost: OrderPopulationByCost
-) : InitializeAlgorithm<EvolutionaryAlgorithmState>() {
+) : InitializeAlgorithm<EvolutionaryAlgorithmState> {
 
     override fun invoke(task: Task): EvolutionaryAlgorithmState {
         val population = initializePopulation(task)

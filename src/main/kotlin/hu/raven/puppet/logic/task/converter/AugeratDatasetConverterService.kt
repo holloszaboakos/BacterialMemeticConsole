@@ -1,7 +1,7 @@
 package hu.raven.puppet.logic.task.converter
 
-import hu.raven.puppet.model.physics.Meter
 import hu.raven.puppet.model.physics.CubicMeter
+import hu.raven.puppet.model.physics.Meter
 import hu.raven.puppet.model.task.*
 import hu.raven.puppet.model.task.augerat.InstanceBean
 import hu.raven.puppet.model.task.augerat.NodeBean
@@ -15,7 +15,11 @@ class AugeratDatasetConverterService(override val vehicleCount: Int) : TaskConve
     override fun toStandardTask(task: InstanceBean): Task = task.run {
         Task(
             transportUnits = Array(vehicleCount) {
-                TransportUnit(volumeCapacity = CubicMeter(task.fleetBean.vehicleProfileBean.capacity.toDouble().toFloat()))
+                TransportUnit(
+                    volumeCapacity = CubicMeter(
+                        task.fleetBean.vehicleProfileBean.capacity.toDouble().toFloat()
+                    )
+                )
             }.asImmutable(),
             costGraph = CostGraph(
                 center = task.networkBean.nodeBeanList

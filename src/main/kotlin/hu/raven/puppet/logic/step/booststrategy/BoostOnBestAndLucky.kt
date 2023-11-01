@@ -15,9 +15,9 @@ class BoostOnBestAndLucky(
         boostOperator(population.activesAsSequence().first())
 
         population.activesAsSequence()
-            .slice(1 until population.activeCount)
+            .slice(1 ..<population.activeCount)
             .shuffled()
-            .slice(0 until luckyCount)
+            .slice(0 ..<luckyCount)
             .forEach { boostOperator(it) }
     }
 }

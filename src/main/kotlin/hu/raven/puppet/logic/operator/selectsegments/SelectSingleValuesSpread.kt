@@ -30,7 +30,7 @@ class SelectSingleValuesSpread(
             }
 
             if (selectedPositions.first() != 0) {
-                val startingRange = 0 until selectedPositions[0]
+                val startingRange = 0 ..<selectedPositions[0]
                 add(
                     ContinuousSegment(
                         index = size,
@@ -56,7 +56,7 @@ class SelectSingleValuesSpread(
                     .forEachIndexed { index, position ->
                         val previousPosition = selectedPositions[index - 1]
                         if (previousPosition + 1 != position) {
-                            val connectingSequence = (previousPosition + 1) until position
+                            val connectingSequence = (previousPosition + 1) ..<position
                             add(
                                 ContinuousSegment(
                                     index = size,

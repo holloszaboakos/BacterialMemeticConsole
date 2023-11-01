@@ -8,7 +8,7 @@ fun main() {
 }
 
 //always same
-fun smartSumAfterShuffle(){
+fun smartSumAfterShuffle() {
     val randomFloats = FloatArray(1000) { Random.nextFloat() }
     val sums = FloatArray(10_000) { randomFloats.apply { shuffle() }.sumClever() }
 
@@ -17,7 +17,7 @@ fun smartSumAfterShuffle(){
 
 //2.3841858E-6
 //2.6226044E-6
-fun sumAfterShuffle(){
+fun sumAfterShuffle() {
     val randomFloats = FloatArray(1000) { Random.nextFloat() }
     val sums = FloatArray(10_000) { randomFloats.apply { shuffle() }.sum() }
 

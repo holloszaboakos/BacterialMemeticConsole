@@ -20,7 +20,7 @@ class SegmentInjectionGeneTransfer(
                 source.permutation.indices.count(),
                 geneTransferSegmentLength
             )
-        val rangeOfSegment = startOfSegment until startOfSegment + geneTransferSegmentLength
+        val rangeOfSegment = startOfSegment ..<startOfSegment + geneTransferSegmentLength
         val elementsOfSegment = collectElementsOfSegment(
             target,
             rangeOfSegment
@@ -73,8 +73,8 @@ class SegmentInjectionGeneTransfer(
         elementsOfTargetNotInSegment: IntArray,
     ) {
 
-        val rangeOfBeforeSegment = 0 until rangeOfSegment.first
-        val rangeOfAfterSegment = (rangeOfSegment.last + 1) until target.permutation.size
+        val rangeOfBeforeSegment = 0 ..<rangeOfSegment.first
+        val rangeOfAfterSegment = (rangeOfSegment.last + 1) ..<target.permutation.size
 
         target.permutation.indices.forEach { index ->
             target.permutation[index] = when (index) {

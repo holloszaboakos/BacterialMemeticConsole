@@ -1,8 +1,8 @@
 package hu.raven.puppet.logic.operator.calculatecost
 
 
-import hu.raven.puppet.model.physics.Meter
 import hu.raven.puppet.model.physics.CubicMeter
+import hu.raven.puppet.model.physics.Meter
 import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.task.CostGraph
 import hu.raven.puppet.model.task.Task
@@ -17,7 +17,7 @@ class CalculateCostOfCVRPSolutionWithCapacityAndMaxTripLength(
         val cost: Meter,
     )
 
-    override fun invoke(solution: OnePartRepresentation): Float {
+    override fun invoke(solution: OnePartRepresentation): FloatArray {
         return solution.permutation
             .sliced { it >= task.costGraph.objectives.size - 1 }
             .mapIndexed { sliceIndex, slice ->
@@ -53,6 +53,7 @@ class CalculateCostOfCVRPSolutionWithCapacityAndMaxTripLength(
                 tripState
             }
             .maxOf { it.cost.value }
+            .let { floatArrayOf(it) }
     }
 
     private fun onFirstValueOfSlice(

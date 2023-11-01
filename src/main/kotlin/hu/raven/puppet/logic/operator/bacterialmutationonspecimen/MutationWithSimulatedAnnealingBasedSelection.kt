@@ -49,7 +49,7 @@ class MutationWithSimulatedAnnealingBasedSelection(
             specimen.value.cloneRepresentationAndCost()
         }
         clones
-            .slice(1 until clones.size)
+            .slice(1 ..<clones.size)
             .forEach { clone ->
                 mutationOperator(clone, selectedSegment)
             }

@@ -2,6 +2,7 @@ package hu.raven.puppet.logic.operator.boostoperator
 
 import hu.raven.puppet.logic.operator.calculatecost.CalculateCost
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCost
+import hu.raven.puppet.utility.extention.FloatArrayExtensions.notDominatedBy
 
 
 class Opt2StepWithProgressMemory<O : OnePartRepresentationWithCost>(
@@ -14,15 +15,15 @@ class Opt2StepWithProgressMemory<O : OnePartRepresentationWithCost>(
         val bestCost = specimen.cost
         var improved = false
 
-        outer@ for (firstIndex in lastPosition.first until specimen.permutation.size - 1) {
+        outer@ for (firstIndex in lastPosition.first ..<specimen.permutation.size - 1) {
             val secondIndexStart =
                 if (firstIndex == lastPosition.first) lastPosition.second
                 else firstIndex + 1
-            for (secondIndex in secondIndexStart until specimen.objectiveCount) {
+            for (secondIndex in secondIndexStart ..<specimen.objectiveCount) {
                 specimen.permutation.swapValues(firstIndex, secondIndex)
                 specimen.cost = calculateCostOf(specimen)
 
-                if (specimen.costOrException() >= bestCost!!) {
+                if (specimen.costOrException() notDominatedBy bestCost!!) {
                     specimen.permutation.swapValues(firstIndex, secondIndex)
                     specimen.cost = bestCost
                     continue

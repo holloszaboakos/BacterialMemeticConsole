@@ -23,7 +23,7 @@ data object AlternatingEdgeCrossOver : CrossOverOperator {
         childPermutation[0] = randomSelector.getNextExcludingIf { false } ?: throw Exception("No values to select!")
 
         //on other positions
-        (1 until childPermutation.size).forEach { geneIndex ->
+        (1 ..<childPermutation.size).forEach { geneIndex ->
             val parentPermutation = parentPermutations[geneIndex % 2]
 
             //select edge from parent

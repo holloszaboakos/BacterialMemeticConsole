@@ -14,9 +14,9 @@ class BacterialMutationOnBestAndLuckyByShuffling(
         val selectedCount = ((population.activeCount - 1) * mutationPercentage).toInt()
 
         val populationRandomized = population.activesAsSequence()
-            .slice(1 until population.activeCount)
+            .slice(1 ..<population.activeCount)
             .shuffled()
-            .slice(0 until selectedCount)
+            .slice(0 ..<selectedCount)
             .toMutableList()
             .apply { add(0, population.activesAsSequence().first()) }
 

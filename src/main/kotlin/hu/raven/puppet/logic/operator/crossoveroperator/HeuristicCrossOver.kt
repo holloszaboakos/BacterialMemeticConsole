@@ -31,7 +31,7 @@ class HeuristicCrossOver(
         childPermutation.clear()
         childPermutation[0] = nextInt(childPermutation.size)
 
-        for (geneIndex in 1 until childPermutation.size) {
+        for (geneIndex in 1 ..<childPermutation.size) {
 
             val previousValue = childPermutation[geneIndex - 1]
 
@@ -87,7 +87,7 @@ class HeuristicCrossOver(
         geneIndex: Int
     ): Int {
 
-        for (index in lastIndexUsed until randomPermutation.size) {
+        for (index in lastIndexUsed ..<randomPermutation.size) {
             if (!child.contains(randomPermutation[index])) {
                 child[geneIndex] = randomPermutation[index]
                 return index + 1

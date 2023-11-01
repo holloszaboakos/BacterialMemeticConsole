@@ -4,14 +4,14 @@ import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.utility.extention.slice
 import kotlin.random.Random
 
-data object MutateChildrenBySwap : MutateChildren() {
+data object MutateChildrenBySwap : MutateChildren {
 
     override fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
         if (task.costGraph.objectives.size > 1)
             population.activesAsSequence()
                 .filter { it.iterationOfCreation == iteration }
                 .shuffled()
-                .slice(0 until population.activeCount / 4)
+                .slice(0 ..<population.activeCount / 4)
                 .forEach { child ->
                     val firstCutIndex = Random.nextInt(task.costGraph.objectives.size)
                     val secondCutIndex = Random.nextInt(task.costGraph.objectives.size)

@@ -13,7 +13,7 @@ class BoostOntTop(
 
     override operator fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
         population.activesAsSequence()
-            .slice(0 until boostedCount)
+            .slice(0 ..<boostedCount)
             .forEach {
                 boostOperator(it)
             }

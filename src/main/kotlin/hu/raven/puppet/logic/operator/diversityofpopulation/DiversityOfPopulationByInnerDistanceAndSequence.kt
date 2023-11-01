@@ -4,7 +4,7 @@ import hu.raven.puppet.model.math.Permutation
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
 
-data object DiversityOfPopulationByInnerDistanceAndSequence : DiversityOfPopulation() {
+data object DiversityOfPopulationByInnerDistanceAndSequence : DiversityOfPopulation {
 
     override fun invoke(algorithmState: EvolutionaryAlgorithmState): Double = algorithmState.run {
         var diversity = 0.0

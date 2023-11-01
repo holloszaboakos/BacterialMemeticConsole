@@ -1,8 +1,6 @@
 package hu.raven.puppet.utility.extention
 
 
-
-
 fun max(left: Float?, right: Float?) =
     when {
         left == null || right == null -> null

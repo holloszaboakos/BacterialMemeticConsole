@@ -14,7 +14,7 @@ class CalculateCostOfVRPSolutionWithoutCapacity(
     override val task: Task
 ) : CalculateCost() {
 
-    override operator fun invoke(solution: OnePartRepresentation): Float {
+    override operator fun invoke(solution: OnePartRepresentation): FloatArray {
         var sumCost = Euro(0)
         var geneIndex = 0
         solution.permutation
@@ -67,7 +67,7 @@ class CalculateCostOfVRPSolutionWithoutCapacity(
                 sumCost += cost
 
             }
-        return sumCost.value
+        return sumCost.value.let { floatArrayOf(it) }
     }
 
     private fun calcCostOnEdge(salesman: TransportUnit, edge: CostGraphEdge) =

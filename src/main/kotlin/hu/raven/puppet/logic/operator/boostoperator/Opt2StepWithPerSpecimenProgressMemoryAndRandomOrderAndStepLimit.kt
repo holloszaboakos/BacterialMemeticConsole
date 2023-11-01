@@ -2,6 +2,7 @@ package hu.raven.puppet.logic.operator.boostoperator
 
 import hu.raven.puppet.logic.operator.calculatecost.CalculateCost
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
+import hu.raven.puppet.utility.extention.FloatArrayExtensions.notDominatedBy
 
 class Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit(
     override val calculateCostOf: CalculateCost,
@@ -10,7 +11,7 @@ class Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit(
     permutationSize: Int,
 ) : BoostOperator<OnePartRepresentationWithCostAndIterationAndId>() {
     private var lastPositionPerSpecimen = Array(populationSize) { Pair(0, 1) }
-    private var shuffler = (0 until permutationSize)
+    private var shuffler = (0 ..<permutationSize)
         .shuffled()
         .toIntArray()
 
@@ -22,12 +23,12 @@ class Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit(
         var lastPosition = lastPositionPerSpecimen[specimen.id]
         var stepCount = 0
 
-        outer@ for (firstIndexIndex in lastPosition.first until specimen.permutation.size - 1) {
+        outer@ for (firstIndexIndex in lastPosition.first ..<specimen.permutation.size - 1) {
             val firstIndex = shuffler[firstIndexIndex]
             val secondIndexStart =
                 if (firstIndexIndex == lastPosition.first) lastPosition.second
                 else firstIndexIndex + 1
-            for (secondIndexIndex in secondIndexStart until specimen.permutation.size) {
+            for (secondIndexIndex in secondIndexStart ..<specimen.permutation.size) {
                 if (stepCount > stepLimit) {
                     lastPosition = Pair(firstIndexIndex, secondIndexIndex)
                     limitPassed = true
@@ -38,7 +39,7 @@ class Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit(
                 specimen.permutation.swapValues(firstIndex, secondIndex)
                 specimen.cost = calculateCostOf(specimen)
 
-                if (specimen.costOrException() >= bestCost!!) {
+                if (specimen.costOrException() notDominatedBy bestCost!!) {
                     specimen.permutation.swapValues(firstIndex, secondIndex)
                     specimen.cost = bestCost
                     continue

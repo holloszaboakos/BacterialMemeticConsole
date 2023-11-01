@@ -2,10 +2,10 @@ package hu.raven.puppet.logic.operator.calculatecost
 
 
 import hu.raven.puppet.model.operator.calculatecost.TakenCapacity
+import hu.raven.puppet.model.physics.CubicMeter
 import hu.raven.puppet.model.physics.Euro
 import hu.raven.puppet.model.physics.Gram
 import hu.raven.puppet.model.physics.Second
-import hu.raven.puppet.model.physics.CubicMeter
 import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.task.*
 import hu.raven.puppet.utility.extention.FloatSumExtensions.sumClever
@@ -16,7 +16,7 @@ class CalculateCostOfACVRPWithMultipleCapacity(
 ) : CalculateCost() {
     override operator fun invoke(
         solution: OnePartRepresentation
-    ): Float {
+    ): FloatArray {
         return solution.permutation
             .sliced { it >= solution.objectiveCount }
             .mapIndexed { sliceIndex, slice ->
@@ -63,6 +63,7 @@ class CalculateCostOfACVRPWithMultipleCapacity(
             }.flatten()
             .map { it.value }
             .sumClever()
+            .let { floatArrayOf(it) }
     }
 
     private fun onFirstValueOfSlice(

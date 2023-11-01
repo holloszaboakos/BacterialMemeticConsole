@@ -9,7 +9,7 @@ import hu.raven.puppet.utility.extention.toPermutation
 
 class InitializeLocalSearchAlgorithm(
     val calculateCostOf: CalculateCost
-) : InitializeAlgorithm<LocalSearchAlgorithmState>() {
+) : InitializeAlgorithm<LocalSearchAlgorithmState> {
 
     override operator fun invoke(task: Task): LocalSearchAlgorithmState {
         val algorithmState = LocalSearchAlgorithmState(

@@ -4,12 +4,37 @@ import hu.raven.puppet.model.math.Permutation
 
 data class OnePartRepresentationWithCostAndIteration(
     override var iterationOfCreation: Int,
-    override var cost: Float?,
+    override var cost: FloatArray?,
     override val objectiveCount: Int,
     override val permutation: Permutation
 ) : IterationProduct,
     OnePartRepresentationWithCost {
     override fun cloneRepresentationAndCost(): OnePartRepresentationWithCostAndIteration {
         return copy(permutation = permutation.clone())
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as OnePartRepresentationWithCostAndIteration
+
+        if (iterationOfCreation != other.iterationOfCreation) return false
+        if (cost != null) {
+            if (other.cost == null) return false
+            if (!cost.contentEquals(other.cost)) return false
+        } else if (other.cost != null) return false
+        if (objectiveCount != other.objectiveCount) return false
+        if (permutation != other.permutation) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = iterationOfCreation
+        result = 31 * result + (cost?.contentHashCode() ?: 0)
+        result = 31 * result + objectiveCount
+        result = 31 * result + permutation.hashCode()
+        return result
     }
 }

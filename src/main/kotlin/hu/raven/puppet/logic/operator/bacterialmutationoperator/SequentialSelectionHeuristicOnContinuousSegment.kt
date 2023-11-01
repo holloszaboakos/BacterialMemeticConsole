@@ -4,13 +4,13 @@ import hu.raven.puppet.logic.operator.selectsegments.ContinuousSegment
 import hu.raven.puppet.logic.operator.weightedselection.RouletteWheelSelection
 import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.task.Task
+import hu.raven.puppet.utility.extention.FloatSumExtensions.sumClever
 import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.extention.multiplicativeInverse
-import hu.raven.puppet.utility.extention.FloatSumExtensions.sumClever
 
 class SequentialSelectionHeuristicOnContinuousSegment(
     val task: Task
-) : BacterialMutationOperator() {
+) : BacterialMutationOperator {
 
     private val rouletteWheelSelection = RouletteWheelSelection<ContinuousSegment>()
     override fun invoke(
@@ -129,11 +129,12 @@ class SequentialSelectionHeuristicOnContinuousSegment(
         remainingSegments.map { segment ->
             when {
                 previousElement < objectiveCount && segment.values.first() < objectiveCount ->
-                        costGraph
-                            .getEdgeBetween(previousElement, segment.values.first())
-                            .length
-                            .value
-                            .multiplicativeInverse()
+                    costGraph
+                        .getEdgeBetween(previousElement, segment.values.first())
+                        .length
+                        .value
+                        .multiplicativeInverse()
+
                 segment.values.first() < objectiveCount ->
                     costGraph
                         .edgesFromCenter[segment.values.first()]

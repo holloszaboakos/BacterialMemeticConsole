@@ -5,7 +5,7 @@ import hu.raven.puppet.utility.extention.toPermutation
 //TODO test!!!
 class Permutation(val size: Int) {
 
-    val indices: IntRange = 0 until size
+    val indices: IntRange = 0 ..<size
     private val permutation: IntArray = IntArray(size) { -1 }
     private val inversePermutation: IntArray = IntArray(size) { -1 }
 
@@ -17,7 +17,7 @@ class Permutation(val size: Int) {
     }
 
     companion object {
-        fun random(size: Int) = (0 until size).shuffled().toIntArray().toPermutation()
+        fun random(size: Int) = (0 ..<size).shuffled().toIntArray().toPermutation()
     }
 
     operator fun get(index: Int) = permutation[index]

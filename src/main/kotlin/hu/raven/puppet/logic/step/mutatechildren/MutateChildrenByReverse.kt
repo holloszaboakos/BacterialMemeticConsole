@@ -6,14 +6,14 @@ import hu.raven.puppet.model.task.Task
 import hu.raven.puppet.utility.extention.slice
 import kotlin.random.Random
 
-data object MutateChildrenByReverse : MutateChildren() {
+data object MutateChildrenByReverse : MutateChildren {
 
     override fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
         if (task.costGraph.objectives.size > 1)
             population.activesAsSequence()
                 .filter { it.iterationOfCreation == iteration }
                 .shuffled()
-                .slice(0 until (population.activeCount / 4))
+                .slice(0 ..<(population.activeCount / 4))
                 .forEach { child -> onChild(child, task) }
     }
 

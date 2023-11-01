@@ -4,7 +4,7 @@ import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationA
 import hu.raven.puppet.model.task.Task
 import hu.raven.puppet.utility.extention.toPermutation
 
-data object InitializePopulationByModuloStepper : InitializePopulation() {
+data object InitializePopulationByModuloStepper : InitializePopulation {
 
     override fun invoke(task: Task): List<OnePartRepresentationWithCostAndIterationAndId> {
         val sizeOfPermutation =
@@ -65,7 +65,7 @@ data object InitializePopulationByModuloStepper : InitializePopulation() {
         val newContains = BooleanArray(sizeOfPermutation) { false }
         val newPermutation = IntArray(sizeOfPermutation) { -1 }
         var baseIndex = step
-        for (newIndex in 0 until sizeOfPermutation) {
+        for (newIndex in 0 ..<sizeOfPermutation) {
             if (newContains[basePermutation[baseIndex]])
                 baseIndex = (baseIndex + 1) % sizeOfPermutation
             newPermutation[newIndex] = basePermutation[baseIndex]

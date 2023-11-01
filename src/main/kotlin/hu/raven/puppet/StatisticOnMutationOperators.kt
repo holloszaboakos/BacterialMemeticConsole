@@ -22,6 +22,7 @@ import hu.raven.puppet.modules.FilePathVariableNames.*
 import hu.raven.puppet.utility.KoinUtil.get
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -48,7 +49,7 @@ private data class Scenario(
     val mutationOperator: (task: Task) -> BacterialMutationOperator,
 )
 
-private val TASK_SIZES = arrayOf(32, 64, 128, 256, 512, 1024)
+private val TASK_SIZES = arrayOf(4, 8, 16, 32, 64, 128, 256, 512, 1024)
 private val STRATEGIES: Array<(
     mutationOperator: BacterialMutationOperator,
     calculateCostOf: CalculateCost,
@@ -139,12 +140,12 @@ fun main() {
 
 }
 
-private fun runScenario(scenario: Scenario) = runBlocking {
+private fun runScenario(scenario: Scenario) {
     startKoin {
         modules(
             module {
                 single(named(CLONE_COUNT)) { scenario.objectiveCount * 5 }
-                single(named(CLONE_SEGMENT_LENGTH)) { scenario.objectiveCount }
+                single(named(CLONE_SEGMENT_LENGTH)) { scenario.objectiveCount / 2 + 1 }
                 single(named(CLONE_CYCLE_COUNT)) { 5 }
                 single(named(SIZE_OF_POPULATION)) { 1 }
                 single(named(ITERATION_LIMIT)) { Int.MAX_VALUE }
@@ -175,6 +176,7 @@ private fun runScenario(scenario: Scenario) = runBlocking {
                     )
                 }
                 single<SelectSegments> {
+                    //TODO
                     SelectSingleValuesContinuouslyWithFullCoverage(
                         get(CLONE_SEGMENT_LENGTH)
                     )
@@ -201,28 +203,33 @@ private fun runScenario(scenario: Scenario) = runBlocking {
     )
     output.appendText("scenario: ${scenario.fileName} ${scenario.objectiveCount} ${strategy::class} ${get<BacterialMutationOperator>()::class}\n")
 
-    (0 until 25)
-        .map {
-            async(Dispatchers.Default) {
-                val specimen =
-                    OnePartRepresentationWithCostAndIterationAndId(
-                        0,
-                        0,
-                        null,
-                        scenario.objectiveCount,
-                        Permutation((0 until scenario.objectiveCount).toList().toIntArray())
-                    )
-                strategy(IndexedValue(0, specimen), 0)
-                calculateCost(specimen)
-                specimen.costOrException()
-            }
+    runBlocking(Dispatchers.Default) {
+        launch {
+            (0 ..<25)
+                .map {
+                    async {
+                        val specimen =
+                            OnePartRepresentationWithCostAndIterationAndId(
+                                0,
+                                0,
+                                null,
+                                scenario.objectiveCount,
+                                Permutation((0 ..<scenario.objectiveCount).toList().toIntArray())
+                            )
+                        strategy(IndexedValue(0, specimen), 0)
+                        calculateCost(specimen)
+                        specimen.costOrException()
+                    }
+                }
+                .map { it.await() }
+                .asSequence()
+                .sortedBy { it }
+                .groupBy { it }
+                .forEach { (value, values) ->
+                    output.appendText("value: $value  count: ${values.size}\n")
+                }
         }
-        .map { it.await() }
-        .sortedBy { it }
-        .groupBy { it }
-        .forEach { (value, values) ->
-            output.appendText("value: $value  count: ${values.size}\n")
-        }
+    }
 
     stopKoin()
 }

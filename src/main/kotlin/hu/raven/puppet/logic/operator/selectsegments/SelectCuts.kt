@@ -18,9 +18,9 @@ class SelectCuts(override val cloneSegmentLength: Int) : SelectSegments {
             )
         )
 
-        val cuts = (0 until (specimen.size - 1))
+        val cuts = (0 ..<(specimen.size - 1))
             .shuffled()
-            .slice(0 until (cloneSegmentLength - 1))
+            .slice(0 ..<cloneSegmentLength)
             .sorted()
 
         return buildList {
@@ -35,12 +35,13 @@ class SelectCuts(override val cloneSegmentLength: Int) : SelectSegments {
             )
 
             cuts
-                .slice(1 until cuts.lastIndex)
-                .mapIndexed { index, position ->
-                    val previousPositions = cuts[index - 1]
-                    val slice = previousPositions + 1..position
+                .slice(1 ..<cuts.size)
+                .mapIndexed { indexInSlice, position ->
+                    val cutIndex = indexInSlice + 1
+                    val previousPosition = cuts[cutIndex - 1]
+                    val slice = previousPosition + 1..position
                     ContinuousSegment(
-                        index = 1 + index,
+                        index = 1 + indexInSlice,
                         keepInPlace = false,
                         indices = slice,
                         values = slice.map { specimen[it] }.toIntArray()

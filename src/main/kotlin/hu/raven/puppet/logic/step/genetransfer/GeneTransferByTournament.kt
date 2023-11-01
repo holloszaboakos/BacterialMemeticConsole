@@ -2,6 +2,7 @@ package hu.raven.puppet.logic.step.genetransfer
 
 import hu.raven.puppet.logic.operator.genetransferoperator.GeneTransferOperator
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
+import hu.raven.puppet.utility.extention.FloatArrayExtensions.vectorLength
 
 class GeneTransferByTournament(
     override val injectionCount: Int,
@@ -12,7 +13,7 @@ class GeneTransferByTournament(
             return
         }
 
-        val populationRandomizer = (1 until population.activeCount)
+        val populationRandomizer = (1 ..<population.activeCount)
             .shuffled()
 
         val populationInRandomPairs = List(population.activeCount - 1) {
@@ -25,10 +26,10 @@ class GeneTransferByTournament(
             populationInRandomPairs.removeLast()
         }
 
-        (0 until injectionCount)
+        (0 ..<injectionCount)
             .forEach { injectionCount ->
                 val specimen = populationInRandomPairs[injectionCount % populationInRandomPairs.size]
-                    .sortedBy { it.costOrException() }
+                    .sortedBy { it.costOrException().vectorLength() }
 
                 synchronized(populationInRandomPairs[injectionCount % populationInRandomPairs.size][0]) {
                     synchronized(populationInRandomPairs[injectionCount % populationInRandomPairs.size][1]) {

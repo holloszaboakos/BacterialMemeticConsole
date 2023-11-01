@@ -30,7 +30,7 @@ data object GeneticEdgeRecombinationCrossOver : CrossOverOperator {
                 table[neighbour].remove(childPermutation[0])
             }
 
-        for (geneIndex in 1 until childPermutation.size) {
+        for (geneIndex in 1 ..<childPermutation.size) {
             val previousGene = childPermutation[geneIndex - 1]
             val neighborsOfPrevious = table[previousGene]
 

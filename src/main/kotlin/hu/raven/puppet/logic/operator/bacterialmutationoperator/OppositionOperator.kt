@@ -3,7 +3,7 @@ package hu.raven.puppet.logic.operator.bacterialmutationoperator
 import hu.raven.puppet.logic.operator.selectsegments.ContinuousSegment
 import hu.raven.puppet.model.solution.OnePartRepresentation
 
-data object OppositionOperator : BacterialMutationOperator() {
+data object OppositionOperator : BacterialMutationOperator {
     override fun invoke(
         clone: OnePartRepresentation,
         selectedSegments: Array<ContinuousSegment>

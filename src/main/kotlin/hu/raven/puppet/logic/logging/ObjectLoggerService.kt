@@ -6,12 +6,12 @@ class ObjectLoggerService<T : Any>(override val outputPath: Path) : AlgorithmLog
 
     override fun initFile() = outputPath.toFile().run {
         if (!exists()) {
-            createNewFile()
+            //TODO: createNewFile()
         }
     }
 
     override fun log(data: T) {
         println(data)
-        outputPath.toFile().appendText("$data\n")
+        //TODO: outputPath.toFile().appendText("$data\n")
     }
 }

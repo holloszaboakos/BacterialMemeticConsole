@@ -2,6 +2,7 @@ package hu.raven.puppet.logic.operator.boostoperator
 
 import hu.raven.puppet.logic.operator.calculatecost.CalculateCost
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
+import hu.raven.puppet.utility.extention.FloatArrayExtensions.notDominatedBy
 
 class Opt2StepWithPerSpecimenProgressMemoryAndRandomOrder(
     override val calculateCostOf: CalculateCost
@@ -15,7 +16,7 @@ class Opt2StepWithPerSpecimenProgressMemoryAndRandomOrder(
             lastPositionPerSpecimen[specimen.id] = Pair(0, 1)
         }
         if (shuffler.isEmpty()) {
-            shuffler = (0 until specimen.permutation.size)
+            shuffler = (0 ..<specimen.permutation.size)
                 .shuffled()
                 .toIntArray()
         }
@@ -25,17 +26,17 @@ class Opt2StepWithPerSpecimenProgressMemoryAndRandomOrder(
 
         var lastPosition = lastPositionPerSpecimen[specimen.id]!!
 
-        outer@ for (firstIndexIndex in lastPosition.first until specimen.permutation.size - 1) {
+        outer@ for (firstIndexIndex in lastPosition.first ..<specimen.permutation.size - 1) {
             val firstIndex = shuffler[firstIndexIndex]
             val secondIndexStart =
                 if (firstIndexIndex == lastPosition.first) lastPosition.second
                 else firstIndexIndex + 1
-            for (secondIndexIndex in secondIndexStart until specimen.permutation.size) {
+            for (secondIndexIndex in secondIndexStart ..<specimen.permutation.size) {
                 val secondIndex = shuffler[secondIndexIndex]
                 specimen.permutation.swapValues(firstIndex, secondIndex)
                 specimen.cost = calculateCostOf(specimen)
 
-                if (specimen.costOrException() >= bestCost!!) {
+                if (specimen.costOrException() notDominatedBy bestCost!!) {
                     specimen.permutation.swapValues(firstIndex, secondIndex)
                     specimen.cost = bestCost
                     continue

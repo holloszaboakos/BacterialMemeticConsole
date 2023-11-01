@@ -10,7 +10,7 @@ import kotlin.random.Random
 
 class EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation(
     val task: Task
-) : BacterialMutationOperator() {
+) : BacterialMutationOperator {
     override fun invoke(
         clone: OnePartRepresentation,
         selectedSegments: Array<ContinuousSegment>
@@ -37,9 +37,9 @@ class EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation(
             rawWeightsOfEdgesToNext
         )
 
-        val availabilityMatrix = Array(unitedRawWeightMatrix.size) {
-            BooleanArray(unitedRawWeightMatrix.size) {
-                true
+        val availabilityMatrix = Array(unitedRawWeightMatrix.size) { columnIndex ->
+            BooleanArray(unitedRawWeightMatrix.size) { index ->
+                columnIndex != index
             }
         }
 
@@ -54,6 +54,7 @@ class EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation(
         repeat(segmentsToMove.size) {
             try {
                 val selectedEdge = selectEdgeBasedOnWeights(finalWeightMatrix)
+                    ?: selectRandomFromAvailable(availabilityMatrix)
 
                 sequentialRepresentationOfSequence[selectedEdge.first] = selectedEdge.second
 
@@ -112,6 +113,19 @@ class EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation(
                 clone.permutation[index] = value
             }
     }
+
+    private fun selectRandomFromAvailable(availabilityMatrix: Array<BooleanArray>): Pair<Int, Int> =
+        availabilityMatrix
+            .mapIndexed { columnIndex, column ->
+                column
+                    .withIndex()
+                    .filter { it.value }
+                    .map { (index, _) ->
+                        Pair(columnIndex, index)
+                    }
+            }
+            .flatten()
+            .random()
 
     private fun removeWeightOfExclusionaryEdges(
         finalWeightMatrix: Array<FloatArray>,
@@ -181,11 +195,15 @@ class EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation(
 
     private fun selectEdgeBasedOnWeights(
         finalWeightMatrix: Array<LongArray>
-    ): Pair<Int, Int> {
+    ): Pair<Int, Int>? {
         val sumOfWeights = finalWeightMatrix.sumOf { it.sum() }
 
         if (sumOfWeights == 0L) {
-            throw Exception("No edge selected! Sum is Zero!")
+            return null
+        }
+
+        if (sumOfWeights < 0L) {
+            throw Exception("Long overflow!")
         }
 
         val randomPoint = 1 + Random.nextLong(sumOfWeights)
@@ -234,7 +252,9 @@ class EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation(
                     LongArray(size) { 0L }
                 }
 
-        if (minNotZero == Float.POSITIVE_INFINITY) {
+        val max = maxOf { it.max() }
+
+        if (minNotZero == Float.POSITIVE_INFINITY || max == Float.POSITIVE_INFINITY) {
             return Array(size) { columnIndex ->
                 LongArray(size) { rowIndex ->
                     if (get(columnIndex)[rowIndex] == Float.POSITIVE_INFINITY) 1 else 0
@@ -245,11 +265,12 @@ class EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation(
 
         return Array(size) { columnIndex ->
             LongArray(size) { rowIndex ->
-                get(columnIndex)[rowIndex]
+                this[columnIndex][rowIndex]
                     .times(1024)
                     .div(minNotZero)
                     .times(1024)
                     .toLong()
+
             }
         }
     }

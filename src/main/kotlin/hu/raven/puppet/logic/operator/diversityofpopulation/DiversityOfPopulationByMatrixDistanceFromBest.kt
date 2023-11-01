@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlin.math.abs
 
-data object DiversityOfPopulationByMatrixDistanceFromBest : DiversityOfPopulation() {
+data object DiversityOfPopulationByMatrixDistanceFromBest : DiversityOfPopulation {
 
     override fun invoke(algorithmState: EvolutionaryAlgorithmState): Double = runBlocking {
         val best = algorithmState.copyOfBest!!

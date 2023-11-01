@@ -13,7 +13,7 @@ data object AlternatingPositionCrossOver : CrossOverOperator {
         childPermutation.clear()
 
         var counter = 0
-        (0 until childPermutation.size).forEach { geneIndex ->
+        (0 ..<childPermutation.size).forEach { geneIndex ->
             parentPermutationsList.forEach { parent ->
                 if (!childPermutation.contains(parent[geneIndex])) {
                     childPermutation[counter] = parent[geneIndex]

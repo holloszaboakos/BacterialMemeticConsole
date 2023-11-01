@@ -19,7 +19,7 @@ class SelectSingleValuesContinuously(
                 cloneSegmentLength
             )
 
-        val randomRange = segmentPosition until segmentPosition + cloneSegmentLength
+        val randomRange = segmentPosition ..<segmentPosition + cloneSegmentLength
         return buildList {
             if (randomRange.isEmpty()) {
                 add(
@@ -34,7 +34,7 @@ class SelectSingleValuesContinuously(
             }
 
             if (randomRange.first != 0) {
-                val startRange = 0 until randomRange.first
+                val startRange = 0 ..<randomRange.first
                 add(
                     ContinuousSegment(
                         index = size,
@@ -57,7 +57,7 @@ class SelectSingleValuesContinuously(
                 .let(::addAll)
 
             if (randomRange.last != specimen.indices.last) {
-                val endRange = randomRange.last + 1 until specimen.indices.last
+                val endRange = randomRange.last + 1 ..<specimen.size
                 add(
                     ContinuousSegment(
                         index = size,

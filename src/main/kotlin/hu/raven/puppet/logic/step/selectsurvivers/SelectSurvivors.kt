@@ -10,11 +10,11 @@ class SelectSurvivors : EvolutionaryAlgorithmStep {
         sortActiveBy { it.costOrException() }
         deactivateAll()
         inactivesAsSequence()
-            .slice(0 until activeCount / 4)
+            .slice(0 ..<activeCount / 4)
             .forEach { activate(it.id) }
         inactivesAsSequence()
             .shuffled()
-            .slice(0 until activeCount / 3)
+            .slice(0 ..<activeCount / 3)
             .forEach { activate(it.id) }
     }
 }

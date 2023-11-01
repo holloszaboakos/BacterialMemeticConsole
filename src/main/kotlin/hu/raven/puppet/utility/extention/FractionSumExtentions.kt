@@ -1,6 +1,6 @@
 package hu.raven.puppet.utility.extention
 
-object FloatSumExtensions{
+object FloatSumExtensions {
 
     fun FloatArray.sumClever(): Float = asIterable().sumClever()
 

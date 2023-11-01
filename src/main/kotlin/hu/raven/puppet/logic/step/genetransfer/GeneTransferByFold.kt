@@ -9,7 +9,7 @@ class GeneTransferByFold(
 ) : GeneTransfer() {
 
     override fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
-        (0 until injectionCount)
+        (0 ..<injectionCount)
             .forEach { injectionIndex ->
                 val specimenIndex = injectionIndex % (population.activeCount / 2)
 

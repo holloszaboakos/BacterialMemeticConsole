@@ -2,13 +2,17 @@ package hu.raven.puppet.logic.operator.calculatecost
 
 import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.task.Task
-import hu.raven.puppet.utility.extention.getEdgeBetween
 import hu.raven.puppet.utility.extention.FloatSumExtensions.sumClever
+import hu.raven.puppet.utility.extention.getEdgeBetween
 
 class CalculateCostOfTspSolution(
     override val task: Task
 ) : CalculateCost() {
-    override operator fun invoke(solution: OnePartRepresentation): Float {
+    override operator fun invoke(solution: OnePartRepresentation): FloatArray {
+        if (!solution.permutation.checkFormat()) {
+            throw Exception("Wrong solution format!")
+        }
+
         return arrayOf(
             task.costGraph.edgesFromCenter[solution.permutation[0]].length.value,
             task.costGraph.edgesToCenter[solution.permutation[solution.permutation.indices.last]].length.value,
@@ -24,5 +28,6 @@ class CalculateCostOfTspSolution(
                 .toList()
                 .toTypedArray()
         ).sumClever()
+            .let { floatArrayOf(it) }
     }
 }

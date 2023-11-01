@@ -54,13 +54,13 @@ class PoolWithSmartActivation<T : HasId<Int>>(
     fun isAllActive() = lock.write { activeCount == pool.size }
 
     fun activesAsSequence() = lock.read {
-        (0 until activeCount)
+        (0 ..<activeCount)
             .asSequence()
             .map { pool[it] }
     }
 
     fun inactivesAsSequence() = lock.read {
-        (activeCount until pool.size)
+        (activeCount ..<pool.size)
             .asSequence()
             .map { pool[it] }
     }
@@ -79,7 +79,7 @@ class PoolWithSmartActivation<T : HasId<Int>>(
     }
 
     operator fun get(index: Int): T = lock.read {
-        if (index !in 0 until activeCount)
+        if (index !in 0 ..<activeCount)
             throw IndexOutOfBoundsException("No active pool item on specified position!")
         return pool[index]
     }
