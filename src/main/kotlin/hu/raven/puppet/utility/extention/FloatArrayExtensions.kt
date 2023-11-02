@@ -10,10 +10,16 @@ object FloatArrayExtensions {
     infix fun FloatArray.matches(right: FloatArray): Boolean =
         indices.all { get(it) == right[it] }
 
-    infix fun FloatArray.dominatedBy(right: FloatArray): Boolean =
+    infix fun FloatArray.subordinatedBy(right: FloatArray): Boolean =
+        right.dominatedBy(this)
+
+    infix fun FloatArray.notSubordinatedBy(right: FloatArray): Boolean =
+        right.notDominatedBy(this)
+
+    private infix fun FloatArray.dominatedBy(right: FloatArray): Boolean =
         indices.all { get(it) <= right[it] } &&
                 indices.any { get(it) < right[it] }
 
-    infix fun FloatArray.notDominatedBy(right: FloatArray): Boolean =
+    private infix fun FloatArray.notDominatedBy(right: FloatArray): Boolean =
         !dominatedBy(right)
 }

@@ -4,7 +4,7 @@ package hu.raven.puppet.logic.operator.genetransferoperator
 import hu.raven.puppet.logic.operator.calculatecost.CalculateCost
 import hu.raven.puppet.logic.operator.crossoveroperator.CrossOverOperator
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCost
-import hu.raven.puppet.utility.extention.FloatArrayExtensions.dominatedBy
+import hu.raven.puppet.utility.extention.FloatArrayExtensions.subordinatedBy
 
 class GeneTransferByCrossOver(
     override val calculateCostOf: CalculateCost,
@@ -28,7 +28,7 @@ class GeneTransferByCrossOver(
 
         child.cost = calculateCostOf(child)
 
-        if (child.costOrException() dominatedBy target.costOrException()) {
+        if (target.costOrException() subordinatedBy child.costOrException()) {
             child.permutation.forEachIndexed { index, value ->
                 target.permutation[index] = value
             }

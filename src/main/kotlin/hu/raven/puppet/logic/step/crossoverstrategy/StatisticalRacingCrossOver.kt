@@ -9,6 +9,8 @@ import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationA
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.model.step.crossoverstrategy.CrossoverOperatorStatistic
 import hu.raven.puppet.model.step.crossoverstrategy.OperatorStatistics
+import hu.raven.puppet.utility.extention.FloatArrayExtensions.subordinatedBy
+import hu.raven.puppet.utility.extention.FloatArrayExtensions.vectorLength
 
 class StatisticalRacingCrossOver(
     override val crossoverOperators: List<CrossOverOperator>,
@@ -86,17 +88,17 @@ class StatisticalRacingCrossOver(
                 /*    AuditWorkstation, ExpeditionArea*/
                 synchronized(oldStatistics) {
                     var newSuccess = oldStatistics.success
-                    if (parents.first.costOrException() > child.costOrException()) {
+                    if (parents.first.costOrException() subordinatedBy child.costOrException()) {
                         newSuccess +=
                             (iteration.toLong() - parents.first.iterationOfCreation).toFloat() /
-                                    child.costOrException() /
+                                    child.costOrException().vectorLength() /
                                     (population.indexOf(parents.first).toLong() + 1).toFloat().let { it * it }
                     }
 
-                    if (parents.second.costOrException() > child.costOrException()) {
+                    if (parents.second.costOrException() subordinatedBy child.costOrException()) {
                         newSuccess +=
                             (iteration.toLong() - parents.second.iterationOfCreation).toFloat() /
-                                    child.costOrException() /
+                                    child.costOrException().vectorLength() /
                                     (population.indexOf(parents.second).toLong() + 1).toFloat().let { it * it }
                     }
                     actualStatistics = oldStatistics.copy(success = newSuccess)
@@ -121,7 +123,7 @@ class StatisticalRacingCrossOver(
         if (iteration < 10 * statistics.operatorsWithStatistics.size) {
             operator =
                 statistics.operatorsWithStatistics.keys.toList()[iteration % statistics.operatorsWithStatistics.size]
-            logger.log(operator!!::class.java.simpleName)
+            logger.log(operator?.let { it::class.java.simpleName } ?: "null")
             actualStatistics = statistics.operatorsWithStatistics[operator]
         } else {
             val operatorsWithWeight = statistics.operatorsWithStatistics.entries

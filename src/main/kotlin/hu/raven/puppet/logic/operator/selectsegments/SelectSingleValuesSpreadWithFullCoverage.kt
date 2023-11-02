@@ -14,15 +14,14 @@ class SelectSingleValuesSpreadWithFullCoverage(
         cycleIndex: Int,
         cycleCount: Int
     ): Array<ContinuousSegment> {
-        if (randomPermutation == null) {
-            randomPermutation =
-                IntArray(specimen.size) { it }
-                    .apply { shuffle() }
-        }
+        val localRandomPermutation =
+            randomPermutation ?: IntArray(specimen.size) { it }.apply { shuffle() }
+        randomPermutation = localRandomPermutation
+
         val segmentStart = cycleIndex * cloneSegmentLength
         val segmentEnd = (cycleIndex + 1) * cloneSegmentLength
-        val selectedPositions = randomPermutation!!
-            .slice(segmentStart ..<segmentEnd)
+        val selectedPositions = localRandomPermutation
+            .slice(segmentStart..<segmentEnd)
             .sortedBy { it }
             .toIntArray()
 
@@ -40,7 +39,7 @@ class SelectSingleValuesSpreadWithFullCoverage(
             }
 
             if (selectedPositions.first() != 0) {
-                val startingRange = 0 ..<selectedPositions[0]
+                val startingRange = 0..<selectedPositions[0]
                 add(
                     ContinuousSegment(
                         index = size,
@@ -66,7 +65,7 @@ class SelectSingleValuesSpreadWithFullCoverage(
                     .forEachIndexed { index, position ->
                         val previousPosition = selectedPositions[index - 1]
                         if (previousPosition + 1 != position) {
-                            val connectingSequence = (previousPosition + 1) ..<position
+                            val connectingSequence = (previousPosition + 1)..<position
                             add(
                                 ContinuousSegment(
                                     index = size,

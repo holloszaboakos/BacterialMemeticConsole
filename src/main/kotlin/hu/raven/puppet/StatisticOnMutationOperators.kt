@@ -20,6 +20,7 @@ import hu.raven.puppet.model.task.Task
 import hu.raven.puppet.modules.AlgorithmParameters.*
 import hu.raven.puppet.modules.FilePathVariableNames.*
 import hu.raven.puppet.utility.KoinUtil.get
+import hu.raven.puppet.utility.extention.FloatArrayExtensions.vectorLength
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -223,7 +224,7 @@ private fun runScenario(scenario: Scenario) {
                 }
                 .map { it.await() }
                 .asSequence()
-                .sortedBy { it }
+                .sortedBy { it.vectorLength() }
                 .groupBy { it }
                 .forEach { (value, values) ->
                     output.appendText("value: $value  count: ${values.size}\n")

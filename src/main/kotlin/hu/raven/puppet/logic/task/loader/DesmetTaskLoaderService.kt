@@ -47,7 +47,7 @@ class DesmetTaskLoaderService(
                             edgesFromCenter.map { it.length.value }.min() +
                                     edgesBetween.mapIndexed { index, edge ->
                                         arrayOf(
-                                            edge.minOfOrNull { it.length.value }!!,
+                                            edge.minOfOrNull { it.length.value } ?: Float.MAX_VALUE,
                                             edgesToCenter[index].length.value
                                         ).min()
                                     }.sumClever()
@@ -61,7 +61,9 @@ class DesmetTaskLoaderService(
         var currentSection: DesmetFileSection = HEADER
         val mutableTask = DesmetTaskMutable()
 
-        this.javaClass.getResource(filePath.toString())!!.openStream().reader()
+        (this.javaClass.getResource(filePath.toString()) ?: throw Exception("Failed to open resource"))
+            .openStream()
+            .reader()
             .forEachLine { line ->
                 currentSection = when (currentSection) {
                     HEADER -> onHeader(line, mutableTask)

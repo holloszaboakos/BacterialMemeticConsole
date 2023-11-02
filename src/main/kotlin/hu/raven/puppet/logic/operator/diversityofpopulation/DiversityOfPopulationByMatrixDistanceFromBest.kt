@@ -12,7 +12,7 @@ import kotlin.math.abs
 data object DiversityOfPopulationByMatrixDistanceFromBest : DiversityOfPopulation {
 
     override fun invoke(algorithmState: EvolutionaryAlgorithmState): Double = runBlocking {
-        val best = algorithmState.copyOfBest!!
+        val best = algorithmState.copyOfBest ?: throw Exception("Algorithm didn't determine best solution yet!")
         val matrixOfBest = preceditionMatrixWithDistance(best)
         var diversity = 0.0
 

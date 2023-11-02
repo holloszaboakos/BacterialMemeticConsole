@@ -63,7 +63,7 @@ class AugeratTaskLoaderService(
     private fun loadDataFromFile(filePath: Path): InstanceBean {
         val xmlMapper = XmlMapper()
         return xmlMapper.readValue(
-            this.javaClass.getResource(filePath.toString())!!.openStream(),
+            (this.javaClass.getResource(filePath.toString()) ?: throw Exception("Couldn't open resource!")).openStream(),
             InstanceBean::class.java
         )
     }

@@ -2,48 +2,32 @@ package hu.raven.puppet.logic.operator.boostoperator
 
 import hu.raven.puppet.logic.operator.calculatecost.CalculateCost
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
-import hu.raven.puppet.utility.extention.FloatArrayExtensions.notDominatedBy
 
 
 class Opt2StepWithPerSpecimenProgressMemory(
-    override val calculateCostOf: CalculateCost
+    override val calculateCostOf: CalculateCost,
+    populationSize: Int
 ) : BoostOperator<OnePartRepresentationWithCostAndIterationAndId>() {
 
-    private var lastPositionPerSpecimen = mutableMapOf<Int, Pair<Int, Int>>()
+    private var lastPositionPerSpecimen = Array(populationSize) { Pair(0, 1) }
 
     override fun invoke(specimen: OnePartRepresentationWithCostAndIterationAndId) {
-        if (!lastPositionPerSpecimen.containsKey(specimen.id)) {
-            lastPositionPerSpecimen[specimen.id] = Pair(0, 1)
-        }
-
-        val bestCost = specimen.cost
-        var improved = false
-
-        var lastPosition = lastPositionPerSpecimen[specimen.id]!!
+        val lastPosition = lastPositionPerSpecimen[specimen.id]
 
         outer@ for (firstIndex in lastPosition.first..<specimen.permutation.size - 1) {
-            val secondIndexStart =
-                if (firstIndex == lastPosition.first) lastPosition.second
-                else firstIndex + 1
-            for (secondIndex in secondIndexStart..<specimen.permutation.size) {
-                specimen.permutation.swapValues(firstIndex, secondIndex)
-                specimen.cost = calculateCostOf(specimen)
-
-                if (specimen.costOrException() notDominatedBy bestCost!!) {
-                    specimen.permutation.swapValues(firstIndex, secondIndex)
-                    specimen.cost = bestCost
-                    continue
+            for (secondIndex in lastPosition.second..<specimen.permutation.size) {
+                swapIfBetter(
+                    specimen,
+                    firstIndex,
+                    secondIndex,
+                    calculateCostOf
+                ) {
+                    lastPositionPerSpecimen[specimen.id] = Pair(firstIndex, secondIndex)
+                    return@invoke
                 }
-
-                improved = true
-                lastPosition = Pair(firstIndex, secondIndex)
-                break@outer
             }
         }
 
-        if (!improved) {
-            lastPosition = Pair(0, 1)
-        }
-        lastPositionPerSpecimen[specimen.id] = lastPosition
+        lastPositionPerSpecimen[specimen.id] = Pair(0, 1)
     }
 }

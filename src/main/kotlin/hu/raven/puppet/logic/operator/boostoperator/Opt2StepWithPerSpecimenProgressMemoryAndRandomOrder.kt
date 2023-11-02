@@ -1,56 +1,43 @@
 package hu.raven.puppet.logic.operator.boostoperator
 
 import hu.raven.puppet.logic.operator.calculatecost.CalculateCost
+import hu.raven.puppet.logic.operator.diversityofpopulation.DiversityOfPopulation
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
-import hu.raven.puppet.utility.extention.FloatArrayExtensions.notDominatedBy
 
 class Opt2StepWithPerSpecimenProgressMemoryAndRandomOrder(
-    override val calculateCostOf: CalculateCost
+    override val calculateCostOf: CalculateCost,
+    permutationSize: Int,
+    populationSize: Int,
 ) : BoostOperator<OnePartRepresentationWithCostAndIterationAndId>() {
 
-    private var lastPositionPerSpecimen = mutableMapOf<Int, Pair<Int, Int>>()
-    private var shuffler = intArrayOf()
+    private var lastPositionPerSpecimen = Array(populationSize) { Pair(0, 1) }
+    private var shuffler = (0..<permutationSize)
+        .shuffled()
+        .toIntArray()
 
     override fun invoke(specimen: OnePartRepresentationWithCostAndIterationAndId) {
-        if (!lastPositionPerSpecimen.containsKey(specimen.id)) {
-            lastPositionPerSpecimen[specimen.id] = Pair(0, 1)
-        }
-        if (shuffler.isEmpty()) {
-            shuffler = (0 ..<specimen.permutation.size)
-                .shuffled()
-                .toIntArray()
-        }
+        val lastPosition = lastPositionPerSpecimen[specimen.id]
 
-        val bestCost = specimen.cost
-        var improved = false
-
-        var lastPosition = lastPositionPerSpecimen[specimen.id]!!
-
-        outer@ for (firstIndexIndex in lastPosition.first ..<specimen.permutation.size - 1) {
+        outer@ for (firstIndexIndex in lastPosition.first..<specimen.permutation.size - 1) {
             val firstIndex = shuffler[firstIndexIndex]
-            val secondIndexStart =
-                if (firstIndexIndex == lastPosition.first) lastPosition.second
-                else firstIndexIndex + 1
-            for (secondIndexIndex in secondIndexStart ..<specimen.permutation.size) {
+            for (secondIndexIndex in lastPosition.second..<specimen.permutation.size) {
                 val secondIndex = shuffler[secondIndexIndex]
-                specimen.permutation.swapValues(firstIndex, secondIndex)
-                specimen.cost = calculateCostOf(specimen)
 
-                if (specimen.costOrException() notDominatedBy bestCost!!) {
-                    specimen.permutation.swapValues(firstIndex, secondIndex)
-                    specimen.cost = bestCost
-                    continue
+                swapIfBetter(
+                    specimen,
+                    firstIndex,
+                    secondIndex,
+                    calculateCostOf
+                ) {
+                    lastPositionPerSpecimen[specimen.id] = Pair(firstIndexIndex, secondIndexIndex)
+                    return@invoke
                 }
-
-                improved = true
-                lastPosition = Pair(firstIndexIndex, secondIndexIndex)
-                break@outer
             }
         }
 
-        if (!improved) {
-            lastPosition = Pair(0, 1)
-        }
-        lastPositionPerSpecimen[specimen.id] = lastPosition
+
+        shuffler.shuffle()
+        lastPositionPerSpecimen[specimen.id] = Pair(0, 1)
+
     }
 }

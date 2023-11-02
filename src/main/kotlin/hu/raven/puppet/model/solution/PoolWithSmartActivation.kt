@@ -88,5 +88,10 @@ class PoolWithSmartActivation<T : HasId<Int>>(
         indexById[item.id]
     }
 
+    fun isActive(id: Int): Boolean = lock.read {
+        val index = indexById[id]
+        return@read index < activeCount
+    }
+
 
 }

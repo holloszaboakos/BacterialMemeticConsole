@@ -21,6 +21,7 @@ import hu.raven.puppet.logic.step.mutatechildren.MutateChildren
 import hu.raven.puppet.logic.step.mutatechildren.MutateChildrenByReverse
 import hu.raven.puppet.logic.step.orderpopulationbycost.OrderPopulationByCost
 import hu.raven.puppet.logic.step.selectsurvivers.SelectSurvivors
+import hu.raven.puppet.logic.step.selectsurvivers.SelectSurvivorsSingleObjectiveHalfElitist
 import hu.raven.puppet.logic.task.loader.TaskLoaderService
 import hu.raven.puppet.logic.task.loader.TspTaskLoaderService
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCost
@@ -87,7 +88,7 @@ fun main() {
                 )
             }
             single {
-                SelectSurvivors()
+                SelectSurvivorsSingleObjectiveHalfElitist
             }
             single<CrossOverStrategy> {
                 HalfElitistCrossover(

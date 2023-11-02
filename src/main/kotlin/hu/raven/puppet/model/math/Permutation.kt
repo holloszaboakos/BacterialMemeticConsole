@@ -2,7 +2,7 @@ package hu.raven.puppet.model.math
 
 import hu.raven.puppet.utility.extention.toPermutation
 
-//TODO test!!!
+//TODO TEST
 class Permutation(val size: Int) {
 
     val indices: IntRange = 0 ..<size

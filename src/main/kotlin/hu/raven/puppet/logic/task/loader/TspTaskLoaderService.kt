@@ -41,10 +41,10 @@ class TspTaskLoaderService(
 
     private fun logUnderEstimate(task: Task) {
         task.costGraph.apply {
-            val minimalCostFromCenter = edgesFromCenter.minOfOrNull { it.length.value }!!
+            val minimalCostFromCenter = edgesFromCenter.minOfOrNull { it.length.value } ?: 0f
             val minimalCostFromTargets = edgesBetween.mapIndexed { index, edgesFrom ->
                 arrayOf(
-                    edgesFrom.minOfOrNull { it.length.value }!!,
+                    edgesFrom.minOfOrNull { it.length.value } ?: Float.MAX_VALUE,
                     edgesToCenter[index].length.value
                 ).min()
             }.sumClever()
