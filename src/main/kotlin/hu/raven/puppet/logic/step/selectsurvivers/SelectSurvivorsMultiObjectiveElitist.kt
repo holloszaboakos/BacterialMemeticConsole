@@ -2,7 +2,7 @@ package hu.raven.puppet.logic.step.selectsurvivers
 
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
-import hu.raven.puppet.utility.extention.FloatArrayExtensions.subordinatedBy
+import hu.raven.puppet.utility.extention.FloatArrayExtensions.compareTo
 import hu.raven.puppet.utility.extention.FloatArrayExtensions.vectorLength
 
 data object SelectSurvivorsMultiObjectiveElitist : SelectSurvivors {
@@ -18,7 +18,7 @@ data object SelectSurvivorsMultiObjectiveElitist : SelectSurvivors {
                     .filter { filtered ->
                         remaining
                             .none {
-                                filtered.costOrException() subordinatedBy it.costOrException()
+                                filtered.costOrException() > it.costOrException()
                             }
                     }
                 add(frontier)

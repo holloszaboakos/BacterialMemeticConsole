@@ -4,7 +4,7 @@ import hu.raven.puppet.logic.operator.boostoperator.BoostOperator
 
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
-import hu.raven.puppet.utility.extention.FloatArrayExtensions.subordinatedBy
+import hu.raven.puppet.utility.extention.FloatArrayExtensions.compareTo
 
 
 class BoostOnFirstThatImproved(
@@ -19,7 +19,7 @@ class BoostOnFirstThatImproved(
 
         population.activesAsSequence()
             .firstOrNull {specimen->
-                costPerPermutation[specimen.id]?.let{it subordinatedBy specimen.costOrException()} == true
+                costPerPermutation[specimen.id]?.let{it > specimen.costOrException()} == true
             }
             ?.let {
                 costPerPermutation[it.id] = it.cost

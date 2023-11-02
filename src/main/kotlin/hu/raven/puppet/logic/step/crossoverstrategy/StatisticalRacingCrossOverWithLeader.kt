@@ -7,7 +7,7 @@ import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationA
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.model.step.crossoverstrategy.CrossoverOperatorStatistic
 import hu.raven.puppet.model.step.crossoverstrategy.OperatorStatistics
-import hu.raven.puppet.utility.extention.FloatArrayExtensions.subordinatedBy
+import hu.raven.puppet.utility.extention.FloatArrayExtensions.compareTo
 import hu.raven.puppet.utility.extention.FloatArrayExtensions.vectorLength
 
 class StatisticalRacingCrossOverWithLeader(
@@ -120,7 +120,7 @@ class StatisticalRacingCrossOverWithLeader(
         state: EvolutionaryAlgorithmState,
     ): Unit = state.run {
         var newSuccess = oldStatistics.success
-        if (parents.first.costOrException() subordinatedBy child.costOrException()) {
+        if (parents.first.costOrException() > child.costOrException()) {
             newSuccess +=
                 (iteration.toLong() - parents.first.iterationOfCreation).toFloat() /
                         child.costOrException().vectorLength() /
@@ -128,7 +128,7 @@ class StatisticalRacingCrossOverWithLeader(
                             .let { it * it }
         }
 
-        if (parents.second.costOrException() subordinatedBy child.costOrException()) {
+        if (parents.second.costOrException() > child.costOrException()) {
             newSuccess +=
                 (iteration.toLong() - parents.second.iterationOfCreation).toFloat() /
                         child.costOrException().vectorLength() /
