@@ -7,27 +7,23 @@ import kotlin.random.Random
 data object MutateChildrenBySwap : MutateChildren {
 
     override fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
-        if (task.costGraph.objectives.size > 1)
-            population.activesAsSequence()
-                .filter { it.iterationOfCreation == iteration }
-                .shuffled()
-                .slice(0 ..<population.activeCount / 4)
-                .forEach { child ->
-                    val firstCutIndex = Random.nextInt(task.costGraph.objectives.size)
-                    val secondCutIndex = Random.nextInt(task.costGraph.objectives.size)
-                        .let {
-                            if (it == firstCutIndex)
-                                (it + 1) % task.costGraph.objectives.size
-                            else
-                                it
-                        }
+        if (task.costGraph.objectives.size <= 1)
+            return@run
 
-                    val tmp = child.permutation[firstCutIndex]
-                    child.permutation[firstCutIndex] = child.permutation[secondCutIndex]
-                    child.permutation[secondCutIndex] = tmp
-                    if (!child.permutation.checkFormat())
-                        throw Error("Invalid specimen!")
-                }
+        population.activesAsSequence()
+            .filter { it.iterationOfCreation == iteration }
+            .shuffled()
+            .slice(0..<population.activeCount / 4)
+            .forEach { child ->
+                val firstCutIndex = Random.nextInt(task.costGraph.objectives.size)
+                val secondCutIndex = Random.nextInt(task.costGraph.objectives.size - 1)
+                    .let { if (it == firstCutIndex) it + 1 else it }
+
+                child.permutation.swapValues(firstCutIndex, secondCutIndex)
+
+                if (!child.permutation.checkFormat())
+                    throw Error("Invalid specimen!")
+            }
 
     }
 }

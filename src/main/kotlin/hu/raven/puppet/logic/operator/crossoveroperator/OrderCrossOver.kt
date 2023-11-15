@@ -1,11 +1,13 @@
 package hu.raven.puppet.logic.operator.crossoveroperator
 
 import hu.raven.puppet.model.math.Permutation
+import hu.raven.puppet.utility.extention.get
 import kotlin.random.Random
 
 //select sequence from primary
 //copy sequence to secondary
 //fill the rest based on secondary
+//problem: if selected sequence is too long the child is almost identical to primary parent on the other extreme it is almost identical to the secondary parent
 data object OrderCrossOver : CrossOverOperator {
 
     override fun invoke(
@@ -23,12 +25,10 @@ data object OrderCrossOver : CrossOverOperator {
 
         //clean child
         //copy parent middle to child
-        childPermutation.indices.forEach { index ->
-            if (index in cut[0]..cut[1]) {
-                val selectedValue = parentPermutations.second[index]
-                seconderCopy.deleteValue(selectedValue)
-                childPermutation[index] = selectedValue
-            }
+        (cut[0]..cut[1]).forEach { index ->
+            val selectedValue = parentPermutations.second[index]
+            seconderCopy.deleteValue(selectedValue)
+            childPermutation[index] = selectedValue
         }
 
         val remainingValues = seconderCopy.filter { it != -1 }.toIntArray()

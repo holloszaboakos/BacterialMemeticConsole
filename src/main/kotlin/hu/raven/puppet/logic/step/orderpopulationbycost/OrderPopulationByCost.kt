@@ -8,16 +8,15 @@ import hu.raven.puppet.utility.extention.FloatArrayExtensions.vectorLength
 
 class OrderPopulationByCost(
     val calculateCostOf: CalculateCost
-) : EvolutionaryAlgorithmStep {
+) : EvolutionaryAlgorithmStep<EvolutionaryAlgorithmState> {
 
-    override operator fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
-        population
-            .activesAsSequence()
+    override operator fun invoke(state: EvolutionaryAlgorithmState): Unit = state.population.run {
+        activesAsSequence()
             .filter { it.cost == null }
             .forEach { specimen ->
                 specimen.cost = calculateCostOf(specimen)
             }
 
-        population.sortActiveBy { it.costOrException().vectorLength() }
+        sortActiveBy { it.costOrException().vectorLength() }
     }
 }

@@ -1,10 +1,13 @@
 package hu.raven.puppet.logic.step.selectsurvivers
 
+import hu.raven.puppet.logic.operator.crowdingdistance.CrowdingDistance
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.utility.extention.FloatArrayExtensions.compareTo
 
-class SelectSurvivorsMultiObjectiveElitist : SelectSurvivors {
+class SelectSurvivorsMultiObjectiveElitistWithCrowdingDistance(
+    val crowdingDistance: CrowdingDistance
+) : SelectSurvivors {
     override fun invoke(state: EvolutionaryAlgorithmState): Unit = state.population.run {
         deactivateAll()
 
@@ -27,10 +30,17 @@ class SelectSurvivorsMultiObjectiveElitist : SelectSurvivors {
             .takeWhile { activeCount + it.size <= poolSize / 2 }
             .forEach { it.forEach { specimen -> activate(specimen.id) } }
 
-        frontiers
-            .first { !isActive(it.first().id) }
-            .shuffled()
+        if (activeCount == poolSize / 2) return@run
+
+        val bestInactiveFrontier = frontiers.first { !isActive(it.first().id) }
+        val crowdingDistanceOfBestInactive = bestInactiveFrontier
+            .map { it.costOrException() }
+            .let { crowdingDistance(it) }
+
+        bestInactiveFrontier
+            .withIndex()
+            .sortedByDescending { crowdingDistanceOfBestInactive[it.index] }
             .slice(0..<(poolSize / 2) - activeCount)
-            .forEach { specimen -> activate(specimen.id) }
+            .forEach { specimen -> activate(specimen.value.id) }
     }
 }

@@ -17,8 +17,8 @@ import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationA
 import hu.raven.puppet.model.state.AlgorithmState
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.model.task.Task
-import hu.raven.puppet.modules.AlgorithmParameters.*
-import hu.raven.puppet.modules.FilePathVariableNames.*
+import hu.raven.puppet.configuration.AlgorithmParameters.*
+import hu.raven.puppet.configuration.FilePathVariableNames.*
 import hu.raven.puppet.utility.KoinUtil.get
 import hu.raven.puppet.utility.extention.FloatArrayExtensions.vectorLength
 import kotlinx.coroutines.Dispatchers

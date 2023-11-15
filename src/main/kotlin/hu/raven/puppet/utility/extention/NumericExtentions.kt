@@ -1,14 +1,6 @@
 package hu.raven.puppet.utility.extention
 
 
-fun max(left: Float?, right: Float?) =
-    when {
-        left == null || right == null -> null
-        left > right -> left
-        left < right -> right
-        else -> null
-    }
-
 fun Long.log2(): Int {
     return 63 - java.lang.Long.numberOfLeadingZeros(this)
 }

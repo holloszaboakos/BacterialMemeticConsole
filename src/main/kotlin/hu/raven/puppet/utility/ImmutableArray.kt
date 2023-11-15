@@ -40,4 +40,3 @@ data class ImmutableArray<T>(private val array: Array<T>) {
     override fun toString(): String = array.contentDeepToString()
 }
 
-fun <R> ImmutableArray<ImmutableArray<R>>.flatten() = flatMap { row -> row.asSequence() }

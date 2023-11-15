@@ -9,12 +9,13 @@ import kotlin.random.Random
 data object MutateChildrenByReverse : MutateChildren {
 
     override fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
-        if (task.costGraph.objectives.size > 1)
-            population.activesAsSequence()
-                .filter { it.iterationOfCreation == iteration }
-                .shuffled()
-                .slice(0 ..<(population.activeCount / 4))
-                .forEach { child -> onChild(child, task) }
+        if (task.costGraph.objectives.size <= 1) return@run
+
+        population.activesAsSequence()
+            .filter { it.iterationOfCreation == iteration }
+            .shuffled()
+            .slice(0..<(population.activeCount / 4))
+            .forEach { child -> onChild(child, task) }
     }
 
     private fun onChild(
@@ -23,25 +24,24 @@ data object MutateChildrenByReverse : MutateChildren {
     ) {
 
         val firstCutIndex = Random.nextInt(task.costGraph.objectives.size)
-        val secondCutIndex = Random.nextInt(task.costGraph.objectives.size)
-            .let {
-                if (it == firstCutIndex)
-                    (it + 1) % task.costGraph.objectives.size
-                else
-                    it
-            }
+        val secondCutIndex = Random.nextInt(task.costGraph.objectives.size - 1)
 
-        if (secondCutIndex > firstCutIndex) {
-            val reversed =
-                child.permutation.slice(firstCutIndex..secondCutIndex).toList().reversed()
-            for (geneIndex in firstCutIndex..secondCutIndex)
-                child.permutation[geneIndex] = reversed[geneIndex - firstCutIndex]
-        } else {
-            val reversed =
-                child.permutation.slice(secondCutIndex..firstCutIndex).toList().reversed()
-            for (geneIndex in secondCutIndex..firstCutIndex)
-                child.permutation[geneIndex] = reversed[geneIndex - secondCutIndex]
+        val range = when {
+            secondCutIndex < firstCutIndex -> secondCutIndex..firstCutIndex
+            secondCutIndex > firstCutIndex -> firstCutIndex..secondCutIndex
+            else -> firstCutIndex..(secondCutIndex + 1)
         }
+
+        val reversed = child.permutation
+            .slice(range)
+            .reversed()
+
+        range.forEach { child.permutation.deletePosition(it) }
+
+        for (geneIndex in range) {
+            child.permutation[geneIndex] = reversed[geneIndex - range.first]
+        }
+
         if (!child.permutation.checkFormat())
             throw Error("Invalid specimen!")
     }

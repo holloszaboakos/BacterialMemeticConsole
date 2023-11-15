@@ -3,9 +3,9 @@ package hu.raven.puppet.model.math
 import hu.raven.puppet.utility.extention.toPermutation
 
 //TODO TEST
-class Permutation(val size: Int) {
+data class Permutation(val size: Int) {
 
-    val indices: IntRange = 0 ..<size
+    val indices: IntRange = 0..<size
     private val permutation: IntArray = IntArray(size) { -1 }
     private val inversePermutation: IntArray = IntArray(size) { -1 }
 
@@ -17,7 +17,7 @@ class Permutation(val size: Int) {
     }
 
     companion object {
-        fun random(size: Int) = (0 ..<size).shuffled().toIntArray().toPermutation()
+        fun random(size: Int) = (0..<size).shuffled().toIntArray().toPermutation()
     }
 
     operator fun get(index: Int) = permutation[index]
@@ -61,6 +61,7 @@ class Permutation(val size: Int) {
     }
 
     fun swapValues(firstIndex: Int, secondIndex: Int) {
+        if(firstIndex == secondIndex) return
         val firstValue = permutation[firstIndex]
         val secondValue = permutation[secondIndex]
         deletePosition(firstIndex)
@@ -77,13 +78,21 @@ class Permutation(val size: Int) {
     }
 
     fun before(value: Int): Int {
-        val indexBefore = (inversePermutation[value] - 1 + size) % size
-        return permutation[indexBefore]
+        if(value == size) return permutation[permutation.lastIndex]
+
+        val index = inversePermutation[value]
+        if (index == 0) return size
+
+        return permutation[index - 1]
     }
 
     fun after(value: Int): Int {
-        val indexAfter = (inversePermutation[value] + 1) % size
-        return permutation[indexAfter]
+        if(value == size) return permutation[0]
+
+        val index = inversePermutation[value]
+        if (index == permutation.lastIndex) return size
+
+        return permutation[index + 1]
     }
 
     fun indexOf(value: Int): Int = inversePermutation[value]
@@ -139,4 +148,8 @@ class Permutation(val size: Int) {
 
 
     fun toMutableList() = permutation.toMutableList()
+
+    override fun toString(): String {
+        return "[${permutation.toList()}, ${inversePermutation.toList()}]"
+    }
 }

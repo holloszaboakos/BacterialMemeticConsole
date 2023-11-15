@@ -1,4 +1,4 @@
-package hu.raven.puppet.modules
+package hu.raven.puppet.configuration
 
 enum class FilePathVariableNames {
     INPUT_FOLDER,

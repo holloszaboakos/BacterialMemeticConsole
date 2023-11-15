@@ -18,7 +18,7 @@ class PoolWithSmartActivation<T : HasId<Int>>(
         .toIntArray()
     var activeCount: Int = lock.read { initialPool.size }
         private set
-    val maxSize: Int get() = pool.size
+    val poolSize: Int get() = pool.size
 
     fun activate(): Unit = lock.write {
         if (activeCount == pool.size) return

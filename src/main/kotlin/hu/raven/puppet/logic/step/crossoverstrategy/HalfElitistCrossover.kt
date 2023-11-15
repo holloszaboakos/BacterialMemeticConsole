@@ -8,7 +8,9 @@ class HalfElitistCrossover(
 ) : CrossOverStrategy() {
 
     override operator fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
-        val children = population.inactivesAsSequence().chunked(2).toList()
+        val children = population.inactivesAsSequence()
+            .chunked(2)
+            .toList()
         val parent = population.activesAsSequence()
             .shuffled()
             .chunked(2)
@@ -27,6 +29,7 @@ class HalfElitistCrossover(
                     parentPair[0].permutation
                 ),
                 children[index][1].permutation
+
             )
             children[index][0].let {
                 it.iterationOfCreation = state.iteration

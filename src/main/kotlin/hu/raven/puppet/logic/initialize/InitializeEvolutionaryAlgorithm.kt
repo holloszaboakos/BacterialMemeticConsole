@@ -7,7 +7,7 @@ import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.model.task.Task
 
 
-class InitializeEvolutionaryAlgorithm(
+open class InitializeEvolutionaryAlgorithm(
     val initializePopulation: InitializePopulation,
     val orderPopulationByCost: OrderPopulationByCost
 ) : InitializeAlgorithm<EvolutionaryAlgorithmState> {
@@ -18,6 +18,7 @@ class InitializeEvolutionaryAlgorithm(
             task = task,
             population = PoolWithSmartActivation(population)
         )
+        algorithmState.population.activateAll()
         orderPopulationByCost(algorithmState)
         algorithmState.apply {
             copyOfBest = algorithmState.population.activesAsSequence().first().cloneRepresentationAndCost()
