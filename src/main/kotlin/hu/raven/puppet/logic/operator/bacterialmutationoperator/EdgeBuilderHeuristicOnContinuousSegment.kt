@@ -1,11 +1,11 @@
 package hu.raven.puppet.logic.operator.bacterialmutationoperator
 
+import hu.akos.hollo.szabo.math.FloatSumExtensions.sumClever
+import hu.akos.hollo.szabo.math.calculus.multiplicativeInverse
 import hu.raven.puppet.logic.operator.selectsegments.ContinuousSegment
 import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.task.Task
-import hu.raven.puppet.utility.extention.FloatSumExtensions.sumClever
 import hu.raven.puppet.utility.extention.getEdgeBetween
-import hu.raven.puppet.utility.extention.multiplicativeInverse
 import kotlin.random.Random
 
 class EdgeBuilderHeuristicOnContinuousSegment(

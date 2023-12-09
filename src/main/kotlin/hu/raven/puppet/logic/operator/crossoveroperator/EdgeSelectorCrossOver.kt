@@ -1,7 +1,6 @@
 package hu.raven.puppet.logic.operator.crossoveroperator
 
-import hu.raven.puppet.model.math.Permutation
-import java.util.NoSuchElementException
+import hu.akos.hollo.szabo.math.Permutation
 import kotlin.random.Random
 
 //select random positions from sequence representation of primary parent
@@ -89,7 +88,7 @@ data object EdgeSelectorCrossOver : CrossOverOperator {
             selectedEdges[edge.first] = edge.second
         }
 
-        for (index in 0.. childPermutation.size) {
+        for (index in 0..childPermutation.size) {
             if (selectedEdges[index] != -1) continue
 
             val parallelFirst = segments.firstOrNull { it.second == index }?.first
@@ -98,11 +97,11 @@ data object EdgeSelectorCrossOver : CrossOverOperator {
             val availableValues = (0..childPermutation.size)
                 .filter { it != index && it != parallelFirst && !selectedEdges.contains(it) }
 
-            if(availableValues.isEmpty()) break
+            if (availableValues.isEmpty()) break
 
-            val edge = try{
+            val edge = try {
                 Pair(index, availableValues.random())
-            }catch (e: NoSuchElementException){
+            } catch (e: NoSuchElementException) {
                 throw e
             }
 

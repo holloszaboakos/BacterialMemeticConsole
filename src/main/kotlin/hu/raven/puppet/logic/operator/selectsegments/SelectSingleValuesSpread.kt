@@ -1,7 +1,7 @@
 package hu.raven.puppet.logic.operator.selectsegments
 
-import hu.raven.puppet.model.math.Permutation
-import hu.raven.puppet.utility.extention.selectRandomPositions
+import hu.akos.hollo.szabo.collections.selectRandomPositions
+import hu.akos.hollo.szabo.math.Permutation
 
 class SelectSingleValuesSpread(
     override val cloneSegmentLength: Int,
@@ -30,7 +30,7 @@ class SelectSingleValuesSpread(
             }
 
             if (selectedPositions.first() != 0) {
-                val startingRange = 0 ..<selectedPositions[0]
+                val startingRange = 0..<selectedPositions[0]
                 add(
                     ContinuousSegment(
                         index = size,
@@ -56,7 +56,7 @@ class SelectSingleValuesSpread(
                     .forEachIndexed { index, position ->
                         val previousPosition = selectedPositions[index - 1]
                         if (previousPosition + 1 != position) {
-                            val connectingSequence = (previousPosition + 1) ..<position
+                            val connectingSequence = (previousPosition + 1)..<position
                             add(
                                 ContinuousSegment(
                                     index = size,

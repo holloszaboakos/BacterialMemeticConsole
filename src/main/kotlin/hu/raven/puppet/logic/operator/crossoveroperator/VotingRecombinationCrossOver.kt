@@ -1,7 +1,7 @@
 package hu.raven.puppet.logic.operator.crossoveroperator
 
-import hu.raven.puppet.model.math.Permutation
-import hu.raven.puppet.model.math.RandomPermutationValueSelector
+import hu.akos.hollo.szabo.math.Permutation
+import hu.akos.hollo.szabo.math.random.CardDeckRandomizer
 
 //copy matching values of parents
 //fill the rest randomly
@@ -13,7 +13,7 @@ data object VotingRecombinationCrossOver : CrossOverOperator {
     ) {
         childPermutation.clear()
 
-        val randomSelector = RandomPermutationValueSelector(childPermutation.size)
+        val randomSelector = CardDeckRandomizer(childPermutation.size)
 
         parentPermutations.first.forEachIndexed { index, value ->
             if (value == parentPermutations.second[index]) {
@@ -23,7 +23,7 @@ data object VotingRecombinationCrossOver : CrossOverOperator {
 
         childPermutation.forEachEmptyIndex { index ->
             childPermutation[index] =
-                randomSelector.getNextExcludingIf { randomValue -> childPermutation.contains(randomValue) }
+                randomSelector.drawWhile { randomValue -> childPermutation.contains(randomValue) }
                     ?: throw Exception("No value can be selected")
         }
     }

@@ -1,6 +1,6 @@
 package hu.raven.puppet
 
-import hu.raven.puppet.utility.extention.FloatSumExtensions.sumClever
+import hu.akos.hollo.szabo.math.FloatSumExtensions.sumClever
 import kotlin.random.Random
 
 fun main() {

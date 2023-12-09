@@ -1,9 +1,9 @@
 package hu.raven.puppet.logic.step.mutatechildren
 
-import hu.raven.puppet.model.math.Permutation
+import hu.akos.hollo.szabo.collections.slice
+import hu.akos.hollo.szabo.math.Permutation
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
-import hu.raven.puppet.utility.extention.slice
 
 data object MutateChildrenByReset : MutateChildren {
 
@@ -17,7 +17,7 @@ data object MutateChildrenByReset : MutateChildren {
         population.activesAsSequence()
             .filter { it.iterationOfCreation == iteration }
             .shuffled()
-            .slice(0 ..<(population.activeCount / 16))
+            .slice(0..<(population.activeCount / 16))
             .forEachIndexed { instanceIndex, child ->
                 onChild(instanceIndex, child, basePermutation)
             }
@@ -41,7 +41,7 @@ data object MutateChildrenByReset : MutateChildren {
 
         val newPermutation = Permutation(child.permutation.indices.count())
         var baseIndex = step
-        for (newIndex in 0 ..<child.permutation.indices.count()) {
+        for (newIndex in 0..<child.permutation.indices.count()) {
             if (newPermutation.contains(basePermutation[baseIndex]))
                 baseIndex = (baseIndex + 1) % child.permutation.indices.count()
             newPermutation[newIndex] = basePermutation[baseIndex]

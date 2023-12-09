@@ -1,6 +1,7 @@
 package hu.raven.puppet.logic.operator.crossoveroperator
 
-import hu.raven.puppet.model.math.Permutation
+import hu.akos.hollo.szabo.math.Permutation
+
 
 //like positions of parents are merged (primary[0], secondary[0], primary[1] ... )
 //always take the first element missing from child
@@ -13,7 +14,7 @@ data object AlternatingPositionCrossOver : CrossOverOperator {
         childPermutation.clear()
 
         var counter = 0
-        (0 ..<childPermutation.size).forEach { geneIndex ->
+        (0..<childPermutation.size).forEach { geneIndex ->
             parentPermutationsList.forEach { parent ->
                 if (!childPermutation.contains(parent[geneIndex])) {
                     childPermutation[counter] = parent[geneIndex]

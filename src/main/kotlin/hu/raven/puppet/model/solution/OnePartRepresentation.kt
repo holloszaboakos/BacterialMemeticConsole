@@ -1,6 +1,7 @@
 package hu.raven.puppet.model.solution
 
-import hu.raven.puppet.model.math.Permutation
+import hu.akos.hollo.szabo.math.Permutation
+
 
 interface OnePartRepresentation {
     val objectiveCount: Int

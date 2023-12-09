@@ -9,10 +9,10 @@ class GeneTransferByQueenBee(
 ) : GeneTransfer() {
 
     override fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
-        val populationRandomizer = (1 ..<population.activeCount)
+        val populationRandomizer = (1..<population.activeCount)
             .shuffled()
             .toIntArray()
-        (0 ..<injectionCount)
+        (0..<injectionCount)
             .map { injectionIndex ->
                 val acceptorIndex = populationRandomizer[injectionIndex % populationRandomizer.size]
                 val acceptor = population[acceptorIndex]

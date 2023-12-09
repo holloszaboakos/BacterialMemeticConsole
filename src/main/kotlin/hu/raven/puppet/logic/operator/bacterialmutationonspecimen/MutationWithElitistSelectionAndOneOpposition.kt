@@ -51,7 +51,7 @@ class MutationWithElitistSelectionAndOneOpposition(
         oppositionOperator.invoke(clones[1], selectedSegment)
 
         clones
-            .slice(2 ..<clones.size)
+            .slice(2..<clones.size)
             .forEach { clone ->
                 mutationOperator(clone, selectedSegment)
             }

@@ -1,10 +1,11 @@
 package hu.raven.puppet.model.task
 
-import hu.raven.puppet.utility.ImmutableArray
-import hu.raven.puppet.utility.ImmutableArray.Companion.immutableArrayOf
+import hu.akos.hollo.szabo.collections.ImmutableArray
+import hu.akos.hollo.szabo.collections.ImmutableArray.Companion.immutableArrayOf
+
 
 data class Task(
-    val transportUnits: ImmutableArray<out TransportUnit> = immutableArrayOf(),
+    val transportUnits: ImmutableArray<TransportUnit> = immutableArrayOf(),
     val costGraph: CostGraph = CostGraph()
 ) {
     override fun equals(other: Any?): Boolean {

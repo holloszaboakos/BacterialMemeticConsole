@@ -1,7 +1,8 @@
 package hu.raven.puppet.model.task
 
-import hu.raven.puppet.utility.ImmutableArray
-import hu.raven.puppet.utility.ImmutableArray.Companion.immutableArrayOf
+import hu.akos.hollo.szabo.collections.ImmutableArray
+import hu.akos.hollo.szabo.collections.ImmutableArray.Companion.immutableArrayOf
+
 
 data class CostGraph(
     val center: Gps = Gps(),

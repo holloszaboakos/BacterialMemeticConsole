@@ -45,7 +45,7 @@ class MutationWithElitistSelection(
     ): MutableList<OnePartRepresentationWithCost> {
         val clones = MutableList(cloneCount + 1) { specimen.cloneRepresentationAndCost() }
         clones
-            .slice(1 ..<clones.size)
+            .slice(1..<clones.size)
             .forEach { clone ->
                 mutationOperator(
                     clone,

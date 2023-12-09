@@ -1,6 +1,6 @@
 package hu.raven.puppet.logic.operator.crossoveroperator
 
-import hu.raven.puppet.model.math.Permutation
+import hu.akos.hollo.szabo.math.Permutation
 import kotlin.random.Random.Default.nextInt
 
 //select size between 1/4 and 1/2

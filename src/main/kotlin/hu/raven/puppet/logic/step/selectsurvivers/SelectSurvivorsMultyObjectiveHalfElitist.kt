@@ -1,9 +1,8 @@
 package hu.raven.puppet.logic.step.selectsurvivers
 
+import hu.akos.hollo.szabo.collections.slice
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
-import hu.raven.puppet.utility.extention.FloatArrayExtensions.compareTo
-import hu.raven.puppet.utility.extention.slice
 
 data object SelectSurvivorsMultyObjectiveHalfElitist : SelectSurvivors {
     override operator fun invoke(state: EvolutionaryAlgorithmState): Unit = state.population.run {
@@ -17,7 +16,7 @@ data object SelectSurvivorsMultyObjectiveHalfElitist : SelectSurvivors {
                     .filter { filtered ->
                         remaining
                             .none {
-                                filtered.costOrException() > it.costOrException()
+                                filtered.costOrException() dominatesSmaller it.costOrException()
                             }
                     }
                 add(frontier)
@@ -33,11 +32,11 @@ data object SelectSurvivorsMultyObjectiveHalfElitist : SelectSurvivors {
             .first { !isActive(it.first().id) }
             .shuffled()
             .slice(0..<(poolSize / 4) - activeCount)
-            .forEach { activate(it.id)  }
+            .forEach { activate(it.id) }
 
         inactivesAsSequence()
             .shuffled()
             .slice(0..<poolSize / 4)
-            .forEach { activate(it.id)  }
+            .forEach { activate(it.id) }
     }
 }

@@ -1,6 +1,7 @@
 package hu.raven.puppet.model.task.desmet
 
-import hu.raven.puppet.utility.ImmutableArray
+import hu.akos.hollo.szabo.collections.ImmutableArray
+
 
 data class DesmetTask(
     val name: String,

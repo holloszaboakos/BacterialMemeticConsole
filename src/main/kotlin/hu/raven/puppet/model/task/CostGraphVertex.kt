@@ -1,8 +1,8 @@
 package hu.raven.puppet.model.task
 
-import hu.raven.puppet.model.physics.CubicMeter
-import hu.raven.puppet.model.physics.Gram
-import hu.raven.puppet.model.physics.Second
+import hu.akos.hollo.szabo.physics.CubicMeter
+import hu.akos.hollo.szabo.physics.Gram
+import hu.akos.hollo.szabo.physics.Second
 
 data class CostGraphVertex(
     val location: Gps = Gps(),

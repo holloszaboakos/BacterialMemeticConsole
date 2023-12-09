@@ -1,10 +1,10 @@
 package hu.raven.puppet.logic.task.generator
 
-import hu.raven.puppet.model.physics.Meter
+import hu.akos.hollo.szabo.collections.asImmutable
+import hu.akos.hollo.szabo.physics.Meter
 import hu.raven.puppet.model.task.CostGraph
 import hu.raven.puppet.model.task.CostGraphEdge
 import hu.raven.puppet.model.task.Task
-import hu.raven.puppet.utility.ImmutableArray.Companion.asImmutable
 import kotlin.random.Random
 import kotlin.random.nextInt
 
@@ -69,10 +69,10 @@ class TspGeneratorService {
     private fun Array<IntArray>.toGraph(): CostGraph {
         return CostGraph(
             edgesBetween = this
-                .slice(1 ..<this.size)
+                .slice(1..<this.size)
                 .mapIndexed { rowIndex, row ->
                     row
-                        .slice(1 ..<this.size)
+                        .slice(1..<this.size)
                         .mapIndexed { distanceIndex, distance ->
                             if (rowIndex == distanceIndex) null
                             else distance.toCostGraphEdge()
@@ -84,12 +84,12 @@ class TspGeneratorService {
                 .toTypedArray()
                 .asImmutable(),
             edgesFromCenter = this[0]
-                .slice(1 ..<this[0].size)
+                .slice(1..<this[0].size)
                 .map { CostGraphEdge(Meter(it)) }
                 .toTypedArray()
                 .asImmutable(),
             edgesToCenter = this
-                .slice(1 ..<this.size)
+                .slice(1..<this.size)
                 .map { CostGraphEdge(Meter(it[0])) }
                 .toTypedArray()
                 .asImmutable()

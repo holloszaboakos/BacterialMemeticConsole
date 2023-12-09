@@ -1,6 +1,6 @@
 package hu.raven.puppet.model.task
 
-import hu.raven.puppet.model.physics.*
+import hu.akos.hollo.szabo.physics.*
 
 data class TransportUnit(
     val workTimePerDay: Second = Second(0),

@@ -1,15 +1,18 @@
 package hu.raven.puppet.logic.operator.crowdingdistance
 
+import hu.akos.hollo.szabo.math.asFloatVector
+import hu.akos.hollo.szabo.math.vector.FloatVector
+
 data object ImprovedCrowdingDistance : CrowdingDistance {
-    override fun invoke(costVectors: List<FloatArray>): FloatArray {
-        if(costVectors.isEmpty()) return floatArrayOf()
+    override fun invoke(costVectors: List<FloatVector>): FloatVector {
+        if (costVectors.isEmpty()) return FloatVector.floatVectorOf()
 
         val dimensions = costVectors[0].size
         if (costVectors.any { it.size != dimensions }) {
             throw Exception("Inconsistent cost dimension!")
         }
 
-        val crowdingDistances = FloatArray(costVectors.size) { 0f }
+        val crowdingDistances = FloatArray(costVectors.size) { 0f }.asFloatVector()
         for (dimensionIndex in 0 until dimensions) {
             val specimenInOrderByCost = costVectors
                 .withIndex()
@@ -21,7 +24,7 @@ data object ImprovedCrowdingDistance : CrowdingDistance {
                 specimenInOrderByCost.last().value[dimensionIndex] -
                         specimenInOrderByCost.first().value[dimensionIndex]
 
-            if(minMaxDistance == 0f) continue
+            if (minMaxDistance == 0f) continue
 
             specimenInOrderByCost
                 .withIndex()

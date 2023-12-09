@@ -10,14 +10,14 @@ class GeneTransferByElitist(
 ) : GeneTransfer() {
 
     override fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
-        val donorIndexRandomizer = (0 ..<population.activeCount / 4)
+        val donorIndexRandomizer = (0..<population.activeCount / 4)
             .shuffled()
             .toIntArray()
-        val acceptorIndexRandomizer = (population.activeCount / 4 ..<population.activeCount)
+        val acceptorIndexRandomizer = (population.activeCount / 4..<population.activeCount)
             .shuffled()
             .toIntArray()
 
-        (0 ..<injectionCount)
+        (0..<injectionCount)
             .forEach { injectionIndex ->
                 val donorIndex = donorIndexRandomizer[
                     injectionIndex % donorIndexRandomizer.size

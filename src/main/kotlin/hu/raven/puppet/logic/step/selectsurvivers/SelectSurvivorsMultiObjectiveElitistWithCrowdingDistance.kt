@@ -3,7 +3,7 @@ package hu.raven.puppet.logic.step.selectsurvivers
 import hu.raven.puppet.logic.operator.crowdingdistance.CrowdingDistance
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
-import hu.raven.puppet.utility.extention.FloatArrayExtensions.compareTo
+
 
 class SelectSurvivorsMultiObjectiveElitistWithCrowdingDistance(
     val crowdingDistance: CrowdingDistance
@@ -18,7 +18,7 @@ class SelectSurvivorsMultiObjectiveElitistWithCrowdingDistance(
                     .filter { filtered ->
                         remaining
                             .none {
-                                filtered.costOrException() > it.costOrException()
+                                filtered.costOrException() dominatesSmaller it.costOrException()
                             }
                     }
                 add(frontier)

@@ -1,6 +1,6 @@
 package hu.raven.puppet.logic.operator.selectsegments
 
-import hu.raven.puppet.model.math.Permutation
+import hu.akos.hollo.szabo.math.Permutation
 
 class SelectSingleValuesSpreadWithFullCoverage(
     override val cloneSegmentLength: Int,

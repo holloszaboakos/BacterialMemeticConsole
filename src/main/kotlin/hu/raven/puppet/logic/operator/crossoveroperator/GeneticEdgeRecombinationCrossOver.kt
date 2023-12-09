@@ -1,7 +1,7 @@
 package hu.raven.puppet.logic.operator.crossoveroperator
 
-import hu.raven.puppet.model.math.Permutation
-import hu.raven.puppet.model.math.RandomPermutationValueSelector
+import hu.akos.hollo.szabo.math.Permutation
+import hu.akos.hollo.szabo.math.random.CardDeckRandomizer
 
 //collect all edges to table
 //copy first element of primary
@@ -20,7 +20,7 @@ data object GeneticEdgeRecombinationCrossOver : CrossOverOperator {
     ) {
         childPermutation.clear()
 
-        val randomSelector = RandomPermutationValueSelector(childPermutation.size)
+        val randomSelector = CardDeckRandomizer(childPermutation.size)
 
         val table = createTable(parentPermutations)
 
@@ -30,7 +30,7 @@ data object GeneticEdgeRecombinationCrossOver : CrossOverOperator {
                 table[neighbour].remove(childPermutation[0])
             }
 
-        for (geneIndex in 1 ..<childPermutation.size) {
+        for (geneIndex in 1..<childPermutation.size) {
             val previousGene = childPermutation[geneIndex - 1]
             val neighborsOfPrevious = table[previousGene]
 
@@ -42,7 +42,7 @@ data object GeneticEdgeRecombinationCrossOver : CrossOverOperator {
                         table[value].size == leastNeighborCount
                     }.random()
             } else {
-                randomSelector.getNextExcludingIf { value ->
+                randomSelector.drawWhile { value ->
                     childPermutation.contains(value)
                 } ?: throw Exception("No values to select")
             }

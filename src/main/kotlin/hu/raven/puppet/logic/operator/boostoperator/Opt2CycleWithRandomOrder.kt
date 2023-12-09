@@ -8,8 +8,8 @@ class Opt2CycleWithRandomOrder<O : OnePartRepresentationWithCost>(
 ) : BoostOperator<O>() {
     override fun invoke(specimen: O) {
         val shuffler = (0..<specimen.permutation.size)
-                .shuffled()
-                .toIntArray()
+            .shuffled()
+            .toIntArray()
 
         for (firstIndexIndex in 0..<specimen.permutation.size - 1) {
             val firstIndex = shuffler[firstIndexIndex]

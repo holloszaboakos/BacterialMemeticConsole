@@ -1,15 +1,15 @@
 package hu.raven.puppet.logic.operator.crossoveroperator
 
-import hu.raven.puppet.model.math.Permutation
-import hu.raven.puppet.model.physics.Gram
-import hu.raven.puppet.model.physics.Meter
-import hu.raven.puppet.model.physics.Second
-import hu.raven.puppet.model.physics.CubicMeter
+import hu.akos.hollo.szabo.collections.asImmutable
+import hu.akos.hollo.szabo.math.Permutation
+import hu.akos.hollo.szabo.physics.Gram
+import hu.akos.hollo.szabo.physics.Meter
+import hu.akos.hollo.szabo.physics.Second
+import hu.akos.hollo.szabo.physics.CubicMeter
 import hu.raven.puppet.model.task.CostGraph
 import hu.raven.puppet.model.task.CostGraphEdge
 import hu.raven.puppet.model.task.CostGraphVertex
 import hu.raven.puppet.model.task.Gps
-import hu.raven.puppet.utility.ImmutableArray.Companion.asImmutable
 import org.junit.Test
 import kotlin.random.Random
 import kotlin.test.assertTrue

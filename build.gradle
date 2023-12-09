@@ -8,6 +8,7 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 ext {
@@ -16,6 +17,7 @@ ext {
 
 dependencies {
 
+    implementation "hu.akos.hollo.szabo:common-utils:1.0.2-SNAPSHOT"
     implementation "org.jetbrains.kotlin:kotlin-stdlib"
     implementation "org.jetbrains.kotlin:kotlin-reflect"
 

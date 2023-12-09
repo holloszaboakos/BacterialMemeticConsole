@@ -1,9 +1,9 @@
 package hu.raven.puppet.logic.operator.genetransferoperator
 
 
+import hu.akos.hollo.szabo.math.random.nextSegmentStartPosition
 import hu.raven.puppet.logic.operator.calculatecost.CalculateCost
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCost
-import hu.raven.puppet.utility.extention.nextSegmentStartPosition
 import kotlin.random.Random
 
 class SegmentInjectionGeneTransfer(
@@ -20,7 +20,7 @@ class SegmentInjectionGeneTransfer(
                 source.permutation.indices.count(),
                 geneTransferSegmentLength
             )
-        val rangeOfSegment = startOfSegment ..<startOfSegment + geneTransferSegmentLength
+        val rangeOfSegment = startOfSegment..<startOfSegment + geneTransferSegmentLength
         val elementsOfSegment = collectElementsOfSegment(
             target,
             rangeOfSegment
@@ -73,8 +73,8 @@ class SegmentInjectionGeneTransfer(
         elementsOfTargetNotInSegment: IntArray,
     ) {
 
-        val rangeOfBeforeSegment = 0 ..<rangeOfSegment.first
-        val rangeOfAfterSegment = (rangeOfSegment.last + 1) ..<target.permutation.size
+        val rangeOfBeforeSegment = 0..<rangeOfSegment.first
+        val rangeOfAfterSegment = (rangeOfSegment.last + 1)..<target.permutation.size
 
         target.permutation.indices.forEach { index ->
             target.permutation[index] = when (index) {

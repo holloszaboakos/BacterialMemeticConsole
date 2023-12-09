@@ -1,7 +1,8 @@
 package hu.raven.puppet.logic.operator.calculatecost
 
 
-import hu.raven.puppet.model.physics.Euro
+import hu.akos.hollo.szabo.math.vector.FloatVector
+import hu.akos.hollo.szabo.physics.Euro
 import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.task.CostGraphEdge
 import hu.raven.puppet.model.task.CostGraphVertex
@@ -14,7 +15,7 @@ class CalculateCostOfVRPSolutionWithoutCapacity(
     override val task: Task
 ) : CalculateCost() {
 
-    override operator fun invoke(solution: OnePartRepresentation): FloatArray {
+    override operator fun invoke(solution: OnePartRepresentation): FloatVector {
         var sumCost = Euro(0)
         var geneIndex = 0
         solution.permutation
@@ -67,7 +68,7 @@ class CalculateCostOfVRPSolutionWithoutCapacity(
                 sumCost += cost
 
             }
-        return sumCost.value.let { floatArrayOf(it) }
+        return sumCost.value.let { FloatVector.floatVectorOf(it) }
     }
 
     private fun calcCostOnEdge(salesman: TransportUnit, edge: CostGraphEdge) =

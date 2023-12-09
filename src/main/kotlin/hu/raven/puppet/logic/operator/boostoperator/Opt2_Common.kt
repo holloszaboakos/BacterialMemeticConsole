@@ -2,7 +2,7 @@ package hu.raven.puppet.logic.operator.boostoperator
 
 import hu.raven.puppet.logic.operator.calculatecost.CalculateCost
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCost
-import hu.raven.puppet.utility.extention.FloatArrayExtensions.compareTo
+
 
 inline fun swapIfBetter(
     specimen: OnePartRepresentationWithCost,
@@ -15,7 +15,7 @@ inline fun swapIfBetter(
     specimen.permutation.swapValues(position1, position2)
     specimen.cost = calculateCostOf(specimen)
 
-    if (specimen.costOrException() > bestCost) {
+    if (specimen.costOrException() dominatesSmaller bestCost) {
         specimen.permutation.swapValues(position1, position2)
         specimen.cost = bestCost
         return

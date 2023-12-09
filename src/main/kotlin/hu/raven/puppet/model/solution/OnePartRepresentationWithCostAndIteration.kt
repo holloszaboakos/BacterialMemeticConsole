@@ -1,10 +1,11 @@
 package hu.raven.puppet.model.solution
 
-import hu.raven.puppet.model.math.Permutation
+import hu.akos.hollo.szabo.math.Permutation
+import hu.akos.hollo.szabo.math.vector.FloatVector
 
 data class OnePartRepresentationWithCostAndIteration(
     override var iterationOfCreation: Int,
-    override var cost: FloatArray?,
+    override var cost: FloatVector?,
     override val objectiveCount: Int,
     override val permutation: Permutation
 ) : IterationProduct,
@@ -22,7 +23,7 @@ data class OnePartRepresentationWithCostAndIteration(
         if (iterationOfCreation != other.iterationOfCreation) return false
         if (cost != null) {
             if (other.cost == null) return false
-            if (!cost.contentEquals(other.cost)) return false
+            if (cost?.contentEquals(other.cost) == false) return false
         } else if (other.cost != null) return false
         if (objectiveCount != other.objectiveCount) return false
         if (permutation != other.permutation) return false

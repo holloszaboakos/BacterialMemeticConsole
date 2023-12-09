@@ -1,9 +1,9 @@
 package hu.raven.puppet.logic.step.booststrategy
 
+import hu.akos.hollo.szabo.collections.slice
 import hu.raven.puppet.logic.operator.boostoperator.BoostOperator
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
-import hu.raven.puppet.utility.extention.slice
 
 
 class BoostOnBestAndLucky(
@@ -15,9 +15,9 @@ class BoostOnBestAndLucky(
         boostOperator(population.activesAsSequence().first())
 
         population.activesAsSequence()
-            .slice(1 ..<population.activeCount)
+            .slice(1..<population.activeCount)
             .shuffled()
-            .slice(0 ..<luckyCount)
+            .slice(0..<luckyCount)
             .forEach { boostOperator(it) }
     }
 }

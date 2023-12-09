@@ -1,5 +1,8 @@
 package hu.raven.puppet
 
+import hu.akos.hollo.szabo.math.Permutation
+import hu.raven.puppet.configuration.AlgorithmParameters.*
+import hu.raven.puppet.configuration.FilePathVariableNames.*
 import hu.raven.puppet.logic.logging.ObjectLoggerService
 import hu.raven.puppet.logic.operator.bacterialmutationonspecimen.MutationOnSpecimen
 import hu.raven.puppet.logic.operator.bacterialmutationonspecimen.MutationWithElitistSelection
@@ -12,15 +15,11 @@ import hu.raven.puppet.logic.operator.selectsegments.SelectSegments
 import hu.raven.puppet.logic.operator.selectsegments.SelectSingleValuesContinuouslyWithFullCoverage
 import hu.raven.puppet.logic.task.loader.TaskLoaderService
 import hu.raven.puppet.logic.task.loader.TspTaskLoaderService
-import hu.raven.puppet.model.math.Permutation
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.state.AlgorithmState
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.model.task.Task
-import hu.raven.puppet.configuration.AlgorithmParameters.*
-import hu.raven.puppet.configuration.FilePathVariableNames.*
 import hu.raven.puppet.utility.KoinUtil.get
-import hu.raven.puppet.utility.extention.FloatArrayExtensions.vectorLength
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -206,7 +205,7 @@ private fun runScenario(scenario: Scenario) {
 
     runBlocking(Dispatchers.Default) {
         launch {
-            (0 ..<25)
+            (0..<25)
                 .map {
                     async {
                         val specimen =
@@ -215,7 +214,7 @@ private fun runScenario(scenario: Scenario) {
                                 0,
                                 null,
                                 scenario.objectiveCount,
-                                Permutation((0 ..<scenario.objectiveCount).toList().toIntArray())
+                                Permutation((0..<scenario.objectiveCount).toList().toIntArray())
                             )
                         strategy(IndexedValue(0, specimen), 0)
                         calculateCost(specimen)
@@ -224,7 +223,7 @@ private fun runScenario(scenario: Scenario) {
                 }
                 .map { it.await() }
                 .asSequence()
-                .sortedBy { it.vectorLength() }
+                .sortedBy { it.length() }
                 .groupBy { it }
                 .forEach { (value, values) ->
                     output.appendText("value: $value  count: ${values.size}\n")

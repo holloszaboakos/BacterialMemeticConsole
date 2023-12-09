@@ -1,6 +1,6 @@
 package hu.raven.puppet.logic.operator.crossoveroperator
 
-import hu.raven.puppet.model.math.Permutation
+import hu.akos.hollo.szabo.math.Permutation
 
 sealed interface CrossOverOperator {
     operator fun invoke(

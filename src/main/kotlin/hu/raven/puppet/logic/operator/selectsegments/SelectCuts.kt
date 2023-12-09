@@ -1,6 +1,6 @@
 package hu.raven.puppet.logic.operator.selectsegments
 
-import hu.raven.puppet.model.math.Permutation
+import hu.akos.hollo.szabo.math.Permutation
 
 class SelectCuts(override val cloneSegmentLength: Int) : SelectSegments {
     override fun invoke(
@@ -18,9 +18,9 @@ class SelectCuts(override val cloneSegmentLength: Int) : SelectSegments {
             )
         )
 
-        val cuts = (0 ..<(specimen.size - 1))
+        val cuts = (0..<(specimen.size - 1))
             .shuffled()
-            .slice(0 ..<cloneSegmentLength)
+            .slice(0..<cloneSegmentLength)
             .sorted()
 
         return buildList {
@@ -35,7 +35,7 @@ class SelectCuts(override val cloneSegmentLength: Int) : SelectSegments {
             )
 
             cuts
-                .slice(1 ..<cuts.size)
+                .slice(1..<cuts.size)
                 .mapIndexed { indexInSlice, position ->
                     val cutIndex = indexInSlice + 1
                     val previousPosition = cuts[cutIndex - 1]

@@ -1,5 +1,7 @@
 package hu.raven.puppet.logic.operator.crowdingDistance
 
+import hu.akos.hollo.szabo.math.vector.FloatVector
+import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.floatVectorOf
 import hu.raven.puppet.logic.operator.crowdingdistance.BasicCrowdingDistance
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatException
@@ -9,7 +11,7 @@ class BasicCrowdingDistanceTest {
 
     @Test
     fun emptyInput() {
-        val data = listOf<FloatArray>()
+        val data = listOf<FloatVector>()
 
         val result = BasicCrowdingDistance(data)
 
@@ -18,7 +20,7 @@ class BasicCrowdingDistanceTest {
 
     @Test
     fun singleOneDimensionalInput() {
-        val data = listOf(floatArrayOf(0f))
+        val data = listOf(floatVectorOf(0f))
 
         val result = BasicCrowdingDistance(data)
 
@@ -27,7 +29,7 @@ class BasicCrowdingDistanceTest {
 
     @Test
     fun singleMultiDimensionalInput() {
-        val data = listOf(floatArrayOf(0f, -1f, 1f))
+        val data = listOf(floatVectorOf(0f, -1f, 1f))
 
         val result = BasicCrowdingDistance(data)
 
@@ -37,9 +39,9 @@ class BasicCrowdingDistanceTest {
     @Test
     fun inconsistentDimensions() {
         val data = listOf(
-            floatArrayOf(0f, -1f, 1f),
-            floatArrayOf(0f, -1f, 1f),
-            floatArrayOf(0f)
+            floatVectorOf(0f, -1f, 1f),
+            floatVectorOf(0f, -1f, 1f),
+            floatVectorOf(0f)
         )
 
         assertThatException()
@@ -50,8 +52,8 @@ class BasicCrowdingDistanceTest {
     @Test
     fun oneDimensionalOnlyEnds() {
         val data = listOf(
-            floatArrayOf(-1f),
-            floatArrayOf(1f)
+            floatVectorOf(-1f),
+            floatVectorOf(1f)
         )
 
         val result = BasicCrowdingDistance(data)
@@ -62,8 +64,8 @@ class BasicCrowdingDistanceTest {
     @Test
     fun multiDimensionalOnlyEnds() {
         val data = listOf(
-            floatArrayOf(-1f, -1f),
-            floatArrayOf(1f, 1f)
+            floatVectorOf(-1f, -1f),
+            floatVectorOf(1f, 1f)
         )
 
         val result = BasicCrowdingDistance(data)
@@ -74,9 +76,9 @@ class BasicCrowdingDistanceTest {
     @Test
     fun multiDimensionalThreeValues() {
         val data = listOf(
-            floatArrayOf(-1f, -1f),
-            floatArrayOf(0f, 0f),
-            floatArrayOf(1f, 1f)
+            floatVectorOf(-1f, -1f),
+            floatVectorOf(0f, 0f),
+            floatVectorOf(1f, 1f)
         )
 
         val result = BasicCrowdingDistance(data)
@@ -93,9 +95,9 @@ class BasicCrowdingDistanceTest {
     @Test
     fun sameValues() {
         val data = listOf(
-            floatArrayOf(-1f, -1f),
-            floatArrayOf(-1f, -1f),
-            floatArrayOf(-1f, -1f),
+            floatVectorOf(-1f, -1f),
+            floatVectorOf(-1f, -1f),
+            floatVectorOf(-1f, -1f),
         )
 
         val result = BasicCrowdingDistance(data)
@@ -112,11 +114,11 @@ class BasicCrowdingDistanceTest {
     @Test
     fun evenlySpread() {
         val data = listOf(
-            floatArrayOf(0f, 0f),
-            floatArrayOf(0.25f, 0.25f),
-            floatArrayOf(0.5f, 0.5f),
-            floatArrayOf(0.75f, 0.75f),
-            floatArrayOf(1f, 1f),
+            floatVectorOf(0f, 0f),
+            floatVectorOf(0.25f, 0.25f),
+            floatVectorOf(0.5f, 0.5f),
+            floatVectorOf(0.75f, 0.75f),
+            floatVectorOf(1f, 1f),
         )
 
         val result = BasicCrowdingDistance(data)
@@ -135,10 +137,10 @@ class BasicCrowdingDistanceTest {
     @Test
     fun unevenlySpread() {
         val data = listOf(
-            floatArrayOf(0f, 0f),
-            floatArrayOf(0.25f, 0.25f),
-            floatArrayOf(0.75f, 0.75f),
-            floatArrayOf(1f, 1f),
+            floatVectorOf(0f, 0f),
+            floatVectorOf(0.25f, 0.25f),
+            floatVectorOf(0.75f, 0.75f),
+            floatVectorOf(1f, 1f),
         )
 
         val result = BasicCrowdingDistance(data)

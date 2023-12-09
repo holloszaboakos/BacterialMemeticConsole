@@ -1,12 +1,12 @@
 package hu.raven.puppet.logic.operator.selectsegments
 
-import hu.raven.puppet.model.math.Permutation
+import hu.akos.hollo.szabo.math.Permutation
 
 class SelectSingleValuesContinuouslyWithFullCoverage(
     override val cloneSegmentLength: Int,
 ) : SelectSegments {
     private val randomizer: IntArray by lazy {
-        (0 ..<cloneSegmentLength)
+        (0..<cloneSegmentLength)
             .shuffled()
             .toIntArray()
     }
@@ -25,7 +25,7 @@ class SelectSingleValuesContinuouslyWithFullCoverage(
                 }
                 )
 
-        val randomRange = firstCutPosition ..<firstCutPosition + cloneSegmentLength
+        val randomRange = firstCutPosition..<firstCutPosition + cloneSegmentLength
         return buildList {
             if (randomRange.isEmpty()) {
                 add(
@@ -40,7 +40,7 @@ class SelectSingleValuesContinuouslyWithFullCoverage(
             }
 
             if (randomRange.first != 0) {
-                val startRange = 0 ..<randomRange.first
+                val startRange = 0..<randomRange.first
                 add(
                     ContinuousSegment(
                         index = size,
@@ -63,7 +63,7 @@ class SelectSingleValuesContinuouslyWithFullCoverage(
                 .let(::addAll)
 
             if (randomRange.last != specimen.indices.last) {
-                val endRange = randomRange.last + 1 ..<specimen.size
+                val endRange = randomRange.last + 1..<specimen.size
                 add(
                     ContinuousSegment(
                         index = size,

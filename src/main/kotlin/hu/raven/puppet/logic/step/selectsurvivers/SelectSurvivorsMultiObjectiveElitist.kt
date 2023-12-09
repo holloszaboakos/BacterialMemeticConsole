@@ -2,7 +2,7 @@ package hu.raven.puppet.logic.step.selectsurvivers
 
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
-import hu.raven.puppet.utility.extention.FloatArrayExtensions.compareTo
+
 
 class SelectSurvivorsMultiObjectiveElitist : SelectSurvivors {
     override fun invoke(state: EvolutionaryAlgorithmState): Unit = state.population.run {
@@ -15,7 +15,7 @@ class SelectSurvivorsMultiObjectiveElitist : SelectSurvivors {
                     .filter { filtered ->
                         remaining
                             .none {
-                                filtered.costOrException() > it.costOrException()
+                                filtered.costOrException() dominatesSmaller it.costOrException()
                             }
                     }
                 add(frontier)

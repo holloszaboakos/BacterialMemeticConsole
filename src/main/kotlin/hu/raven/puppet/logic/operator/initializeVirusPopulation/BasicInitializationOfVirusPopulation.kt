@@ -1,6 +1,6 @@
 package hu.raven.puppet.logic.operator.initializeVirusPopulation
 
-import hu.raven.puppet.model.math.Permutation
+import hu.akos.hollo.szabo.math.Permutation
 import hu.raven.puppet.model.solution.VirusSpecimen
 import kotlin.random.Random
 

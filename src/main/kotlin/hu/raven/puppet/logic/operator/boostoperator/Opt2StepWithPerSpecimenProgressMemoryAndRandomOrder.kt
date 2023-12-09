@@ -1,7 +1,6 @@
 package hu.raven.puppet.logic.operator.boostoperator
 
 import hu.raven.puppet.logic.operator.calculatecost.CalculateCost
-import hu.raven.puppet.logic.operator.diversityofpopulation.DiversityOfPopulation
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 
 class Opt2StepWithPerSpecimenProgressMemoryAndRandomOrder(

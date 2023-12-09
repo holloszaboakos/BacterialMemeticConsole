@@ -2,7 +2,6 @@ package hu.raven.puppet.logic.iteration
 
 import hu.raven.puppet.logic.operator.calculatecost.CalculateCost
 import hu.raven.puppet.model.state.LocalSearchAlgorithmState
-import hu.raven.puppet.utility.extention.FloatArrayExtensions.compareTo
 
 
 class Opt2Iteration(
@@ -29,7 +28,7 @@ class Opt2Iteration(
             best.permutation[secondIndex] = tempGene
             best.cost = calculateCostOf(best)
 
-            if (best.costOrException() > bestCost) {
+            if (best.costOrException() dominatesSmaller bestCost) {
                 tempGene = best.permutation[firstIndex]
                 best.permutation[firstIndex] = best.permutation[secondIndex]
                 best.permutation[secondIndex] = tempGene

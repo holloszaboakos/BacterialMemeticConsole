@@ -1,6 +1,6 @@
 package hu.raven.puppet.logic.operator.crossoveroperator
 
-import hu.raven.puppet.model.math.Permutation
+import hu.akos.hollo.szabo.math.Permutation
 import kotlin.random.Random
 
 //copy primary values by 25% chance

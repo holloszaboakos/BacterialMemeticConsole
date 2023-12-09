@@ -1,7 +1,7 @@
 package hu.raven.puppet.logic.step.selectsurvivers
 
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
-import hu.raven.puppet.utility.extention.FloatArrayExtensions.compareTo
+
 
 data object SelectSurvivorsMultiObjectiveTournament : SelectSurvivors {
     override fun invoke(state: EvolutionaryAlgorithmState): Unit = state.population.run {
@@ -12,9 +12,9 @@ data object SelectSurvivorsMultiObjectiveTournament : SelectSurvivors {
                 .chunked(2)
                 .takeWhile { activeCount < poolSize / 2 }
                 .forEach { pair ->
-                    if (pair[0].costOrException() < pair[1].costOrException()) {
+                    if (pair[0].costOrException() dominatesSmaller pair[1].costOrException()) {
                         activate(pair[0].id)
-                    } else if (pair[1].costOrException() < pair[0].costOrException()) {
+                    } else if (pair[1].costOrException() dominatesSmaller pair[0].costOrException()) {
                         activate(pair[1].id)
                     }
                 }

@@ -1,10 +1,10 @@
 package hu.raven.puppet.logic.initialize
 
+import hu.akos.hollo.szabo.math.asPermutation
 import hu.raven.puppet.logic.operator.calculatecost.CalculateCost
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIteration
 import hu.raven.puppet.model.state.LocalSearchAlgorithmState
 import hu.raven.puppet.model.task.Task
-import hu.raven.puppet.utility.extention.toPermutation
 
 
 class InitializeLocalSearchAlgorithm(
@@ -24,7 +24,7 @@ class InitializeLocalSearchAlgorithm(
                 index
             }
                 .apply(IntArray::shuffle)
-                .toPermutation(),
+                .asPermutation(),
             iterationOfCreation = 0,
             cost = null
         )

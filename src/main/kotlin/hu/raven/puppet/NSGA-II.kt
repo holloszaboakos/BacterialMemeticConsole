@@ -9,7 +9,6 @@ import hu.raven.puppet.logic.logging.ObjectLoggerService
 import hu.raven.puppet.logic.operator.calculatecost.CalculateCost
 import hu.raven.puppet.logic.operator.calculatecost.CalculateCostOfTspSolution
 import hu.raven.puppet.logic.operator.crossoveroperator.CrossOverOperator
-import hu.raven.puppet.logic.operator.crossoveroperator.EdgeSelectorCrossOver
 import hu.raven.puppet.logic.operator.crossoveroperator.HeuristicCrossOver
 import hu.raven.puppet.logic.operator.crowdingdistance.BasicCrowdingDistance
 import hu.raven.puppet.logic.operator.crowdingdistance.CrowdingDistance

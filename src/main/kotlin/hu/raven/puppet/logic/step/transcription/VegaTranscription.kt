@@ -4,7 +4,7 @@ import hu.raven.puppet.logic.operator.calculatecost.CalculateCost
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.solution.VirusSpecimen
 import hu.raven.puppet.model.state.VirusEvolutionaryAlgorithmState
-import hu.raven.puppet.utility.extention.FloatArrayExtensions.compareTo
+
 import kotlin.random.Random
 
 //TODO
@@ -30,7 +30,7 @@ class VegaTranscription(
                         val oldPermutation = specimen.permutation.clone()
                         applyVirus(specimen, virus)
                         val newCost = calculateCost(specimen)
-                        if (newCost > oldCost) {
+                        if (newCost dominatesSmaller oldCost) {
                             oldPermutation.forEachIndexed { index, value ->
                                 val oldIndex = specimen.permutation.indexOf(value)
                                 specimen.permutation.swapValues(index, oldIndex)

@@ -1,8 +1,8 @@
 package hu.raven.puppet.logic.operator.crossoveroperator
 
-import hu.raven.puppet.model.math.Permutation
-import hu.raven.puppet.model.math.RandomPermutationValueSelector
-import hu.raven.puppet.utility.extention.get
+import hu.akos.hollo.szabo.math.Permutation
+import hu.akos.hollo.szabo.math.random.CardDeckRandomizer
+import hu.akos.hollo.szabo.primitives.get
 
 //random start point
 //select always the edge of the other parent
@@ -17,13 +17,13 @@ data object AlternatingEdgeCrossOver : CrossOverOperator {
         childPermutation.clear()
 
         //for optimization of random element selection
-        val randomSelector = RandomPermutationValueSelector(childPermutation.size)
+        val randomSelector = CardDeckRandomizer(childPermutation.size)
 
         //random starting value for first position
-        childPermutation[0] = randomSelector.getNextExcludingIf { false } ?: throw Exception("No values to select!")
+        childPermutation[0] = randomSelector.drawWhile { false } ?: throw Exception("No values to select!")
 
         //on other positions
-        (1 ..<childPermutation.size).forEach { geneIndex ->
+        (1..<childPermutation.size).forEach { geneIndex ->
             val parentPermutation = parentPermutations[geneIndex % 2]
 
             //select edge from parent
@@ -36,7 +36,7 @@ data object AlternatingEdgeCrossOver : CrossOverOperator {
 
             //select randomly if edge can not be selected
             childPermutation[geneIndex] =
-                randomSelector.getNextExcludingIf { value ->
+                randomSelector.drawWhile { value ->
                     childPermutation.contains(value)
                 } ?: throw Exception("No values to select!")
         }

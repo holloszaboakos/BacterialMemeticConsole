@@ -1,10 +1,10 @@
 package hu.raven.puppet.logic.operator.bacterialmutationonspecimen
 
+
 import hu.raven.puppet.logic.operator.bacterialmutationoperator.BacterialMutationOperator
 import hu.raven.puppet.logic.operator.calculatecost.CalculateCost
 import hu.raven.puppet.logic.operator.selectsegments.SelectSegments
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCost
-import hu.raven.puppet.utility.extention.FloatArrayExtensions.vectorLength
 
 
 sealed class MutationOnSpecimen {
@@ -17,7 +17,7 @@ sealed class MutationOnSpecimen {
     fun calcCostOfEachAndSort(clones: MutableList<OnePartRepresentationWithCost>) {
         clones
             .onEach { it.cost = calculateCostOf(it) }
-            .sortBy { it.costOrException().vectorLength() }
+            .sortBy { it.costOrException().length() }
     }
 
     abstract operator fun invoke(

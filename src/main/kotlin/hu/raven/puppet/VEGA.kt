@@ -40,6 +40,7 @@ import org.koin.core.context.stopKoin
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import java.nio.file.Path
+
 //iterationOfCreation=1550, cost=[17191.0], 64 virus, 8 length, 0.25, 0.75, 0.75
 //iterationOfCreation=1713, cost=[17303.0], 64 virus, 8 length, 0.1, 0.5, 0.5
 //iterationOfCreation=707, cost=[17385.0], 16 virus, 8 length, 0.01, 0.5, 0.5

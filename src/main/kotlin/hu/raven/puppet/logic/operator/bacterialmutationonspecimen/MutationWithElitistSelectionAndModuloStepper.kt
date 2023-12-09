@@ -51,10 +51,10 @@ class MutationWithElitistSelectionAndModuloStepper(
                 addAll(generateModuloStepperSegments(segmentsToMove.indices.toList().toIntArray()))
             }
         }
-            .slice(0 ..<deterministicCount)
+            .slice(0..<deterministicCount)
 
         clones
-            .slice(1 ..<moduloStepperPermutations.size + 1)
+            .slice(1..<moduloStepperPermutations.size + 1)
             .forEachIndexed { cloneIndex, clone ->
                 clone.permutation.clear()
                 val segmentPermutation = moduloStepperPermutations[cloneIndex]
@@ -94,7 +94,7 @@ class MutationWithElitistSelectionAndModuloStepper(
         val baseOrder = values.clone()
         baseOrder.shuffle()
 
-        return (1 ..<values.size)
+        return (1..<values.size)
             .map { shiftSize ->
                 val newSegment = IntArray(baseOrder.size) { -1 }
                 val contains = BooleanArray(baseOrder.size) { false }

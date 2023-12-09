@@ -1,12 +1,11 @@
 package hu.raven.puppet.logic.operator.crossoveroperator
 
+import hu.akos.hollo.szabo.math.Permutation
+import hu.akos.hollo.szabo.math.calculus.multiplicativeInverse
+import hu.akos.hollo.szabo.primitives.get
 import hu.raven.puppet.logic.operator.weightedselection.RouletteWheelSelection
-
-import hu.raven.puppet.model.math.Permutation
 import hu.raven.puppet.model.task.CostGraph
-import hu.raven.puppet.utility.extention.get
 import hu.raven.puppet.utility.extention.getEdgeBetween
-import hu.raven.puppet.utility.extention.multiplicativeInverse
 import kotlin.random.Random.Default.nextInt
 
 //random first value
@@ -31,7 +30,7 @@ class HeuristicCrossOver(
         childPermutation.clear()
         childPermutation[0] = nextInt(childPermutation.size)
 
-        for (geneIndex in 1 ..<childPermutation.size) {
+        for (geneIndex in 1..<childPermutation.size) {
 
             val previousValue = childPermutation[geneIndex - 1]
 
@@ -87,7 +86,7 @@ class HeuristicCrossOver(
         geneIndex: Int
     ): Int {
 
-        for (index in lastIndexUsed ..<randomPermutation.size) {
+        for (index in lastIndexUsed..<randomPermutation.size) {
             if (!child.contains(randomPermutation[index])) {
                 child[geneIndex] = randomPermutation[index]
                 return index + 1

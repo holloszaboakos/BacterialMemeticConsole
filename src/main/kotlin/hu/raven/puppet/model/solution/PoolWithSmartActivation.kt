@@ -1,7 +1,7 @@
 package hu.raven.puppet.model.solution
 
 
-import hu.raven.puppet.utility.extention.swap
+import hu.akos.hollo.szabo.collections.swap
 import java.util.concurrent.locks.ReentrantReadWriteLock
 import kotlin.concurrent.read
 import kotlin.concurrent.write
@@ -54,13 +54,13 @@ class PoolWithSmartActivation<T : HasId<Int>>(
     fun isAllActive() = lock.write { activeCount == pool.size }
 
     fun activesAsSequence() = lock.read {
-        (0 ..<activeCount)
+        (0..<activeCount)
             .asSequence()
             .map { pool[it] }
     }
 
     fun inactivesAsSequence() = lock.read {
-        (activeCount ..<pool.size)
+        (activeCount..<pool.size)
             .asSequence()
             .map { pool[it] }
     }
@@ -79,7 +79,7 @@ class PoolWithSmartActivation<T : HasId<Int>>(
     }
 
     operator fun get(index: Int): T = lock.read {
-        if (index !in 0 ..<activeCount)
+        if (index !in 0..<activeCount)
             throw IndexOutOfBoundsException("No active pool item on specified position!")
         return pool[index]
     }

@@ -1,9 +1,9 @@
 package hu.raven.puppet.logic.operator.crossoveroperator
 
-import hu.raven.puppet.model.math.Permutation
+import hu.akos.hollo.szabo.math.FloatSumExtensions.sumClever
+import hu.akos.hollo.szabo.math.Permutation
+import hu.akos.hollo.szabo.primitives.get
 import hu.raven.puppet.model.task.CostGraph
-import hu.raven.puppet.utility.extention.FloatSumExtensions.sumClever
-import hu.raven.puppet.utility.extention.get
 import hu.raven.puppet.utility.extention.getEdgeBetween
 import kotlin.math.abs
 
@@ -26,8 +26,8 @@ class SortedMatchCrossOver(
         var longestSliceSize = 0
         var foundSlices = listOf<IntArray>()
 
-        for (firstValue in 0 ..<parentPermutations.first.size - 1) {
-            for (secondValue in firstValue ..<parentPermutations.first.size) {
+        for (firstValue in 0..<parentPermutations.first.size - 1) {
+            for (secondValue in firstValue..<parentPermutations.first.size) {
 
                 if (
                 //values same distance away in both parents
@@ -63,7 +63,7 @@ class SortedMatchCrossOver(
 
         if (foundSlices.isNotEmpty()) {
             val cheaperIndex = Array(2) { sliceIndex ->
-                (1 ..<foundSlices[sliceIndex].size)
+                (1..<foundSlices[sliceIndex].size)
                     .map { geneIndex ->
                         val previousValueOfSlice = foundSlices[sliceIndex][geneIndex - 1]
                         val currentValueOfSlice = foundSlices[sliceIndex][geneIndex]
@@ -80,7 +80,7 @@ class SortedMatchCrossOver(
                         parentPermutations[index].indexOf(foundSlices[index].last())
             }
 
-            (0 ..<indices[0].first).forEach { geneIndex ->
+            (0..<indices[0].first).forEach { geneIndex ->
                 childPermutation[geneIndex] =
                     parentPermutations[0][geneIndex]
             }
@@ -88,7 +88,7 @@ class SortedMatchCrossOver(
                 childPermutation[geneIndex] =
                     foundSlices[cheaperIndex][geneIndex - indices[0].first]
             }
-            (indices[0].last + 1 ..<parentPermutations.first.size)
+            (indices[0].last + 1..<parentPermutations.first.size)
                 .forEach { geneIndex ->
                     childPermutation[geneIndex] =
                         parentPermutations[0][geneIndex]

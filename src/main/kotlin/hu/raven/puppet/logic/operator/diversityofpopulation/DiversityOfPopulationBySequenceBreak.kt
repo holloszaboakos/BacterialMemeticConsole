@@ -1,6 +1,6 @@
 package hu.raven.puppet.logic.operator.diversityofpopulation
 
-import hu.raven.puppet.model.math.Permutation
+import hu.akos.hollo.szabo.math.Permutation
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

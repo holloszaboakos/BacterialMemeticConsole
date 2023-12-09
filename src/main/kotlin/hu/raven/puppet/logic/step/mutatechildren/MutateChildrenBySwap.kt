@@ -1,7 +1,7 @@
 package hu.raven.puppet.logic.step.mutatechildren
 
+import hu.akos.hollo.szabo.collections.slice
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
-import hu.raven.puppet.utility.extention.slice
 import kotlin.random.Random
 
 data object MutateChildrenBySwap : MutateChildren {

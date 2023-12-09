@@ -1,7 +1,6 @@
 package hu.raven.puppet.logic.operator.crossoveroperator
 
-import hu.raven.puppet.model.math.Permutation
-import hu.raven.puppet.utility.extention.get
+import hu.akos.hollo.szabo.math.Permutation
 import kotlin.random.Random
 
 //select sequence from primary

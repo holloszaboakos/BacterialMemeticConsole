@@ -1,8 +1,8 @@
 package hu.raven.puppet.logic.operator.crossoveroperator
 
-import hu.raven.puppet.model.math.Permutation
-import hu.raven.puppet.model.math.RandomPermutationValueSelector
-import hu.raven.puppet.utility.extention.get
+import hu.akos.hollo.szabo.math.Permutation
+import hu.akos.hollo.szabo.math.random.CardDeckRandomizer
+import hu.akos.hollo.szabo.primitives.get
 import kotlin.random.Random.Default.nextInt
 
 //TODO: check if implementation is wrong!
@@ -15,7 +15,7 @@ data object SubTourChunksCrossOver : CrossOverOperator {
         var size = nextInt(childPermutation.size / 2) + 1
         var parentIndex = 0
         childPermutation.clear()
-        val randomSelector = RandomPermutationValueSelector(childPermutation.size)
+        val randomSelector = CardDeckRandomizer(childPermutation.size)
 
         childPermutation.indices.forEach { nextGeneIndex ->
             if (nextGeneIndex == 0) {
@@ -35,7 +35,7 @@ data object SubTourChunksCrossOver : CrossOverOperator {
                 childPermutation[nextGeneIndex] = indexInCurrentParent
             } else {
                 childPermutation[nextGeneIndex] =
-                    randomSelector.getNextExcludingIf { value -> childPermutation.contains(value) }
+                    randomSelector.drawWhile { value -> childPermutation.contains(value) }
                         ?: throw Exception("No value can be selected!")
             }
         }

@@ -1,5 +1,6 @@
 package hu.raven.puppet
 
+import hu.raven.puppet.configuration.FilePathVariableNames.*
 import hu.raven.puppet.logic.initialize.InitializeAlgorithm
 import hu.raven.puppet.logic.initialize.InitializeEvolutionaryAlgorithm
 import hu.raven.puppet.logic.iteration.AlgorithmIteration
@@ -26,7 +27,6 @@ import hu.raven.puppet.logic.task.loader.TaskLoaderService
 import hu.raven.puppet.logic.task.loader.TspTaskLoaderService
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.model.task.Task
-import hu.raven.puppet.configuration.FilePathVariableNames.*
 import hu.raven.puppet.utility.KoinUtil.get
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin

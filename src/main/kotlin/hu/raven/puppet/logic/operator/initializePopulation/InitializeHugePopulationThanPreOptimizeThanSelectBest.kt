@@ -1,11 +1,10 @@
 package hu.raven.puppet.logic.operator.initializePopulation
 
+import hu.akos.hollo.szabo.collections.slice
+import hu.akos.hollo.szabo.math.asPermutation
 import hu.raven.puppet.logic.operator.bacterialmutationonspecimen.MutationOnSpecimen
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.task.Task
-import hu.raven.puppet.utility.extention.FloatArrayExtensions.vectorLength
-import hu.raven.puppet.utility.extention.slice
-import hu.raven.puppet.utility.extention.toPermutation
 
 class InitializeHugePopulationThanPreOptimizeThanSelectBest(
     private val sizeOfPopulation: Int,
@@ -28,7 +27,7 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest(
             val newContains = BooleanArray(sizeOfPermutation) { false }
             val newPermutation = IntArray(sizeOfPermutation) { -1 }
             var baseIndex = step
-            for (newIndex in 0 ..<sizeOfPermutation) {
+            for (newIndex in 0..<sizeOfPermutation) {
                 if (newContains[basePermutation[baseIndex]])
                     baseIndex = (baseIndex + 1) % sizeOfPermutation
                 newPermutation[newIndex] = basePermutation[baseIndex]
@@ -47,7 +46,7 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest(
         population =
             bestImprovements
                 .map { it.first }
-                .slice(0 ..<sizeOfPopulation)
+                .slice(0..<sizeOfPopulation)
                 .map { specimen ->
                     OnePartRepresentationWithCostAndIterationAndId(
                         id = specimen.value.id,
@@ -70,7 +69,7 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest(
             )
         }
         .sortedBy {
-            it.first.value.costOrException().vectorLength() / it.second.value.costOrException().vectorLength()
+            it.first.value.costOrException().length() / it.second.value.costOrException().length()
         }
 
 
@@ -86,7 +85,7 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest(
                         task.transportUnits.size +
                                 task.costGraph.objectives.size
                     ) { index -> index }
-                        .toPermutation()
+                        .asPermutation()
                 )
             }
         else
@@ -96,7 +95,7 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest(
                     iterationOfCreation = 0,
                     cost = null,
                     1,
-                    intArrayOf(0).toPermutation()
+                    intArrayOf(0).asPermutation()
                 )
             )
     }

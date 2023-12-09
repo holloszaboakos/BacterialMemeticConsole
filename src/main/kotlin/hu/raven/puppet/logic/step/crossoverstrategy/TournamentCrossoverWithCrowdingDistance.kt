@@ -3,7 +3,7 @@ package hu.raven.puppet.logic.step.crossoverstrategy
 import hu.raven.puppet.logic.operator.crossoveroperator.CrossOverOperator
 import hu.raven.puppet.logic.operator.crowdingdistance.CrowdingDistance
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
-import hu.raven.puppet.utility.extention.FloatArrayExtensions.compareTo
+
 
 class TournamentCrossoverWithCrowdingDistance(
     override val crossoverOperators: List<CrossOverOperator>,
@@ -30,7 +30,7 @@ class TournamentCrossoverWithCrowdingDistance(
                     val dominant =
                         crowdingDistanceAndParent.filter { (_, parent) ->
                             crowdingDistanceAndParent.none {
-                                parent.costOrException() < it.second.costOrException()
+                                parent.costOrException() dominatesSmaller it.second.costOrException()
                             }
                         }
 

@@ -1,8 +1,8 @@
 package hu.raven.puppet.logic.operator.initializePopulation
 
+import hu.akos.hollo.szabo.math.asPermutation
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.task.Task
-import hu.raven.puppet.utility.extention.toPermutation
 
 class InitializePopulationByModuloStepper(
     private val sizeOfPopulation: Int
@@ -27,7 +27,7 @@ class InitializePopulationByModuloStepper(
                                 task.costGraph.objectives.size
                     ) { index ->
                         index
-                    }.toPermutation()
+                    }.asPermutation()
                 )
             }
         else
@@ -37,7 +37,7 @@ class InitializePopulationByModuloStepper(
                     0,
                     null,
                     1,
-                    intArrayOf(0).toPermutation()
+                    intArrayOf(0).asPermutation()
                 )
             )
 
@@ -67,7 +67,7 @@ class InitializePopulationByModuloStepper(
         val newContains = BooleanArray(sizeOfPermutation) { false }
         val newPermutation = IntArray(sizeOfPermutation) { -1 }
         var baseIndex = step
-        for (newIndex in 0 ..<sizeOfPermutation) {
+        for (newIndex in 0..<sizeOfPermutation) {
             if (newContains[basePermutation[baseIndex]])
                 baseIndex = (baseIndex + 1) % sizeOfPermutation
             newPermutation[newIndex] = basePermutation[baseIndex]

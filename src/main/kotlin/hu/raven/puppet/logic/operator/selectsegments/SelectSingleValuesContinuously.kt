@@ -1,7 +1,7 @@
 package hu.raven.puppet.logic.operator.selectsegments
 
-import hu.raven.puppet.model.math.Permutation
-import hu.raven.puppet.utility.extention.nextSegmentStartPosition
+import hu.akos.hollo.szabo.math.Permutation
+import hu.akos.hollo.szabo.math.random.nextSegmentStartPosition
 import kotlin.random.Random
 
 class SelectSingleValuesContinuously(
@@ -19,7 +19,7 @@ class SelectSingleValuesContinuously(
                 cloneSegmentLength
             )
 
-        val randomRange = segmentPosition ..<segmentPosition + cloneSegmentLength
+        val randomRange = segmentPosition..<segmentPosition + cloneSegmentLength
         return buildList {
             if (randomRange.isEmpty()) {
                 add(
@@ -34,7 +34,7 @@ class SelectSingleValuesContinuously(
             }
 
             if (randomRange.first != 0) {
-                val startRange = 0 ..<randomRange.first
+                val startRange = 0..<randomRange.first
                 add(
                     ContinuousSegment(
                         index = size,
@@ -57,7 +57,7 @@ class SelectSingleValuesContinuously(
                 .let(::addAll)
 
             if (randomRange.last != specimen.indices.last) {
-                val endRange = randomRange.last + 1 ..<specimen.size
+                val endRange = randomRange.last + 1..<specimen.size
                 add(
                     ContinuousSegment(
                         index = size,
