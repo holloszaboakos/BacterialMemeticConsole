@@ -46,6 +46,7 @@ import java.nio.file.Path
 //iterationOfCreation=707, cost=[17385.0], 16 virus, 8 length, 0.01, 0.5, 0.5
 //iterationOfCreation=758, cost=[17369.0], 64 virus, 8 length, 1 / 64, 0.5, 0.5
 //iterationOfCreation=1066, cost=[17305.0], 64 virus, 16 length, 1 / 128, 0.5, 0.5
+//NEW TSP DATASET
 fun main() {
     startKoin {
         modules(module {

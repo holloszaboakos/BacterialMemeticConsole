@@ -1,1 +1,198 @@
-{"transportUnits":{"array":[]},"costGraph":{"center":{"latitude":0.0,"longitude":0.0},"objectives":{"array":[]},"edgesBetween":{"array":[{"array":[{"length":18.0},{"length":669.0},{"length":2792.0},{"length":471.0},{"length":643.0},{"length":3729.0}]},{"array":[{"length":601.0},{"length":651.0},{"length":3393.0},{"length":1072.0},{"length":1244.0},{"length":4330.0}]},{"array":[{"length":1982.0},{"length":1381.0},{"length":4419.0},{"length":1272.0},{"length":2625.0},{"length":4279.0}]},{"array":[{"length":707.0},{"length":106.0},{"length":757.0},{"length":1178.0},{"length":1350.0},{"length":1309.0}]},{"array":[{"length":748.0},{"length":766.0},{"length":1417.0},{"length":3398.0},{"length":1391.0},{"length":3258.0}]},{"array":[{"length":1667.0},{"length":1066.0},{"length":1717.0},{"length":2149.0},{"length":2138.0},{"length":3458.0}]},{"array":[{"length":847.0},{"length":246.0},{"length":897.0},{"length":140.0},{"length":1318.0},{"length":1313.0}]}]},"edgesFromCenter":{"array":[{"length":2181.0},{"length":1580.0},{"length":2231.0},{"length":1737.0},{"length":2652.0},{"length":514.0},{"length":1597.0}]},"edgesToCenter":{"array":[{"length":3351.0},{"length":3333.0},{"length":2682.0},{"length":3439.0},{"length":4099.0},{"length":3687.0},{"length":3579.0}]}}}
+{
+  "transportUnits": [],
+  "costGraph": {
+    "center": {
+      "latitude": 0.0,
+      "longitude": 0.0
+    },
+    "objectives": [],
+    "edgesBetween": [
+      [
+        {
+          "length": 4366.0
+        },
+        {
+          "length": 3115.0
+        },
+        {
+          "length": 4741.0
+        },
+        {
+          "length": 2556.0
+        },
+        {
+          "length": 3946.0
+        },
+        {
+          "length": 6305.0
+        }
+      ],
+      [
+        {
+          "length": 900.0
+        },
+        {
+          "length": 4015.0
+        },
+        {
+          "length": 375.0
+        },
+        {
+          "length": 2005.0
+        },
+        {
+          "length": 2307.0
+        },
+        {
+          "length": 5369.0
+        }
+      ],
+      [
+        {
+          "length": 4295.0
+        },
+        {
+          "length": 3395.0
+        },
+        {
+          "length": 3770.0
+        },
+        {
+          "length": 3863.0
+        },
+        {
+          "length": 5253.0
+        },
+        {
+          "length": 4650.0
+        }
+      ],
+      [
+        {
+          "length": 2121.0
+        },
+        {
+          "length": 1221.0
+        },
+        {
+          "length": 3758.0
+        },
+        {
+          "length": 1630.0
+        },
+        {
+          "length": 1932.0
+        },
+        {
+          "length": 4994.0
+        }
+      ],
+      [
+        {
+          "length": 7137.0
+        },
+        {
+          "length": 6237.0
+        },
+        {
+          "length": 4514.0
+        },
+        {
+          "length": 5016.0
+        },
+        {
+          "length": 5306.0
+        },
+        {
+          "length": 7665.0
+        }
+      ],
+      [
+        {
+          "length": 5053.0
+        },
+        {
+          "length": 4153.0
+        },
+        {
+          "length": 3718.0
+        },
+        {
+          "length": 4528.0
+        },
+        {
+          "length": 5652.0
+        },
+        {
+          "length": 3062.0
+        }
+      ],
+      [
+        {
+          "length": 1991.0
+        },
+        {
+          "length": 1091.0
+        },
+        {
+          "length": 2953.0
+        },
+        {
+          "length": 1466.0
+        },
+        {
+          "length": 3096.0
+        },
+        {
+          "length": 3398.0
+        }
+      ]
+    ],
+    "edgesFromCenter": [
+      {
+        "length": 5432.0
+      },
+      {
+        "length": 4532.0
+      },
+      {
+        "length": 1416.0
+      },
+      {
+        "length": 3311.0
+      },
+      {
+        "length": 818.0
+      },
+      {
+        "length": 2208.0
+      },
+      {
+        "length": 4567.0
+      }
+    ],
+    "edgesToCenter": [
+      {
+        "length": 1738.0
+      },
+      {
+        "length": 2638.0
+      },
+      {
+        "length": 3045.0
+      },
+      {
+        "length": 2342.0
+      },
+      {
+        "length": 3098.0
+      },
+      {
+        "length": 4834.0
+      },
+      {
+        "length": 3729.0
+      }
+    ]
+  }
+}

@@ -1,1 +1,58 @@
-{"transportUnits":{"array":[]},"costGraph":{"center":{"latitude":0.0,"longitude":0.0},"objectives":{"array":[]},"edgesBetween":{"array":[{"array":[{"length":855.0},{"length":3254.0}]},{"array":[{"length":1004.0},{"length":4258.0}]},{"array":[{"length":2916.0},{"length":3120.0}]}]},"edgesFromCenter":{"array":[{"length":750.0},{"length":1605.0},{"length":1767.0}]},"edgesToCenter":{"array":[{"length":1487.0},{"length":2491.0},{"length":2166.0}]}}}
+{
+  "transportUnits": [],
+  "costGraph": {
+    "center": {
+      "latitude": 0.0,
+      "longitude": 0.0
+    },
+    "objectives": [],
+    "edgesBetween": [
+      [
+        {
+          "length": 6362.0
+        },
+        {
+          "length": 2383.0
+        }
+      ],
+      [
+        {
+          "length": 4255.0
+        },
+        {
+          "length": 2979.0
+        }
+      ],
+      [
+        {
+          "length": 1276.0
+        },
+        {
+          "length": 7131.0
+        }
+      ]
+    ],
+    "edgesFromCenter": [
+      {
+        "length": 3957.0
+      },
+      {
+        "length": 1701.0
+      },
+      {
+        "length": 2681.0
+      }
+    ],
+    "edgesToCenter": [
+      {
+        "length": 4661.0
+      },
+      {
+        "length": 1772.0
+      },
+      {
+        "length": 5430.0
+      }
+    ]
+  }
+}

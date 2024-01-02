@@ -57,6 +57,7 @@ import java.nio.file.Path
 //iterationOfCreation=9957, cost=[30335.0], EdgeSelectorCrossOver
 //iterationOfCreation=23061, cost=[16978.0], EdgeSelectorCrossOver
 
+//NEW TSP DATASET
 fun main() {
     val size = 256
     startKoin {

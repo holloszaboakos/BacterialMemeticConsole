@@ -1,7 +1,7 @@
 package hu.raven.puppet.logic.task.loader
 
-import hu.akos.hollo.szabo.collections.ImmutableArray
 import hu.akos.hollo.szabo.collections.asImmutable
+import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray
 import hu.akos.hollo.szabo.math.FloatSumExtensions.sumClever
 import hu.raven.puppet.logic.logging.ObjectLoggerService
 import hu.raven.puppet.model.task.*

@@ -5,6 +5,7 @@ import hu.akos.hollo.szabo.math.FloatSumExtensions.sumClever
 import hu.raven.puppet.logic.logging.ObjectLoggerService
 import hu.raven.puppet.model.task.CostGraphVertex
 import hu.raven.puppet.model.task.Task
+import hu.raven.puppet.model.task.TaskSerializable
 import java.nio.file.Path
 
 class TspTaskLoaderService(
@@ -12,7 +13,8 @@ class TspTaskLoaderService(
     private val fileName: String
 ) : TaskLoaderService() {
     override fun loadTask(folderPath: String): Task {
-        val standardTask: Task = loadFromResourceFile(Path.of(folderPath, fileName))
+        val standardTaskSerializable: TaskSerializable = loadFromResourceFile(Path.of(folderPath, fileName))
+        val standardTask: Task = standardTaskSerializable.toTask()
         val taskWithObjectives = standardTask.copy(
             costGraph = standardTask.costGraph.copy(
                 objectives = Array(standardTask.costGraph.edgesFromCenter.size) {

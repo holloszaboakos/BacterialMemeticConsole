@@ -1,5 +1,6 @@
 plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.9.20'
+    id 'org.jetbrains.kotlin.jvm' version '1.9.21'
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.6.21'
 }
 
 group 'hu.raven.puppet'
@@ -17,7 +18,7 @@ ext {
 
 dependencies {
 
-    implementation "hu.akos.hollo.szabo:common-utils:1.0.2-SNAPSHOT"
+    implementation "hu.akos.hollo.szabo:common-utils:1.0.4-SNAPSHOT"
     implementation "org.jetbrains.kotlin:kotlin-stdlib"
     implementation "org.jetbrains.kotlin:kotlin-reflect"
 
