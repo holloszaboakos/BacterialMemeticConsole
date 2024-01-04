@@ -1,5 +1,7 @@
 package hu.raven.puppet
 
+import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray.Companion.indices
+import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray.Companion.size
 import hu.raven.puppet.logic.task.generator.TspGeneratorService
 import hu.raven.puppet.model.task.CostGraph
 import java.io.File

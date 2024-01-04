@@ -7,7 +7,7 @@ data class TaskSerializable(
     val costGraph: CostGraphSerializable = CostGraphSerializable()
 ) {
     constructor(task: Task) : this(
-        transportUnits = task.transportUnits,
+        transportUnits = task.transportUnits.asList(),
         costGraph = CostGraphSerializable(task.costGraph)
     )
 

@@ -1,6 +1,8 @@
 package hu.raven.puppet.model.task.desmet
 
 import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray
+import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray.Companion.contentEquals
+import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray.Companion.contentHashCode
 
 
 data class DesmetTask(

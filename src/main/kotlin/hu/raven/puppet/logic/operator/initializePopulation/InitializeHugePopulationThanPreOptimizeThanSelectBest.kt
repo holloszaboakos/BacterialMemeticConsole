@@ -1,5 +1,6 @@
 package hu.raven.puppet.logic.operator.initializePopulation
 
+import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray.Companion.size
 import hu.akos.hollo.szabo.collections.slice
 import hu.akos.hollo.szabo.math.asPermutation
 import hu.raven.puppet.logic.operator.bacterialmutationonspecimen.MutationOnSpecimen

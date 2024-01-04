@@ -1,6 +1,7 @@
 package hu.raven.puppet.logic.operator.calculatecost
 
 
+import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray.Companion.size
 import hu.akos.hollo.szabo.math.vector.FloatVector
 import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.floatVectorOf
 import hu.akos.hollo.szabo.physics.CubicMeter

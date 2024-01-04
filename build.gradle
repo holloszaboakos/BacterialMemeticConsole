@@ -18,7 +18,7 @@ ext {
 
 dependencies {
 
-    implementation "hu.akos.hollo.szabo:common-utils:1.0.4-SNAPSHOT"
+    implementation "hu.akos.hollo.szabo:common-utils:1.0.5-SNAPSHOT"
     implementation "org.jetbrains.kotlin:kotlin-stdlib"
     implementation "org.jetbrains.kotlin:kotlin-reflect"
 

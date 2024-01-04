@@ -11,10 +11,10 @@ data class CostGraphSerializable(
 ) {
     constructor(costGraph: CostGraph) : this(
         center = costGraph.center,
-        objectives = costGraph.objectives,
-        edgesBetween = costGraph.edgesBetween,
-        edgesFromCenter = costGraph.edgesFromCenter,
-        edgesToCenter = costGraph.edgesToCenter,
+        objectives = costGraph.objectives.asList(),
+        edgesBetween = costGraph.edgesBetween.map{ it.asList() },
+        edgesFromCenter = costGraph.edgesFromCenter.asList(),
+        edgesToCenter = costGraph.edgesToCenter.asList(),
     )
 
     fun toCostGraph() = CostGraph(

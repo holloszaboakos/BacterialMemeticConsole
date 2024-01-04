@@ -1,6 +1,8 @@
 package hu.raven.puppet.model.task
 
 import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray
+import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray.Companion.contentEquals
+import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray.Companion.contentHashCode
 import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray.Companion.immutableArrayOf
 
 

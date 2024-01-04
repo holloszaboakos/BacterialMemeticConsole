@@ -1,5 +1,6 @@
 package hu.raven.puppet.logic.step.mutatechildren
 
+import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray.Companion.size
 import hu.akos.hollo.szabo.collections.slice
 import hu.akos.hollo.szabo.math.Permutation
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId

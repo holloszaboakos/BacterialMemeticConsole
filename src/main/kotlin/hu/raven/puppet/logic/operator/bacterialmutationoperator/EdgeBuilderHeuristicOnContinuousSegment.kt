@@ -1,5 +1,6 @@
 package hu.raven.puppet.logic.operator.bacterialmutationoperator
 
+import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray.Companion.size
 import hu.akos.hollo.szabo.math.FloatSumExtensions.sumClever
 import hu.akos.hollo.szabo.math.calculus.multiplicativeInverse
 import hu.raven.puppet.logic.operator.selectsegments.ContinuousSegment

@@ -1,5 +1,6 @@
 package hu.raven.puppet.logic.initialize
 
+import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray.Companion.size
 import hu.akos.hollo.szabo.math.asPermutation
 import hu.raven.puppet.logic.operator.calculatecost.CalculateCost
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIteration

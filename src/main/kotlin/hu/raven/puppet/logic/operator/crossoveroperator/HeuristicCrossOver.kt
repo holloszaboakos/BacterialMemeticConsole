@@ -1,5 +1,6 @@
 package hu.raven.puppet.logic.operator.crossoveroperator
 
+import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray.Companion.size
 import hu.akos.hollo.szabo.math.Permutation
 import hu.akos.hollo.szabo.math.calculus.multiplicativeInverse
 import hu.akos.hollo.szabo.primitives.get
