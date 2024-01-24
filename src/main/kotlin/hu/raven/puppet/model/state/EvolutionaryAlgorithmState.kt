@@ -6,7 +6,7 @@ import hu.raven.puppet.model.task.Task
 
 open class EvolutionaryAlgorithmState(
     override val task: Task,
-    val population: PoolWithSmartActivation<OnePartRepresentationWithCostAndIterationAndId>
+    open val population: PoolWithSmartActivation<OnePartRepresentationWithCostAndIterationAndId>
 ) : IterativeAlgorithmState {
     override var iteration = 0
     var copyOfBest: OnePartRepresentationWithCostAndIterationAndId? = null

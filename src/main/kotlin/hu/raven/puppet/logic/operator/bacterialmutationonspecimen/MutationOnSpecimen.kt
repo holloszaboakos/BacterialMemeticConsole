@@ -1,6 +1,7 @@
 package hu.raven.puppet.logic.operator.bacterialmutationonspecimen
 
 
+import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.length
 import hu.raven.puppet.logic.operator.bacterialmutationoperator.BacterialMutationOperator
 import hu.raven.puppet.logic.operator.calculatecost.CalculateCost
 import hu.raven.puppet.logic.operator.selectsegments.SelectSegments

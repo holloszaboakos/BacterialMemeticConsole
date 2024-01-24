@@ -7,9 +7,9 @@ import hu.raven.puppet.model.task.CostGraph
 import java.io.File
 
 private const val SIZE = 64
-private const val AMOUNT_TO_GENERATE = 100
+private const val AMOUNT_TO_GENERATE = 10_000
 private val DISTANCE_RANGE = 1..<1_000_000
-private const val OUTPUT_FOLDER = "output/generated_tsp_tasks_64"
+private const val OUTPUT_FOLDER = "output/generated_tsp_tasks_64_v2"
 fun main() {
     val generatorService = TspGeneratorService()
     repeat(AMOUNT_TO_GENERATE) { repetitionIndex ->

@@ -3,6 +3,7 @@ package hu.raven.puppet.logic.operator.initializePopulation
 import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray.Companion.size
 import hu.akos.hollo.szabo.collections.slice
 import hu.akos.hollo.szabo.math.asPermutation
+import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.length
 import hu.raven.puppet.logic.operator.bacterialmutationonspecimen.MutationOnSpecimen
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.task.Task

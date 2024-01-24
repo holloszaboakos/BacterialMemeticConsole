@@ -1,6 +1,7 @@
 package hu.raven.puppet.logic.step.booststrategy
 
 import hu.akos.hollo.szabo.math.vector.FloatVector
+import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.dominatesSmaller
 import hu.raven.puppet.logic.operator.boostoperator.BoostOperator
 
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId

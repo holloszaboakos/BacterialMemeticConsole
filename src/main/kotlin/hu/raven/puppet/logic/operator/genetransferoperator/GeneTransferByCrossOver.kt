@@ -1,6 +1,7 @@
 package hu.raven.puppet.logic.operator.genetransferoperator
 
 
+import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.dominatesSmaller
 import hu.raven.puppet.logic.operator.calculatecost.CalculateCost
 import hu.raven.puppet.logic.operator.crossoveroperator.CrossOverOperator
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCost

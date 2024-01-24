@@ -17,9 +17,9 @@ fun main() {
         repeat(REPEAT_PER_SIZE) { repetitionIndex ->
             val task = generatorService.generateTspTask(size, DISTANCE_RANGE)
             val json = gson.toJson(TaskSerializable(task))
-            val outputFile = File("$OUTPUT_FOLDER\\size${size}instance$repetitionIndex.json")
+            val outputFile = File("$OUTPUT_FOLDER\\size${size}instance$repetitionIndex.txt")
             outputFile.writeText(json)
-            println("finished generation of size${size}instance$repetitionIndex.json")
+            println("finished generation of size${size}instance$repetitionIndex.txt")
         }
     }
 }

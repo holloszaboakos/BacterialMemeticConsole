@@ -1,28 +1,20 @@
-package hu.raven.puppet.logic.step.transcription
+package hu.raven.puppet.logic.step.bacteriophagetranscription
 
 import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.dominatesSmaller
 import hu.raven.puppet.logic.operator.calculatecost.CalculateCost
+import hu.raven.puppet.logic.step.EvolutionaryAlgorithmStep
+import hu.raven.puppet.model.solution.BacteriophageSpecimen
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
-import hu.raven.puppet.model.solution.VirusSpecimen
-import hu.raven.puppet.model.state.VirusEvolutionaryAlgorithmState
+import hu.raven.puppet.model.solution.SimpleGraphEdge
+import hu.raven.puppet.model.state.BacteriophageEvolutionaryAlgorithmState
 
-import kotlin.random.Random
-
-//TODO
-//iterate virus
-//for each virus select random targets
-//for each target
-//store old cost
-//insert virus
-//map cost difference to fitness
-//calculate new life force
-class VegaTranscription(
-    override val virusInfectionRate: Float, //TODO use
-    override val lifeReductionRate: Float,
-    override val lifeCoefficient: Float,
+class BacteriophageTranscription(
+    val infectionRate: Float, //TODO use
+    val lifeReductionRate: Float,
+    val lifeCoefficient: Float,
     private val calculateCost: CalculateCost
-) : Transcription() {
-    override fun invoke(state: VirusEvolutionaryAlgorithmState) {
+) : EvolutionaryAlgorithmStep<BacteriophageEvolutionaryAlgorithmState> {
+    override fun invoke(state: BacteriophageEvolutionaryAlgorithmState) {
         state.virusPopulation.activesAsSequence()
             .onEach { virus ->
                 val fitness = state.population.activesAsSequence()
@@ -70,12 +62,21 @@ class VegaTranscription(
             }
     }
 
-    private fun applyVirus(specimen: OnePartRepresentationWithCostAndIterationAndId, virus: VirusSpecimen) {
-        val randomStartPosition = Random.nextInt(specimen.permutation.size - virus.genes.size + 1)
-
-        virus.genes.forEachIndexed { index, gene ->
-            val oldIndex = specimen.permutation.indexOf(gene)
-            specimen.permutation.swapValues(index + randomStartPosition, oldIndex)
+    private fun applyVirus(specimen: OnePartRepresentationWithCostAndIterationAndId, virus: BacteriophageSpecimen) {
+        val currentEdges = (0..specimen.permutation.size)
+            .map { SimpleGraphEdge(specimen.permutation.before(it), it) }
+        val reducedEdges = currentEdges.filter {
+            virus.removedEdges.all { toRemove ->
+                toRemove.sourceNodeIndex != it.sourceNodeIndex || toRemove.targetNodeIndex != it.targetNodeIndex
+            }
         }
+
+        val sequentialRepresentation = IntArray(specimen.permutation.size) { -1 }
+
+        //TODO create sequential representation
+        //TODO create sequences
+        //TODO try insert edges
+        //TODO connect sequences
+        //TODO write result to specimen
     }
 }

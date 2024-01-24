@@ -1,5 +1,7 @@
 package hu.raven.puppet.logic.step.crossoverstrategy
 
+import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.dominatesSmaller
+import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.length
 import hu.raven.puppet.logic.logging.ObjectLoggerService
 import hu.raven.puppet.logic.operator.calculatecost.CalculateCost
 import hu.raven.puppet.logic.operator.crossoveroperator.CrossOverOperator
@@ -90,14 +92,14 @@ class StatisticalRacingCrossOver(
                     if (parents.first.costOrException() dominatesSmaller child.costOrException()) {
                         newSuccess +=
                             (iteration.toLong() - parents.first.iterationOfCreation).toFloat() /
-                                    child.costOrException().length() /
+                                    child.costOrException().length().toFloat() /
                                     (population.indexOf(parents.first).toLong() + 1).toFloat().let { it * it }
                     }
 
                     if (parents.second.costOrException() dominatesSmaller child.costOrException()) {
                         newSuccess +=
                             (iteration.toLong() - parents.second.iterationOfCreation).toFloat() /
-                                    child.costOrException().length() /
+                                    child.costOrException().length().toFloat() /
                                     (population.indexOf(parents.second).toLong() + 1).toFloat().let { it * it }
                     }
                     actualStatistics = oldStatistics.copy(success = newSuccess)

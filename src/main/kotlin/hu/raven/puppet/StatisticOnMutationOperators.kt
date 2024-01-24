@@ -1,6 +1,7 @@
 package hu.raven.puppet
 
 import hu.akos.hollo.szabo.math.Permutation
+import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.length
 import hu.raven.puppet.configuration.AlgorithmParameters.*
 import hu.raven.puppet.configuration.FilePathVariableNames.*
 import hu.raven.puppet.logic.logging.ObjectLoggerService

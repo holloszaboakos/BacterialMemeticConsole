@@ -33,6 +33,7 @@ import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
+import java.io.File
 import java.nio.file.Path
 
 //size 128 instance 0
@@ -51,13 +52,20 @@ import java.nio.file.Path
 //size 64 instance 0 population 64x64
 //1608749
 //[8, 28, 25, 42, 24, 34, 57, 14, 21, 45, 12, 36, 7, 47, 50, 46, 52, 33, 3, 17, 49, 1, 13, 9, 54, 6, 10, 39, 48, 43, 16, 38, 31, 56, 0, 19, 5, 59, 15, 40, 26, 29, 20, 53, 4, 37, 55, 41, 27, 11, 23, 62, 30, 18, 58, 22, 44, 35, 60, 32, 51, 2, 61]
-
+//1599378
+//[8, 28, 25, 42, 24, 34, 1, 29, 20, 53, 4, 7, 52, 33, 3, 17, 49, 13, 9, 54, 6, 10, 14, 21, 11, 23, 62, 30, 18, 57, 39, 48, 43, 16, 38, 31, 56, 0, 19, 5, 59, 15, 40, 26, 47, 46, 50, 45, 12, 36, 41, 27, 37, 55, 58, 22, 44, 35, 60, 32, 51, 2, 61]
 fun main() {
+    for (i in 0..99) {
+        runOnInstance(i)
+    }
+}
+
+fun runOnInstance(instanceId: Int) {
     val SIZE = 64
     startKoin {
         modules(module {
             single(named(FilePathVariableNames.INPUT_FOLDER)) { "\\input\\tsp$SIZE" }
-            single(named(FilePathVariableNames.SINGLE_FILE)) { "instance0.json" }
+            single(named(FilePathVariableNames.SINGLE_FILE)) { "instance$instanceId.json" }
             single(named(FilePathVariableNames.OUTPUT_FOLDER)) { Path.of("output\\default\\output.txt") }
             single<InitializeAlgorithm<*>> {
                 InitializeEvolutionaryAlgorithm(
@@ -129,15 +137,21 @@ fun main() {
     val state = initialization(KoinUtil.get())
     repeat(10_000) {
         iteration(state)
-        print("iteration $it.: ")
-        println(state.copyOfBest)
+        if (it % 100 == 0) {
+            print("iteration $it.: ")
+            println(state.copyOfBest)
+        }
+    }
+
+    state.copyOfBest?.permutation?.toIntArray()?.let {
+        File("results").appendText("\n${it.asList()}")
     }
 
     stopKoin()
 }
 
 private fun loadTask(inputFolder: String, inputFile: String): Task {
-    val matrix = Loader.loadMatrix(inputFolder, inputFile)
+    val matrix = MatrixLoader.loadMatrix(inputFolder, inputFile)
     val costGraph = CostGraph(
         center = Gps(),
         objectives = Array(matrix.size - 1) { CostGraphVertex() }.asImmutable(),
@@ -169,8 +183,9 @@ private fun loadTask(inputFolder: String, inputFile: String): Task {
     )
 }
 
-private class Loader {
+class MatrixLoader {
     companion object {
+
         fun loadMatrix(inputFolder: String, inputFile: String): List<List<Int>> {
             val url = this::class.java.getResource("$inputFolder\\$inputFile".replace("\\", "/"))
                 ?: throw Exception("File not found")

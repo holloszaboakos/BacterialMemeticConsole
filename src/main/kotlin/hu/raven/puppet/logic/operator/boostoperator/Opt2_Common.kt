@@ -1,5 +1,6 @@
 package hu.raven.puppet.logic.operator.boostoperator
 
+import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.dominatesSmaller
 import hu.raven.puppet.logic.operator.calculatecost.CalculateCost
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCost
 

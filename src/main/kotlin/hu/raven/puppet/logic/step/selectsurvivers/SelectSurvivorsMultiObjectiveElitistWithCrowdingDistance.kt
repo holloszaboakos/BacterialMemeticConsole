@@ -1,5 +1,6 @@
 package hu.raven.puppet.logic.step.selectsurvivers
 
+import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.dominatesSmaller
 import hu.raven.puppet.logic.operator.crowdingdistance.CrowdingDistance
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState

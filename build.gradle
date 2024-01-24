@@ -35,3 +35,10 @@ dependencies {
 
     testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.24.2'
 }
+
+kotlin {
+    jvmToolchain {
+        // Target version of generated JVM bytecode
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
+}

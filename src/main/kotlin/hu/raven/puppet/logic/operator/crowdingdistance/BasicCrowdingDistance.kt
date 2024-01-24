@@ -2,6 +2,7 @@ package hu.raven.puppet.logic.operator.crowdingdistance
 
 import hu.akos.hollo.szabo.math.asFloatVector
 import hu.akos.hollo.szabo.math.vector.FloatVector
+import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.set
 
 data object BasicCrowdingDistance : CrowdingDistance {
     override fun invoke(costVectors: List<FloatVector>): FloatVector {

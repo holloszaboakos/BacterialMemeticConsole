@@ -1,5 +1,6 @@
 package hu.raven.puppet.logic.step.genetransfer
 
+import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.length
 import hu.raven.puppet.logic.operator.genetransferoperator.GeneTransferOperator
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
