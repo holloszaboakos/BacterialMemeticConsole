@@ -28,7 +28,7 @@ import hu.raven.puppet.logic.step.selectsurvivers.SelectSurvivors
 import hu.raven.puppet.logic.step.selectsurvivers.SelectSurvivorsMultyObjectiveHalfElitist
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.model.task.*
-import hu.raven.puppet.utility.KoinUtil
+import hu.raven.puppet.utility.extention.KoinUtil
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.core.qualifier.named
@@ -137,10 +137,8 @@ fun runOnInstance(instanceId: Int) {
     val state = initialization(KoinUtil.get())
     repeat(10_000) {
         iteration(state)
-        if (it % 100 == 0) {
-            print("iteration $it.: ")
-            println(state.copyOfBest)
-        }
+        print("iteration $it.: ")
+        println(state.copyOfBest)
     }
 
     state.copyOfBest?.permutation?.toIntArray()?.let {

@@ -6,6 +6,8 @@ import hu.akos.hollo.szabo.math.calculus.multiplicativeInverse
 import hu.raven.puppet.logic.operator.selectsegments.ContinuousSegment
 import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.task.Task
+import hu.raven.puppet.model.utility.SimpleGraphEdge
+import hu.raven.puppet.utility.buildPermutation
 import hu.raven.puppet.utility.extention.getEdgeBetween
 import kotlin.random.Random
 
@@ -54,54 +56,32 @@ class EdgeBuilderHeuristicOnContinuousSegment(
 
         clone.permutation.clear()
 
-        val sequentialRepresentationOfSequence = IntArray(finalWeightMatrix.size) { -1 }
-        val segmentsOfEdges: MutableList<Pair<Int, Int>> = mutableListOf()
+        val elementIndexes = buildPermutation(finalWeightMatrix.size) {
 
-        repeat(segmentsToMove.size) {
-            try {
+            repeat(segmentsToMove.size - 1) {
+                try {
 
-                val selectedEdge = selectEdgeBasedOnWeights(finalWeightMatrix)
-                    ?: selectRandomFromAvailable(availabilityMatrix)
+                    val selectedEdge = selectEdgeBasedOnWeights(finalWeightMatrix)
+                        ?: selectRandomFromAvailable(availabilityMatrix)
 
 
-                sequentialRepresentationOfSequence[selectedEdge.first] = selectedEdge.second
+                    val newSegment = addEdge(selectedEdge)
 
-                val newSegment = createNewSegment(
-                    segmentsOfEdges,
-                    selectedEdge
-                )
+                    removeWeightOfExclusionaryEdges(
+                        reducedWeightMatrix,
+                        availabilityMatrix,
+                        newSegment,
+                        selectedEdge
+                    )
 
-                removeWeightOfExclusionaryEdges(
-                    reducedWeightMatrix,
-                    availabilityMatrix,
-                    newSegment,
-                    selectedEdge
-                )
-
-                finalWeightMatrix = reducedWeightMatrix.normalize()
-            } catch (e: Exception) {
-                e.printStackTrace()
-                throw e
+                    finalWeightMatrix = reducedWeightMatrix.normalize()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    throw e
+                }
             }
-        }
 
-        Pair(
-            segmentsOfEdges.first().second,
-            segmentsOfEdges.first().first
-        ).let {
-            sequentialRepresentationOfSequence[it.first] = it.second
-        }
-
-        val elementIndexes = IntArray(segmentsToMove.size) { -1 }
-        var lastElement = segmentsToMove.size
-        repeat(elementIndexes.size) { index ->
-            try {
-                elementIndexes[index] = sequentialRepresentationOfSequence[lastElement]
-                lastElement = elementIndexes[index]
-            } catch (e: ArrayIndexOutOfBoundsException) {
-                e.printStackTrace()
-                throw e
-            }
+            this.addLastEdge()
         }
 
         var counter = -1
@@ -129,14 +109,14 @@ class EdgeBuilderHeuristicOnContinuousSegment(
         }
     }
 
-    private fun selectRandomFromAvailable(availabilityMatrix: Array<BooleanArray>): Pair<Int, Int> =
+    private fun selectRandomFromAvailable(availabilityMatrix: Array<BooleanArray>): SimpleGraphEdge =
         availabilityMatrix
             .mapIndexed { columnIndex, column ->
                 column
                     .withIndex()
                     .filter { it.value }
                     .map { (index, _) ->
-                        Pair(columnIndex, index)
+                        SimpleGraphEdge(columnIndex, index)
                     }
             }
             .flatten()
@@ -263,72 +243,28 @@ class EdgeBuilderHeuristicOnContinuousSegment(
     private fun removeWeightOfExclusionaryEdges(
         finalWeightMatrix: Array<FloatArray>,
         availabilityMatrix: Array<BooleanArray>,
-        newSegment: Pair<Int, Int>,
-        selectedEdge: Pair<Int, Int>
+        newSegment: SimpleGraphEdge,
+        selectedEdge: SimpleGraphEdge
     ) {
-        finalWeightMatrix[newSegment.second][newSegment.first] = 0f
-        availabilityMatrix[newSegment.second][newSegment.first] = false
+        finalWeightMatrix[newSegment.targetNodeIndex][newSegment.sourceNodeIndex] = 0f
+        availabilityMatrix[newSegment.targetNodeIndex][newSegment.sourceNodeIndex] = false
 
-        finalWeightMatrix.indices.forEach { columnIndex ->
-            finalWeightMatrix[columnIndex][selectedEdge.second] = 0f
-            availabilityMatrix[columnIndex][selectedEdge.second] = false
-        }
+        finalWeightMatrix.indices
+            .forEach { columnIndex ->
+                finalWeightMatrix[columnIndex][selectedEdge.targetNodeIndex] = 0f
+                availabilityMatrix[columnIndex][selectedEdge.targetNodeIndex] = false
+            }
 
-        finalWeightMatrix.first().indices.forEach { rowIndex ->
-            finalWeightMatrix[selectedEdge.first][rowIndex] = 0f
-            availabilityMatrix[selectedEdge.first][rowIndex] = false
-        }
-    }
-
-    private fun createNewSegment(
-        segmentsOfEdges: MutableList<Pair<Int, Int>>,
-        selectedEdge: Pair<Int, Int>
-    ): Pair<Int, Int> {
-
-        val segmentWithCommonEnd = segmentsOfEdges.firstOrNull {
-            it.second == selectedEdge.first
-        }?.also {
-            segmentsOfEdges.remove(it)
-        }
-
-        val segmentWithCommonStart = segmentsOfEdges.firstOrNull {
-            it.first == selectedEdge.second
-        }?.also {
-            segmentsOfEdges.remove(it)
-        }
-
-        val newSegment = when {
-            segmentWithCommonStart != null && segmentWithCommonEnd != null ->
-                Pair(
-                    segmentWithCommonEnd.first,
-                    segmentWithCommonStart.second
-                )
-
-            segmentWithCommonStart != null ->
-                Pair(
-                    selectedEdge.first,
-                    segmentWithCommonStart.second
-                )
-
-            segmentWithCommonEnd != null ->
-                Pair(
-                    segmentWithCommonEnd.first,
-                    selectedEdge.second
-                )
-
-            else ->
-                selectedEdge
-
-        }
-
-
-        segmentsOfEdges.add(newSegment)
-        return newSegment
+        finalWeightMatrix.first().indices
+            .forEach { rowIndex ->
+                finalWeightMatrix[selectedEdge.sourceNodeIndex][rowIndex] = 0f
+                availabilityMatrix[selectedEdge.sourceNodeIndex][rowIndex] = false
+            }
     }
 
     private fun selectEdgeBasedOnWeights(
         finalWeightMatrix: Array<LongArray>
-    ): Pair<Int, Int>? {
+    ): SimpleGraphEdge? {
         val sumOfWeights = finalWeightMatrix.sumOf { it.sum() }
         if (sumOfWeights == 0L) {
             return null
@@ -349,7 +285,7 @@ class EdgeBuilderHeuristicOnContinuousSegment(
                 sum += finalWeightMatrix[columnIndex][rowIndex]
 
                 if (randomPoint <= sum) {
-                    return Pair(columnIndex, rowIndex)
+                    return SimpleGraphEdge(columnIndex, rowIndex)
                 }
             }
         }

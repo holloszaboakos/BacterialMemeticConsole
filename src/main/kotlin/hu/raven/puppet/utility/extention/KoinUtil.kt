@@ -1,4 +1,4 @@
-package hu.raven.puppet.utility
+package hu.raven.puppet.utility.extention
 
 import org.koin.core.qualifier.named
 import org.koin.java.KoinJavaComponent

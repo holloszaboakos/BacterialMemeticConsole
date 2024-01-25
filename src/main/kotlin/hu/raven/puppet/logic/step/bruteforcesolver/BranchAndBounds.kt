@@ -6,6 +6,7 @@ import hu.akos.hollo.szabo.math.matrix.IntMatrix
 import hu.akos.hollo.szabo.math.vector.IntVector
 import hu.akos.hollo.szabo.math.vector.IntVector.Companion.set
 import hu.akos.hollo.szabo.math.vector.IntVector2D
+import hu.raven.puppet.model.utility.SimpleWeightedGraphEdge
 import kotlin.math.max
 import kotlin.math.min
 
@@ -21,7 +22,7 @@ fun branchAndBounds(graph: IntMatrix): Pair<Permutation, Int> {
                 mutableListOf(),
                 false,
                 graph[0][locationIndex],
-                graph[0][locationIndex] + minimalCostSpanningTree(graph).sumOf { it.cost },
+                graph[0][locationIndex] + minimalCostSpanningTree(graph).sumOf { it.weight },
                 0
             )
         }
@@ -111,7 +112,7 @@ private fun extractChildrenOf(node: Node, graph: IntMatrix, path: IntArray): Mut
                                     .filter { it !in path || it == 0 }
                                     .toList()
                             )
-                        ).sumOf { it.cost },
+                        ).sumOf { it.weight },
                 node.level + 1
             )
         }
@@ -129,21 +130,21 @@ private data class Node(
     val level: Int
 )
 
-private fun minimalCostSpanningTree(graph: IntMatrix): Array<SimpleWeightedEdge> {
+private fun minimalCostSpanningTree(graph: IntMatrix): Array<SimpleWeightedGraphEdge> {
     val nodeGrouping = IntVector(graph.size) { it }
     return (graph.indices)
         .map { from ->
             graph.indices.map { to ->
-                SimpleWeightedEdge(from, to, graph[from][to])
+                SimpleWeightedGraphEdge(from, to, graph[from][to])
             }
         }
         .flatten()
-        .sortedBy { it.cost }
+        .sortedBy { it.weight }
         .filter { edge ->
-            if (nodeGrouping[edge.from] == nodeGrouping[edge.to]) {
+            if (nodeGrouping[edge.sourceNodeIndex] == nodeGrouping[edge.targetNodeIndex]) {
                 false
             } else {
-                mergeGroups(nodeGrouping, IntVector2D(nodeGrouping[edge.from], nodeGrouping[edge.to]))
+                mergeGroups(nodeGrouping, IntVector2D(nodeGrouping[edge.sourceNodeIndex], nodeGrouping[edge.targetNodeIndex]))
                 true
             }
         }
