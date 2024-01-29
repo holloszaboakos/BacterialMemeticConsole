@@ -3,7 +3,7 @@ package hu.raven.puppet.logic.operator.bacteriophagetransduction
 import hu.akos.hollo.szabo.collections.asImmutable
 import hu.akos.hollo.szabo.math.Permutation
 import hu.raven.puppet.model.solution.BacteriophageSpecimen
-import hu.raven.puppet.model.solution.SimpleGraphEdge
+import hu.raven.puppet.model.utility.SimpleGraphEdge
 
 class BacteriophageTransductionOperator {
     operator fun invoke(

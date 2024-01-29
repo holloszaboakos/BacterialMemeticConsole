@@ -1,5 +1,6 @@
 package hu.raven.puppet.logic.step.transcription
 
+import hu.akos.hollo.szabo.collections.slice
 import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.dominatesSmaller
 import hu.raven.puppet.logic.operator.calculatecost.CalculateCost
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
@@ -17,7 +18,7 @@ import kotlin.random.Random
 //map cost difference to fitness
 //calculate new life force
 class VegaTranscription(
-    override val virusInfectionRate: Float, //TODO use
+    override val virusInfectionRate: Float,
     override val lifeReductionRate: Float,
     override val lifeCoefficient: Float,
     private val calculateCost: CalculateCost
@@ -26,6 +27,8 @@ class VegaTranscription(
         state.virusPopulation.activesAsSequence()
             .onEach { virus ->
                 val fitness = state.population.activesAsSequence()
+                    .shuffled()
+                    .slice(0..<(state.population.poolSize * virusInfectionRate).toInt())
                     .map { specimen ->
                         val oldCost = specimen.costOrException()
                         val oldPermutation = specimen.permutation.clone()

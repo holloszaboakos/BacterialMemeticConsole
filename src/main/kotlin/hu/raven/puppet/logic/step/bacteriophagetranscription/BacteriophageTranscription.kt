@@ -1,12 +1,14 @@
 package hu.raven.puppet.logic.step.bacteriophagetranscription
 
+import hu.akos.hollo.szabo.collections.slice
 import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.dominatesSmaller
 import hu.raven.puppet.logic.operator.calculatecost.CalculateCost
 import hu.raven.puppet.logic.step.EvolutionaryAlgorithmStep
 import hu.raven.puppet.model.solution.BacteriophageSpecimen
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
-import hu.raven.puppet.model.solution.SimpleGraphEdge
 import hu.raven.puppet.model.state.BacteriophageEvolutionaryAlgorithmState
+import hu.raven.puppet.model.utility.SimpleGraphEdge
+import hu.raven.puppet.utility.buildPermutation
 
 class BacteriophageTranscription(
     val infectionRate: Float, //TODO use
@@ -18,6 +20,8 @@ class BacteriophageTranscription(
         state.virusPopulation.activesAsSequence()
             .onEach { virus ->
                 val fitness = state.population.activesAsSequence()
+                    .shuffled()
+                    .slice(0..<(state.population.poolSize * infectionRate).toInt())
                     .map { specimen ->
                         val oldCost = specimen.costOrException()
                         val oldPermutation = specimen.permutation.clone()
@@ -71,12 +75,65 @@ class BacteriophageTranscription(
             }
         }
 
-        val sequentialRepresentation = IntArray(specimen.permutation.size) { -1 }
+        val availabilityMatrix = Array(specimen.permutation.size) {
+            BooleanArray(specimen.permutation.size) { true }
+        }
+        specimen.permutation.indices.forEach { availabilityMatrix[it][it] = false }
 
-        //TODO create sequential representation
-        //TODO create sequences
-        //TODO try insert edges
-        //TODO connect sequences
-        //TODO write result to specimen
+        val permutation = buildPermutation(specimen.permutation.size) {
+            reducedEdges.forEach { edge ->
+                val segment = addEdge(edge)
+                availabilityMatrix[edge.targetNodeIndex][edge.sourceNodeIndex] = false
+                availabilityMatrix[segment.targetNodeIndex][segment.sourceNodeIndex] = false
+                specimen.permutation.indices.forEach {
+                    availabilityMatrix[it][edge.targetNodeIndex] = false
+                    availabilityMatrix[edge.sourceNodeIndex][it] = false
+                }
+            }
+            virus.addedEdges.forEach { edge ->
+                if (!availabilityMatrix[edge.sourceNodeIndex][edge.targetNodeIndex])
+                    return@forEach
+                val segment = addEdge(edge)
+                availabilityMatrix[edge.targetNodeIndex][edge.sourceNodeIndex] = false
+                availabilityMatrix[segment.targetNodeIndex][segment.sourceNodeIndex] = false
+                specimen.permutation.indices.forEach {
+                    availabilityMatrix[it][edge.targetNodeIndex] = false
+                    availabilityMatrix[edge.sourceNodeIndex][it] = false
+                }
+            }
+
+            availabilityMatrix
+                .asSequence()
+                .flatMapIndexed { rowIndex, row ->
+                    row.asSequence()
+                        .mapIndexed { columnIndex, available ->
+                            Triple(
+                                rowIndex,
+                                columnIndex,
+                                available
+                            )
+                        }
+                }
+                .filter { it.third }
+                .map { SimpleGraphEdge(it.first, it.second) }
+                .shuffled()
+                .forEach { edge ->
+                    if (!availabilityMatrix[edge.sourceNodeIndex][edge.targetNodeIndex])
+                        return@forEach
+                    val segment = addEdge(edge)
+                    availabilityMatrix[edge.targetNodeIndex][edge.sourceNodeIndex] = false
+                    availabilityMatrix[segment.targetNodeIndex][segment.sourceNodeIndex] = false
+                    specimen.permutation.indices.forEach {
+                        availabilityMatrix[it][edge.targetNodeIndex] = false
+                        availabilityMatrix[edge.sourceNodeIndex][it] = false
+                    }
+                }
+            addLastEdge()
+        }
+        specimen.permutation.clear()
+        permutation
+            .forEachIndexed { index, value ->
+                specimen.permutation[index] = value
+            }
     }
 }
