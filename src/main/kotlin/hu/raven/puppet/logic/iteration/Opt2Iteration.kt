@@ -1,7 +1,7 @@
 package hu.raven.puppet.logic.iteration
 
 import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.dominatesSmaller
-import hu.raven.puppet.logic.operator.calculatecost.CalculateCost
+import hu.raven.puppet.logic.operator.calculate_cost.CalculateCost
 import hu.raven.puppet.model.state.LocalSearchAlgorithmState
 
 

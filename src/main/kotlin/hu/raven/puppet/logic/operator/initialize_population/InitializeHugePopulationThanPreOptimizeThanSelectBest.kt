@@ -4,7 +4,7 @@ import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray.Companion.
 import hu.akos.hollo.szabo.collections.slice
 import hu.akos.hollo.szabo.math.asPermutation
 import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.length
-import hu.raven.puppet.logic.operator.bacterialmutationonspecimen.MutationOnSpecimen
+import hu.raven.puppet.logic.operator.bacterial_mutation_on_specimen.MutationOnSpecimen
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.task.Task
 
