@@ -12,8 +12,8 @@ import hu.raven.puppet.logic.operator.calculatecost.CalculateCost
 import hu.raven.puppet.logic.operator.calculatecost.CalculateCostOfTspSolution
 import hu.raven.puppet.logic.operator.crossoveroperator.CrossOverOperator
 import hu.raven.puppet.logic.operator.crossoveroperator.HeuristicCrossOver
-import hu.raven.puppet.logic.operator.initializePopulation.InitializePopulation
-import hu.raven.puppet.logic.operator.initializePopulation.InitializePopulationByModuloStepper
+import hu.raven.puppet.logic.operator.initialize_population.InitializePopulation
+import hu.raven.puppet.logic.operator.initialize_population.InitializePopulationByModuloStepper
 import hu.raven.puppet.logic.step.booststrategy.BoostOnBestLazy
 import hu.raven.puppet.logic.step.booststrategy.BoostStrategy
 import hu.raven.puppet.logic.step.crossoverstrategy.CrossOverStrategy
@@ -22,7 +22,7 @@ import hu.raven.puppet.logic.step.mutatechildren.MutateChildren
 import hu.raven.puppet.logic.step.mutatechildren.MutateChildrenByReverse
 import hu.raven.puppet.logic.step.orderpopulationbycost.OrderPopulationByCost
 import hu.raven.puppet.logic.step.selectsurvivers.SelectSurvivors
-import hu.raven.puppet.logic.step.selectsurvivers.SelectSurvivorsMultyObjectiveHalfElitist
+import hu.raven.puppet.logic.step.selectsurvivers.SelectSurvivorsMultiObjectiveHalfElitist
 import hu.raven.puppet.logic.task.loader.TaskLoaderService
 import hu.raven.puppet.logic.task.loader.TspTaskLoaderService
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
@@ -96,7 +96,7 @@ fun main() {
                 )
             }
             single<SelectSurvivors> {
-                SelectSurvivorsMultyObjectiveHalfElitist
+                SelectSurvivorsMultiObjectiveHalfElitist
             }
             single<CrossOverStrategy> {
                 HalfElitistCrossover(

@@ -34,13 +34,13 @@ class HalfElitistCrossover(
             children[index][0].let {
                 it.iterationOfCreation = state.iteration
                 it.cost = null
-                if (!it.permutation.checkFormat())
+                if (!it.permutation.isFormatCorrect())
                     throw Error("Invalid specimen!")
             }
             children[index][1].let {
                 it.iterationOfCreation = state.iteration
                 it.cost = null
-                if (!it.permutation.checkFormat())
+                if (!it.permutation.isFormatCorrect())
                     throw Error("Invalid specimen!")
             }
         }

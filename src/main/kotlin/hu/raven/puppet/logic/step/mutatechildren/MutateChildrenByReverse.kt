@@ -43,7 +43,7 @@ data object MutateChildrenByReverse : MutateChildren {
             child.permutation[geneIndex] = reversed[geneIndex - range.first]
         }
 
-        if (!child.permutation.checkFormat())
+        if (!child.permutation.isFormatCorrect())
             throw Error("Invalid specimen!")
     }
 }

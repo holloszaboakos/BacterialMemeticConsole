@@ -20,24 +20,24 @@ class MutationWithElitistSelectionAndOneOpposition(
     override fun invoke(
         specimenWithIndex: IndexedValue<OnePartRepresentationWithCost>,
         iteration: Int
-    ) {
-        if (specimenWithIndex.value.cost == null) {
-            specimenWithIndex.value.cost = calculateCostOf(specimenWithIndex.value)
+    ) = specimenWithIndex.value.let {specimen->
+        if (specimen.cost == null) {
+            specimen.cost = calculateCostOf(specimen)
         }
         repeat(cloneCycleCount) { cycleIndex ->
             val clones = generateClones(
-                specimenWithIndex.value,
-                selectSegments(specimenWithIndex.value.permutation, iteration, cycleIndex, cloneCycleCount)
+                specimen,
+                selectSegments(specimen.permutation, iteration, cycleIndex, cloneCycleCount)
             )
 
             calcCostOfEachAndSort(clones)
 
-            if (clones.first().cost != specimenWithIndex.value.cost) {
-                specimenWithIndex.value.permutation.clear()
-                specimenWithIndex.value.permutation.indices.forEach { index ->
-                    specimenWithIndex.value.permutation[index] = clones.first().permutation[index]
+            if (clones.first().cost != specimen.cost) {
+                specimen.permutation.clear()
+                specimen.permutation.indices.forEach { index ->
+                    specimen.permutation[index] = clones.first().permutation[index]
                 }
-                specimenWithIndex.value.cost = clones.first().cost
+                specimen.cost = clones.first().cost
             }
         }
     }

@@ -53,7 +53,7 @@ data object MutateChildrenByReset : MutateChildren {
             child.permutation[index] = value
         }
 
-        if (!child.permutation.checkFormat())
+        if (!child.permutation.isFormatCorrect())
             throw Error("Invalid specimen!")
     }
 }

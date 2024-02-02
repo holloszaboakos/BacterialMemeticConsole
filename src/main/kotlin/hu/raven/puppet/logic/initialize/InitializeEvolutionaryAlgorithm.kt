@@ -1,6 +1,6 @@
 package hu.raven.puppet.logic.initialize
 
-import hu.raven.puppet.logic.operator.initializePopulation.InitializePopulation
+import hu.raven.puppet.logic.operator.initialize_population.InitializePopulation
 import hu.raven.puppet.logic.step.orderpopulationbycost.OrderPopulationByCost
 import hu.raven.puppet.model.solution.PoolWithSmartActivation
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState

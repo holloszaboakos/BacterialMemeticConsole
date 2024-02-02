@@ -5,7 +5,7 @@ import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.dominatesSmaller
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
-data object SelectSurvivorsMultyObjectiveHalfElitist : SelectSurvivors {
+data object SelectSurvivorsMultiObjectiveHalfElitist : SelectSurvivors {
     override operator fun invoke(state: EvolutionaryAlgorithmState): Unit = state.population.run {
         deactivateAll()
 

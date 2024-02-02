@@ -22,7 +22,7 @@ data object MutateChildrenBySwap : MutateChildren {
 
                 child.permutation.swapValues(firstCutIndex, secondCutIndex)
 
-                if (!child.permutation.checkFormat())
+                if (!child.permutation.isFormatCorrect())
                     throw Error("Invalid specimen!")
             }
 

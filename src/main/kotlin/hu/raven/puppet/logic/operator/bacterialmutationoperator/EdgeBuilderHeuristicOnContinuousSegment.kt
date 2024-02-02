@@ -18,7 +18,7 @@ class EdgeBuilderHeuristicOnContinuousSegment(
         clone: OnePartRepresentation,
         selectedSegments: Array<ContinuousSegment>
     ) {
-        if (!clone.permutation.checkFormat()) {
+        if (!clone.permutation.isFormatCorrect()) {
             throw Exception("Wrong solution format!")
         }
 
@@ -56,9 +56,9 @@ class EdgeBuilderHeuristicOnContinuousSegment(
 
         clone.permutation.clear()
 
-        val elementIndexes = buildPermutation(finalWeightMatrix.size) {
+        val elementIndexes = buildPermutation(finalWeightMatrix.size - 1) {
 
-            repeat(segmentsToMove.size - 1) {
+            repeat(segmentsToMove.size) {
                 try {
 
                     val selectedEdge = selectEdgeBasedOnWeights(finalWeightMatrix)
@@ -75,6 +75,7 @@ class EdgeBuilderHeuristicOnContinuousSegment(
                     )
 
                     finalWeightMatrix = reducedWeightMatrix.normalize()
+
                 } catch (e: Exception) {
                     e.printStackTrace()
                     throw e
@@ -104,7 +105,7 @@ class EdgeBuilderHeuristicOnContinuousSegment(
                 clone.permutation[index] = value
             }
 
-        if (!clone.permutation.checkFormat()) {
+        if (!clone.permutation.isFormatCorrect()) {
             throw Exception("Wrong solution format!")
         }
     }

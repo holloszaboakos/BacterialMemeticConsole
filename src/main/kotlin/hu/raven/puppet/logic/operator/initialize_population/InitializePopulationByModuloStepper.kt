@@ -1,4 +1,4 @@
-package hu.raven.puppet.logic.operator.initializePopulation
+package hu.raven.puppet.logic.operator.initialize_population
 
 import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray.Companion.size
 import hu.akos.hollo.szabo.math.asPermutation

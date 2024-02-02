@@ -138,7 +138,7 @@ data object EdgeSelectorCrossOver : CrossOverOperator {
             currentValue = selectedEdges[currentValue]
         }
 
-        if (!childPermutation.checkFormat()) {
+        if (!childPermutation.isFormatCorrect()) {
             throw Exception("Wrong child format!")
         }
     }

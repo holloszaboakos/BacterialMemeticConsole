@@ -18,21 +18,21 @@ class MutationWithElitistSelectionAndModuloStepper(
     override fun invoke(
         specimenWithIndex: IndexedValue<OnePartRepresentationWithCost>,
         iteration: Int
-    ) {
-        specimenWithIndex.value.cost = calculateCostOf(specimenWithIndex.value)
+    ): Unit = specimenWithIndex.value.let { specimen ->
+        specimen.cost = calculateCostOf(specimen)
         repeat(cloneCycleCount) { cloneCycleIndex ->
             val clones = generateClones(
-                specimenWithIndex.value,
-                selectSegments(specimenWithIndex.value.permutation, iteration, cloneCycleCount, cloneCycleIndex)
+                specimen,
+                selectSegments(specimen.permutation, iteration, cloneCycleCount, cloneCycleIndex)
             )
             calcCostOfEachAndSort(clones)
 
-            if (clones.first().cost != specimenWithIndex.value.cost) {
-                specimenWithIndex.value.permutation.clear()
-                specimenWithIndex.value.permutation.indices.forEach { index ->
-                    specimenWithIndex.value.permutation[index] = clones.first().permutation[index]
+            if (clones.first().cost != specimen.cost) {
+                specimen.permutation.clear()
+                specimen.permutation.indices.forEach { index ->
+                    specimen.permutation[index] = clones.first().permutation[index]
                 }
-                specimenWithIndex.value.cost = clones.first().cost
+                specimen.cost = clones.first().cost
             }
         }
     }

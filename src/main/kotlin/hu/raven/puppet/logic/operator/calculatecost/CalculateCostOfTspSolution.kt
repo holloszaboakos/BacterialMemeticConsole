@@ -10,7 +10,7 @@ class CalculateCostOfTspSolution(
     override val task: Task
 ) : CalculateCost() {
     override operator fun invoke(solution: OnePartRepresentation): FloatVector {
-        if (!solution.permutation.checkFormat()) {
+        if (!solution.permutation.isFormatCorrect()) {
             throw Exception("Wrong solution format!")
         }
 

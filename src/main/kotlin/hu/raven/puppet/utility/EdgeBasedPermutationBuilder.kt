@@ -11,6 +11,8 @@ class EdgeBasedPermutationBuilder(val size: Int) {
         return createNewSegment(edge)
     }
 
+    fun isComplete() = sequentialRepresentation.none { it == -1 }
+
     private fun createNewSegment(selectedEdge: SimpleGraphEdge): SimpleGraphEdge {
 
         val segmentWithCommonEnd = segmentsOfEdges
@@ -53,7 +55,7 @@ class EdgeBasedPermutationBuilder(val size: Int) {
         (1..<result.size).forEach {
             result[it] = sequentialRepresentation[result[it - 1]]
         }
-        if (result.checkFormat()) {
+        if (!result.isFormatCorrect()) {
             throw Exception("permutation is malformed")
         }
         return result

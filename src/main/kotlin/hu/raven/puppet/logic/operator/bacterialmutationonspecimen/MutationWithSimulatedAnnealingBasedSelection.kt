@@ -21,19 +21,19 @@ class MutationWithSimulatedAnnealingBasedSelection(
     override fun invoke(
         specimenWithIndex: IndexedValue<OnePartRepresentationWithCost>,
         iteration: Int
-    ) {
-        val doSimulatedAnnealing = specimenWithIndex.index != 0
+    ): Unit = specimenWithIndex.let { (index, specimen) ->
+        val doSimulatedAnnealing = index != 0
         repeat(cloneCycleCount) { cycleIndex ->
 
             val clones = generateClones(
-                specimenWithIndex,
-                selectSegments(specimenWithIndex.value.permutation, iteration, cycleIndex, cloneCycleCount)
+                specimen,
+                selectSegments(specimen.permutation, iteration, cycleIndex, cloneCycleCount)
             )
 
             calcCostOfEachAndSort(clones)
 
             loadDataToSpecimen(
-                specimenWithIndex.value,
+                specimen,
                 clones,
                 iteration,
                 doSimulatedAnnealing
@@ -42,11 +42,11 @@ class MutationWithSimulatedAnnealingBasedSelection(
     }
 
     private fun generateClones(
-        specimen: IndexedValue<OnePartRepresentationWithCost>,
+        specimen: OnePartRepresentationWithCost,
         selectedSegment: Array<ContinuousSegment>
     ): MutableList<OnePartRepresentationWithCost> {
         val clones = MutableList(cloneCount + 1) {
-            specimen.value.cloneRepresentationAndCost()
+            specimen.cloneRepresentationAndCost()
         }
         clones
             .slice(1..<clones.size)

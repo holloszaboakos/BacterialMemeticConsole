@@ -60,13 +60,13 @@ class TournamentCrossoverWithCrowdingDistance(
                     childPair[0].let {
                         it.iterationOfCreation = state.iteration
                         it.cost = null
-                        if (!it.permutation.checkFormat())
+                        if (!it.permutation.isFormatCorrect())
                             throw Error("Invalid specimen!")
                     }
                     childPair[1].let {
                         it.iterationOfCreation = state.iteration
                         it.cost = null
-                        if (!it.permutation.checkFormat())
+                        if (!it.permutation.isFormatCorrect())
                             throw Error("Invalid specimen!")
                     }
                 }

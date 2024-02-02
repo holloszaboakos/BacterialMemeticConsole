@@ -1,4 +1,4 @@
-package hu.raven.puppet.logic.operator.initializePopulation
+package hu.raven.puppet.logic.operator.initialize_population
 
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.task.Task

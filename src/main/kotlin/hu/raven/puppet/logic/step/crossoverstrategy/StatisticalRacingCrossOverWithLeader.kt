@@ -49,7 +49,7 @@ class StatisticalRacingCrossOverWithLeader(
             children[index].forEach {
                 it.iterationOfCreation = state.iteration
                 it.cost = null
-                if (!it.permutation.checkFormat())
+                if (!it.permutation.isFormatCorrect())
                     throw Error("Invalid specimen!")
             }
         }
