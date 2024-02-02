@@ -2,11 +2,11 @@ package hu.raven.puppet
 
 import hu.raven.puppet.logic.iteration.AlgorithmIteration
 import hu.raven.puppet.logic.iteration.EvolutionaryAlgorithmIteration
-import hu.raven.puppet.logic.step.booststrategy.BoostStrategy
-import hu.raven.puppet.logic.step.crossoverstrategy.CrossOverStrategy
-import hu.raven.puppet.logic.step.mutatechildren.MutateChildren
-import hu.raven.puppet.logic.step.orderpopulationbycost.OrderPopulationByCost
-import hu.raven.puppet.logic.step.selectsurvivers.SelectSurvivors
+import hu.raven.puppet.logic.step.boost_strategy.BoostStrategy
+import hu.raven.puppet.logic.step.crossover_strategy.CrossOverStrategy
+import hu.raven.puppet.logic.step.mutate_children.MutateChildren
+import hu.raven.puppet.logic.step.order_population_by_cost.OrderPopulationByCost
+import hu.raven.puppet.logic.step.select_survivers.SelectSurvivors
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.dsl.module

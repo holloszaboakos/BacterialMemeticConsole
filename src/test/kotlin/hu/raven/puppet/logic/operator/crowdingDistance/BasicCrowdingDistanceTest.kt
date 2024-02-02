@@ -2,7 +2,7 @@ package hu.raven.puppet.logic.operator.crowdingDistance
 
 import hu.akos.hollo.szabo.math.vector.FloatVector
 import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.floatVectorOf
-import hu.raven.puppet.logic.operator.crowdingdistance.BasicCrowdingDistance
+import hu.raven.puppet.logic.operator.crowding_distance.BasicCrowdingDistance
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatException
 import org.junit.Test

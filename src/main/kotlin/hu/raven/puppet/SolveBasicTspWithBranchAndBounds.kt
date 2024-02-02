@@ -3,7 +3,7 @@ package hu.raven.puppet
 import hu.akos.hollo.szabo.math.matrix.IntMatrix
 import hu.akos.hollo.szabo.math.toIntVector
 import hu.raven.puppet.configuration.FilePathVariableNames
-import hu.raven.puppet.logic.step.bruteforcesolver.branchAndBounds
+import hu.raven.puppet.logic.step.bruteforce_solver.branchAndBounds
 import hu.raven.puppet.utility.extention.KoinUtil
 import org.koin.core.context.startKoin
 import org.koin.core.qualifier.named
