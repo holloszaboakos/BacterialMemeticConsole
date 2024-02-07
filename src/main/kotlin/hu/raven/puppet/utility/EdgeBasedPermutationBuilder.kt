@@ -6,9 +6,30 @@ import hu.raven.puppet.model.utility.SimpleGraphEdge
 class EdgeBasedPermutationBuilder(val size: Int) {
     private val sequentialRepresentation = IntArray(size + 1) { -1 }
     private val segmentsOfEdges: MutableList<SimpleGraphEdge> = mutableListOf()
+    private val availabilityMatrix: Array<BooleanArray> =
+        Array(sequentialRepresentation.size) { rowIndex ->
+            BooleanArray(sequentialRepresentation.size) { columnIndex -> rowIndex != columnIndex }
+        }
+
+    fun isAvailable(edge: SimpleGraphEdge) = availabilityMatrix[edge.sourceNodeIndex][edge.targetNodeIndex]
+
     fun addEdge(edge: SimpleGraphEdge): SimpleGraphEdge {
+
+        if(!availabilityMatrix[edge.sourceNodeIndex][edge.targetNodeIndex]){
+            throw Exception("Edge is not available!")
+        }
+
         sequentialRepresentation[edge.sourceNodeIndex] = edge.targetNodeIndex
-        return createNewSegment(edge)
+        val newSegment = createNewSegment(edge)
+
+        availabilityMatrix[edge.targetNodeIndex][edge.sourceNodeIndex] = false
+        availabilityMatrix[newSegment.targetNodeIndex][newSegment.sourceNodeIndex] = false
+        availabilityMatrix.indices.forEach {
+            availabilityMatrix[it][edge.targetNodeIndex] = false
+            availabilityMatrix[edge.sourceNodeIndex][it] = false
+        }
+
+        return newSegment
     }
 
     fun isComplete() = sequentialRepresentation.none { it == -1 }
@@ -72,6 +93,41 @@ class EdgeBasedPermutationBuilder(val size: Int) {
 
         sequentialRepresentation[segmentsOfEdges[0].targetNodeIndex] = segmentsOfEdges[0].sourceNodeIndex
     }
+
+    fun completeWithRandomAvailableEdges() {
+        availabilityMatrix
+            .asSequence()
+            .flatMapIndexed { sourceIndex, row ->
+                row.asSequence()
+                    .mapIndexed { targetIndex, available ->
+                        Pair(
+                            SimpleGraphEdge(
+                                sourceIndex,
+                                targetIndex
+                            ),
+                            available
+                        )
+                    }
+            }
+            .filter { it.second }
+            .map { it.first }
+            .shuffled()
+            .filter { edge -> isAvailable(edge) }
+            .forEach { edge -> addEdge(edge) }
+    }
+
+    fun selectRandomFromAvailable(): SimpleGraphEdge =
+        availabilityMatrix
+            .mapIndexed { columnIndex, column ->
+                column
+                    .withIndex()
+                    .filter { it.value }
+                    .map { (index, _) ->
+                        SimpleGraphEdge(columnIndex, index)
+                    }
+            }
+            .flatten()
+            .random()
 }
 
 fun buildPermutation(size: Int, builderFunction: EdgeBasedPermutationBuilder.() -> Unit): Permutation {

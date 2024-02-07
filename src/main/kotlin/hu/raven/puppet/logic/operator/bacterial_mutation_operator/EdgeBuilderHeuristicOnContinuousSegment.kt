@@ -44,12 +44,6 @@ class EdgeBuilderHeuristicOnContinuousSegment(
             weightsOfEdgesToNext
         )
 
-        val availabilityMatrix = Array(unitedRawWeightMatrix.size) { columnIndex ->
-            BooleanArray(unitedRawWeightMatrix.size) { index ->
-                columnIndex != index
-            }
-        }
-
         val reducedWeightMatrix = unitedRawWeightMatrix.weightDownByRowAndColumn()
 
         var finalWeightMatrix = reducedWeightMatrix.normalize()
@@ -62,14 +56,13 @@ class EdgeBuilderHeuristicOnContinuousSegment(
                 try {
 
                     val selectedEdge = selectEdgeBasedOnWeights(finalWeightMatrix)
-                        ?: selectRandomFromAvailable(availabilityMatrix)
+                        ?: selectRandomFromAvailable()
 
 
                     val newSegment = addEdge(selectedEdge)
 
                     removeWeightOfExclusionaryEdges(
                         reducedWeightMatrix,
-                        availabilityMatrix,
                         newSegment,
                         selectedEdge
                     )
@@ -110,18 +103,6 @@ class EdgeBuilderHeuristicOnContinuousSegment(
         }
     }
 
-    private fun selectRandomFromAvailable(availabilityMatrix: Array<BooleanArray>): SimpleGraphEdge =
-        availabilityMatrix
-            .mapIndexed { columnIndex, column ->
-                column
-                    .withIndex()
-                    .filter { it.value }
-                    .map { (index, _) ->
-                        SimpleGraphEdge(columnIndex, index)
-                    }
-            }
-            .flatten()
-            .random()
 
     private fun calculateWeightsOfInnerEdges(
         selectedElements: List<ContinuousSegment>
@@ -243,23 +224,19 @@ class EdgeBuilderHeuristicOnContinuousSegment(
 
     private fun removeWeightOfExclusionaryEdges(
         finalWeightMatrix: Array<FloatArray>,
-        availabilityMatrix: Array<BooleanArray>,
         newSegment: SimpleGraphEdge,
         selectedEdge: SimpleGraphEdge
     ) {
         finalWeightMatrix[newSegment.targetNodeIndex][newSegment.sourceNodeIndex] = 0f
-        availabilityMatrix[newSegment.targetNodeIndex][newSegment.sourceNodeIndex] = false
 
         finalWeightMatrix.indices
             .forEach { columnIndex ->
                 finalWeightMatrix[columnIndex][selectedEdge.targetNodeIndex] = 0f
-                availabilityMatrix[columnIndex][selectedEdge.targetNodeIndex] = false
             }
 
         finalWeightMatrix.first().indices
             .forEach { rowIndex ->
                 finalWeightMatrix[selectedEdge.sourceNodeIndex][rowIndex] = 0f
-                availabilityMatrix[selectedEdge.sourceNodeIndex][rowIndex] = false
             }
     }
 

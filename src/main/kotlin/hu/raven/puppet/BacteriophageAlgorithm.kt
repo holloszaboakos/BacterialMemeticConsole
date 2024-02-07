@@ -19,11 +19,13 @@ import hu.raven.puppet.logic.operator.initialize_bacteriophage_population.BasicI
 import hu.raven.puppet.logic.operator.initialize_bacteriophage_population.InitializeBacteriophagePopulation
 import hu.raven.puppet.logic.operator.initialize_population.InitializePopulation
 import hu.raven.puppet.logic.operator.initialize_population.InitializePopulationByModuloStepper
+import hu.raven.puppet.logic.operator.select_segments.SelectCuts
 import hu.raven.puppet.logic.operator.select_segments.SelectSegments
 import hu.raven.puppet.logic.operator.select_segments.SelectSingleValuesContinuouslyWithFullCoverage
 import hu.raven.puppet.logic.step.bacterial_mutation.BacterialMutation
 import hu.raven.puppet.logic.step.bacterial_mutation.BacterialMutationOnBestAndLuckyByShuffling
 import hu.raven.puppet.logic.step.bacteriophage_transcription.BacteriophageTranscription
+import hu.raven.puppet.logic.step.bacteriophage_transcription.BacteriophageTranscriptionByLooseMatchingAndHeuristicCompletion
 import hu.raven.puppet.logic.step.order_population_by_cost.OrderPopulationByCost
 import hu.raven.puppet.logic.step.select_survivers.SelectSurvivors
 import hu.raven.puppet.logic.step.select_survivers.SelectSurvivorsMultiObjectiveHalfElitist
@@ -39,6 +41,11 @@ import org.koin.dsl.module
 import java.nio.file.Path
 
 //70 successful transcriptions only!
+//loose matching and random completion
+//iterationOfCreation=8536, cost=FloatVector(coordinates=[17657.0]), 159060 successful transcription
+//loose matching and heuristic completion
+//iterationOfCreation=3401, cost=FloatVector(coordinates=[17840.0]), 159060 successful transcription
+//loose matching and heuristic completion, population 64x64, bacterial mutation 8 cycle 8 clone, 8 transcription per bacteriophage
 fun main() {
     startKoin {
         modules(
@@ -56,7 +63,7 @@ fun main() {
                     )
                 }
                 single<InitializePopulation> {
-                    InitializePopulationByModuloStepper(64 )
+                    InitializePopulationByModuloStepper(64 * 8)
                 }
                 single<InitializeBacteriophagePopulation> {
                     BasicInitializationOfBacteriophagePopulation(64)
@@ -102,8 +109,8 @@ fun main() {
                             get(),
                             get(),
                             get(),
-                            cloneCount = 4,
-                            cloneCycleCount = 16
+                            cloneCount = 8,
+                            cloneCycleCount = 8
                         ),
                         get(),
                         KoinUtil::get
@@ -112,8 +119,16 @@ fun main() {
                 single<BacteriophageAlgorithmState> { get<InitializeAlgorithm<BacteriophageAlgorithmState>>()(get()) }
                 single { BacteriophageTransductionOperator() }
                 single<BacterialMutationOperator> { EdgeBuilderHeuristicOnContinuousSegment(get()) }
-                single<SelectSegments> { SelectSingleValuesContinuouslyWithFullCoverage(8) }
-                single { BacteriophageTranscription(1 / 8f, 0.5f, 0.5f, get()) }
+                single<SelectSegments> { SelectCuts(8) }
+                single<BacteriophageTranscription> {
+                    BacteriophageTranscriptionByLooseMatchingAndHeuristicCompletion(
+                        1 / 64f,
+                        0.5f,
+                        0.5f,
+                        get(),
+                        get()
+                    )
+                }
             }
         )
     }
