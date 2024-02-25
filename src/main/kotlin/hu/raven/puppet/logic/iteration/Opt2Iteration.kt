@@ -12,7 +12,6 @@ class Opt2Iteration(
     private var sourceIndex = 0
     private var permutation = listOf<Int>()
 
-    //TODO: unify with boost operators
     override fun invoke(algorithmState: LocalSearchAlgorithmState) = algorithmState.run {
         val best = actualCandidate
         var bestCost = best.costOrException()

@@ -20,7 +20,7 @@ class AugeratDatasetConverterService(override val vehicleCount: Int) : TaskConve
                         task.fleetBean.vehicleProfileBean.capacity.toDouble().toFloat()
                     )
                 )
-            }.asImmutable(),
+            },
             costGraph = CostGraph(
                 center = task.networkBean.nodeBeanList
                     .first { it.id == task.fleetBean.vehicleProfileBean.arrivalNode }
@@ -28,22 +28,22 @@ class AugeratDatasetConverterService(override val vehicleCount: Int) : TaskConve
                 objectives = constructObjectives(
                     task.requestBeanList,
                     task.networkBean.nodeBeanList
-                ).asImmutable(),
+                ),
                 edgesBetween = constructEdgesBetweenClients(
                     task.networkBean.nodeBeanList,
                     task.fleetBean.vehicleProfileBean.arrivalNode
                 )
-                    .map { it.asImmutable() }
+                    .map { it }
                     .toTypedArray()
-                    .asImmutable(),
+                    ,
                 edgesFromCenter = constructEdgesWithCenter(
                     task.networkBean.nodeBeanList,
                     task.fleetBean.vehicleProfileBean.arrivalNode
-                ).asImmutable(),
+                ),
                 edgesToCenter = constructEdgesWithCenter(
                     task.networkBean.nodeBeanList,
                     task.fleetBean.vehicleProfileBean.arrivalNode
-                ).asImmutable()
+                )
             )
         )
     }

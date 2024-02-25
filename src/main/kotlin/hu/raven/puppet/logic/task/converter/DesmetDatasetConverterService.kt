@@ -17,16 +17,16 @@ class DesmetDatasetConverterService(override val vehicleCount: Int) : TaskConver
                 TransportUnit(
                     volumeCapacity = CubicMeter(capacity)
                 )
-            }.asImmutable(),
+            },
             costGraph = CostGraph(
                 center = depot.toGPS(),
-                objectives = buildObjectives().asImmutable(),
+                objectives = buildObjectives(),
                 edgesBetween = buildEdgesBetween()
-                    .map { it.asImmutable() }
+                    .map { it }
                     .toTypedArray()
-                    .asImmutable(),
-                edgesFromCenter = buildEdgesFromCenter().asImmutable(),
-                edgesToCenter = buildEdgesToCenter().asImmutable()
+                    ,
+                edgesFromCenter = buildEdgesFromCenter(),
+                edgesToCenter = buildEdgesToCenter()
             )
         )
     }

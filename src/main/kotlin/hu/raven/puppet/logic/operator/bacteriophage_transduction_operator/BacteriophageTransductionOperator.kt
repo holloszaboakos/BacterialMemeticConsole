@@ -1,4 +1,4 @@
-package hu.raven.puppet.logic.operator.bacteriophage_transduction
+package hu.raven.puppet.logic.operator.bacteriophage_transduction_operator
 
 import hu.akos.hollo.szabo.collections.asImmutable
 import hu.akos.hollo.szabo.math.Permutation
@@ -23,12 +23,10 @@ class BacteriophageTransductionOperator {
         specimenToOverwrite.removedEdges = differingEdges
             .map { it.first }
             .toTypedArray()
-            .asImmutable()
 
         specimenToOverwrite.addedEdges = differingEdges
             .map { it.second }
             .toTypedArray()
-            .asImmutable()
 
         specimenToOverwrite.lifeForce = null
     }

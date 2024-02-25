@@ -11,8 +11,8 @@ class BasicInitializationOfBacteriophagePopulation(
             .map {
                 BacteriophageSpecimen(
                     it,
-                    ImmutableArray.immutableArrayOf(),
-                    ImmutableArray.immutableArrayOf(),
+                    arrayOf(),
+                    arrayOf(),
                     null
                 )
             }

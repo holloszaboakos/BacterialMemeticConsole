@@ -2,7 +2,6 @@ package hu.raven.puppet.logic.task.loader
 
 import hu.akos.hollo.szabo.collections.asImmutable
 import hu.akos.hollo.szabo.math.FloatSumExtensions.sumClever
-import hu.raven.puppet.logic.logging.ObjectLoggerService
 import hu.raven.puppet.logic.task.converter.DesmetDatasetConverterService
 import hu.raven.puppet.model.task.Task
 import hu.raven.puppet.model.task.desmet.*
@@ -11,9 +10,9 @@ import hu.raven.puppet.model.task.desmet.DesmetFileSection.*
 import java.nio.file.Path
 
 class DesmetTaskLoaderService(
-    override val logger: ObjectLoggerService<String>,
     private val converter: DesmetDatasetConverterService,
     private val fileName: String,
+    override val log: (String) -> Unit,
 ) : TaskLoaderService() {
 
     companion object {
@@ -32,7 +31,7 @@ class DesmetTaskLoaderService(
 
     override fun logEstimates(task: Task) {
         task.costGraph.apply {
-            logger.log(
+            log(
                 "OVERESTIMATE: ${
                     (
                             edgesFromCenter.map { it.length.value }.sumClever()
@@ -41,7 +40,7 @@ class DesmetTaskLoaderService(
                 }"
             )
 
-            logger.log(
+            log(
                 "UNDERESTIMATE: ${
                     (
                             edgesFromCenter.map { it.length.value }.min() +

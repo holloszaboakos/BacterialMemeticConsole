@@ -5,8 +5,8 @@ import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationA
 import hu.raven.puppet.model.solution.PoolWithSmartActivation
 import hu.raven.puppet.model.task.Task
 
-data class BacteriophageAlgorithmState(
-    override val task: Task,
-    override val population: PoolWithSmartActivation<OnePartRepresentationWithCostAndIterationAndId>,
+class BacteriophageAlgorithmState(
+    task: Task,
+    population: PoolWithSmartActivation<OnePartRepresentationWithCostAndIterationAndId>,
     val virusPopulation: PoolWithSmartActivation<BacteriophageSpecimen>,
 ) : EvolutionaryAlgorithmState(task, population)

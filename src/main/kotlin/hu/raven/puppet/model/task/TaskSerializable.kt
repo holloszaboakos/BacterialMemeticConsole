@@ -1,7 +1,5 @@
 package hu.raven.puppet.model.task
 
-import hu.akos.hollo.szabo.collections.asImmutable
-
 data class TaskSerializable(
     val transportUnits: List<TransportUnit> = listOf(),
     val costGraph: CostGraphSerializable = CostGraphSerializable()
@@ -12,7 +10,7 @@ data class TaskSerializable(
     )
 
     fun toTask() = Task(
-        transportUnits = transportUnits.toTypedArray().asImmutable(),
+        transportUnits = transportUnits.toTypedArray(),
         costGraph = costGraph.toCostGraph(),
     )
 }

@@ -6,13 +6,17 @@ import hu.raven.puppet.logic.initialize.InitializeBacteriophageAlgorithm
 import hu.raven.puppet.logic.initialize.InitializeEvolutionaryAlgorithm
 import hu.raven.puppet.logic.iteration.AlgorithmIteration
 import hu.raven.puppet.logic.iteration.EvolutionaryAlgorithmIteration
-import hu.raven.puppet.logic.logging.ObjectLoggerService
+import hu.raven.puppet.logic.logging.JsonChannel
+import hu.raven.puppet.logic.logging.LoggingChannel
 import hu.raven.puppet.logic.operator.bacterial_mutation_on_specimen.MutationOnSpecimen
 import hu.raven.puppet.logic.operator.bacterial_mutation_on_specimen.MutationOnSpecimenWithBacteriophageTransduction
 import hu.raven.puppet.logic.operator.bacterial_mutation_on_specimen.MutationWithElitistSelection
 import hu.raven.puppet.logic.operator.bacterial_mutation_operator.BacterialMutationOperator
 import hu.raven.puppet.logic.operator.bacterial_mutation_operator.EdgeBuilderHeuristicOnContinuousSegment
-import hu.raven.puppet.logic.operator.bacteriophage_transduction.BacteriophageTransductionOperator
+import hu.raven.puppet.logic.operator.bacteriophage_transduction_operator.BacteriophageTransductionOperator
+import hu.raven.puppet.logic.operator.boost_operator.BoostOperator
+import hu.raven.puppet.logic.operator.boost_operator.BoostOperatorWithBacteriophageTransduction
+import hu.raven.puppet.logic.operator.boost_operator.Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit
 import hu.raven.puppet.logic.operator.calculate_cost.CalculateCost
 import hu.raven.puppet.logic.operator.calculate_cost.CalculateCostOfTspSolution
 import hu.raven.puppet.logic.operator.initialize_bacteriophage_population.BasicInitializationOfBacteriophagePopulation
@@ -21,11 +25,13 @@ import hu.raven.puppet.logic.operator.initialize_population.InitializePopulation
 import hu.raven.puppet.logic.operator.initialize_population.InitializePopulationByModuloStepper
 import hu.raven.puppet.logic.operator.select_segments.SelectCuts
 import hu.raven.puppet.logic.operator.select_segments.SelectSegments
-import hu.raven.puppet.logic.operator.select_segments.SelectSingleValuesContinuouslyWithFullCoverage
+import hu.raven.puppet.logic.step.StepLogger
 import hu.raven.puppet.logic.step.bacterial_mutation.BacterialMutation
 import hu.raven.puppet.logic.step.bacterial_mutation.BacterialMutationOnBestAndLuckyByShuffling
 import hu.raven.puppet.logic.step.bacteriophage_transcription.BacteriophageTranscription
 import hu.raven.puppet.logic.step.bacteriophage_transcription.BacteriophageTranscriptionByLooseMatchingAndHeuristicCompletion
+import hu.raven.puppet.logic.step.boost_strategy.BoostOnBestAndLucky
+import hu.raven.puppet.logic.step.boost_strategy.BoostStrategy
 import hu.raven.puppet.logic.step.order_population_by_cost.OrderPopulationByCost
 import hu.raven.puppet.logic.step.select_survivers.SelectSurvivors
 import hu.raven.puppet.logic.step.select_survivers.SelectSurvivorsMultiObjectiveHalfElitist
@@ -39,13 +45,23 @@ import org.koin.core.context.stopKoin
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import java.nio.file.Path
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 //70 successful transcriptions only!
 //loose matching and random completion
 //iterationOfCreation=8536, cost=FloatVector(coordinates=[17657.0]), 159060 successful transcription
 //loose matching and heuristic completion
 //iterationOfCreation=3401, cost=FloatVector(coordinates=[17840.0]), 159060 successful transcription
-//loose matching and heuristic completion, population 64x64, bacterial mutation 8 cycle 8 clone, 8 transcription per bacteriophage
+//loose matching and heuristic completion, segment size 4, population 64x4, bacterial mutation 8 cycle 8 clone, 32 transcription per bacteriophage
+//iterationOfCreation=2900, cost=FloatVector(coordinates=[16290.0])
+//iterationOfCreation=4102, cost=FloatVector(coordinates=[16018.0])
+//iterationOfCreation=6844, cost=FloatVector(coordinates=[15583.0])
+//iterationOfCreation=9255, cost=FloatVector(coordinates=[15404.0])
+//loose matching and heuristic completion, segment size 4, population 64x4, bacterial mutation 16 cycle 4 clone, 32 transcription per bacteriophage
+//iterationOfCreation=7838, cost=FloatVector(coordinates=[15535.0])
+//Added boost with bacteriophage
+//id=195, iterationOfCreation=910, cost=FloatVector(coordinates=[16676.0])
 fun main() {
     startKoin {
         modules(
@@ -63,7 +79,7 @@ fun main() {
                     )
                 }
                 single<InitializePopulation> {
-                    InitializePopulationByModuloStepper(64 * 8)
+                    InitializePopulationByModuloStepper(64 * 4)
                 }
                 single<InitializeBacteriophagePopulation> {
                     BasicInitializationOfBacteriophagePopulation(64)
@@ -76,12 +92,9 @@ fun main() {
                 }
                 single<TaskLoaderService> {
                     TspTaskLoaderService(
-                        logger = get(),
+                        log = { println(it) },
                         fileName = get(named(FilePathVariableNames.SINGLE_FILE))
                     )
-                }
-                single<ObjectLoggerService<*>> {
-                    ObjectLoggerService<String>(outputPath = get(named(FilePathVariableNames.OUTPUT_FOLDER)))
                 }
                 single {
                     get<TaskLoaderService>().loadTask(folderPath = get(named(FilePathVariableNames.INPUT_FOLDER)))
@@ -89,11 +102,11 @@ fun main() {
                 single<AlgorithmIteration<*>> {
                     EvolutionaryAlgorithmIteration(
                         steps = arrayOf(
-                            get<SelectSurvivors>(),
-                            get<BacterialMutation>(),
-                            get<BacteriophageTranscription>(),
-                            get<OrderPopulationByCost>(),
-                            //get<BoostStrategy>(),
+                            get<SelectSurvivors>().let { StepLogger(it, get()) },
+                            get<BacterialMutation>().let { StepLogger(it, get()) },
+                            get<BacteriophageTranscription>().let { StepLogger(it, get()) },
+                            get<OrderPopulationByCost>().let { StepLogger(it, get()) },
+                            get<BoostStrategy>().let { StepLogger(it, get()) },
                         )
                     )
                 }
@@ -109,8 +122,8 @@ fun main() {
                             get(),
                             get(),
                             get(),
-                            cloneCount = 8,
-                            cloneCycleCount = 8
+                            cloneCount = 2,
+                            cloneCycleCount = 32
                         ),
                         get(),
                         KoinUtil::get
@@ -119,14 +132,40 @@ fun main() {
                 single<BacteriophageAlgorithmState> { get<InitializeAlgorithm<BacteriophageAlgorithmState>>()(get()) }
                 single { BacteriophageTransductionOperator() }
                 single<BacterialMutationOperator> { EdgeBuilderHeuristicOnContinuousSegment(get()) }
-                single<SelectSegments> { SelectCuts(8) }
+                single<SelectSegments> { SelectCuts(4) }
                 single<BacteriophageTranscription> {
                     BacteriophageTranscriptionByLooseMatchingAndHeuristicCompletion(
-                        1 / 64f,
+                        1 / 8f,
                         0.5f,
                         0.5f,
                         get(),
                         get()
+                    )
+                }
+                single<BoostStrategy> {
+                    BoostOnBestAndLucky(luckyCount = 64, get())
+                }
+                single<BoostOperator<*>> {
+                    BoostOperatorWithBacteriophageTransduction(
+                        Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit(
+                            get(),
+                            stepLimit = 64,
+                            populationSize = 64 * 4,
+                            permutationSize = 63
+                        ),
+                        get(),
+                        KoinUtil::get
+                    )
+                }
+                single<LoggingChannel<*>> {
+                    JsonChannel<BacteriophageAlgorithmState>(
+                        outputFolder = arrayOf(
+                            "output", "${LocalDate.now()}",
+                            LocalDateTime.now().toString()
+                                .replace(":","_")
+                                .replace(".","_")
+                        ),
+                        outputFileName = "algorithmState"
                     )
                 }
             }

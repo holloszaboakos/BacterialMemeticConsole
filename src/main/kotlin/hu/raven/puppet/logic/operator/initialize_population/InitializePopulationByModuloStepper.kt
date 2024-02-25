@@ -53,7 +53,6 @@ class InitializePopulationByModuloStepper(
         return population
     }
 
-    //TODO: review
     private fun initSpecimen(
         instanceIndex: Int,
         instance: OnePartRepresentationWithCostAndIterationAndId,

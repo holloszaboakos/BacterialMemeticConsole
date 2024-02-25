@@ -19,9 +19,9 @@ data class CostGraphSerializable(
 
     fun toCostGraph() = CostGraph(
         center = center,
-        objectives = objectives.toTypedArray().asImmutable(),
-        edgesBetween = edgesBetween.map { it.toTypedArray().asImmutable() }.toTypedArray().asImmutable(),
-        edgesFromCenter = edgesFromCenter.toTypedArray().asImmutable(),
-        edgesToCenter = edgesToCenter.toTypedArray().asImmutable(),
+        objectives = objectives.toTypedArray(),
+        edgesBetween = edgesBetween.map { it.toTypedArray() }.toTypedArray(),
+        edgesFromCenter = edgesFromCenter.toTypedArray(),
+        edgesToCenter = edgesToCenter.toTypedArray(),
     )
 }

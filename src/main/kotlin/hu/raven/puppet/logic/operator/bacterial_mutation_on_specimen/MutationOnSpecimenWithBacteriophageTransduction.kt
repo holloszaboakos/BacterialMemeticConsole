@@ -2,7 +2,7 @@ package hu.raven.puppet.logic.operator.bacterial_mutation_on_specimen
 
 import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.dominatesBigger
 import hu.raven.puppet.logic.operator.bacterial_mutation_operator.BacterialMutationOperator
-import hu.raven.puppet.logic.operator.bacteriophage_transduction.BacteriophageTransductionOperator
+import hu.raven.puppet.logic.operator.bacteriophage_transduction_operator.BacteriophageTransductionOperator
 import hu.raven.puppet.logic.operator.calculate_cost.CalculateCost
 import hu.raven.puppet.logic.operator.select_segments.SelectSegments
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCost

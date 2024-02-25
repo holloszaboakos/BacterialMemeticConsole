@@ -79,20 +79,20 @@ class TspGeneratorService {
                         }
                         .filterNotNull()
                         .toTypedArray()
-                        .asImmutable()
+
                 }
                 .toTypedArray()
-                .asImmutable(),
+                ,
             edgesFromCenter = this[0]
                 .slice(1..<this[0].size)
                 .map { CostGraphEdge(Meter(it)) }
                 .toTypedArray()
-                .asImmutable(),
+                ,
             edgesToCenter = this
                 .slice(1..<this.size)
                 .map { CostGraphEdge(Meter(it[0])) }
                 .toTypedArray()
-                .asImmutable()
+
         )
     }
 

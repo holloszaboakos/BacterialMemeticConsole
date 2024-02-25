@@ -2,7 +2,6 @@ package hu.raven.puppet.logic.step.crossover_strategy
 
 import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.dominatesSmaller
 import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.length
-import hu.raven.puppet.logic.logging.ObjectLoggerService
 import hu.raven.puppet.logic.operator.calculate_cost.CalculateCost
 import hu.raven.puppet.logic.operator.crossover_operator.CrossOverOperator
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
@@ -13,7 +12,6 @@ import hu.raven.puppet.model.step.crossover_strategy.OperatorStatistics
 
 class StatisticalRacingCrossOverWithLeader(
     override val crossoverOperators: List<CrossOverOperator>,
-    private val logger: ObjectLoggerService<String>,
     private val calculateCostOf: CalculateCost,
     private val statistics: CrossoverOperatorStatistic
 ) : CrossOverStrategy() {
@@ -79,11 +77,11 @@ class StatisticalRacingCrossOverWithLeader(
             if (lastIteration < 10 * statistics.operatorsWithStatistics.size) {
                 operator =
                     statistics.operatorsWithStatistics.keys.toList()[lastIteration % statistics.operatorsWithStatistics.size]
-                logger.log(operator.toString())
+                println(operator.toString())
                 actualStatistics = statistics.operatorsWithStatistics[operator]
             } else {
                 operator = statistics.operatorsWithStatistics.maxByOrNull { it.value.successRatio }?.key
-                logger.log(operator.toString())
+                println(operator.toString())
                 actualStatistics = statistics.operatorsWithStatistics[operator]
             }
         }

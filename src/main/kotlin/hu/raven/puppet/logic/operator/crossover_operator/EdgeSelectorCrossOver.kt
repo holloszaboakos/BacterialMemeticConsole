@@ -25,7 +25,6 @@ data object EdgeSelectorCrossOver : CrossOverOperator {
             if (to == -1) return@forEachIndexed
 
 
-            //TODO: optimize segment administration
             val followed = segments.firstOrNull { it.second == from }
             val preceded = segments.firstOrNull { it.first == to }
 
@@ -58,7 +57,6 @@ data object EdgeSelectorCrossOver : CrossOverOperator {
                 continue
             }
 
-            //TODO: optimize contains
             if (selectedEdges.contains(edge.second)) {
                 continue
             }
@@ -93,7 +91,6 @@ data object EdgeSelectorCrossOver : CrossOverOperator {
 
             val parallelFirst = segments.firstOrNull { it.second == index }?.first
 
-            //TODO: optimize
             val availableValues = (0..childPermutation.size)
                 .filter { it != index && it != parallelFirst && !selectedEdges.contains(it) }
 

@@ -10,7 +10,6 @@ import hu.raven.puppet.model.utility.SimpleWeightedGraphEdge
 import kotlin.math.max
 import kotlin.math.min
 
-//TODO: debug, why path contains duplicates
 fun branchAndBounds(graph: IntMatrix): Pair<Permutation, Int> {
     var bestPath = intArrayOf(0)
     var bestCost = Int.MAX_VALUE

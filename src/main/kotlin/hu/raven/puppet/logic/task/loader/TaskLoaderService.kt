@@ -2,13 +2,12 @@ package hu.raven.puppet.logic.task.loader
 
 import com.google.gson.Gson
 import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray.Companion.size
-import hu.raven.puppet.logic.logging.ObjectLoggerService
 import hu.raven.puppet.model.task.Task
 import java.nio.file.Path
 
 sealed class TaskLoaderService {
 
-    protected abstract val logger: ObjectLoggerService<String>
+    abstract val log:(String)->Unit
 
     abstract fun loadTask(folderPath: String): Task
 

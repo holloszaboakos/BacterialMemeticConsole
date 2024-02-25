@@ -3,17 +3,16 @@ package hu.raven.puppet.logic.task.loader
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import hu.akos.hollo.szabo.math.FloatSumExtensions.sumClever
 import hu.akos.hollo.szabo.physics.Meter
-import hu.raven.puppet.logic.logging.ObjectLoggerService
 import hu.raven.puppet.logic.task.converter.AugeratDatasetConverterService
 import hu.raven.puppet.model.task.Task
 import hu.raven.puppet.model.task.augerat.InstanceBean
 import java.nio.file.Path
 
 class AugeratTaskLoaderService(
-    override val logger: ObjectLoggerService<String>,
     private val vehicleCount: Int,
     private val fileName: String,
     private val converter: AugeratDatasetConverterService,
+    override val log: (String) -> Unit,
 ) : TaskLoaderService() {
 
     override fun loadTask(folderPath: String): Task {
@@ -35,7 +34,7 @@ class AugeratTaskLoaderService(
 
     override fun logEstimates(task: Task) {
         task.costGraph.apply {
-            logger.log(
+            log(
                 "OVERESTIMATE: ${
                     (
                             edgesFromCenter.map { it.length.value }.sumClever()
@@ -44,7 +43,7 @@ class AugeratTaskLoaderService(
                 }"
             )
 
-            logger.log(
+            log(
                 "UNDERESTIMATE: ${
                     ((
                             edgesFromCenter.map { it.length.value }.sumClever() +

@@ -28,7 +28,7 @@ class CrossOverOperatorStabilityTest {
             val child = Permutation.random(PROBLEM_SIZE)
 
             AlternatingEdgeCrossOver(Pair(firstParent, secondParent), child)
-            assertTrue(child.checkFormat())
+            assertTrue(child.isFormatCorrect())
         }
     }
 
@@ -40,7 +40,7 @@ class CrossOverOperatorStabilityTest {
             val child = Permutation.random(PROBLEM_SIZE)
 
             AlternatingPositionCrossOver(Pair(firstParent, secondParent), child)
-            assertTrue(child.checkFormat())
+            assertTrue(child.isFormatCorrect())
         }
     }
 
@@ -52,7 +52,7 @@ class CrossOverOperatorStabilityTest {
             val child = Permutation.random(PROBLEM_SIZE)
 
             CycleCrossOver(Pair(firstParent, secondParent), child)
-            assertTrue(child.checkFormat())
+            assertTrue(child.isFormatCorrect())
         }
     }
 
@@ -64,7 +64,7 @@ class CrossOverOperatorStabilityTest {
             val child = Permutation.random(PROBLEM_SIZE)
 
             DistancePreservingCrossOver(Pair(firstParent, secondParent), child)
-            assertTrue(child.checkFormat())
+            assertTrue(child.isFormatCorrect())
         }
     }
 
@@ -76,7 +76,7 @@ class CrossOverOperatorStabilityTest {
             val child = Permutation.random(PROBLEM_SIZE)
 
             GeneticEdgeRecombinationCrossOver(Pair(firstParent, secondParent), child)
-            assertTrue(child.checkFormat())
+            assertTrue(child.isFormatCorrect())
         }
     }
 
@@ -110,7 +110,7 @@ class CrossOverOperatorStabilityTest {
             val child = Permutation.random(PROBLEM_SIZE)
 
             HeuristicCrossOver(costGraph)(Pair(firstParent, secondParent), child)
-            assertTrue(child.checkFormat())
+            assertTrue(child.isFormatCorrect())
         }
     }
 
@@ -122,7 +122,7 @@ class CrossOverOperatorStabilityTest {
             val child = Permutation.random(PROBLEM_SIZE)
 
             MaximalPreservationCrossOver(Pair(firstParent, secondParent), child)
-            assertTrue(child.checkFormat())
+            assertTrue(child.isFormatCorrect())
         }
     }
 
@@ -134,7 +134,7 @@ class CrossOverOperatorStabilityTest {
             val child = Permutation.random(PROBLEM_SIZE)
 
             OrderBasedCrossOver(Pair(firstParent, secondParent), child)
-            assertTrue(child.checkFormat())
+            assertTrue(child.isFormatCorrect())
         }
     }
 
@@ -146,7 +146,7 @@ class CrossOverOperatorStabilityTest {
             val child = Permutation.random(PROBLEM_SIZE)
 
             OrderCrossOver(Pair(firstParent, secondParent), child)
-            assertTrue(child.checkFormat())
+            assertTrue(child.isFormatCorrect())
         }
     }
 
@@ -158,7 +158,7 @@ class CrossOverOperatorStabilityTest {
             val child = Permutation.random(PROBLEM_SIZE)
 
             PartiallyMatchedCrossOver(Pair(firstParent, secondParent), child)
-            assertTrue(child.checkFormat())
+            assertTrue(child.isFormatCorrect())
         }
     }
 
@@ -170,7 +170,7 @@ class CrossOverOperatorStabilityTest {
             val child = Permutation.random(PROBLEM_SIZE)
 
             PositionBasedCrossOver(Pair(firstParent, secondParent), child)
-            assertTrue(child.checkFormat())
+            assertTrue(child.isFormatCorrect())
         }
     }
 
@@ -205,7 +205,7 @@ class CrossOverOperatorStabilityTest {
             val child = Permutation.random(PROBLEM_SIZE)
 
             SortedMatchCrossOver(costGraph)(Pair(firstParent, secondParent), child)
-            assertTrue(child.checkFormat())
+            assertTrue(child.isFormatCorrect())
         }
     }
 
@@ -217,7 +217,7 @@ class CrossOverOperatorStabilityTest {
             val child = Permutation.random(PROBLEM_SIZE)
 
             SubTourChunksCrossOver(Pair(firstParent, secondParent), child)
-            assertTrue(child.checkFormat())
+            assertTrue(child.isFormatCorrect())
         }
     }
 
@@ -229,7 +229,7 @@ class CrossOverOperatorStabilityTest {
             val child = Permutation.random(PROBLEM_SIZE)
 
             VotingRecombinationCrossOver(Pair(firstParent, secondParent), child)
-            assertTrue(child.checkFormat())
+            assertTrue(child.isFormatCorrect())
         }
     }
 }

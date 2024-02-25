@@ -1,13 +1,9 @@
 package hu.raven.puppet.logic.task.loader
 
-import hu.akos.hollo.szabo.collections.asImmutable
-import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray
 import hu.akos.hollo.szabo.math.FloatSumExtensions.sumClever
-import hu.raven.puppet.logic.logging.ObjectLoggerService
 import hu.raven.puppet.model.task.*
 import java.nio.file.Path
 
-//TODO fix json structures
 class DefaultTaskLoaderService(
     private val graphFilePath: String,
     private val edgesBetweenFilePath: String,
@@ -15,24 +11,24 @@ class DefaultTaskLoaderService(
     private val edgesToFilePath: String,
     private val salesmenFilePath: String,
     private val objectivesFilePath: String,
-    override val logger: ObjectLoggerService<String>
+    override val log: (String) -> Unit,
 ) : TaskLoaderService() {
     override fun loadTask(folderPath: String): Task {
         val incompleteGraph: CostGraph =
             loadFromResourceFile(Path.of(folderPath, graphFilePath))
-        val edgesBetween: ImmutableArray<ImmutableArray<CostGraphEdge>> =
+        val edgesBetween: Array<Array<CostGraphEdge>> =
             loadFromResourceFile<Array<Array<CostGraphEdge>>>(Path.of(folderPath, edgesBetweenFilePath))
-                .map { it.asImmutable() }
+                .map { it }
                 .toTypedArray()
-                .asImmutable()
-        val edgesFromCenter: ImmutableArray<CostGraphEdge> =
-            loadFromResourceFile<Array<CostGraphEdge>>(Path.of(folderPath, edgesFromFilePath)).asImmutable()
-        val edgesToCenter: ImmutableArray<CostGraphEdge> =
-            loadFromResourceFile<Array<CostGraphEdge>>(Path.of(folderPath, edgesToFilePath)).asImmutable()
-        val salesmen: ImmutableArray<TransportUnit> =
-            loadFromResourceFile<Array<TransportUnit>>(Path.of(folderPath, salesmenFilePath)).asImmutable()
-        val objectives: ImmutableArray<CostGraphVertex> =
-            loadFromResourceFile<Array<CostGraphVertex>>(Path.of(folderPath, objectivesFilePath)).asImmutable()
+
+        val edgesFromCenter: Array<CostGraphEdge> =
+            loadFromResourceFile<Array<CostGraphEdge>>(Path.of(folderPath, edgesFromFilePath))
+        val edgesToCenter: Array<CostGraphEdge> =
+            loadFromResourceFile<Array<CostGraphEdge>>(Path.of(folderPath, edgesToFilePath))
+        val salesmen: Array<TransportUnit> =
+            loadFromResourceFile<Array<TransportUnit>>(Path.of(folderPath, salesmenFilePath))
+        val objectives: Array<CostGraphVertex> =
+            loadFromResourceFile<Array<CostGraphVertex>>(Path.of(folderPath, objectivesFilePath))
 
         val task = Task(
             transportUnits = salesmen,
@@ -58,7 +54,7 @@ class DefaultTaskLoaderService(
         task.costGraph.apply {
             val salesman = task.transportUnits.first()
 
-            logger.log(
+            log(
                 "OVERESTIMATE: ${
                     (edgesFromCenter.map { calcCostOnEdge(salesman, it).value }.sumClever()
                             + edgesToCenter.map { calcCostOnEdge(salesman, it).value }.sumClever()
@@ -66,7 +62,7 @@ class DefaultTaskLoaderService(
                 }"
             )
 
-            logger.log(
+            log(
                 "UNDERESTIMATE: ${
                     (edgesFromCenter.map { calcCostOnEdge(salesman, it).value }.min()
                             + edgesBetween.mapIndexed { index, edgeArray ->

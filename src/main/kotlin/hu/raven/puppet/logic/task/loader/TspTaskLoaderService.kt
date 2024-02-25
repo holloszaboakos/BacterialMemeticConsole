@@ -3,15 +3,14 @@ package hu.raven.puppet.logic.task.loader
 import hu.akos.hollo.szabo.collections.asImmutable
 import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray.Companion.size
 import hu.akos.hollo.szabo.math.FloatSumExtensions.sumClever
-import hu.raven.puppet.logic.logging.ObjectLoggerService
 import hu.raven.puppet.model.task.CostGraphVertex
 import hu.raven.puppet.model.task.Task
 import hu.raven.puppet.model.task.TaskSerializable
 import java.nio.file.Path
 
 class TspTaskLoaderService(
-    override val logger: ObjectLoggerService<String>,
-    private val fileName: String
+    private val fileName: String,
+    override val log: (String) -> Unit,
 ) : TaskLoaderService() {
     override fun loadTask(folderPath: String): Task {
         val standardTaskSerializable: TaskSerializable = loadFromResourceFile(Path.of(folderPath, fileName))
@@ -20,7 +19,7 @@ class TspTaskLoaderService(
             costGraph = standardTask.costGraph.copy(
                 objectives = Array(standardTask.costGraph.edgesFromCenter.size) {
                     CostGraphVertex()
-                }.asImmutable()
+                }
             )
         )
         logEstimates(taskWithObjectives)
@@ -38,7 +37,7 @@ class TspTaskLoaderService(
             val costOfAllToCenterEdges = edgesToCenter.map { it.length.value }.sumClever()
             val overEstimate = costOfAllFromCenterEdges + costOfAllToCenterEdges
 
-            logger.log("OVERESTIMATE: $overEstimate")
+            log("OVERESTIMATE: $overEstimate")
         }
     }
 
@@ -52,7 +51,7 @@ class TspTaskLoaderService(
                 ).min()
             }.sumClever()
             val underEstimate = minimalCostFromCenter + minimalCostFromTargets
-            logger.log("UNDERESTIMATE: $underEstimate")
+            log("UNDERESTIMATE: $underEstimate")
         }
     }
 

@@ -7,7 +7,7 @@ import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray.Companion.
 
 
 data class Task(
-    val transportUnits: ImmutableArray<TransportUnit> = immutableArrayOf(),
+    val transportUnits: Array<TransportUnit> = arrayOf(),
     val costGraph: CostGraph = CostGraph()
 ) {
     override fun equals(other: Any?): Boolean {

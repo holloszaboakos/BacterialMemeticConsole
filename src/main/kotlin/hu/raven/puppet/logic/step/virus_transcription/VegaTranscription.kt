@@ -9,14 +9,6 @@ import hu.raven.puppet.model.state.VirusEvolutionaryAlgorithmState
 
 import kotlin.random.Random
 
-//TODO
-//iterate virus
-//for each virus select random targets
-//for each target
-//store old cost
-//insert virus
-//map cost difference to fitness
-//calculate new life force
 class VegaTranscription(
     override val virusInfectionRate: Float,
     override val lifeReductionRate: Float,

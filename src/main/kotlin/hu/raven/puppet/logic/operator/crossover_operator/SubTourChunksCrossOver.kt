@@ -5,7 +5,6 @@ import hu.akos.hollo.szabo.math.random.CardDeckRandomizer
 import hu.akos.hollo.szabo.primitives.get
 import kotlin.random.Random.Default.nextInt
 
-//TODO: check if implementation is wrong!
 data object SubTourChunksCrossOver : CrossOverOperator {
 
     override fun invoke(
