@@ -38,7 +38,6 @@ class BacteriophageTranscriptionByLooseMatchingAndHeuristicCompletion(
                             }
                         } else {
                             if (!specimen.permutation.indices.all { specimen.permutation[it] == oldPermutation[it] }) {
-                                File("output.txt").appendText("SUCCESSFUL MUTATION\n")
                                 specimen.iterationOfCreation = state.iteration
                             }
                             specimen.cost = newCost
