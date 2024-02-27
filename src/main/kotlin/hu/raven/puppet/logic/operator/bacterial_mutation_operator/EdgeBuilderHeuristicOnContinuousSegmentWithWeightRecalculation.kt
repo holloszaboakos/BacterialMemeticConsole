@@ -1,18 +1,18 @@
 package hu.raven.puppet.logic.operator.bacterial_mutation_operator
 
-import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray.Companion.size
 import hu.akos.hollo.szabo.math.FloatSumExtensions.sumClever
 import hu.akos.hollo.szabo.math.calculus.multiplicativeInverse
+import hu.akos.hollo.szabo.math.matrix.FloatMatrix
+import hu.akos.hollo.szabo.math.vector.IntVector2D
 import hu.raven.puppet.logic.operator.select_segments.ContinuousSegment
 import hu.raven.puppet.model.solution.OnePartRepresentation
-import hu.raven.puppet.model.task.Task
 import hu.raven.puppet.model.utility.SimpleGraphEdge
 import hu.raven.puppet.utility.buildPermutation
-import hu.raven.puppet.utility.extention.getEdgeBetween
+import kotlin.math.min
 import kotlin.random.Random
 
 class EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation(
-    val task: Task
+    val distanceMatrix: FloatMatrix
 ) : BacterialMutationOperator {
     override fun invoke(
         clone: OnePartRepresentation,
@@ -209,7 +209,7 @@ class EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation(
         clone: OnePartRepresentation,
         selectedSegment: List<ContinuousSegment>
     ): FloatArray {
-        val objectiveCount = task.costGraph.objectives.size
+        val objectiveCount = distanceMatrix.size - 1
         val nextElement = if (selectedSegment.last().indices.last == clone.permutation.indices.last) {
             objectiveCount
         } else {
@@ -227,7 +227,7 @@ class EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation(
         clone: OnePartRepresentation,
         selectedSegment: List<ContinuousSegment>
     ): FloatArray {
-        val objectiveCount = task.costGraph.objectives.size
+        val objectiveCount = distanceMatrix.size - 1
         val previousElement = if (selectedSegment.first().indices.first == 0) {
             objectiveCount
         } else {
@@ -259,31 +259,11 @@ class EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation(
         fromElement: Int,
         toElement: Int
     ): Float {
-        task.apply {
-            val objectiveCount = costGraph.objectives.size
-            return when {
-                fromElement == toElement -> 0f
-                fromElement < objectiveCount && toElement < objectiveCount -> costGraph
-                    .getEdgeBetween(fromElement, toElement)
-                    .length
-                    .value
-                    .multiplicativeInverse()
-
-                toElement < objectiveCount -> costGraph
-                    .edgesFromCenter[toElement]
-                    .length
-                    .value
-                    .multiplicativeInverse()
-
-                fromElement < objectiveCount -> costGraph
-                    .edgesToCenter[fromElement]
-                    .length
-                    .value
-                    .multiplicativeInverse()
-
-                else -> 1f
-            }
-        }
+        return distanceMatrix[IntVector2D(
+            x = min(fromElement, distanceMatrix.size - 1),
+            y = min(toElement, distanceMatrix.size - 1),
+        )]
+            .multiplicativeInverse()
     }
 
 }

@@ -1,12 +1,12 @@
 package hu.raven.puppet.logic.operator.crossover_operator
 
-import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray.Companion.size
 import hu.akos.hollo.szabo.math.Permutation
 import hu.akos.hollo.szabo.math.calculus.multiplicativeInverse
+import hu.akos.hollo.szabo.math.matrix.FloatMatrix
+import hu.akos.hollo.szabo.math.vector.IntVector2D
 import hu.akos.hollo.szabo.primitives.get
 import hu.raven.puppet.logic.operator.weighted_selection.RouletteWheelSelection
-import hu.raven.puppet.model.task.CostGraph
-import hu.raven.puppet.utility.extention.getEdgeBetween
+import kotlin.math.min
 import kotlin.random.Random.Default.nextInt
 
 //random first value
@@ -14,7 +14,7 @@ import kotlin.random.Random.Default.nextInt
 // gather neighbour
 //distance based random selection
 class HeuristicCrossOver(
-    val costGraph: CostGraph
+    val distanceMatrix: FloatMatrix
 ) : CrossOverOperator {
 
     private val rouletteWheelSelection = RouletteWheelSelection<Int>()
@@ -52,7 +52,6 @@ class HeuristicCrossOver(
             }
 
             val weights = calculateWeightForNeighbours(
-                costGraph,
                 neighbours,
                 previousValue
             )
@@ -98,37 +97,16 @@ class HeuristicCrossOver(
     }
 
     private fun calculateWeightForNeighbours(
-        costGraph: CostGraph,
         neighbours: List<Int>,
         previousValue: Int
-    ): Array<Float> = costGraph.run {
+    ): Array<Float> =
         Array(neighbours.size) { neighbourIndex ->
-            when {
-                previousValue < objectives.size && neighbours[neighbourIndex] < objectives.size -> {
-                    getEdgeBetween(previousValue, neighbours[neighbourIndex])
-                        .length
-                        .value
-                        .multiplicativeInverse()
-                }
-
-                previousValue < objectives.size -> {
-                    edgesToCenter[previousValue]
-                        .length
-                        .value
-                        .multiplicativeInverse()
-                }
-
-                neighbours[neighbourIndex] < objectives.size -> {
-                    edgesFromCenter[neighbours[neighbourIndex]]
-                        .length
-                        .value
-                        .multiplicativeInverse()
-                }
-
-                else -> 1f
-            }
+            distanceMatrix[IntVector2D(
+                x = min(previousValue, distanceMatrix.size - 1),
+                y = min(neighbours[neighbourIndex], distanceMatrix.size - 1),
+            )]
+                .multiplicativeInverse()
         }
-    }
 
 
     private fun chooseNextValueBasedOnWeight(

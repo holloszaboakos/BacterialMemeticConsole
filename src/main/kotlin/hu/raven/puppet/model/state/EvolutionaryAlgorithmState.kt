@@ -2,12 +2,11 @@ package hu.raven.puppet.model.state
 
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.solution.PoolWithSmartActivation
-import hu.raven.puppet.model.task.Task
 
-open class EvolutionaryAlgorithmState(
-    override val task: Task,
+open class EvolutionaryAlgorithmState<T>(
+    override val task: T,
     open val population: PoolWithSmartActivation<OnePartRepresentationWithCostAndIterationAndId>
-) : IterativeAlgorithmState {
+) : IterativeAlgorithmState<T> {
     override var iteration = 0
     var copyOfBest: OnePartRepresentationWithCostAndIterationAndId? = null
     var copyOfWorst: OnePartRepresentationWithCostAndIterationAndId? = null

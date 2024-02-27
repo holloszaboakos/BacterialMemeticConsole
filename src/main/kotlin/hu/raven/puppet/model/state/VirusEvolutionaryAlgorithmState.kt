@@ -3,10 +3,9 @@ package hu.raven.puppet.model.state
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.solution.PoolWithSmartActivation
 import hu.raven.puppet.model.solution.VirusSpecimen
-import hu.raven.puppet.model.task.Task
 
-data class VirusEvolutionaryAlgorithmState(
-    override val task: Task,
+data class VirusEvolutionaryAlgorithmState<T>(
+    override val task: T,
     override val population: PoolWithSmartActivation<OnePartRepresentationWithCostAndIterationAndId>,
     val virusPopulation: PoolWithSmartActivation<VirusSpecimen>,
-) : EvolutionaryAlgorithmState(task, population)
+) : EvolutionaryAlgorithmState<T>(task, population)

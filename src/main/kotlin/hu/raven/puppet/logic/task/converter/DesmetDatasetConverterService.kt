@@ -1,11 +1,11 @@
 package hu.raven.puppet.logic.task.converter
 
-import hu.akos.hollo.szabo.collections.asImmutable
 import hu.akos.hollo.szabo.physics.CubicMeter
 import hu.akos.hollo.szabo.physics.Meter
 import hu.raven.puppet.model.task.*
 import hu.raven.puppet.model.task.desmet.DesmetTask
 import hu.raven.puppet.model.task.desmet.NodeCoordinate
+import hu.raven.puppet.model.utility.Gps
 
 class DesmetDatasetConverterService(override val vehicleCount: Int) : TaskConverterService<DesmetTask>() {
 

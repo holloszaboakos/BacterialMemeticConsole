@@ -3,7 +3,7 @@ package hu.raven.puppet.logic.iteration
 import hu.raven.puppet.logic.step.EvolutionaryAlgorithmStep
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
-class EvolutionaryAlgorithmIteration<T : EvolutionaryAlgorithmState>(
+class EvolutionaryAlgorithmIteration<T : EvolutionaryAlgorithmState<*>>(
     private val steps: Array<EvolutionaryAlgorithmStep<T>>
 ) : AlgorithmIteration<T> {
 

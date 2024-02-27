@@ -1,5 +1,5 @@
 package hu.raven.puppet.model.state
 
-sealed interface IterativeAlgorithmState : AlgorithmState {
+sealed interface IterativeAlgorithmState<T> : AlgorithmState<T> {
     var iteration: Int
 }

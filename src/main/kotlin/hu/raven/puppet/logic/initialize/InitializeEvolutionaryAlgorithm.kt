@@ -4,15 +4,14 @@ import hu.raven.puppet.logic.operator.initialize_population.InitializePopulation
 import hu.raven.puppet.logic.step.order_population_by_cost.OrderPopulationByCost
 import hu.raven.puppet.model.solution.PoolWithSmartActivation
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
-import hu.raven.puppet.model.task.Task
 
 
-open class InitializeEvolutionaryAlgorithm(
-    val initializePopulation: InitializePopulation,
-    val orderPopulationByCost: OrderPopulationByCost
-) : InitializeAlgorithm<EvolutionaryAlgorithmState> {
+open class InitializeEvolutionaryAlgorithm<T>(
+    private val initializePopulation: InitializePopulation,
+    private val orderPopulationByCost: OrderPopulationByCost
+) : InitializeAlgorithm<T,EvolutionaryAlgorithmState<T>> {
 
-    override fun invoke(task: Task): EvolutionaryAlgorithmState {
+    override fun invoke(task: T): EvolutionaryAlgorithmState<T> {
         val population = initializePopulation(task)
         val algorithmState = EvolutionaryAlgorithmState(
             task = task,

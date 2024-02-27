@@ -25,6 +25,7 @@ import hu.raven.puppet.logic.operator.initialize_population.InitializePopulation
 import hu.raven.puppet.logic.operator.initialize_population.InitializePopulationByModuloStepper
 import hu.raven.puppet.logic.operator.select_segments.SelectCuts
 import hu.raven.puppet.logic.operator.select_segments.SelectSegments
+import hu.raven.puppet.logic.step.EvolutionaryAlgorithmStep
 import hu.raven.puppet.logic.step.StepLogger
 import hu.raven.puppet.logic.step.bacterial_mutation.BacterialMutation
 import hu.raven.puppet.logic.step.bacterial_mutation.BacterialMutationOnBestAndLuckyByShuffling
@@ -38,6 +39,7 @@ import hu.raven.puppet.logic.step.select_survivers.SelectSurvivorsMultiObjective
 import hu.raven.puppet.logic.task.loader.TaskLoaderService
 import hu.raven.puppet.logic.task.loader.TspTaskLoaderService
 import hu.raven.puppet.model.state.BacteriophageAlgorithmState
+import hu.raven.puppet.model.utility.math.CompleteGraph
 import hu.raven.puppet.utility.extention.KoinUtil
 import hu.raven.puppet.utility.extention.KoinUtil.get
 import org.koin.core.context.startKoin
@@ -62,6 +64,9 @@ import java.time.LocalDateTime
 //iterationOfCreation=7838, cost=FloatVector(coordinates=[15535.0])
 //Added boost with bacteriophage
 //id=195, iterationOfCreation=910, cost=FloatVector(coordinates=[16676.0])
+
+private typealias Task = CompleteGraph<Unit, Int>
+
 fun main() {
     startKoin {
         modules(
@@ -69,9 +74,9 @@ fun main() {
                 single(named(FilePathVariableNames.SINGLE_FILE)) { "size64instance0.json" }
                 single(named(FilePathVariableNames.INPUT_FOLDER)) { "\\input\\tsp" }
                 single(named(FilePathVariableNames.OUTPUT_FOLDER)) { Path.of("output\\default\\output.txt") }
-                single<InitializeAlgorithm<*>> {
+                single<InitializeAlgorithm<*, *>> {
                     InitializeBacteriophageAlgorithm(
-                        InitializeEvolutionaryAlgorithm(
+                        InitializeEvolutionaryAlgorithm<Task>(
                             initializePopulation = get(),
                             orderPopulationByCost = get()
                         ),
@@ -87,8 +92,8 @@ fun main() {
                 single {
                     OrderPopulationByCost(calculateCostOf = get())
                 }
-                single<CalculateCost> {
-                    CalculateCostOfTspSolution(task = get())
+                single<CalculateCost<*>> {
+                    CalculateCostOfTspSolution(task = get<Task>())
                 }
                 single<TaskLoaderService> {
                     TspTaskLoaderService(
@@ -100,8 +105,8 @@ fun main() {
                     get<TaskLoaderService>().loadTask(folderPath = get(named(FilePathVariableNames.INPUT_FOLDER)))
                 }
                 single<AlgorithmIteration<*>> {
-                    EvolutionaryAlgorithmIteration(
-                        steps = arrayOf(
+                    EvolutionaryAlgorithmIteration<BacteriophageAlgorithmState<Task>>(
+                        steps = arrayOf<EvolutionaryAlgorithmStep<BacteriophageAlgorithmState<Task>>>(
                             get<SelectSurvivors>().let { StepLogger(it, get()) },
                             get<BacterialMutation>().let { StepLogger(it, get()) },
                             get<BacteriophageTranscription>().let { StepLogger(it, get()) },
@@ -162,8 +167,8 @@ fun main() {
                         outputFolder = arrayOf(
                             "output", "${LocalDate.now()}",
                             LocalDateTime.now().toString()
-                                .replace(":","_")
-                                .replace(".","_")
+                                .replace(":", "_")
+                                .replace(".", "_")
                         ),
                         outputFileName = "algorithmState"
                     )

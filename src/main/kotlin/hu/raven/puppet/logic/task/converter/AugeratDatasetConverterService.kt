@@ -1,12 +1,12 @@
 package hu.raven.puppet.logic.task.converter
 
-import hu.akos.hollo.szabo.collections.asImmutable
 import hu.akos.hollo.szabo.physics.CubicMeter
 import hu.akos.hollo.szabo.physics.Meter
 import hu.raven.puppet.model.task.*
 import hu.raven.puppet.model.task.augerat.InstanceBean
 import hu.raven.puppet.model.task.augerat.NodeBean
 import hu.raven.puppet.model.task.augerat.RequestBean
+import hu.raven.puppet.model.utility.Gps
 import kotlin.math.max
 import kotlin.math.pow
 import kotlin.math.sqrt

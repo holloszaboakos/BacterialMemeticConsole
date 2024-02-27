@@ -9,7 +9,7 @@ import hu.akos.hollo.szabo.physics.CubicMeter
 import hu.raven.puppet.model.task.CostGraph
 import hu.raven.puppet.model.task.CostGraphEdge
 import hu.raven.puppet.model.task.CostGraphVertex
-import hu.raven.puppet.model.task.Gps
+import hu.raven.puppet.model.utility.Gps
 import org.junit.Test
 import kotlin.random.Random
 import kotlin.test.assertTrue
