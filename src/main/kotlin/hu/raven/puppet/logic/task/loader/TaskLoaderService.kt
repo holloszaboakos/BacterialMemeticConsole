@@ -1,22 +1,13 @@
 package hu.raven.puppet.logic.task.loader
 
 import com.google.gson.Gson
-import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray.Companion.size
-import hu.raven.puppet.model.task.Task
 import java.nio.file.Path
 
-sealed class TaskLoaderService {
+sealed class TaskLoaderService<T> {
 
     abstract val log:(String)->Unit
 
-    abstract fun loadTask(folderPath: String): Task
-
-    protected fun Task.isWellFormatted(): Boolean {
-        return costGraph.edgesBetween.size == costGraph.objectives.size
-                && costGraph.edgesBetween.all { it.size == costGraph.objectives.size - 1 }
-                && costGraph.edgesFromCenter.size == costGraph.objectives.size
-                && costGraph.edgesToCenter.size == costGraph.objectives.size
-    }
+    abstract fun loadTask(folderPath: String): T
 
     protected inline fun <reified T : Any> loadFromResourceFile(
         filePath: Path
@@ -27,5 +18,5 @@ sealed class TaskLoaderService {
         return gson.fromJson(resourceURL.readText(), T::class.java)
     }
 
-    protected abstract fun logEstimates(task: Task)
+    protected abstract fun logEstimates(task: T)
 }

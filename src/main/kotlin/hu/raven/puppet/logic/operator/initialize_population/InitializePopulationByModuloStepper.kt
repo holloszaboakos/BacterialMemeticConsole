@@ -3,50 +3,33 @@ package hu.raven.puppet.logic.operator.initialize_population
 import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray.Companion.size
 import hu.akos.hollo.szabo.math.asPermutation
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
-import hu.raven.puppet.model.task.Task
 
 class InitializePopulationByModuloStepper(
-    private val sizeOfPopulation: Int
+    private val sizeOfPopulation: Int,
+    private val sizeOfTask: Int,
 ) : InitializePopulation {
 
-    override fun invoke(task: Task): List<OnePartRepresentationWithCostAndIterationAndId> {
-        val sizeOfPermutation =
-            if (task.transportUnits.size != 0)
-                (task.costGraph.objectives.size + task.transportUnits.size - 1)
-            else
-                task.costGraph.objectives.size
-        val basePermutation = IntArray(sizeOfPermutation) { it }
-        val population = if (task.costGraph.objectives.size != 1)
+    override fun invoke(): List<OnePartRepresentationWithCostAndIterationAndId> {
+        val basePermutation = IntArray(sizeOfTask) { it }
+        val population =
             MutableList(sizeOfPopulation) {
                 OnePartRepresentationWithCostAndIterationAndId(
                     id = it,
                     iterationOfCreation = 0,
                     cost = null,
-                    objectiveCount = task.costGraph.objectives.size,
                     permutation = IntArray(
-                        task.transportUnits.size +
-                                task.costGraph.objectives.size
+                        sizeOfTask
                     ) { index ->
                         index
                     }.asPermutation()
                 )
             }
-        else
-            mutableListOf(
-                OnePartRepresentationWithCostAndIterationAndId(
-                    0,
-                    0,
-                    null,
-                    1,
-                    intArrayOf(0).asPermutation()
-                )
-            )
 
         population.forEachIndexed { instanceIndex, instance ->
             initSpecimen(
                 instanceIndex,
                 instance,
-                sizeOfPermutation,
+                sizeOfTask,
                 basePermutation
             )
         }

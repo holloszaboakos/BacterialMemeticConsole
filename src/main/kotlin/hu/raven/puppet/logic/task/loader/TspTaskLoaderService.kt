@@ -1,56 +1,38 @@
 package hu.raven.puppet.logic.task.loader
 
-import hu.akos.hollo.szabo.collections.asImmutable
-import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray.Companion.size
-import hu.akos.hollo.szabo.math.FloatSumExtensions.sumClever
-import hu.raven.puppet.model.task.CostGraphVertex
-import hu.raven.puppet.model.task.Task
-import hu.raven.puppet.model.task.TaskSerializable
+import hu.raven.puppet.model.utility.math.CompleteGraph
 import java.nio.file.Path
 
 class TspTaskLoaderService(
     private val fileName: String,
     override val log: (String) -> Unit,
-) : TaskLoaderService() {
-    override fun loadTask(folderPath: String): Task {
-        val standardTaskSerializable: TaskSerializable = loadFromResourceFile(Path.of(folderPath, fileName))
-        val standardTask: Task = standardTaskSerializable.toTask()
-        val taskWithObjectives = standardTask.copy(
-            costGraph = standardTask.costGraph.copy(
-                objectives = Array(standardTask.costGraph.edgesFromCenter.size) {
-                    CostGraphVertex()
-                }
-            )
-        )
-        logEstimates(taskWithObjectives)
-        return taskWithObjectives
+) : TaskLoaderService<CompleteGraph<Unit, Int>>() {
+
+    override fun loadTask(folderPath: String): CompleteGraph<Unit, Int> {
+        val standardTask: CompleteGraph<Unit, Int> = loadFromResourceFile(Path.of(folderPath, fileName))
+        logEstimates(standardTask)
+        return standardTask
     }
 
-    override fun logEstimates(task: Task) {
+    override fun logEstimates(task: CompleteGraph<Unit, Int>) {
         logOverEstimate(task)
         logUnderEstimate(task)
     }
 
-    private fun logOverEstimate(task: Task) {
-        task.costGraph.apply {
-            val costOfAllFromCenterEdges = edgesFromCenter.map { it.length.value }.sumClever()
-            val costOfAllToCenterEdges = edgesToCenter.map { it.length.value }.sumClever()
+    private fun logOverEstimate(task: CompleteGraph<Unit, Int>) {
+        task.apply {
+            val costOfAllFromCenterEdges = edges.last().map { it.value }.sum()
+            val costOfAllToCenterEdges = edges.map { it.last().value }.sum()
             val overEstimate = costOfAllFromCenterEdges + costOfAllToCenterEdges
 
             log("OVERESTIMATE: $overEstimate")
         }
     }
 
-    private fun logUnderEstimate(task: Task) {
-        task.costGraph.apply {
-            val minimalCostFromCenter = edgesFromCenter.minOfOrNull { it.length.value } ?: 0f
-            val minimalCostFromTargets = edgesBetween.mapIndexed { index, edgesFrom ->
-                arrayOf(
-                    edgesFrom.minOfOrNull { it.length.value } ?: Float.MAX_VALUE,
-                    edgesToCenter[index].length.value
-                ).min()
-            }.sumClever()
-            val underEstimate = minimalCostFromCenter + minimalCostFromTargets
+    private fun logUnderEstimate(task: CompleteGraph<Unit, Int>) {
+        task.apply {
+
+            val underEstimate = edges.map { it.minOfOrNull { it.value } ?: 0 }
             log("UNDERESTIMATE: $underEstimate")
         }
     }

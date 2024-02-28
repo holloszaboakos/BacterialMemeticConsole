@@ -7,7 +7,7 @@ class HalfElitistCrossover(
     override val crossoverOperators: List<CrossOverOperator>
 ) : CrossOverStrategy() {
 
-    override operator fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
+    override operator fun invoke(state: EvolutionaryAlgorithmState<*>): Unit = state.run {
         val children = population.inactivesAsSequence()
             .chunked(2)
             .toList()

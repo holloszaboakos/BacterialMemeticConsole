@@ -1,18 +1,17 @@
 package hu.raven.puppet.logic.task.generator
 
 import hu.akos.hollo.szabo.collections.asImmutable
-import hu.akos.hollo.szabo.physics.Meter
-import hu.raven.puppet.model.task.CostGraph
-import hu.raven.puppet.model.task.CostGraphEdge
-import hu.raven.puppet.model.task.Task
+import hu.raven.puppet.model.utility.math.CompleteGraph
+import hu.raven.puppet.model.utility.math.CompleteGraphEdge
+import hu.raven.puppet.model.utility.math.CompleteGraphVertex
 import kotlin.random.Random
 import kotlin.random.nextInt
 
 class TspGeneratorService {
-    fun generateTspTask(size: Int, range: IntRange): Task {
+    fun generateTspTask(size: Int, range: IntRange): CompleteGraph<Unit, Int> {
         val distanceMatrix = generateDistanceMatrix(size, range)
         distanceMatrix.optimizeDistanceMatrixByFloyd()
-        return distanceMatrix.toGraph().toTask()
+        return distanceMatrix.toGraph()
     }
 
     private fun generateDistanceMatrix(size: Int, range: IntRange) = Array(size) { indexFrom ->
@@ -66,37 +65,27 @@ class TspGeneratorService {
         return improvement
     }
 
-    private fun Array<IntArray>.toGraph(): CostGraph {
-        return CostGraph(
-            edgesBetween = this
-                .slice(1..<this.size)
+    private fun Array<IntArray>.toGraph(): CompleteGraph<Unit, Int> {
+        return CompleteGraph(
+            edges = this
                 .mapIndexed { rowIndex, row ->
                     row
-                        .slice(1..<this.size)
                         .mapIndexed { distanceIndex, distance ->
-                            if (rowIndex == distanceIndex) null
-                            else distance.toCostGraphEdge()
+                            CompleteGraphEdge(
+                                fromIndex = rowIndex,
+                                toIndex = distanceIndex,
+                                value = distance
+                            )
                         }
-                        .filterNotNull()
                         .toTypedArray()
+                        .asImmutable()
 
                 }
                 .toTypedArray()
-                ,
-            edgesFromCenter = this[0]
-                .slice(1..<this[0].size)
-                .map { CostGraphEdge(Meter(it)) }
-                .toTypedArray()
-                ,
-            edgesToCenter = this
-                .slice(1..<this.size)
-                .map { CostGraphEdge(Meter(it[0])) }
-                .toTypedArray()
+                .asImmutable(),
+            vertices = Array(this.size) { CompleteGraphVertex(it, Unit) }.asImmutable()
 
         )
     }
 
-    private fun CostGraph.toTask() = Task(costGraph = this)
-
-    private fun Int.toCostGraphEdge() = CostGraphEdge(Meter(this))
 }

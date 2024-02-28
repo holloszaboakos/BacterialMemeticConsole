@@ -9,7 +9,7 @@ class BoostOnWorst(
     override val boostOperator: BoostOperator<OnePartRepresentationWithCostAndIterationAndId>,
 ) : BoostStrategy() {
 
-    override operator fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
+    override operator fun invoke(state: EvolutionaryAlgorithmState<*>): Unit = state.run {
         val worst = population.activesAsSequence().last()
         boostOperator(worst)
     }

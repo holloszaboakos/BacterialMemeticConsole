@@ -6,35 +6,34 @@ import hu.akos.hollo.szabo.math.asPermutation
 import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.length
 import hu.raven.puppet.logic.operator.bacterial_mutation_on_specimen.MutationOnSpecimen
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
-import hu.raven.puppet.model.task.Task
 
 class InitializeHugePopulationThanPreOptimizeThanSelectBest(
     private val sizeOfPopulation: Int,
+    private val sizeOfTask: Int,
     private val mutationOperator: MutationOnSpecimen,
 ) : InitializePopulation {
 
 
-    override fun invoke(task: Task): List<OnePartRepresentationWithCostAndIterationAndId> {
-        val sizeOfPermutation = task.costGraph.objectives.size + task.transportUnits.size - 1
-        val basePermutation = IntArray(sizeOfPermutation) { it }
+    override fun invoke(): List<OnePartRepresentationWithCostAndIterationAndId> {
+        val basePermutation = IntArray(sizeOfTask) { it }
 
-        var population = createPopulation(task)
+        var population = createPopulation(sizeOfTask)
 
         population.asSequence().forEachIndexed { instanceIndex, instance ->
-            val step = instanceIndex % (sizeOfPermutation - 1) + 1
+            val step = instanceIndex % (sizeOfTask - 1) + 1
             if (step == 1) {
                 basePermutation.shuffle()
             }
 
-            val newContains = BooleanArray(sizeOfPermutation) { false }
-            val newPermutation = IntArray(sizeOfPermutation) { -1 }
+            val newContains = BooleanArray(sizeOfTask) { false }
+            val newPermutation = IntArray(sizeOfTask) { -1 }
             var baseIndex = step
-            for (newIndex in 0..<sizeOfPermutation) {
+            for (newIndex in 0..<sizeOfTask) {
                 if (newContains[basePermutation[baseIndex]])
-                    baseIndex = (baseIndex + 1) % sizeOfPermutation
+                    baseIndex = (baseIndex + 1) % sizeOfTask
                 newPermutation[newIndex] = basePermutation[baseIndex]
                 newContains[basePermutation[baseIndex]] = true
-                baseIndex = (baseIndex + step) % sizeOfPermutation
+                baseIndex = (baseIndex + step) % sizeOfTask
             }
             newPermutation.forEachIndexed { index, value ->
                 instance.permutation[index] = value
@@ -54,7 +53,6 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest(
                         id = specimen.value.id,
                         iterationOfCreation = specimen.value.iterationOfCreation,
                         cost = specimen.value.cost,
-                        objectiveCount = specimen.value.objectiveCount,
                         permutation = specimen.value.permutation.clone()
                     )
                 }.toList()
@@ -75,18 +73,14 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest(
         }
 
 
-    private fun createPopulation(task: Task): List<OnePartRepresentationWithCostAndIterationAndId> {
-        return if (task.costGraph.objectives.size != 1)
-            MutableList((task.costGraph.objectives.size + task.transportUnits.size - 1)) {
+    private fun createPopulation(sizeOfTask: Int): List<OnePartRepresentationWithCostAndIterationAndId> {
+        return if (sizeOfTask != 1)
+            MutableList((sizeOfTask)) {
                 OnePartRepresentationWithCostAndIterationAndId(
                     id = it,
                     iterationOfCreation = 0,
                     cost = null,
-                    objectiveCount = task.costGraph.objectives.size,
-                    permutation = IntArray(
-                        task.transportUnits.size +
-                                task.costGraph.objectives.size
-                    ) { index -> index }
+                    permutation = IntArray(sizeOfTask) { index -> index }
                         .asPermutation()
                 )
             }
@@ -96,7 +90,6 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest(
                     id = 0,
                     iterationOfCreation = 0,
                     cost = null,
-                    1,
                     intArrayOf(0).asPermutation()
                 )
             )

@@ -11,7 +11,7 @@ class BoostOntTop(
     override val boostOperator: BoostOperator<OnePartRepresentationWithCostAndIterationAndId>,
 ) : BoostStrategy() {
 
-    override operator fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
+    override operator fun invoke(state: EvolutionaryAlgorithmState<*>): Unit = state.run {
         population.activesAsSequence()
             .slice(0..<boostedCount)
             .forEach {

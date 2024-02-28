@@ -9,7 +9,7 @@ inline fun swapIfBetter(
     specimen: OnePartRepresentationWithCost,
     position1: Int,
     position2: Int,
-    calculateCostOf: CalculateCost,
+    calculateCostOf: CalculateCost<*>,
     onImprovement: () -> Unit = {}
 ) {
     val bestCost = specimen.costOrException()

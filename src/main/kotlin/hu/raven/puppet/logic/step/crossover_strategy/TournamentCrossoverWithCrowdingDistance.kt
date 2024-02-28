@@ -11,7 +11,7 @@ class TournamentCrossoverWithCrowdingDistance(
     private val crowdingDistance: CrowdingDistance,
     private val tournamentSize: Int,
 ) : CrossOverStrategy() {
-    override fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
+    override fun invoke(state: EvolutionaryAlgorithmState<*>): Unit = state.run {
         val children = population.inactivesAsSequence()
             .chunked(2)
             .toList()

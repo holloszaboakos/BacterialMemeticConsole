@@ -4,7 +4,7 @@ import hu.raven.puppet.model.state.VirusEvolutionaryAlgorithmState
 import kotlin.random.Random
 
 data object VegaTransduction : Transduction {
-    override fun invoke(state: VirusEvolutionaryAlgorithmState) {
+    override fun invoke(state: VirusEvolutionaryAlgorithmState<*>) {
         state.virusPopulation
             .inactivesAsSequence()
             .forEach {

@@ -11,7 +11,7 @@ class BoostOnBestAndLucky(
     override val boostOperator: BoostOperator<OnePartRepresentationWithCostAndIterationAndId>
 ) : BoostStrategy() {
 
-    override fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
+    override fun invoke(state: EvolutionaryAlgorithmState<*>): Unit = state.run {
         boostOperator(population.activesAsSequence().first())
 
         population.activesAsSequence()

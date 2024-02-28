@@ -4,7 +4,7 @@ import hu.raven.puppet.logic.operator.calculate_cost.CalculateCost
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 
 class Opt2StepWithPerSpecimenProgressMemoryAndRandomOrder(
-    override val calculateCostOf: CalculateCost,
+    override val calculateCostOf: CalculateCost<*>,
     permutationSize: Int,
     populationSize: Int,
 ) : BoostOperator<OnePartRepresentationWithCostAndIterationAndId>() {

@@ -5,7 +5,7 @@ import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
 
 data object SelectSurvivorsMultiObjectiveTournament : SelectSurvivors {
-    override fun invoke(state: EvolutionaryAlgorithmState): Unit = state.population.run {
+    override fun invoke(state: EvolutionaryAlgorithmState<*>): Unit = state.population.run {
         deactivateAll()
         while (activeCount < poolSize / 2) {
             inactivesAsSequence()

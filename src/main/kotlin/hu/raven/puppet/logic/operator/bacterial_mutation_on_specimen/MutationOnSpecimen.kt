@@ -10,7 +10,7 @@ import hu.raven.puppet.model.solution.OnePartRepresentationWithCost
 
 sealed class MutationOnSpecimen {
     protected abstract val mutationOperator: BacterialMutationOperator
-    protected abstract val calculateCostOf: CalculateCost
+    protected abstract val calculateCostOf: CalculateCost<*>
     protected abstract val selectSegments: SelectSegments
     protected abstract val cloneCount: Int
     protected abstract val cloneCycleCount: Int

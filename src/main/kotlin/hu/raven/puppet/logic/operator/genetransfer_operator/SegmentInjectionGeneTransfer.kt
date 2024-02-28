@@ -6,10 +6,10 @@ import hu.raven.puppet.logic.operator.calculate_cost.CalculateCost
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCost
 import kotlin.random.Random
 
-class SegmentInjectionGeneTransfer(
-    override val calculateCostOf: CalculateCost,
+class SegmentInjectionGeneTransfer<T>(
+    override val calculateCostOf: CalculateCost<T>,
     override val geneTransferSegmentLength: Int
-) : GeneTransferOperator() {
+) : GeneTransferOperator<T>() {
 
     override fun invoke(
         source: OnePartRepresentationWithCost,

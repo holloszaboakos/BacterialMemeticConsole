@@ -8,7 +8,7 @@ import hu.raven.puppet.model.solution.OnePartRepresentationWithCost
 
 class MutationWithElitistSelectionAndModuloStepper(
     override val mutationOperator: BacterialMutationOperator,
-    override val calculateCostOf: CalculateCost,
+    override val calculateCostOf: CalculateCost<*>,
     override val selectSegments: SelectSegments,
     override val cloneCount: Int,
     override val cloneCycleCount: Int,

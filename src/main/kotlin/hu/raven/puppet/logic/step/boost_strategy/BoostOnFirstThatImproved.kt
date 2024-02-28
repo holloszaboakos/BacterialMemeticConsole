@@ -13,7 +13,7 @@ class BoostOnFirstThatImproved(
 ) : BoostStrategy() {
     private var costPerPermutation = mutableListOf<FloatVector?>()
 
-    override fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
+    override fun invoke(state: EvolutionaryAlgorithmState<*>): Unit = state.run {
         if (costPerPermutation.isEmpty()) {
             costPerPermutation = MutableList(population.activeCount) { null }
         }

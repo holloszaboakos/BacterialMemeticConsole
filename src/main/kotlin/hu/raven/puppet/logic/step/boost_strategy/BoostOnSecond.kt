@@ -9,7 +9,7 @@ class BoostOnSecond(
     override val boostOperator: BoostOperator<OnePartRepresentationWithCostAndIterationAndId>
 ) : BoostStrategy() {
 
-    override operator fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
+    override operator fun invoke(state: EvolutionaryAlgorithmState<*>): Unit = state.run {
         val secondBest = population[1]
         boostOperator(secondBest)
     }

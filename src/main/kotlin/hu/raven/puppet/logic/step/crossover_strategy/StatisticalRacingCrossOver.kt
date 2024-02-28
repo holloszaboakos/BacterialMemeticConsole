@@ -13,7 +13,7 @@ import hu.raven.puppet.model.step.crossover_strategy.OperatorStatistics
 
 class StatisticalRacingCrossOver(
     override val crossoverOperators: List<CrossOverOperator>,
-    private val calculateCostOf: CalculateCost,
+    private val calculateCostOf: CalculateCost<*>,
     private val statistics: CrossoverOperatorStatistic
 ) : CrossOverStrategy() {
     private var lastIteration = -1
@@ -22,7 +22,7 @@ class StatisticalRacingCrossOver(
     private var actualStatistics: OperatorStatistics? = null
     private var rouletteWheelSelection = RouletteWheelSelection<CrossOverOperator>()
 
-    override fun invoke(state: EvolutionaryAlgorithmState) = state.run {
+    override fun invoke(state: EvolutionaryAlgorithmState<*>) = state.run {
         val children = population.inactivesAsSequence().chunked(2).toList()
         val parent = population.activesAsSequence()
             .shuffled()
@@ -56,7 +56,7 @@ class StatisticalRacingCrossOver(
     }
 
     private fun crossover(
-        state: EvolutionaryAlgorithmState,
+        state: EvolutionaryAlgorithmState<*>,
         parents: Pair<
                 OnePartRepresentationWithCostAndIterationAndId,
                 OnePartRepresentationWithCostAndIterationAndId,

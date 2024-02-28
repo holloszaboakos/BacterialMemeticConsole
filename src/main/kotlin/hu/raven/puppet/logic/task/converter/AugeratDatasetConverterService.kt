@@ -1,5 +1,7 @@
 package hu.raven.puppet.logic.task.converter
 
+import hu.akos.hollo.szabo.collections.asImmutable
+import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray
 import hu.akos.hollo.szabo.physics.CubicMeter
 import hu.akos.hollo.szabo.physics.Meter
 import hu.raven.puppet.model.task.*
@@ -7,40 +9,34 @@ import hu.raven.puppet.model.task.augerat.InstanceBean
 import hu.raven.puppet.model.task.augerat.NodeBean
 import hu.raven.puppet.model.task.augerat.RequestBean
 import hu.raven.puppet.model.utility.Gps
+import hu.raven.puppet.model.utility.math.CompleteGraphEdge
+import hu.raven.puppet.model.utility.math.CompleteGraphVertex
+import hu.raven.puppet.model.utility.math.CompleteGraphWithCenterVertex
 import kotlin.math.max
 import kotlin.math.pow
 import kotlin.math.sqrt
 
-class AugeratDatasetConverterService(override val vehicleCount: Int) : TaskConverterService<InstanceBean>() {
-    override fun toStandardTask(task: InstanceBean): Task = task.run {
-        Task(
-            transportUnits = Array(vehicleCount) {
-                TransportUnit(
-                    volumeCapacity = CubicMeter(
-                        task.fleetBean.vehicleProfileBean.capacity.toDouble().toFloat()
-                    )
-                )
-            },
-            costGraph = CostGraph(
-                center = task.networkBean.nodeBeanList
+class AugeratDatasetConverterService : TaskConverterService<InstanceBean,ProcessedAugeratTask>() {
+    override fun processRawTask(task: InstanceBean): ProcessedAugeratTask = task.run {
+        ProcessedAugeratTask(
+            capacity = task.fleetBean.vehicleProfileBean.capacity.toDouble().toInt(),
+            graph = CompleteGraphWithCenterVertex(
+                centerVertex = task.networkBean.nodeBeanList
                     .first { it.id == task.fleetBean.vehicleProfileBean.arrivalNode }
                     .toGPS(),
-                objectives = constructObjectives(
+                vertices = constructObjectives(
                     task.requestBeanList,
                     task.networkBean.nodeBeanList
                 ),
                 edgesBetween = constructEdgesBetweenClients(
                     task.networkBean.nodeBeanList,
                     task.fleetBean.vehicleProfileBean.arrivalNode
-                )
-                    .map { it }
-                    .toTypedArray()
-                    ,
-                edgesFromCenter = constructEdgesWithCenter(
+                ),
+                edgesFromCenter = constructEdgesFromCenter(
                     task.networkBean.nodeBeanList,
                     task.fleetBean.vehicleProfileBean.arrivalNode
                 ),
-                edgesToCenter = constructEdgesWithCenter(
+                edgesToCenter = constructEdgesToCenter(
                     task.networkBean.nodeBeanList,
                     task.fleetBean.vehicleProfileBean.arrivalNode
                 )
@@ -51,47 +47,72 @@ class AugeratDatasetConverterService(override val vehicleCount: Int) : TaskConve
     private fun constructObjectives(
         requests: List<RequestBean>,
         nodes: List<NodeBean>
-    ): Array<CostGraphVertex> {
+    ): ImmutableArray<CompleteGraphVertex<LocationWithVolume>> {
         return requests.map {
-            CostGraphVertex(
+            LocationWithVolume(
                 location = nodes
                     .first { node -> node.id == it.node }
                     .toGPS(),
-                volume = CubicMeter(it.quantity.toDouble().toFloat())
+                volume = it.quantity.toDouble().toInt()
             )
         }
+            .mapIndexed { index, value -> CompleteGraphVertex(index, value) }
             .toTypedArray()
+            .asImmutable()
     }
 
-    private fun constructEdgesWithCenter(
+    private fun constructEdgesFromCenter(
         nodes: List<NodeBean>,
         centerId: String
-    ): Array<CostGraphEdge> {
+    ): ImmutableArray<CompleteGraphEdge<Float>> {
         val center = nodes.first { it.id == centerId }
         val clients = nodes - center
-        return clients.map {
-            CostGraphEdge(
-                length = Meter(it.toGPS() euclideanDist center.toGPS())
+
+        return clients.mapIndexed { fromIndex, nodeTo ->
+            CompleteGraphEdge(
+                fromIndex = fromIndex,
+                toIndex = nodes.lastIndex,
+                value = (center.toGPS() euclideanDist nodeTo.toGPS())
             )
         }.toTypedArray()
+            .asImmutable()
+    }
+
+    private fun constructEdgesToCenter(
+        nodes: List<NodeBean>,
+        centerId: String
+    ): ImmutableArray<CompleteGraphEdge<Float>> {
+        val center = nodes.first { it.id == centerId }
+        val clients = nodes - center
+        return clients.mapIndexed { toIndex, nodeTo ->
+            CompleteGraphEdge(
+                fromIndex = nodes.lastIndex,
+                toIndex = toIndex,
+                value = (center.toGPS() euclideanDist nodeTo.toGPS())
+            )
+        }.toTypedArray()
+            .asImmutable()
     }
 
     private fun constructEdgesBetweenClients(
         nodes: List<NodeBean>,
         centerId: String
-    ): Array<Array<CostGraphEdge>> {
+    ): ImmutableArray<ImmutableArray<CompleteGraphEdge<Float>>> {
         val center = nodes.first { it.id == centerId }
         val clients = nodes - center
-        return clients.map { nodeFrom ->
+        return clients.mapIndexed {fromIndex, nodeFrom ->
             clients
-                .filter { it != nodeFrom }
-                .map { nodeTo ->
-                    CostGraphEdge(
-                        length = Meter(nodeFrom.toGPS() euclideanDist nodeTo.toGPS())
+                .mapIndexed { toIndex, nodeTo ->
+                    CompleteGraphEdge(
+                        fromIndex = fromIndex,
+                        toIndex = toIndex,
+                        value = (nodeFrom.toGPS() euclideanDist nodeTo.toGPS())
                     )
                 }
                 .toTypedArray()
+                .asImmutable()
         }.toTypedArray()
+            .asImmutable()
     }
 
     private fun NodeBean.toGPS(): Gps = Gps(

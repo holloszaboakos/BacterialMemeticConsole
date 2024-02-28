@@ -7,5 +7,5 @@ import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 class NoBoost(
     override val boostOperator: BoostOperator<OnePartRepresentationWithCostAndIterationAndId>
 ) : BoostStrategy() {
-    override operator fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {}
+    override operator fun invoke(state: EvolutionaryAlgorithmState<*>): Unit = state.run {}
 }

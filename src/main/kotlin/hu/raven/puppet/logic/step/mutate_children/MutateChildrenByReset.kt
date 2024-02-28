@@ -8,11 +8,11 @@ import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
 data object MutateChildrenByReset : MutateChildren {
 
-    override fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
+    override fun invoke(state: EvolutionaryAlgorithmState<*>): Unit = state.run {
         val basePermutation =
             List(copyOfBest?.permutation?.indices?.count() ?: 0) { it }.shuffled().toIntArray()
 
-        if (task.costGraph.objectives.size <= 1)
+        if (state.population.activesAsSequence().first().permutation.size <= 1)
             return@run
 
         population.activesAsSequence()

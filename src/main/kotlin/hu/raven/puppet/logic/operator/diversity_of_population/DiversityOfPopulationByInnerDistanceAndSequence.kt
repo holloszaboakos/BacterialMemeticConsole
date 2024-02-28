@@ -6,7 +6,7 @@ import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
 data object DiversityOfPopulationByInnerDistanceAndSequence : DiversityOfPopulation {
 
-    override fun invoke(algorithmState: EvolutionaryAlgorithmState): Double = algorithmState.run {
+    override fun invoke(algorithmState: EvolutionaryAlgorithmState<*>): Double = algorithmState.run {
         var diversity = 0.0
 
         population.activesAsSequence().forEach { firstSpecimen ->

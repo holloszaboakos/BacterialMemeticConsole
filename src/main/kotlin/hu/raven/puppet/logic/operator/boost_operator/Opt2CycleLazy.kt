@@ -6,7 +6,7 @@ import hu.raven.puppet.model.solution.OnePartRepresentationWithCost
 
 
 class Opt2CycleLazy<O : OnePartRepresentationWithCost>(
-    override val calculateCostOf: CalculateCost
+    override val calculateCostOf: CalculateCost<*>
 ) : BoostOperator<O>() {
 
     private var bestCost: FloatVector? = null

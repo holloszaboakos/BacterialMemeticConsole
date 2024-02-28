@@ -6,21 +6,19 @@ import hu.raven.puppet.logic.operator.calculate_cost.CalculateCost
 import hu.raven.puppet.model.solution.BacteriophageSpecimen
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.state.BacteriophageAlgorithmState
-import hu.raven.puppet.model.task.Task
 import hu.raven.puppet.model.utility.SimpleGraphEdge
+import hu.raven.puppet.model.utility.math.CompleteGraphWithCenterVertex
 import hu.raven.puppet.utility.buildPermutation
-import hu.raven.puppet.utility.extention.getEdgeBetween
-import java.io.File
 import kotlin.random.Random
 
-class BacteriophageTranscriptionByLooseMatchingAndHeuristicCompletion(
+class BacteriophageTranscriptionByLooseMatchingAndHeuristicCompletion<T>(
     override val infectionRate: Float,
     override val lifeReductionRate: Float,
     override val lifeCoefficient: Float,
-    override val calculateCost: CalculateCost,
-    val task: Task
-) : BacteriophageTranscription() {
-    override fun invoke(state: BacteriophageAlgorithmState) {
+    override val calculateCost: CalculateCost<T>,
+    val task: CompleteGraphWithCenterVertex<Unit,Unit,Int>
+) : BacteriophageTranscription<T>() {
+    override fun invoke(state: BacteriophageAlgorithmState<T>) {
         state.virusPopulation.activesAsSequence()
             .onEach { virus ->
                 val fitness = state.population.activesAsSequence()
@@ -102,9 +100,9 @@ class BacteriophageTranscriptionByLooseMatchingAndHeuristicCompletion(
                 FloatArray(populationSize + 1) { targetIndex ->
                     when {
                         sourceIndex == targetIndex -> 0f
-                        sourceIndex == populationSize -> task.costGraph.edgesFromCenter[targetIndex].length.value
-                        targetIndex == populationSize -> task.costGraph.edgesToCenter[sourceIndex].length.value
-                        else -> task.costGraph.getEdgeBetween(sourceIndex, targetIndex).length.value
+                        sourceIndex == populationSize -> task.edgesFromCenter[targetIndex].value.toFloat()
+                        targetIndex == populationSize -> task.edgesToCenter[sourceIndex].value.toFloat()
+                        else -> task.edgesBetween[sourceIndex][ targetIndex].value.toFloat()
                     }
                 }
             }

@@ -4,7 +4,7 @@ import hu.raven.puppet.logic.operator.calculate_cost.CalculateCost
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCost
 
 class Opt2CycleWithRandomOrder<O : OnePartRepresentationWithCost>(
-    override val calculateCostOf: CalculateCost
+    override val calculateCostOf: CalculateCost<*>
 ) : BoostOperator<O>() {
     override fun invoke(specimen: O) {
         val shuffler = (0..<specimen.permutation.size)

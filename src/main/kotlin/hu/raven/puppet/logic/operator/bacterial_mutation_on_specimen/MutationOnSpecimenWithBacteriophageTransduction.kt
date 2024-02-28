@@ -11,11 +11,11 @@ import hu.raven.puppet.model.state.BacteriophageAlgorithmState
 class MutationOnSpecimenWithBacteriophageTransduction(
     private val mutationOnSpecimen: MutationOnSpecimen,
     private val bacteriophageTransductionOperator: BacteriophageTransductionOperator,
-    private val getActualAlgorithmState: () -> BacteriophageAlgorithmState
+    private val getActualAlgorithmState: () -> BacteriophageAlgorithmState<*>
 ) : MutationOnSpecimen() {
     override val mutationOperator: BacterialMutationOperator
         get() = throw Exception("Should not be used!")
-    override val calculateCostOf: CalculateCost
+    override val calculateCostOf: CalculateCost<*>
         get() = throw Exception("Should not be used!")
     override val selectSegments: SelectSegments
         get() = throw Exception("Should not be used!")

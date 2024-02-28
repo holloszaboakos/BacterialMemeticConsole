@@ -84,33 +84,36 @@ fun main() {
                     )
                 }
                 single<InitializePopulation> {
-                    InitializePopulationByModuloStepper(64 * 4)
+                    InitializePopulationByModuloStepper(
+                        sizeOfPopulation = 64 * 4,
+                        sizeOfTask = 63
+                    )
                 }
                 single<InitializeBacteriophagePopulation> {
                     BasicInitializationOfBacteriophagePopulation(64)
                 }
                 single {
-                    OrderPopulationByCost(calculateCostOf = get())
+                    OrderPopulationByCost<Task>(calculateCostOf = get())
                 }
                 single<CalculateCost<*>> {
                     CalculateCostOfTspSolution(task = get<Task>())
                 }
-                single<TaskLoaderService> {
+                single<TaskLoaderService<Task>> {
                     TspTaskLoaderService(
                         log = { println(it) },
                         fileName = get(named(FilePathVariableNames.SINGLE_FILE))
                     )
                 }
                 single {
-                    get<TaskLoaderService>().loadTask(folderPath = get(named(FilePathVariableNames.INPUT_FOLDER)))
+                    get<TaskLoaderService<Task>>().loadTask(folderPath = get(named(FilePathVariableNames.INPUT_FOLDER)))
                 }
                 single<AlgorithmIteration<*>> {
                     EvolutionaryAlgorithmIteration<BacteriophageAlgorithmState<Task>>(
                         steps = arrayOf<EvolutionaryAlgorithmStep<BacteriophageAlgorithmState<Task>>>(
                             get<SelectSurvivors>().let { StepLogger(it, get()) },
                             get<BacterialMutation>().let { StepLogger(it, get()) },
-                            get<BacteriophageTranscription>().let { StepLogger(it, get()) },
-                            get<OrderPopulationByCost>().let { StepLogger(it, get()) },
+                            get<BacteriophageTranscription<Task>>().let { StepLogger(it, get()) },
+                            get<OrderPopulationByCost<Task>>().let { StepLogger(it, get()) },
                             get<BoostStrategy>().let { StepLogger(it, get()) },
                         )
                     )
@@ -134,12 +137,16 @@ fun main() {
                         KoinUtil::get
                     )
                 }
-                single<BacteriophageAlgorithmState> { get<InitializeAlgorithm<BacteriophageAlgorithmState>>()(get()) }
+                single<BacteriophageAlgorithmState<Task>> {
+                    get<InitializeAlgorithm<Task, BacteriophageAlgorithmState<Task>>>()(
+                        get()
+                    )
+                }
                 single { BacteriophageTransductionOperator() }
                 single<BacterialMutationOperator> { EdgeBuilderHeuristicOnContinuousSegment(get()) }
                 single<SelectSegments> { SelectCuts(4) }
-                single<BacteriophageTranscription> {
-                    BacteriophageTranscriptionByLooseMatchingAndHeuristicCompletion(
+                single<BacteriophageTranscription<Task>> {
+                    BacteriophageTranscriptionByLooseMatchingAndHeuristicCompletion<Task>(
                         1 / 8f,
                         0.5f,
                         0.5f,
@@ -163,7 +170,7 @@ fun main() {
                     )
                 }
                 single<LoggingChannel<*>> {
-                    JsonChannel<BacteriophageAlgorithmState>(
+                    JsonChannel<BacteriophageAlgorithmState<Task>>(
                         outputFolder = arrayOf(
                             "output", "${LocalDate.now()}",
                             LocalDateTime.now().toString()
@@ -177,8 +184,8 @@ fun main() {
         )
     }
 
-    val iteration: AlgorithmIteration<BacteriophageAlgorithmState> = get()
-    val algorithmState: BacteriophageAlgorithmState = get()
+    val iteration: AlgorithmIteration<BacteriophageAlgorithmState<Task>> = get()
+    val algorithmState: BacteriophageAlgorithmState<Task> = get()
 
     repeat(10_000) {
         iteration(algorithmState)

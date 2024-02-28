@@ -6,7 +6,7 @@ import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationA
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
 data object SelectSurvivorsMultiObjectiveHalfElitist : SelectSurvivors {
-    override operator fun invoke(state: EvolutionaryAlgorithmState): Unit = state.population.run {
+    override operator fun invoke(state: EvolutionaryAlgorithmState<*>): Unit = state.population.run {
         deactivateAll()
 
 

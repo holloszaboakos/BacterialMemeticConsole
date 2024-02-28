@@ -1,30 +1,29 @@
 package hu.raven.puppet.logic.task.converter
 
+import hu.akos.hollo.szabo.collections.asImmutable
+import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray
 import hu.akos.hollo.szabo.physics.CubicMeter
 import hu.akos.hollo.szabo.physics.Meter
+import hu.akos.hollo.szabo.physics.Second
 import hu.raven.puppet.model.task.*
 import hu.raven.puppet.model.task.desmet.DesmetTask
 import hu.raven.puppet.model.task.desmet.NodeCoordinate
 import hu.raven.puppet.model.utility.Gps
+import hu.raven.puppet.model.utility.math.CompleteGraphEdge
+import hu.raven.puppet.model.utility.math.CompleteGraphVertex
+import hu.raven.puppet.model.utility.math.CompleteGraphWithCenterVertex
 
-class DesmetDatasetConverterService(override val vehicleCount: Int) : TaskConverterService<DesmetTask>() {
+class DesmetDatasetConverterService : TaskConverterService<DesmetTask,ProcessedDesmetTask>() {
 
-    override fun toStandardTask(task: DesmetTask): Task = task.run {
+    override fun processRawTask(task: DesmetTask): ProcessedDesmetTask = task.run {
         val depot = nodeCoordinates.first { it.nodeId == depotId }
 
-        return Task(
-            transportUnits = Array(vehicleCount) {
-                TransportUnit(
-                    volumeCapacity = CubicMeter(capacity)
-                )
-            },
-            costGraph = CostGraph(
-                center = depot.toGPS(),
-                objectives = buildObjectives(),
-                edgesBetween = buildEdgesBetween()
-                    .map { it }
-                    .toTypedArray()
-                    ,
+        return ProcessedDesmetTask(
+            capacity = capacity,
+            graph = CompleteGraphWithCenterVertex(
+                centerVertex = depot.toGPS(),
+                vertices = buildObjectives(),
+                edgesBetween = buildEdgesBetween(),
                 edgesFromCenter = buildEdgesFromCenter(),
                 edgesToCenter = buildEdgesToCenter()
             )
@@ -38,19 +37,23 @@ class DesmetDatasetConverterService(override val vehicleCount: Int) : TaskConver
         )
     }
 
-    private fun DesmetTask.buildObjectives(): Array<CostGraphVertex> {
+    private fun DesmetTask.buildObjectives(): ImmutableArray<CompleteGraphVertex<LocationWithVolumeAndName>> {
         val targetNodes = nodeCoordinates.filter { it.nodeId != depotId }
 
         return targetNodes
             .map {
-                CostGraphVertex(
+                LocationWithVolumeAndName(
                     location = it.toGPS(),
-                    volume = CubicMeter(nodeDemands.getValue(it.nodeId).demand)
+                    volume = nodeDemands.getValue(it.nodeId).demand,
+                    name = it.nameString
                 )
-            }.toTypedArray()
+            }
+            .mapIndexed { index, value -> CompleteGraphVertex(index, value) }
+            .toTypedArray()
+            .asImmutable()
     }
 
-    private fun DesmetTask.buildEdgesToCenter(): Array<CostGraphEdge> {
+    private fun DesmetTask.buildEdgesToCenter(): ImmutableArray<CompleteGraphEdge<Second>> {
         val depotIndex = nodeCoordinates
             .indexOfFirst { it.nodeId == depotId }
         val targetNodesWithIndex = nodeCoordinates
@@ -58,14 +61,19 @@ class DesmetDatasetConverterService(override val vehicleCount: Int) : TaskConver
             .filter { it.value.nodeId != depotId }
 
         return targetNodesWithIndex
-            .map { indexValuePair ->
-                val weight = distanceMatrix.distances[indexValuePair.index][depotIndex]
-                CostGraphEdge(length = Meter(weight.times(1000).toFloat()))
+            .mapIndexed {newIndex, (oldIndex,_) ->
+                val weight = distanceMatrix.distances[oldIndex][depotIndex]
+                CompleteGraphEdge(
+                    fromIndex = newIndex,
+                    toIndex = nodeCoordinates.withIndex().last().index,
+                    value = Second(weight.toFloat())
+                )
             }
             .toTypedArray()
+            .asImmutable()
     }
 
-    private fun DesmetTask.buildEdgesFromCenter(): Array<CostGraphEdge> {
+    private fun DesmetTask.buildEdgesFromCenter(): ImmutableArray<CompleteGraphEdge<Second>> {
         val depotIndex = nodeCoordinates
             .indexOfFirst { it.nodeId == depotId }
         val targetNodesWithIndex = nodeCoordinates
@@ -73,30 +81,40 @@ class DesmetDatasetConverterService(override val vehicleCount: Int) : TaskConver
             .filter { it.value.nodeId != depotId }
 
         return targetNodesWithIndex
-            .map { indexValuePair ->
-                val weight = distanceMatrix.distances[depotIndex][indexValuePair.index]
-                CostGraphEdge(length = Meter(weight.toFloat()))
+            .mapIndexed {newIndex, (oldIndex,_) ->
+                val weight = distanceMatrix.distances[depotIndex][oldIndex]
+                CompleteGraphEdge(
+                    fromIndex = nodeCoordinates.withIndex().last().index,
+                    toIndex = newIndex,
+                    value = Second(weight.toFloat())
+                )
             }
             .toTypedArray()
+            .asImmutable()
 
     }
 
-    private fun DesmetTask.buildEdgesBetween(): Array<Array<CostGraphEdge>> {
+    private fun DesmetTask.buildEdgesBetween(): ImmutableArray<ImmutableArray<CompleteGraphEdge<Second>>> {
         val targetNodesWithIndex = nodeCoordinates
             .withIndex()
             .filter { it.value.nodeId != depotId }
 
         return targetNodesWithIndex
-            .map { fromNodeIndexed ->
+            .mapIndexed { newFromIndex, (oldFromNodeIndexed, _) ->
                 targetNodesWithIndex
-                    .filter { it.index != fromNodeIndexed.index }
-                    .map { toNodeIndexed ->
-                        val weight = distanceMatrix.distances[fromNodeIndexed.index][toNodeIndexed.index]
-                        CostGraphEdge(length = Meter(weight.times(1000).toFloat()))
+                    .mapIndexed { newToIndex, (oldToNodeIndexed, _) ->
+                        val weight = distanceMatrix.distances[oldFromNodeIndexed][oldToNodeIndexed]
+                        CompleteGraphEdge(
+                            fromIndex = newFromIndex,
+                            toIndex = newToIndex,
+                            value = Second(weight.toFloat())
+                        )
                     }
                     .toTypedArray()
+                    .asImmutable()
             }
             .toTypedArray()
+            .asImmutable()
     }
 
 }

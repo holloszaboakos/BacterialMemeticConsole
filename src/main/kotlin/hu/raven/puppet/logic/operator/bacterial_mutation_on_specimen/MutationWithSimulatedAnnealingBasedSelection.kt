@@ -11,7 +11,7 @@ import kotlin.random.Random
 
 class MutationWithSimulatedAnnealingBasedSelection(
     override val mutationOperator: BacterialMutationOperator,
-    override val calculateCostOf: CalculateCost,
+    override val calculateCostOf: CalculateCost<*>,
     override val selectSegments: SelectSegments,
     override val cloneCount: Int,
     override val cloneCycleCount: Int,

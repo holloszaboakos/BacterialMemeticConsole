@@ -9,9 +9,9 @@ import hu.raven.puppet.model.state.BacteriophageAlgorithmState
 class BoostOperatorWithBacteriophageTransduction<O : OnePartRepresentationWithCost>(
     val boostOperator: BoostOperator<O>,
     private val bacteriophageTransductionOperator: BacteriophageTransductionOperator,
-    private val getActualAlgorithmState: () -> BacteriophageAlgorithmState
+    private val getActualAlgorithmState: () -> BacteriophageAlgorithmState<*>
 ) :BoostOperator<O>() {
-    override val calculateCostOf: CalculateCost
+    override val calculateCostOf: CalculateCost<*>
         get() = throw Exception("Should not be used!")
     override fun invoke(specimen:O) {
         val algorithmState = getActualAlgorithmState()

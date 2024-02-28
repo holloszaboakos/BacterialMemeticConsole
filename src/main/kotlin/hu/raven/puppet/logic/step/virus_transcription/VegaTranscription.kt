@@ -9,13 +9,13 @@ import hu.raven.puppet.model.state.VirusEvolutionaryAlgorithmState
 
 import kotlin.random.Random
 
-class VegaTranscription(
+class VegaTranscription<T>(
     override val virusInfectionRate: Float,
     override val lifeReductionRate: Float,
     override val lifeCoefficient: Float,
-    private val calculateCost: CalculateCost
-) : Transcription() {
-    override fun invoke(state: VirusEvolutionaryAlgorithmState) {
+    private val calculateCost: CalculateCost<T>
+) : Transcription<T>() {
+    override fun invoke(state: VirusEvolutionaryAlgorithmState<T>) {
         state.virusPopulation.activesAsSequence()
             .onEach { virus ->
                 val fitness = state.population.activesAsSequence()

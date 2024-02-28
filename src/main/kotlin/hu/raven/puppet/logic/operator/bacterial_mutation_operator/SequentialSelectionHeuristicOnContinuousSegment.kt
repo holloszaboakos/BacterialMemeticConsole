@@ -6,11 +6,10 @@ import hu.akos.hollo.szabo.math.calculus.multiplicativeInverse
 import hu.raven.puppet.logic.operator.select_segments.ContinuousSegment
 import hu.raven.puppet.logic.operator.weighted_selection.RouletteWheelSelection
 import hu.raven.puppet.model.solution.OnePartRepresentation
-import hu.raven.puppet.model.task.Task
-import hu.raven.puppet.utility.extention.getEdgeBetween
+import hu.raven.puppet.model.utility.math.CompleteGraphWithCenterVertex
 
 class SequentialSelectionHeuristicOnContinuousSegment(
-    val task: Task
+    val costGraph:CompleteGraphWithCenterVertex<Unit,Unit,Float>
 ) : BacterialMutationOperator {
 
     private val rouletteWheelSelection = RouletteWheelSelection<ContinuousSegment>()
@@ -39,7 +38,7 @@ class SequentialSelectionHeuristicOnContinuousSegment(
                             }
 
                             selectNextSegment(
-                                task.costGraph.objectives.size,
+                                costGraph.vertices.size,
                                 followingElement,
                                 remainingSegmentsToMove
                             )
@@ -49,12 +48,12 @@ class SequentialSelectionHeuristicOnContinuousSegment(
                             val previousElement = if (selectedSegments[selectedSegments.lastIndex - 1].keepInPlace) {
                                 selectedSegments[selectedSegments.lastIndex - 1].values.last()
                             } else {
-                                lastInsertedSegment?.values?.last() ?: task.costGraph.objectives.size
+                                lastInsertedSegment?.values?.last() ?: costGraph.vertices.size
                             }
 
                             selectNextSegment(
                                 previousElement,
-                                task.costGraph.objectives.size,
+                                costGraph.vertices.size,
                                 remainingSegmentsToMove
                             )
                         }
@@ -68,7 +67,7 @@ class SequentialSelectionHeuristicOnContinuousSegment(
                             val previousElement = if (selectedSegments[holeIndex - 1].keepInPlace) {
                                 selectedSegments[holeIndex - 1].values.last()
                             } else {
-                                lastInsertedSegment?.values?.last() ?: task.costGraph.objectives.size
+                                lastInsertedSegment?.values?.last() ?: costGraph.vertices.size
                             }
 
                             selectNextSegment(
@@ -125,28 +124,25 @@ class SequentialSelectionHeuristicOnContinuousSegment(
         previousElement: Int,
         followingElement: Int?,
         remainingSegments: MutableList<ContinuousSegment>
-    ): FloatArray = task.run {
-        val objectiveCount = costGraph.objectives.size
+    ): FloatArray = run {
+        val objectiveCount = costGraph.vertices.size
         remainingSegments.map { segment ->
             when {
                 previousElement < objectiveCount && segment.values.first() < objectiveCount ->
                     costGraph
-                        .getEdgeBetween(previousElement, segment.values.first())
-                        .length
+                        .edgesBetween[previousElement][ segment.values.first()]
                         .value
                         .multiplicativeInverse()
 
                 segment.values.first() < objectiveCount ->
                     costGraph
                         .edgesFromCenter[segment.values.first()]
-                        .length
                         .value
                         .multiplicativeInverse()
 
                 previousElement < objectiveCount ->
                     costGraph
                         .edgesToCenter[previousElement]
-                        .length
                         .value
                         .multiplicativeInverse()
 
@@ -155,22 +151,19 @@ class SequentialSelectionHeuristicOnContinuousSegment(
                 followingElement == null -> 0f
                 followingElement < objectiveCount && segment.values.first() < objectiveCount ->
                     costGraph
-                        .getEdgeBetween(followingElement, segment.values.first())
-                        .length
+                        .edgesBetween[followingElement][ segment.values.first()]
                         .value
                         .multiplicativeInverse()
 
                 segment.values.first() < objectiveCount ->
                     costGraph
                         .edgesFromCenter[segment.values.first()]
-                        .length
                         .value
                         .multiplicativeInverse()
 
                 followingElement < objectiveCount ->
                     costGraph
                         .edgesToCenter[followingElement]
-                        .length
                         .value
                         .multiplicativeInverse()
 
@@ -182,28 +175,25 @@ class SequentialSelectionHeuristicOnContinuousSegment(
     private fun calculateWeightsOfNeighbouringEdges(
         currentElement: ContinuousSegment,
         remainingElements: MutableList<ContinuousSegment>
-    ): Float = task.run {
-        val objectiveCount = costGraph.objectives.size
+    ): Float = run {
+        val objectiveCount = costGraph.vertices.size
         remainingElements
             .map { element ->
                 if (currentElement == element)
                     return@map 0f
                 when {
                     element.indices.last < objectiveCount && currentElement.indices.first < objectiveCount -> costGraph
-                        .getEdgeBetween(element.indices.last, currentElement.indices.first)
-                        .length
+                        .edgesBetween[element.indices.last][ currentElement.indices.first]
                         .value
                         .multiplicativeInverse()
 
                     currentElement.indices.first < objectiveCount -> costGraph
                         .edgesFromCenter[currentElement.indices.first]
-                        .length
                         .value
                         .multiplicativeInverse()
 
                     element.indices.last < objectiveCount -> costGraph
                         .edgesToCenter[element.indices.last]
-                        .length
                         .value
                         .multiplicativeInverse()
 

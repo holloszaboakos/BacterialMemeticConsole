@@ -10,7 +10,7 @@ import kotlinx.coroutines.runBlocking
 
 data object DiversityOfPopulationBySequenceBreak : DiversityOfPopulation {
 
-    override fun invoke(algorithmState: EvolutionaryAlgorithmState): Double = runBlocking {
+    override fun invoke(algorithmState: EvolutionaryAlgorithmState<*>): Double = runBlocking {
         val best = algorithmState.copyOfBest ?: throw Exception("Algorithm didn't determine best solution yet!")
         var diversity = 0.0
 

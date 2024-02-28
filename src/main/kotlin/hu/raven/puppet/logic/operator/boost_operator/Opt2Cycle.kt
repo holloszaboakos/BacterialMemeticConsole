@@ -5,7 +5,7 @@ import hu.raven.puppet.model.solution.OnePartRepresentationWithCost
 
 
 class Opt2Cycle<O : OnePartRepresentationWithCost>(
-    override val calculateCostOf: CalculateCost
+    override val calculateCostOf: CalculateCost<*>
 ) : BoostOperator<O>() {
 
     override fun invoke(specimen: O) {

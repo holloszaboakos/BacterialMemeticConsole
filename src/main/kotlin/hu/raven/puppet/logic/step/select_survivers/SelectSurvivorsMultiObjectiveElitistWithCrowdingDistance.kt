@@ -9,7 +9,7 @@ import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 class SelectSurvivorsMultiObjectiveElitistWithCrowdingDistance(
     val crowdingDistance: CrowdingDistance
 ) : SelectSurvivors {
-    override fun invoke(state: EvolutionaryAlgorithmState): Unit = state.population.run {
+    override fun invoke(state: EvolutionaryAlgorithmState<*>): Unit = state.population.run {
         deactivateAll()
 
         val remaining = inactivesAsSequence().toMutableList()

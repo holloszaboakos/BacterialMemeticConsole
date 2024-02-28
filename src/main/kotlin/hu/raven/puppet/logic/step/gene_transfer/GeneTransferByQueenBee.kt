@@ -5,10 +5,10 @@ import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
 class GeneTransferByQueenBee(
     override val injectionCount: Int,
-    override val geneTransferOperator: GeneTransferOperator,
+    override val geneTransferOperator: GeneTransferOperator<*>,
 ) : GeneTransfer() {
 
-    override fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
+    override fun invoke(state: EvolutionaryAlgorithmState<*>): Unit = state.run {
         val populationRandomizer = (1..<population.activeCount)
             .shuffled()
             .toIntArray()

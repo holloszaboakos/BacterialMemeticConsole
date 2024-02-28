@@ -7,11 +7,11 @@ import hu.raven.puppet.logic.operator.crossover_operator.CrossOverOperator
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCost
 
 
-class GeneTransferByCrossOver(
-    override val calculateCostOf: CalculateCost,
+class GeneTransferByCrossOver<T>(
+    override val calculateCostOf: CalculateCost<T>,
     override val geneTransferSegmentLength: Int,
     private val crossOverOperator: CrossOverOperator,
-) : GeneTransferOperator() {
+) : GeneTransferOperator<T>() {
 
     override fun invoke(
         source: OnePartRepresentationWithCost,

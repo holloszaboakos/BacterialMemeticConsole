@@ -12,7 +12,7 @@ class BoostOnBestLazy(
 ) : BoostStrategy() {
     private var costOfBest: FloatVector? = null
 
-    override operator fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
+    override operator fun invoke(state: EvolutionaryAlgorithmState<*>): Unit = state.run {
         val best = population.activesAsSequence().first()
         if (costOfBest?.let { best.costOrException() contentEquals it } != false)
             boostOperator(best)

@@ -6,11 +6,14 @@ import hu.raven.puppet.logic.step.EvolutionaryAlgorithmStep
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
 
-class OrderPopulationByCost(
-    val calculateCostOf: CalculateCost
-) : EvolutionaryAlgorithmStep<EvolutionaryAlgorithmState> {
+class OrderPopulationByCost<T>(
+    val calculateCostOf: CalculateCost<T>
+) : EvolutionaryAlgorithmStep<EvolutionaryAlgorithmState<T>> {
 
-    override operator fun invoke(state: EvolutionaryAlgorithmState): Unit = state.population.run {
+    override operator fun invoke(state: EvolutionaryAlgorithmState<T>): Unit = state.population.run {
+        if (activesAsSequence().first().permutation.size <= 1)
+            return@run
+
         activesAsSequence()
             .filter { it.cost == null }
             .forEach { specimen ->

@@ -2,9 +2,8 @@ package hu.raven.puppet.logic.task.loader
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import hu.akos.hollo.szabo.math.FloatSumExtensions.sumClever
-import hu.akos.hollo.szabo.physics.Meter
 import hu.raven.puppet.logic.task.converter.AugeratDatasetConverterService
-import hu.raven.puppet.model.task.Task
+import hu.raven.puppet.model.task.ProcessedAugeratTask
 import hu.raven.puppet.model.task.augerat.InstanceBean
 import java.nio.file.Path
 
@@ -13,17 +12,17 @@ class AugeratTaskLoaderService(
     private val fileName: String,
     private val converter: AugeratDatasetConverterService,
     override val log: (String) -> Unit,
-) : TaskLoaderService() {
+) : TaskLoaderService<ProcessedAugeratTask>() {
 
-    override fun loadTask(folderPath: String): Task {
+    override fun loadTask(folderPath: String): ProcessedAugeratTask {
         val augeratTask = loadDataFromFile(Path.of(folderPath, fileName))
-        val standardTask = converter.toStandardTask(augeratTask)
-        standardTask.costGraph.edgesBetween
+        val standardTask = converter.processRawTask(augeratTask)
+        standardTask.graph.edgesBetween
             .map {
-                it.firstOrNull { edge -> edge.length == Meter(0) }
+                it.firstOrNull { edge -> edge.value == 0f }
             }
             .firstOrNull {
-                it?.length == Meter(0)
+                it?.value == 0f
             }
             .let {
                 println(it)
@@ -32,13 +31,13 @@ class AugeratTaskLoaderService(
         return standardTask
     }
 
-    override fun logEstimates(task: Task) {
-        task.costGraph.apply {
+    override fun logEstimates(task: ProcessedAugeratTask) {
+        task.graph.apply {
             log(
                 "OVERESTIMATE: ${
                     (
-                            edgesFromCenter.map { it.length.value }.sumClever()
-                                    + edgesToCenter.map { it.length.value }.sumClever()
+                            edgesFromCenter.map { it.value }.sumClever()
+                                    + edgesToCenter.map { it.value }.sumClever()
                             )
                 }"
             )
@@ -46,11 +45,11 @@ class AugeratTaskLoaderService(
             log(
                 "UNDERESTIMATE: ${
                     ((
-                            edgesFromCenter.map { it.length.value }.sumClever() +
+                            edgesFromCenter.map { it.value }.sumClever() +
                                     edgesBetween.mapIndexed { index, edge ->
                                         arrayOf(
-                                            edge.map { it.length.value }.min(),
-                                            edgesToCenter[index].length.value
+                                            edge.map { it.value }.min(),
+                                            edgesToCenter[index].value
                                         ).min()
                                     }.sumClever()
                             ) / vehicleCount.toLong())

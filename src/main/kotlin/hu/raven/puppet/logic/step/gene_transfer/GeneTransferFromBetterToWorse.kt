@@ -6,10 +6,10 @@ import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
 class GeneTransferFromBetterToWorse(
     override val injectionCount: Int,
-    override val geneTransferOperator: GeneTransferOperator,
+    override val geneTransferOperator: GeneTransferOperator<*>,
 ) : GeneTransfer() {
 
-    override fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
+    override fun invoke(state: EvolutionaryAlgorithmState<*>): Unit = state.run {
         val worse = population
             .activesAsSequence()
             .slice(population.activeCount / 2..<population.activeCount)

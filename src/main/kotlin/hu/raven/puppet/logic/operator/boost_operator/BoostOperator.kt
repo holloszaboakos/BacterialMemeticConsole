@@ -5,7 +5,7 @@ import hu.raven.puppet.model.solution.OnePartRepresentationWithCost
 
 
 sealed class BoostOperator<O : OnePartRepresentationWithCost> {
-    protected abstract val calculateCostOf: CalculateCost
+    protected abstract val calculateCostOf: CalculateCost<*>
 
     abstract operator fun invoke(specimen: O)
 }

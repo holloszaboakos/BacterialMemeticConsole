@@ -5,7 +5,7 @@ import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationA
 
 
 class Opt2StepWithPerSpecimenProgressMemory(
-    override val calculateCostOf: CalculateCost,
+    override val calculateCostOf: CalculateCost<*>,
     populationSize: Int
 ) : BoostOperator<OnePartRepresentationWithCostAndIterationAndId>() {
 

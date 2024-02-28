@@ -7,8 +7,8 @@ import kotlin.random.Random
 
 data object MutateChildrenBySwap : MutateChildren {
 
-    override fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
-        if (task.costGraph.objectives.size <= 1)
+    override fun invoke(state: EvolutionaryAlgorithmState<*>): Unit = state.run {
+        if (population.activesAsSequence().first().permutation.size <= 1)
             return@run
 
         population.activesAsSequence()
@@ -16,8 +16,8 @@ data object MutateChildrenBySwap : MutateChildren {
             .shuffled()
             .slice(0..<population.activeCount / 4)
             .forEach { child ->
-                val firstCutIndex = Random.nextInt(task.costGraph.objectives.size)
-                val secondCutIndex = Random.nextInt(task.costGraph.objectives.size - 1)
+                val firstCutIndex = Random.nextInt(child.permutation.size)
+                val secondCutIndex = Random.nextInt(child.permutation.size - 1)
                     .let { if (it == firstCutIndex) it + 1 else it }
 
                 child.permutation.swapValues(firstCutIndex, secondCutIndex)

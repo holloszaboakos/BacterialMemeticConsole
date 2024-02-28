@@ -9,7 +9,7 @@ class BacterialMutationOnBestAndLuckyByCoinFlip(
     private val mutationPercentage: Float
 ) : BacterialMutation() {
 
-    override fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
+    override fun invoke(state: EvolutionaryAlgorithmState<*>): Unit = state.run {
         population.activesAsSequence()
             .withIndex()
             .forEach { indexedSpecimen ->

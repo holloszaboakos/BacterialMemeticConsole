@@ -10,13 +10,13 @@ import hu.raven.puppet.model.utility.SimpleGraphEdge
 import hu.raven.puppet.utility.buildPermutation
 import java.io.File
 
-class BacteriophageTranscriptionByLooseMatching(
+class BacteriophageTranscriptionByLooseMatching<T>(
     override val infectionRate: Float,
     override val lifeReductionRate: Float,
     override val lifeCoefficient: Float,
-    override val calculateCost: CalculateCost
-) : BacteriophageTranscription() {
-    override fun invoke(state: BacteriophageAlgorithmState) {
+    override val calculateCost: CalculateCost<T>
+) : BacteriophageTranscription<T>() {
+    override fun invoke(state: BacteriophageAlgorithmState<T>) {
         state.virusPopulation.activesAsSequence()
             .onEach { virus ->
                 val fitness = state.population.activesAsSequence()

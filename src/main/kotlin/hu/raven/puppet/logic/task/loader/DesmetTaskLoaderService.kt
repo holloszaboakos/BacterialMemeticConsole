@@ -3,7 +3,7 @@ package hu.raven.puppet.logic.task.loader
 import hu.akos.hollo.szabo.collections.asImmutable
 import hu.akos.hollo.szabo.math.FloatSumExtensions.sumClever
 import hu.raven.puppet.logic.task.converter.DesmetDatasetConverterService
-import hu.raven.puppet.model.task.Task
+import hu.raven.puppet.model.task.ProcessedDesmetTask
 import hu.raven.puppet.model.task.desmet.*
 import hu.raven.puppet.model.task.desmet.DesmetFileHeader.*
 import hu.raven.puppet.model.task.desmet.DesmetFileSection.*
@@ -13,7 +13,7 @@ class DesmetTaskLoaderService(
     private val converter: DesmetDatasetConverterService,
     private val fileName: String,
     override val log: (String) -> Unit,
-) : TaskLoaderService() {
+) : TaskLoaderService<ProcessedDesmetTask>() {
 
     companion object {
         private const val NODE_COORDINATE_LIST_START = "NODE_COORD_SECTION"
@@ -22,20 +22,20 @@ class DesmetTaskLoaderService(
         private const val DEPOT_LIST_START = "DEPOT_SECTION"
     }
 
-    override fun loadTask(folderPath: String): Task {
+    override fun loadTask(folderPath: String): ProcessedDesmetTask {
         val desmetTask = loadDataFromFile(Path.of(folderPath, fileName))
-        val standardTask = converter.toStandardTask(desmetTask)
+        val standardTask = converter.processRawTask(desmetTask)
         logEstimates(standardTask)
         return standardTask
     }
 
-    override fun logEstimates(task: Task) {
-        task.costGraph.apply {
+    override fun logEstimates(task: ProcessedDesmetTask) {
+        task.graph.apply {
             log(
                 "OVERESTIMATE: ${
                     (
-                            edgesFromCenter.map { it.length.value }.sumClever()
-                                    + edgesToCenter.map { it.length.value }.sumClever()
+                            edgesFromCenter.map { it.value.value }.sumClever()
+                                    + edgesToCenter.map { it.value.value }.sumClever()
                             )
                 }"
             )
@@ -43,11 +43,11 @@ class DesmetTaskLoaderService(
             log(
                 "UNDERESTIMATE: ${
                     (
-                            edgesFromCenter.map { it.length.value }.min() +
+                            edgesFromCenter.map { it.value.value }.min() +
                                     edgesBetween.mapIndexed { index, edge ->
                                         arrayOf(
-                                            edge.minOfOrNull { it.length.value } ?: Float.MAX_VALUE,
-                                            edgesToCenter[index].length.value
+                                            edge.minOfOrNull { it.value.value } ?: Float.MAX_VALUE,
+                                            edgesToCenter[index].value.value
                                         ).min()
                                     }.sumClever()
                             )

@@ -7,9 +7,9 @@ import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
 class GeneTransferByTournament(
     override val injectionCount: Int,
-    override val geneTransferOperator: GeneTransferOperator,
+    override val geneTransferOperator: GeneTransferOperator<*>,
 ) : GeneTransfer() {
-    override fun invoke(state: EvolutionaryAlgorithmState): Unit = state.run {
+    override fun invoke(state: EvolutionaryAlgorithmState<*>): Unit = state.run {
         if (population.activeCount <= 1 || injectionCount == 0) {
             return
         }

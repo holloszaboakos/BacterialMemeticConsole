@@ -8,7 +8,6 @@ data class OnePartRepresentationWithCostAndIterationAndId(
     override val id: Int,
     override var iterationOfCreation: Int,
     override var cost: FloatVector?,
-    override val objectiveCount: Int,
     override val permutation: Permutation,
 ) : IterationProduct,
     HasId<Int>,

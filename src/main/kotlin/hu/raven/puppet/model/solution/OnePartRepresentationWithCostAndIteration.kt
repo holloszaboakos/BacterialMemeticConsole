@@ -6,7 +6,6 @@ import hu.akos.hollo.szabo.math.vector.FloatVector
 data class OnePartRepresentationWithCostAndIteration(
     override var iterationOfCreation: Int,
     override var cost: FloatVector?,
-    override val objectiveCount: Int,
     override val permutation: Permutation
 ) : IterationProduct,
     OnePartRepresentationWithCost {
@@ -25,7 +24,6 @@ data class OnePartRepresentationWithCostAndIteration(
             if (other.cost == null) return false
             if (cost?.contentEquals(other.cost) == false) return false
         } else if (other.cost != null) return false
-        if (objectiveCount != other.objectiveCount) return false
         if (permutation != other.permutation) return false
 
         return true
@@ -34,7 +32,6 @@ data class OnePartRepresentationWithCostAndIteration(
     override fun hashCode(): Int {
         var result = iterationOfCreation
         result = 31 * result + (cost?.contentHashCode() ?: 0)
-        result = 31 * result + objectiveCount
         result = 31 * result + permutation.hashCode()
         return result
     }

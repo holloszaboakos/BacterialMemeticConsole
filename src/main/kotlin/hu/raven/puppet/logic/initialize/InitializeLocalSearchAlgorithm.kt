@@ -16,7 +16,6 @@ class InitializeLocalSearchAlgorithm<T>(
             task = task
         )
         algorithmState.actualCandidate = OnePartRepresentationWithCostAndIteration(
-            objectiveCount = objectiveCount,
             permutation = IntArray(permutationSize) { index ->
                 index
             }
