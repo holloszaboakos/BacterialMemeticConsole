@@ -12,7 +12,7 @@ import kotlin.math.abs
 //fill other values in primary order
 
 class SortedMatchCrossOver(
-    val costGraph: CompleteGraphWithCenterVertex<Unit, Unit, Float>
+    val costGraph: CompleteGraphWithCenterVertex<Unit, Unit, Int>
 ) : CrossOverOperator {
 
     override fun invoke(
@@ -62,15 +62,13 @@ class SortedMatchCrossOver(
 
         if (foundSlices.isNotEmpty()) {
             val cheaperIndex = Array(2) { sliceIndex ->
-                (1..<foundSlices[sliceIndex].size)
-                    .map { geneIndex ->
-                        val previousValueOfSlice = foundSlices[sliceIndex][geneIndex - 1]
-                        val currentValueOfSlice = foundSlices[sliceIndex][geneIndex]
-                        costGraph
-                            .edgesBetween[previousValueOfSlice][currentValueOfSlice]
-                            .value
-                    }
-                    .sumClever()
+                (1..<foundSlices[sliceIndex].size).sumOf { geneIndex ->
+                    val previousValueOfSlice = foundSlices[sliceIndex][geneIndex - 1]
+                    val currentValueOfSlice = foundSlices[sliceIndex][geneIndex]
+                    costGraph
+                        .edgesBetween[previousValueOfSlice][currentValueOfSlice]
+                        .value
+                }
             }.let { costs -> costs.indexOf(costs.min()) }
 
             val indices = Array(2) { index ->

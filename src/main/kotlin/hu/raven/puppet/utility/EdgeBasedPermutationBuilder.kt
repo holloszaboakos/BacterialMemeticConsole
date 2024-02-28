@@ -1,21 +1,21 @@
 package hu.raven.puppet.utility
 
 import hu.akos.hollo.szabo.math.Permutation
-import hu.raven.puppet.model.utility.SimpleGraphEdge
+import hu.raven.puppet.model.utility.math.GraphEdge
 
 class EdgeBasedPermutationBuilder(val size: Int) {
     private val sequentialRepresentation = IntArray(size + 1) { -1 }
-    private val segmentsOfEdges: MutableList<SimpleGraphEdge> = mutableListOf()
+    private val segmentsOfEdges: MutableList<GraphEdge<Unit>> = mutableListOf()
     private val availabilityMatrix: Array<BooleanArray> =
         Array(sequentialRepresentation.size) { rowIndex ->
             BooleanArray(sequentialRepresentation.size) { columnIndex -> rowIndex != columnIndex }
         }
 
-    fun isAvailable(edge: SimpleGraphEdge) = availabilityMatrix[edge.sourceNodeIndex][edge.targetNodeIndex]
+    fun isAvailable(edge: GraphEdge<Unit>) = availabilityMatrix[edge.sourceNodeIndex][edge.targetNodeIndex]
 
-    fun addEdge(edge: SimpleGraphEdge): SimpleGraphEdge {
+    fun addEdge(edge: GraphEdge<Unit>): GraphEdge<Unit> {
 
-        if(!availabilityMatrix[edge.sourceNodeIndex][edge.targetNodeIndex]){
+        if (!availabilityMatrix[edge.sourceNodeIndex][edge.targetNodeIndex]) {
             throw Exception("Edge is not available!")
         }
 
@@ -34,7 +34,7 @@ class EdgeBasedPermutationBuilder(val size: Int) {
 
     fun isComplete() = sequentialRepresentation.none { it == -1 }
 
-    private fun createNewSegment(selectedEdge: SimpleGraphEdge): SimpleGraphEdge {
+    private fun createNewSegment(selectedEdge: GraphEdge<Unit>): GraphEdge<Unit> {
 
         val segmentWithCommonEnd = segmentsOfEdges
             .firstOrNull { it.targetNodeIndex == selectedEdge.sourceNodeIndex }
@@ -46,21 +46,24 @@ class EdgeBasedPermutationBuilder(val size: Int) {
 
         return when {
             segmentWithCommonStart != null && segmentWithCommonEnd != null ->
-                SimpleGraphEdge(
+                GraphEdge(
                     segmentWithCommonEnd.sourceNodeIndex,
-                    segmentWithCommonStart.targetNodeIndex
+                    segmentWithCommonStart.targetNodeIndex,
+                    Unit
                 )
 
             segmentWithCommonStart != null ->
-                SimpleGraphEdge(
+                GraphEdge(
                     selectedEdge.sourceNodeIndex,
-                    segmentWithCommonStart.targetNodeIndex
+                    segmentWithCommonStart.targetNodeIndex,
+                    Unit
                 )
 
             segmentWithCommonEnd != null ->
-                SimpleGraphEdge(
+                GraphEdge(
                     segmentWithCommonEnd.sourceNodeIndex,
-                    selectedEdge.targetNodeIndex
+                    selectedEdge.targetNodeIndex,
+                    Unit
                 )
 
             else ->
@@ -101,9 +104,10 @@ class EdgeBasedPermutationBuilder(val size: Int) {
                 row.asSequence()
                     .mapIndexed { targetIndex, available ->
                         Pair(
-                            SimpleGraphEdge(
+                            GraphEdge(
                                 sourceIndex,
-                                targetIndex
+                                targetIndex,
+                                Unit
                             ),
                             available
                         )
@@ -116,14 +120,14 @@ class EdgeBasedPermutationBuilder(val size: Int) {
             .forEach { edge -> addEdge(edge) }
     }
 
-    fun selectRandomFromAvailable(): SimpleGraphEdge =
+    fun selectRandomFromAvailable(): GraphEdge<Unit> =
         availabilityMatrix
             .mapIndexed { columnIndex, column ->
                 column
                     .withIndex()
                     .filter { it.value }
                     .map { (index, _) ->
-                        SimpleGraphEdge(columnIndex, index)
+                        GraphEdge(columnIndex, index, Unit)
                     }
             }
             .flatten()

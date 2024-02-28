@@ -6,7 +6,7 @@ import hu.akos.hollo.szabo.math.matrix.FloatMatrix
 import hu.akos.hollo.szabo.math.vector.IntVector2D
 import hu.raven.puppet.logic.operator.select_segments.ContinuousSegment
 import hu.raven.puppet.model.solution.OnePartRepresentation
-import hu.raven.puppet.model.utility.SimpleGraphEdge
+import hu.raven.puppet.model.utility.math.GraphEdge
 import hu.raven.puppet.utility.buildPermutation
 import kotlin.math.min
 import kotlin.random.Random
@@ -224,8 +224,8 @@ class EdgeBuilderHeuristicOnContinuousSegment(
 
     private fun removeWeightOfExclusionaryEdges(
         finalWeightMatrix: Array<FloatArray>,
-        newSegment: SimpleGraphEdge,
-        selectedEdge: SimpleGraphEdge
+        newSegment: GraphEdge<Unit>,
+        selectedEdge: GraphEdge<Unit>
     ) {
         finalWeightMatrix[newSegment.targetNodeIndex][newSegment.sourceNodeIndex] = 0f
 
@@ -242,7 +242,7 @@ class EdgeBuilderHeuristicOnContinuousSegment(
 
     private fun selectEdgeBasedOnWeights(
         finalWeightMatrix: Array<LongArray>
-    ): SimpleGraphEdge? {
+    ): GraphEdge<Unit>? {
         val sumOfWeights = finalWeightMatrix.sumOf { it.sum() }
         if (sumOfWeights == 0L) {
             return null
@@ -263,7 +263,7 @@ class EdgeBuilderHeuristicOnContinuousSegment(
                 sum += finalWeightMatrix[columnIndex][rowIndex]
 
                 if (randomPoint <= sum) {
-                    return SimpleGraphEdge(columnIndex, rowIndex)
+                    return GraphEdge(columnIndex, rowIndex, Unit)
                 }
             }
         }

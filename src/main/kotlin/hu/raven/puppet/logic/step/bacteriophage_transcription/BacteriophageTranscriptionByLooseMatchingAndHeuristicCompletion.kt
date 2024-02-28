@@ -6,8 +6,8 @@ import hu.raven.puppet.logic.operator.calculate_cost.CalculateCost
 import hu.raven.puppet.model.solution.BacteriophageSpecimen
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.state.BacteriophageAlgorithmState
-import hu.raven.puppet.model.utility.SimpleGraphEdge
 import hu.raven.puppet.model.utility.math.CompleteGraphWithCenterVertex
+import hu.raven.puppet.model.utility.math.GraphEdge
 import hu.raven.puppet.utility.buildPermutation
 import kotlin.random.Random
 
@@ -16,7 +16,7 @@ class BacteriophageTranscriptionByLooseMatchingAndHeuristicCompletion<T>(
     override val lifeReductionRate: Float,
     override val lifeCoefficient: Float,
     override val calculateCost: CalculateCost<T>,
-    val task: CompleteGraphWithCenterVertex<Unit,Unit,Int>
+    val task: CompleteGraphWithCenterVertex<Unit, Unit, Int>
 ) : BacteriophageTranscription<T>() {
     override fun invoke(state: BacteriophageAlgorithmState<T>) {
         state.virusPopulation.activesAsSequence()
@@ -72,7 +72,7 @@ class BacteriophageTranscriptionByLooseMatchingAndHeuristicCompletion<T>(
 
     private fun applyVirus(specimen: OnePartRepresentationWithCostAndIterationAndId, virus: BacteriophageSpecimen) {
         val currentEdges = (0..specimen.permutation.size)
-            .map { SimpleGraphEdge(specimen.permutation.before(it), it) }
+            .map { GraphEdge<Unit>(specimen.permutation.before(it), it, Unit) }
         val reducedEdges = currentEdges.filter {
             virus.removedEdges.all { toRemove ->
                 toRemove.sourceNodeIndex != it.sourceNodeIndex && toRemove.targetNodeIndex != it.targetNodeIndex
@@ -102,7 +102,7 @@ class BacteriophageTranscriptionByLooseMatchingAndHeuristicCompletion<T>(
                         sourceIndex == targetIndex -> 0f
                         sourceIndex == populationSize -> task.edgesFromCenter[targetIndex].value.toFloat()
                         targetIndex == populationSize -> task.edgesToCenter[sourceIndex].value.toFloat()
-                        else -> task.edgesBetween[sourceIndex][ targetIndex].value.toFloat()
+                        else -> task.edgesBetween[sourceIndex][targetIndex].value.toFloat()
                     }
                 }
             }
@@ -126,7 +126,7 @@ class BacteriophageTranscriptionByLooseMatchingAndHeuristicCompletion<T>(
                     .mapIndexed { sourceIndex, row ->
                         row
                             .filterIndexed { targetIndex, _ ->
-                                isAvailable(SimpleGraphEdge(sourceIndex, targetIndex))
+                                isAvailable(GraphEdge<Unit>(sourceIndex, targetIndex, Unit))
                             }
                             .sum()
                     }
@@ -139,12 +139,12 @@ class BacteriophageTranscriptionByLooseMatchingAndHeuristicCompletion<T>(
                 downWeighted.forEachIndexed outerForEach@{ sourceIndex, row ->
                     if (random <= 0f) return@outerForEach
                     row.forEachIndexed innerForEach@{ targetIndex, value ->
-                        if (!isAvailable(SimpleGraphEdge(sourceIndex, targetIndex))) return@innerForEach
+                        if (!isAvailable(GraphEdge<Unit>(sourceIndex, targetIndex, Unit))) return@innerForEach
 
                         random -= value
 
                         if (random <= 0f) {
-                            addEdge(SimpleGraphEdge(sourceIndex, targetIndex))
+                            addEdge(GraphEdge<Unit>(sourceIndex, targetIndex, Unit))
                         }
                     }
                 }

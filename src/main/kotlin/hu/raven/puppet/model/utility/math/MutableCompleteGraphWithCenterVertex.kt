@@ -4,10 +4,10 @@ import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray
 
 data class MutableCompleteGraphWithCenterVertex<C, V, E>(
     val centerVertex: C,
-    val vertices: Array<CompleteGraphVertex<V>>,
-    val edgesToCenter: Array<CompleteGraphEdge<E>>,
-    val edgesFromCenter: Array<CompleteGraphEdge<E>>,
-    val edgesBetween: Array<ImmutableArray<CompleteGraphEdge<E>>>,
+    val vertices: Array<GraphVertex<V>>,
+    val edgesToCenter: Array<GraphEdge<E>>,
+    val edgesFromCenter: Array<GraphEdge<E>>,
+    val edgesBetween: Array<ImmutableArray<GraphEdge<E>>>,
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

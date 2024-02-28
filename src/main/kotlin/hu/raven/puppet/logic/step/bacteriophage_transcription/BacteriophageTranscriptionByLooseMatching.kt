@@ -6,9 +6,8 @@ import hu.raven.puppet.logic.operator.calculate_cost.CalculateCost
 import hu.raven.puppet.model.solution.BacteriophageSpecimen
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.state.BacteriophageAlgorithmState
-import hu.raven.puppet.model.utility.SimpleGraphEdge
+import hu.raven.puppet.model.utility.math.GraphEdge
 import hu.raven.puppet.utility.buildPermutation
-import java.io.File
 
 class BacteriophageTranscriptionByLooseMatching<T>(
     override val infectionRate: Float,
@@ -70,7 +69,7 @@ class BacteriophageTranscriptionByLooseMatching<T>(
 
     private fun applyVirus(specimen: OnePartRepresentationWithCostAndIterationAndId, virus: BacteriophageSpecimen) {
         val currentEdges = (0..specimen.permutation.size)
-            .map { SimpleGraphEdge(specimen.permutation.before(it), it) }
+            .map { GraphEdge<Unit>(specimen.permutation.before(it), it,Unit) }
         val reducedEdges = currentEdges.filter {
             virus.removedEdges.all { toRemove ->
                 toRemove.sourceNodeIndex != it.sourceNodeIndex && toRemove.targetNodeIndex != it.targetNodeIndex

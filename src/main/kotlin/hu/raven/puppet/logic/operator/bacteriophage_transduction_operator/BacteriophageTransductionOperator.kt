@@ -1,9 +1,8 @@
 package hu.raven.puppet.logic.operator.bacteriophage_transduction_operator
 
-import hu.akos.hollo.szabo.collections.asImmutable
 import hu.akos.hollo.szabo.math.Permutation
 import hu.raven.puppet.model.solution.BacteriophageSpecimen
-import hu.raven.puppet.model.utility.SimpleGraphEdge
+import hu.raven.puppet.model.utility.math.GraphEdge
 
 class BacteriophageTransductionOperator {
     operator fun invoke(
@@ -11,11 +10,11 @@ class BacteriophageTransductionOperator {
         afterPermutation: Permutation,
         specimenToOverwrite: BacteriophageSpecimen
     ) {
-        val differingEdges = (0.. beforePermutation.size)
+        val differingEdges = (0..beforePermutation.size)
             .map {
                 Pair(
-                    SimpleGraphEdge(it, beforePermutation.after(it)),
-                    SimpleGraphEdge(it, afterPermutation.after(it)),
+                    GraphEdge(it, beforePermutation.after(it), Unit),
+                    GraphEdge(it, afterPermutation.after(it), Unit),
                 )
             }
             .filter { it.first != it.second }

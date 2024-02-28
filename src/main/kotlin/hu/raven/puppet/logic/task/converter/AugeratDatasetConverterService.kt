@@ -2,15 +2,13 @@ package hu.raven.puppet.logic.task.converter
 
 import hu.akos.hollo.szabo.collections.asImmutable
 import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray
-import hu.akos.hollo.szabo.physics.CubicMeter
-import hu.akos.hollo.szabo.physics.Meter
 import hu.raven.puppet.model.task.*
 import hu.raven.puppet.model.task.augerat.InstanceBean
 import hu.raven.puppet.model.task.augerat.NodeBean
 import hu.raven.puppet.model.task.augerat.RequestBean
 import hu.raven.puppet.model.utility.Gps
-import hu.raven.puppet.model.utility.math.CompleteGraphEdge
-import hu.raven.puppet.model.utility.math.CompleteGraphVertex
+import hu.raven.puppet.model.utility.math.GraphEdge
+import hu.raven.puppet.model.utility.math.GraphVertex
 import hu.raven.puppet.model.utility.math.CompleteGraphWithCenterVertex
 import kotlin.math.max
 import kotlin.math.pow
@@ -47,7 +45,7 @@ class AugeratDatasetConverterService : TaskConverterService<InstanceBean,Process
     private fun constructObjectives(
         requests: List<RequestBean>,
         nodes: List<NodeBean>
-    ): ImmutableArray<CompleteGraphVertex<LocationWithVolume>> {
+    ): ImmutableArray<GraphVertex<LocationWithVolume>> {
         return requests.map {
             LocationWithVolume(
                 location = nodes
@@ -56,7 +54,7 @@ class AugeratDatasetConverterService : TaskConverterService<InstanceBean,Process
                 volume = it.quantity.toDouble().toInt()
             )
         }
-            .mapIndexed { index, value -> CompleteGraphVertex(index, value) }
+            .mapIndexed { index, value -> GraphVertex(index, value) }
             .toTypedArray()
             .asImmutable()
     }
@@ -64,14 +62,14 @@ class AugeratDatasetConverterService : TaskConverterService<InstanceBean,Process
     private fun constructEdgesFromCenter(
         nodes: List<NodeBean>,
         centerId: String
-    ): ImmutableArray<CompleteGraphEdge<Float>> {
+    ): ImmutableArray<GraphEdge<Float>> {
         val center = nodes.first { it.id == centerId }
         val clients = nodes - center
 
         return clients.mapIndexed { fromIndex, nodeTo ->
-            CompleteGraphEdge(
-                fromIndex = fromIndex,
-                toIndex = nodes.lastIndex,
+            GraphEdge(
+                sourceNodeIndex = fromIndex,
+                targetNodeIndex = nodes.lastIndex,
                 value = (center.toGPS() euclideanDist nodeTo.toGPS())
             )
         }.toTypedArray()
@@ -81,13 +79,13 @@ class AugeratDatasetConverterService : TaskConverterService<InstanceBean,Process
     private fun constructEdgesToCenter(
         nodes: List<NodeBean>,
         centerId: String
-    ): ImmutableArray<CompleteGraphEdge<Float>> {
+    ): ImmutableArray<GraphEdge<Float>> {
         val center = nodes.first { it.id == centerId }
         val clients = nodes - center
         return clients.mapIndexed { toIndex, nodeTo ->
-            CompleteGraphEdge(
-                fromIndex = nodes.lastIndex,
-                toIndex = toIndex,
+            GraphEdge(
+                sourceNodeIndex = nodes.lastIndex,
+                targetNodeIndex = toIndex,
                 value = (center.toGPS() euclideanDist nodeTo.toGPS())
             )
         }.toTypedArray()
@@ -97,15 +95,15 @@ class AugeratDatasetConverterService : TaskConverterService<InstanceBean,Process
     private fun constructEdgesBetweenClients(
         nodes: List<NodeBean>,
         centerId: String
-    ): ImmutableArray<ImmutableArray<CompleteGraphEdge<Float>>> {
+    ): ImmutableArray<ImmutableArray<GraphEdge<Float>>> {
         val center = nodes.first { it.id == centerId }
         val clients = nodes - center
         return clients.mapIndexed {fromIndex, nodeFrom ->
             clients
                 .mapIndexed { toIndex, nodeTo ->
-                    CompleteGraphEdge(
-                        fromIndex = fromIndex,
-                        toIndex = toIndex,
+                    GraphEdge(
+                        sourceNodeIndex = fromIndex,
+                        targetNodeIndex = toIndex,
                         value = (nodeFrom.toGPS() euclideanDist nodeTo.toGPS())
                     )
                 }
