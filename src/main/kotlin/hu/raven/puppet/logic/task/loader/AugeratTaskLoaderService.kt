@@ -17,7 +17,7 @@ class AugeratTaskLoaderService(
     override fun loadTask(folderPath: String): ProcessedAugeratTask {
         val augeratTask = loadDataFromFile(Path.of(folderPath, fileName))
         val standardTask = converter.processRawTask(augeratTask)
-        standardTask.graph.edgesBetween
+        standardTask.graph.edges
             .map {
                 it.firstOrNull { edge -> edge.value == 0f }
             }
@@ -36,23 +36,20 @@ class AugeratTaskLoaderService(
             log(
                 "OVERESTIMATE: ${
                     (
-                            edgesFromCenter.map { it.value }.sumClever()
-                                    + edgesToCenter.map { it.value }.sumClever()
+                            edges.last().map { it.value }.sumClever()
+                                    + edges.map { it.last().value }.sumClever()
                             )
                 }"
             )
 
             log(
                 "UNDERESTIMATE: ${
-                    ((
-                            edgesFromCenter.map { it.value }.sumClever() +
-                                    edgesBetween.mapIndexed { index, edge ->
-                                        arrayOf(
-                                            edge.map { it.value }.min(),
-                                            edgesToCenter[index].value
-                                        ).min()
-                                    }.sumClever()
-                            ) / vehicleCount.toLong())
+                    edges
+                        .map { edgesFromNode ->
+                            edgesFromNode.minOfOrNull { it.value } ?: 0f
+                        }
+                        .sumClever()
+
                 }"
             )
         }

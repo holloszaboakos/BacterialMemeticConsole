@@ -3,14 +3,8 @@ package hu.raven.puppet.logic.operator.crossover_operator
 import hu.akos.hollo.szabo.collections.asImmutable
 import hu.akos.hollo.szabo.math.Permutation
 import hu.akos.hollo.szabo.math.matrix.FloatMatrix
-import hu.akos.hollo.szabo.math.vector.IntVector
 import hu.akos.hollo.szabo.math.vector.IntVector2D
-import hu.akos.hollo.szabo.physics.CubicMeter
-import hu.akos.hollo.szabo.physics.Gram
-import hu.akos.hollo.szabo.physics.Meter
-import hu.akos.hollo.szabo.physics.Second
-import hu.raven.puppet.model.utility.Gps
-import hu.raven.puppet.model.utility.math.CompleteGraphWithCenterVertex
+import hu.raven.puppet.model.utility.math.CompleteGraph
 import hu.raven.puppet.model.utility.math.GraphEdge
 import hu.raven.puppet.model.utility.math.GraphVertex
 import org.junit.Test
@@ -158,37 +152,22 @@ class CrossOverOperatorStabilityTest {
 
     @Test
     fun sortedMatchCrossOver() {
-        val costGraph = CompleteGraphWithCenterVertex(
-            centerVertex = Unit,
-            vertices = Array(PROBLEM_SIZE) {
+        val costGraph = CompleteGraph(
+            vertices = Array(PROBLEM_SIZE + 1) {
                 GraphVertex(
                     index = it,
                     value = Unit
                 )
             }.asImmutable(),
-            edgesBetween = Array(PROBLEM_SIZE) {sourceNodeIndex->
-                Array(PROBLEM_SIZE) {targetNodeIndex->
+            edges = Array(PROBLEM_SIZE + 1) { sourceNodeIndex ->
+                Array(PROBLEM_SIZE + 1) { targetNodeIndex ->
                     GraphEdge(
                         sourceNodeIndex = sourceNodeIndex,
                         targetNodeIndex = targetNodeIndex,
                         value = (Random.nextInt())
                     )
                 }.asImmutable()
-            }.asImmutable(),
-            edgesFromCenter = Array(PROBLEM_SIZE) {
-                GraphEdge(
-                    sourceNodeIndex = PROBLEM_SIZE,
-                    targetNodeIndex = it,
-                    value = (Random.nextInt())
-                )
-            }.asImmutable(),
-            edgesToCenter = Array(PROBLEM_SIZE) {
-                GraphEdge(
-                    sourceNodeIndex = it,
-                    targetNodeIndex = PROBLEM_SIZE,
-                    value = (Random.nextInt())
-                )
-            }.asImmutable(),
+            }.asImmutable()
         )
 
         repeat(REPEAT_TIME) {

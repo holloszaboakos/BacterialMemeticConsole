@@ -6,10 +6,11 @@ import hu.akos.hollo.szabo.math.calculus.multiplicativeInverse
 import hu.raven.puppet.logic.operator.select_segments.ContinuousSegment
 import hu.raven.puppet.logic.operator.weighted_selection.RouletteWheelSelection
 import hu.raven.puppet.model.solution.OnePartRepresentation
-import hu.raven.puppet.model.utility.math.CompleteGraphWithCenterVertex
+import hu.raven.puppet.model.utility.math.CompleteGraph
+import kotlin.math.min
 
 class SequentialSelectionHeuristicOnContinuousSegment(
-    val costGraph:CompleteGraphWithCenterVertex<Unit,Unit,Float>
+    val costGraph: CompleteGraph<Unit, Float>
 ) : BacterialMutationOperator {
 
     private val rouletteWheelSelection = RouletteWheelSelection<ContinuousSegment>()
@@ -128,45 +129,29 @@ class SequentialSelectionHeuristicOnContinuousSegment(
         val objectiveCount = costGraph.vertices.size
         remainingSegments.map { segment ->
             when {
-                previousElement < objectiveCount && segment.values.first() < objectiveCount ->
+                previousElement != segment.values.first() ->
                     costGraph
-                        .edgesBetween[previousElement][ segment.values.first()]
-                        .value
-                        .multiplicativeInverse()
-
-                segment.values.first() < objectiveCount ->
-                    costGraph
-                        .edgesFromCenter[segment.values.first()]
-                        .value
-                        .multiplicativeInverse()
-
-                previousElement < objectiveCount ->
-                    costGraph
-                        .edgesToCenter[previousElement]
+                        .edges[
+                        min(previousElement, costGraph.vertices.size)
+                    ][
+                        min(segment.values.first(), costGraph.vertices.size)
+                    ]
                         .value
                         .multiplicativeInverse()
 
                 else -> 1f
             } + when {
                 followingElement == null -> 0f
-                followingElement < objectiveCount && segment.values.first() < objectiveCount ->
+                //TODO should I swap indexes?
+                followingElement != segment.values.first() ->
                     costGraph
-                        .edgesBetween[followingElement][ segment.values.first()]
+                        .edges[
+                        min(followingElement, costGraph.vertices.size)
+                    ][
+                        min(segment.values.first(), costGraph.vertices.size)
+                    ]
                         .value
                         .multiplicativeInverse()
-
-                segment.values.first() < objectiveCount ->
-                    costGraph
-                        .edgesFromCenter[segment.values.first()]
-                        .value
-                        .multiplicativeInverse()
-
-                followingElement < objectiveCount ->
-                    costGraph
-                        .edgesToCenter[followingElement]
-                        .value
-                        .multiplicativeInverse()
-
                 else -> 1f
             }
         }.toFloatArray()
@@ -182,18 +167,13 @@ class SequentialSelectionHeuristicOnContinuousSegment(
                 if (currentElement == element)
                     return@map 0f
                 when {
-                    element.indices.last < objectiveCount && currentElement.indices.first < objectiveCount -> costGraph
-                        .edgesBetween[element.indices.last][ currentElement.indices.first]
-                        .value
-                        .multiplicativeInverse()
-
-                    currentElement.indices.first < objectiveCount -> costGraph
-                        .edgesFromCenter[currentElement.indices.first]
-                        .value
-                        .multiplicativeInverse()
-
-                    element.indices.last < objectiveCount -> costGraph
-                        .edgesToCenter[element.indices.last]
+                    element.indices.last < objectiveCount || currentElement.indices.first < objectiveCount ->
+                        costGraph
+                        .edges[
+                            min(element.indices.last,objectiveCount)
+                        ][
+                            min(currentElement.indices.first,objectiveCount)
+                        ]
                         .value
                         .multiplicativeInverse()
 

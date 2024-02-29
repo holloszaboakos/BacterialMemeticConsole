@@ -33,23 +33,19 @@ class DesmetTaskLoaderService(
         task.graph.apply {
             log(
                 "OVERESTIMATE: ${
-                    (
-                            edgesFromCenter.map { it.value.value }.sumClever()
-                                    + edgesToCenter.map { it.value.value }.sumClever()
-                            )
+                    edges.last().map { it.value.value }.sumClever()
+                            + edges.map { it.last().value.value }.sumClever()
                 }"
             )
 
             log(
                 "UNDERESTIMATE: ${
                     (
-                            edgesFromCenter.map { it.value.value }.min() +
-                                    edgesBetween.mapIndexed { index, edge ->
-                                        arrayOf(
-                                            edge.minOfOrNull { it.value.value } ?: Float.MAX_VALUE,
-                                            edgesToCenter[index].value.value
-                                        ).min()
-                                    }.sumClever()
+                            edges
+                                .map { edgesFromNode ->
+                                    edgesFromNode.minOfOrNull { it.value.value } ?: 0f
+                                }
+                                .sumClever()
                             )
                 }"
             )

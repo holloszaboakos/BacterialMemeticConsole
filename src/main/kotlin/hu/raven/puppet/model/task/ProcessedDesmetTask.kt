@@ -2,9 +2,9 @@ package hu.raven.puppet.model.task
 
 import hu.akos.hollo.szabo.physics.Second
 import hu.raven.puppet.model.utility.Gps
-import hu.raven.puppet.model.utility.math.CompleteGraphWithCenterVertex
+import hu.raven.puppet.model.utility.math.CompleteGraph
 
 data class ProcessedDesmetTask(
-    val graph: CompleteGraphWithCenterVertex<Gps, LocationWithVolumeAndName, Second>,
-    val capacity:Int
+    val graph: CompleteGraph<LocationWithVolumeAndName, Second>,
+    val capacity: Int
 )

@@ -1,9 +1,8 @@
 package hu.raven.puppet.logic.operator.crossover_operator
 
-import hu.akos.hollo.szabo.math.FloatSumExtensions.sumClever
 import hu.akos.hollo.szabo.math.Permutation
 import hu.akos.hollo.szabo.primitives.get
-import hu.raven.puppet.model.utility.math.CompleteGraphWithCenterVertex
+import hu.raven.puppet.model.utility.math.CompleteGraph
 import kotlin.math.abs
 
 //finds longest sequence in parents with same ends and same values but in any order
@@ -12,7 +11,7 @@ import kotlin.math.abs
 //fill other values in primary order
 
 class SortedMatchCrossOver(
-    val costGraph: CompleteGraphWithCenterVertex<Unit, Unit, Int>
+    val costGraph: CompleteGraph<Unit, Int>
 ) : CrossOverOperator {
 
     override fun invoke(
@@ -66,7 +65,7 @@ class SortedMatchCrossOver(
                     val previousValueOfSlice = foundSlices[sliceIndex][geneIndex - 1]
                     val currentValueOfSlice = foundSlices[sliceIndex][geneIndex]
                     costGraph
-                        .edgesBetween[previousValueOfSlice][currentValueOfSlice]
+                        .edges[previousValueOfSlice][currentValueOfSlice]
                         .value
                 }
             }.let { costs -> costs.indexOf(costs.min()) }
