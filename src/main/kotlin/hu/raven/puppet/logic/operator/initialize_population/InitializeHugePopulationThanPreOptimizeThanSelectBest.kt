@@ -1,6 +1,5 @@
 package hu.raven.puppet.logic.operator.initialize_population
 
-import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray.Companion.size
 import hu.akos.hollo.szabo.collections.slice
 import hu.akos.hollo.szabo.math.asPermutation
 import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.length

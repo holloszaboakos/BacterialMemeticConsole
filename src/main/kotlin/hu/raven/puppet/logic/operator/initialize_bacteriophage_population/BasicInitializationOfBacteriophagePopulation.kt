@@ -1,6 +1,5 @@
 package hu.raven.puppet.logic.operator.initialize_bacteriophage_population
 
-import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray
 import hu.raven.puppet.model.solution.BacteriophageSpecimen
 
 class BasicInitializationOfBacteriophagePopulation(

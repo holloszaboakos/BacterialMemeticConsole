@@ -152,6 +152,7 @@ class SequentialSelectionHeuristicOnContinuousSegment(
                     ]
                         .value
                         .multiplicativeInverse()
+
                 else -> 1f
             }
         }.toFloatArray()
@@ -169,13 +170,13 @@ class SequentialSelectionHeuristicOnContinuousSegment(
                 when {
                     element.indices.last < objectiveCount || currentElement.indices.first < objectiveCount ->
                         costGraph
-                        .edges[
-                            min(element.indices.last,objectiveCount)
+                            .edges[
+                            min(element.indices.last, objectiveCount)
                         ][
-                            min(currentElement.indices.first,objectiveCount)
+                            min(currentElement.indices.first, objectiveCount)
                         ]
-                        .value
-                        .multiplicativeInverse()
+                            .value
+                            .multiplicativeInverse()
 
                     else -> 1f
                 }

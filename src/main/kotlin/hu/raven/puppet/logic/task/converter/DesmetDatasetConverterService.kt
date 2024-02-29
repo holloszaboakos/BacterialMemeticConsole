@@ -3,7 +3,8 @@ package hu.raven.puppet.logic.task.converter
 import hu.akos.hollo.szabo.collections.asImmutable
 import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray
 import hu.akos.hollo.szabo.physics.Second
-import hu.raven.puppet.model.task.*
+import hu.raven.puppet.model.task.LocationWithVolumeAndName
+import hu.raven.puppet.model.task.ProcessedDesmetTask
 import hu.raven.puppet.model.task.desmet.DesmetTask
 import hu.raven.puppet.model.task.desmet.NodeCoordinate
 import hu.raven.puppet.model.utility.Gps

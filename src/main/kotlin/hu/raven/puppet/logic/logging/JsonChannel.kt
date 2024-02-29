@@ -1,7 +1,6 @@
 package hu.raven.puppet.logic.logging
 
 import com.google.gson.Gson
-import java.io.File
 import java.nio.file.Files
 import kotlin.io.path.Path
 

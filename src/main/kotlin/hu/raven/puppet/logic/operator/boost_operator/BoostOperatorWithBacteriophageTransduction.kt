@@ -10,10 +10,11 @@ class BoostOperatorWithBacteriophageTransduction<O : OnePartRepresentationWithCo
     val boostOperator: BoostOperator<O>,
     private val bacteriophageTransductionOperator: BacteriophageTransductionOperator,
     private val getActualAlgorithmState: () -> BacteriophageAlgorithmState<*>
-) :BoostOperator<O>() {
+) : BoostOperator<O>() {
     override val calculateCostOf: CalculateCost<*>
         get() = throw Exception("Should not be used!")
-    override fun invoke(specimen:O) {
+
+    override fun invoke(specimen: O) {
         val algorithmState = getActualAlgorithmState()
         val oldCost = specimen.costOrException()
         val oldPermutation = specimen.permutation.clone()

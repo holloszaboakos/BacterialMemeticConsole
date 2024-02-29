@@ -20,7 +20,7 @@ class MutationWithElitistSelectionAndOneOpposition(
     override fun invoke(
         specimenWithIndex: IndexedValue<OnePartRepresentationWithCost>,
         iteration: Int
-    ) = specimenWithIndex.value.let {specimen->
+    ) = specimenWithIndex.value.let { specimen ->
         if (specimen.cost == null) {
             specimen.cost = calculateCostOf(specimen)
         }

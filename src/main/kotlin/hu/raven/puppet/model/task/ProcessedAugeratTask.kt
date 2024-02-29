@@ -1,6 +1,5 @@
 package hu.raven.puppet.model.task
 
-import hu.raven.puppet.model.utility.Gps
 import hu.raven.puppet.model.utility.math.CompleteGraph
 
 data class ProcessedAugeratTask(

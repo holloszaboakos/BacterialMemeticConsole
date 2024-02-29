@@ -2,7 +2,8 @@ package hu.raven.puppet.logic.task.converter
 
 import hu.akos.hollo.szabo.collections.asImmutable
 import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray
-import hu.raven.puppet.model.task.*
+import hu.raven.puppet.model.task.LocationWithVolume
+import hu.raven.puppet.model.task.ProcessedAugeratTask
 import hu.raven.puppet.model.task.augerat.InstanceBean
 import hu.raven.puppet.model.task.augerat.NodeBean
 import hu.raven.puppet.model.task.augerat.RequestBean

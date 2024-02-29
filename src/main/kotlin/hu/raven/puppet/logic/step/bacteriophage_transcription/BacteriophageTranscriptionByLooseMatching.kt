@@ -69,7 +69,7 @@ class BacteriophageTranscriptionByLooseMatching<T>(
 
     private fun applyVirus(specimen: OnePartRepresentationWithCostAndIterationAndId, virus: BacteriophageSpecimen) {
         val currentEdges = (0..specimen.permutation.size)
-            .map { GraphEdge<Unit>(specimen.permutation.before(it), it,Unit) }
+            .map { GraphEdge<Unit>(specimen.permutation.before(it), it, Unit) }
         val reducedEdges = currentEdges.filter {
             virus.removedEdges.all { toRemove ->
                 toRemove.sourceNodeIndex != it.sourceNodeIndex && toRemove.targetNodeIndex != it.targetNodeIndex

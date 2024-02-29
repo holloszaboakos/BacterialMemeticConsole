@@ -29,7 +29,7 @@ class MutationWithElitistSelection(
             )
             calcCostOfEachAndSort(clones)
 
-            if (clones.first().cost != specimen.cost && !(clones.first().cost?.contentEquals(specimen.cost) ?: false)) {
+            if (clones.first().cost != specimen.cost && clones.first().cost?.contentEquals(specimen.cost) != true) {
                 specimen.permutation.clear()
                 clones.first().permutation.forEachIndexed { index, value ->
                     specimen.permutation[index] = value

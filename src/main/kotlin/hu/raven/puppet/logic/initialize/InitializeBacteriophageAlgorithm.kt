@@ -7,7 +7,7 @@ import hu.raven.puppet.model.state.BacteriophageAlgorithmState
 class InitializeBacteriophageAlgorithm<T>(
     private val initializeEvolutionaryAlgorithm: InitializeEvolutionaryAlgorithm<T>,
     private val initializePopulation: InitializeBacteriophagePopulation
-) : InitializeAlgorithm<T,BacteriophageAlgorithmState<T>> {
+) : InitializeAlgorithm<T, BacteriophageAlgorithmState<T>> {
     override fun invoke(task: T): BacteriophageAlgorithmState<T> {
         val preState = initializeEvolutionaryAlgorithm(task)
         val bacteriophagePopulation = initializePopulation()

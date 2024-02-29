@@ -5,7 +5,7 @@ import java.nio.file.Path
 
 sealed class TaskLoaderService<T> {
 
-    abstract val log:(String)->Unit
+    abstract val log: (String) -> Unit
 
     abstract fun loadTask(folderPath: String): T
 

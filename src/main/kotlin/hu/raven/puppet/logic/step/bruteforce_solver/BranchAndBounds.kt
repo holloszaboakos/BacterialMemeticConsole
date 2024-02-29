@@ -50,7 +50,7 @@ fun branchAndBounds(graph: IntMatrix): Pair<Permutation, Int> {
                 println()
                 println("LEAF: ${node.locationIndex}")
                 if (node.pathCost + graph[node.locationIndex][0] < bestCost) {
-                    if(path.toSet().size != path.size)
+                    if (path.toSet().size != path.size)
                         throw Exception("Duplicate in path!")
                     bestPath = path
                     bestCost = node.pathCost + graph[node.locationIndex][0]
@@ -143,7 +143,10 @@ private fun minimalCostSpanningTree(graph: IntMatrix): Array<GraphEdge<Int>> {
             if (nodeGrouping[edge.sourceNodeIndex] == nodeGrouping[edge.targetNodeIndex]) {
                 false
             } else {
-                mergeGroups(nodeGrouping, IntVector2D(nodeGrouping[edge.sourceNodeIndex], nodeGrouping[edge.targetNodeIndex]))
+                mergeGroups(
+                    nodeGrouping,
+                    IntVector2D(nodeGrouping[edge.sourceNodeIndex], nodeGrouping[edge.targetNodeIndex])
+                )
                 true
             }
         }
