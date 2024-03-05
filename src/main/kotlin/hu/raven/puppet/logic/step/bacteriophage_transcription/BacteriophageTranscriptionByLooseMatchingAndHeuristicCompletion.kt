@@ -11,12 +11,13 @@ import hu.raven.puppet.model.utility.math.GraphEdge
 import hu.raven.puppet.utility.buildPermutation
 import kotlin.random.Random
 
-class BacteriophageTranscriptionByLooseMatchingAndHeuristicCompletion<T>(
+class BacteriophageTranscriptionByLooseMatchingAndHeuristicCompletion<T, E>(
     override val infectionRate: Float,
     override val lifeReductionRate: Float,
     override val lifeCoefficient: Float,
     override val calculateCost: CalculateCost<T>,
-    val task: CompleteGraph<Unit, Int>
+    val costGraph: CompleteGraph<*, E>,
+    val extractEdgeWeight: (E) -> Float,
 ) : BacteriophageTranscription<T>() {
     override fun invoke(state: BacteriophageAlgorithmState<T>) {
         state.virusPopulation.activesAsSequence()
@@ -100,7 +101,7 @@ class BacteriophageTranscriptionByLooseMatchingAndHeuristicCompletion<T>(
                 FloatArray(populationSize + 1) { targetIndex ->
                     when {
                         sourceIndex == targetIndex -> 0f
-                        else -> task.edges[sourceIndex][targetIndex].value.toFloat()
+                        else -> costGraph.edges[sourceIndex][targetIndex].value.let(extractEdgeWeight).toFloat()
                     }
                 }
             }
@@ -124,7 +125,7 @@ class BacteriophageTranscriptionByLooseMatchingAndHeuristicCompletion<T>(
                     .mapIndexed { sourceIndex, row ->
                         row
                             .filterIndexed { targetIndex, _ ->
-                                isAvailable(GraphEdge<Unit>(sourceIndex, targetIndex, Unit))
+                                isAvailable(GraphEdge(sourceIndex, targetIndex, Unit))
                             }
                             .sum()
                     }
@@ -137,12 +138,12 @@ class BacteriophageTranscriptionByLooseMatchingAndHeuristicCompletion<T>(
                 downWeighted.forEachIndexed outerForEach@{ sourceIndex, row ->
                     if (random <= 0f) return@outerForEach
                     row.forEachIndexed innerForEach@{ targetIndex, value ->
-                        if (!isAvailable(GraphEdge<Unit>(sourceIndex, targetIndex, Unit))) return@innerForEach
+                        if (!isAvailable(GraphEdge(sourceIndex, targetIndex, Unit))) return@innerForEach
 
                         random -= value
 
                         if (random <= 0f) {
-                            addEdge(GraphEdge<Unit>(sourceIndex, targetIndex, Unit))
+                            addEdge(GraphEdge(sourceIndex, targetIndex, Unit))
                         }
                     }
                 }

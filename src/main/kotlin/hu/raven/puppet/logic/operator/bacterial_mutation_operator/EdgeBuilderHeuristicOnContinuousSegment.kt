@@ -1,18 +1,19 @@
 package hu.raven.puppet.logic.operator.bacterial_mutation_operator
 
+import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray.Companion.size
 import hu.akos.hollo.szabo.math.FloatSumExtensions.sumClever
 import hu.akos.hollo.szabo.math.calculus.multiplicativeInverse
-import hu.akos.hollo.szabo.math.matrix.FloatMatrix
-import hu.akos.hollo.szabo.math.vector.IntVector2D
 import hu.raven.puppet.logic.operator.select_segments.ContinuousSegment
 import hu.raven.puppet.model.solution.OnePartRepresentation
+import hu.raven.puppet.model.utility.math.CompleteGraph
 import hu.raven.puppet.model.utility.math.GraphEdge
 import hu.raven.puppet.utility.buildPermutation
 import kotlin.math.min
 import kotlin.random.Random
 
-class EdgeBuilderHeuristicOnContinuousSegment(
-    val distanceMatrix: FloatMatrix,
+class EdgeBuilderHeuristicOnContinuousSegment<T>(
+    private val costGraph: CompleteGraph<*, T>,
+    private val extractEdgeWeight: (T) -> Float
 ) : BacterialMutationOperator {
     override fun invoke(
         clone: OnePartRepresentation,
@@ -121,7 +122,7 @@ class EdgeBuilderHeuristicOnContinuousSegment(
         clone: OnePartRepresentation,
         selectedSegment: List<ContinuousSegment>
     ): FloatArray {
-        val objectiveCount = distanceMatrix.size
+        val objectiveCount = costGraph.vertices.size - 1
         val nextElement = if (selectedSegment.last().indices.last == clone.permutation.indices.last) {
             objectiveCount
         } else {
@@ -139,7 +140,7 @@ class EdgeBuilderHeuristicOnContinuousSegment(
         clone: OnePartRepresentation,
         selectedSegments: List<ContinuousSegment>
     ): FloatArray {
-        val objectiveCount = distanceMatrix.size - 1
+        val objectiveCount = costGraph.vertices.size - 1
         val previousElement = if (selectedSegments.first().indices.first == 0) {
             objectiveCount
         } else {
@@ -275,10 +276,12 @@ class EdgeBuilderHeuristicOnContinuousSegment(
         fromElement: Int,
         toElement: Int
     ): Float {
-        return distanceMatrix[IntVector2D(
-            x = min(fromElement, distanceMatrix.size - 1),
-            y = min(toElement, distanceMatrix.size - 1),
+        return costGraph.edges[min(fromElement, costGraph.vertices.size - 1)][min(
+            toElement,
+            costGraph.vertices.size - 1
         )]
+            .value
+            .let(extractEdgeWeight)
             .multiplicativeInverse()
     }
 }

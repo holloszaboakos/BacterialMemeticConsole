@@ -2,8 +2,6 @@ package hu.raven.puppet.logic.operator.crossover_operator
 
 import hu.akos.hollo.szabo.collections.asImmutable
 import hu.akos.hollo.szabo.math.Permutation
-import hu.akos.hollo.szabo.math.matrix.FloatMatrix
-import hu.akos.hollo.szabo.math.vector.IntVector2D
 import hu.raven.puppet.model.utility.math.CompleteGraph
 import hu.raven.puppet.model.utility.math.GraphEdge
 import hu.raven.puppet.model.utility.math.GraphVertex
@@ -79,13 +77,24 @@ class CrossOverOperatorStabilityTest {
 
     @Test
     fun heuristicCrossOver() {
-        val costGraph = FloatMatrix(IntVector2D(PROBLEM_SIZE + 1, PROBLEM_SIZE + 1)) { Random.nextFloat() }
+        val costGraph = CompleteGraph(
+            vertices = Array(PROBLEM_SIZE + 1) { GraphVertex(it, Unit) }.asImmutable(),
+            edges = Array(PROBLEM_SIZE + 1) { sourceIndex ->
+                Array(PROBLEM_SIZE + 1) { targetIndex ->
+                    GraphEdge(
+                        sourceNodeIndex = sourceIndex,
+                        targetNodeIndex = targetIndex,
+                        value = Random.nextFloat()
+                    )
+                }.asImmutable()
+            }.asImmutable()
+        )
         repeat(REPEAT_TIME) {
             val firstParent = Permutation.random(PROBLEM_SIZE)
             val secondParent = Permutation.random(PROBLEM_SIZE)
             val child = Permutation.random(PROBLEM_SIZE)
 
-            HeuristicCrossOver(costGraph)(Pair(firstParent, secondParent), child)
+            HeuristicCrossOver(costGraph) { it }(Pair(firstParent, secondParent), child)
             assertTrue(child.isFormatCorrect())
         }
     }
@@ -175,7 +184,7 @@ class CrossOverOperatorStabilityTest {
             val secondParent = Permutation.random(PROBLEM_SIZE)
             val child = Permutation.random(PROBLEM_SIZE)
 
-            SortedMatchCrossOver(costGraph)(Pair(firstParent, secondParent), child)
+            SortedMatchCrossOver(costGraph, Int::toFloat)(Pair(firstParent, secondParent), child)
             assertTrue(child.isFormatCorrect())
         }
     }

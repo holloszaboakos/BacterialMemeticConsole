@@ -1,5 +1,6 @@
 package hu.raven.puppet.logic.operator.crossover_operator
 
+import hu.akos.hollo.szabo.math.FloatSumExtensions.sumClever
 import hu.akos.hollo.szabo.math.Permutation
 import hu.akos.hollo.szabo.primitives.get
 import hu.raven.puppet.model.utility.math.CompleteGraph
@@ -10,8 +11,9 @@ import kotlin.math.abs
 //copy segment
 //fill other values in primary order
 
-class SortedMatchCrossOver(
-    val costGraph: CompleteGraph<Unit, Int>
+class SortedMatchCrossOver<T>(
+    private val costGraph: CompleteGraph<*, T>,
+    private val extractEdgeWeight: (T) -> Float
 ) : CrossOverOperator {
 
     override fun invoke(
@@ -61,13 +63,16 @@ class SortedMatchCrossOver(
 
         if (foundSlices.isNotEmpty()) {
             val cheaperIndex = Array(2) { sliceIndex ->
-                (1..<foundSlices[sliceIndex].size).sumOf { geneIndex ->
-                    val previousValueOfSlice = foundSlices[sliceIndex][geneIndex - 1]
-                    val currentValueOfSlice = foundSlices[sliceIndex][geneIndex]
-                    costGraph
-                        .edges[previousValueOfSlice][currentValueOfSlice]
-                        .value
-                }
+                (1..<foundSlices[sliceIndex].size)
+                    .map { geneIndex ->
+                        val previousValueOfSlice = foundSlices[sliceIndex][geneIndex - 1]
+                        val currentValueOfSlice = foundSlices[sliceIndex][geneIndex]
+                        costGraph
+                            .edges[previousValueOfSlice][currentValueOfSlice]
+                            .value
+                            .let(extractEdgeWeight)
+                    }
+                    .sumClever()
             }.let { costs -> costs.indexOf(costs.min()) }
 
             val indices = Array(2) { index ->

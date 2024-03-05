@@ -1,11 +1,11 @@
 package hu.raven.puppet.logic.operator.crossover_operator
 
+import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray.Companion.size
 import hu.akos.hollo.szabo.math.Permutation
 import hu.akos.hollo.szabo.math.calculus.multiplicativeInverse
-import hu.akos.hollo.szabo.math.matrix.FloatMatrix
-import hu.akos.hollo.szabo.math.vector.IntVector2D
 import hu.akos.hollo.szabo.primitives.get
 import hu.raven.puppet.logic.operator.weighted_selection.RouletteWheelSelection
+import hu.raven.puppet.model.utility.math.CompleteGraph
 import kotlin.math.min
 import kotlin.random.Random.Default.nextInt
 
@@ -13,8 +13,9 @@ import kotlin.random.Random.Default.nextInt
 //iterate:
 // gather neighbour
 //distance based random selection
-class HeuristicCrossOver(
-    val distanceMatrix: FloatMatrix
+class HeuristicCrossOver<T>(
+    private val costGraph: CompleteGraph<*, T>,
+    private val extractEdgeCost: (T) -> Float
 ) : CrossOverOperator {
 
     private val rouletteWheelSelection = RouletteWheelSelection<Int>()
@@ -101,10 +102,13 @@ class HeuristicCrossOver(
         previousValue: Int
     ): Array<Float> =
         Array(neighbours.size) { neighbourIndex ->
-            distanceMatrix[IntVector2D(
-                x = min(previousValue, distanceMatrix.size - 1),
-                y = min(neighbours[neighbourIndex], distanceMatrix.size - 1),
-            )]
+            costGraph.edges[
+                min(previousValue, costGraph.edges.size - 1)
+            ][
+                min(neighbours[neighbourIndex], costGraph.edges.size - 1)
+            ]
+                .value
+                .let(extractEdgeCost)
                 .multiplicativeInverse()
         }
 

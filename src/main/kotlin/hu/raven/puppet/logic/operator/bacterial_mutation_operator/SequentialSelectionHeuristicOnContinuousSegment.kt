@@ -9,8 +9,9 @@ import hu.raven.puppet.model.solution.OnePartRepresentation
 import hu.raven.puppet.model.utility.math.CompleteGraph
 import kotlin.math.min
 
-class SequentialSelectionHeuristicOnContinuousSegment(
-    val costGraph: CompleteGraph<Unit, Float>
+class SequentialSelectionHeuristicOnContinuousSegment<T>(
+    private val costGraph: CompleteGraph<*, T>,
+    private val extractEdgeCost: (T) -> Float
 ) : BacterialMutationOperator {
 
     private val rouletteWheelSelection = RouletteWheelSelection<ContinuousSegment>()
@@ -126,10 +127,9 @@ class SequentialSelectionHeuristicOnContinuousSegment(
         followingElement: Int?,
         remainingSegments: MutableList<ContinuousSegment>
     ): FloatArray = run {
-        val objectiveCount = costGraph.vertices.size
         remainingSegments.map { segment ->
             when {
-                previousElement != segment.values.first() ->
+                previousElement < costGraph.vertices.size || segment.values.first() < costGraph.vertices.size ->
                     costGraph
                         .edges[
                         min(previousElement, costGraph.vertices.size)
@@ -137,13 +137,14 @@ class SequentialSelectionHeuristicOnContinuousSegment(
                         min(segment.values.first(), costGraph.vertices.size)
                     ]
                         .value
+                        .let(extractEdgeCost)
                         .multiplicativeInverse()
 
                 else -> 1f
             } + when {
                 followingElement == null -> 0f
                 //TODO should I swap indexes?
-                followingElement != segment.values.first() ->
+                followingElement < costGraph.vertices.size || segment.values.first() < costGraph.vertices.size ->
                     costGraph
                         .edges[
                         min(followingElement, costGraph.vertices.size)
@@ -151,6 +152,7 @@ class SequentialSelectionHeuristicOnContinuousSegment(
                         min(segment.values.first(), costGraph.vertices.size)
                     ]
                         .value
+                        .let(extractEdgeCost)
                         .multiplicativeInverse()
 
                 else -> 1f
@@ -176,6 +178,7 @@ class SequentialSelectionHeuristicOnContinuousSegment(
                             min(currentElement.indices.first, objectiveCount)
                         ]
                             .value
+                            .let(extractEdgeCost)
                             .multiplicativeInverse()
 
                     else -> 1f

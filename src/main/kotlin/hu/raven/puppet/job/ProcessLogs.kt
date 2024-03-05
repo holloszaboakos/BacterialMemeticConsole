@@ -10,7 +10,7 @@ import hu.raven.puppet.model.state.BacteriophageAlgorithmState
 import java.io.File
 
 fun main() {
-    val file = File("output/2024-02-23/2024-02-23T13_54_07_386941700/algorithmState.json")
+    val file = File("output/2024-02-29/2024-02-29T21_01_58_403359600/algorithmState.json")
     val gson = GsonBuilder()
         .registerTypeAdapter(Permutation::class.java, object : TypeAdapter<Permutation>() {
             override fun write(out: JsonWriter, value: Permutation) {

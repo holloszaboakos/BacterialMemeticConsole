@@ -37,9 +37,10 @@ import hu.raven.puppet.logic.step.order_population_by_cost.OrderPopulationByCost
 import hu.raven.puppet.logic.step.select_survivers.SelectSurvivors
 import hu.raven.puppet.logic.step.select_survivers.SelectSurvivorsMultiObjectiveHalfElitist
 import hu.raven.puppet.logic.task.loader.TaskLoaderService
-import hu.raven.puppet.logic.task.loader.TspTaskLoaderService
+import hu.raven.puppet.logic.task.loader.TspFromMatrixTaskLoaderService
 import hu.raven.puppet.model.state.BacteriophageAlgorithmState
 import hu.raven.puppet.model.utility.math.CompleteGraph
+import hu.raven.puppet.model.utility.math.MutableCompleteGraph
 import hu.raven.puppet.utility.extention.KoinUtil
 import hu.raven.puppet.utility.extention.KoinUtil.get
 import org.koin.core.context.startKoin
@@ -50,29 +51,14 @@ import java.nio.file.Path
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-//70 successful transcriptions only!
-//loose matching and random completion
-//iterationOfCreation=8536, cost=FloatVector(coordinates=[17657.0]), 159060 successful transcription
-//loose matching and heuristic completion
-//iterationOfCreation=3401, cost=FloatVector(coordinates=[17840.0]), 159060 successful transcription
-//loose matching and heuristic completion, segment size 4, population 64x4, bacterial mutation 8 cycle 8 clone, 32 transcription per bacteriophage
-//iterationOfCreation=2900, cost=FloatVector(coordinates=[16290.0])
-//iterationOfCreation=4102, cost=FloatVector(coordinates=[16018.0])
-//iterationOfCreation=6844, cost=FloatVector(coordinates=[15583.0])
-//iterationOfCreation=9255, cost=FloatVector(coordinates=[15404.0])
-//loose matching and heuristic completion, segment size 4, population 64x4, bacterial mutation 16 cycle 4 clone, 32 transcription per bacteriophage
-//iterationOfCreation=7838, cost=FloatVector(coordinates=[15535.0])
-//Added boost with bacteriophage
-//id=195, iterationOfCreation=910, cost=FloatVector(coordinates=[16676.0])
-
 private typealias Task = CompleteGraph<Unit, Int>
 
 fun main() {
     startKoin {
         modules(
             module {
-                single(named(FilePathVariableNames.SINGLE_FILE)) { "size64instance0.json" }
-                single(named(FilePathVariableNames.INPUT_FOLDER)) { "\\input\\tsp" }
+                single(named(FilePathVariableNames.SINGLE_FILE)) { "instance1.json" }
+                single(named(FilePathVariableNames.INPUT_FOLDER)) { "\\input\\tsp64" }
                 single(named(FilePathVariableNames.OUTPUT_FOLDER)) { Path.of("output\\default\\output.txt") }
                 single<InitializeAlgorithm<*, *>> {
                     InitializeBacteriophageAlgorithm(
@@ -99,7 +85,7 @@ fun main() {
                     CalculateCostOfTspSolution(task = get<Task>())
                 }
                 single<TaskLoaderService<Task>> {
-                    TspTaskLoaderService(
+                    TspFromMatrixTaskLoaderService(
                         log = { println(it) },
                         fileName = get(named(FilePathVariableNames.SINGLE_FILE))
                     )
@@ -107,14 +93,34 @@ fun main() {
                 single {
                     get<TaskLoaderService<Task>>().loadTask(folderPath = get(named(FilePathVariableNames.INPUT_FOLDER)))
                 }
-                single<AlgorithmIteration<*>> {
-                    EvolutionaryAlgorithmIteration<BacteriophageAlgorithmState<Task>>(
-                        steps = arrayOf<EvolutionaryAlgorithmStep<BacteriophageAlgorithmState<Task>>>(
-                            get<SelectSurvivors>().let { StepLogger(it, get()) },
-                            get<BacterialMutation>().let { StepLogger(it, get()) },
-                            get<BacteriophageTranscription<Task>>().let { StepLogger(it, get()) },
-                            get<OrderPopulationByCost<Task>>().let { StepLogger(it, get()) },
-                            get<BoostStrategy>().let { StepLogger(it, get()) },
+                single<AlgorithmIteration<BacteriophageAlgorithmState<Task>>> {
+                    val stateToSerializableMapper = { state: BacteriophageAlgorithmState<Task> ->
+                        BacteriophageAlgorithmState(
+                            MutableCompleteGraph(
+                                vertices = state.task.vertices.asList().toTypedArray(),
+                                edges = state.task.edges.map { it.asList().toTypedArray() }.toTypedArray()
+                            ),
+                            population = state.population,
+                            virusPopulation = state.virusPopulation
+                        )
+                    }
+
+                    val wrapIntoLogger =
+                        { state: EvolutionaryAlgorithmStep<BacteriophageAlgorithmState<Task>> ->
+                            StepLogger(
+                                state,
+                                get(),
+                                stateToSerializableMapper
+                            )
+                        }
+
+                    EvolutionaryAlgorithmIteration(
+                        steps = arrayOf(
+                            get<SelectSurvivors>().let(wrapIntoLogger),
+                            get<BacterialMutation>().let(wrapIntoLogger),
+                            get<BacteriophageTranscription<Task>>().let(wrapIntoLogger),
+                            get<OrderPopulationByCost<Task>>().let(wrapIntoLogger),
+                            get<BoostStrategy>().let(wrapIntoLogger),
                         )
                     )
                 }
@@ -143,15 +149,16 @@ fun main() {
                     )
                 }
                 single { BacteriophageTransductionOperator() }
-                single<BacterialMutationOperator> { EdgeBuilderHeuristicOnContinuousSegment(get()) }
+                single<BacterialMutationOperator> { EdgeBuilderHeuristicOnContinuousSegment(get(), Int::toFloat) }
                 single<SelectSegments> { SelectCuts(4) }
                 single<BacteriophageTranscription<Task>> {
-                    BacteriophageTranscriptionByLooseMatchingAndHeuristicCompletion<Task>(
+                    BacteriophageTranscriptionByLooseMatchingAndHeuristicCompletion(
                         1 / 8f,
                         0.5f,
                         0.5f,
                         get(),
-                        get()
+                        get(),
+                        Int::toFloat
                     )
                 }
                 single<BoostStrategy> {
@@ -161,7 +168,7 @@ fun main() {
                     BoostOperatorWithBacteriophageTransduction(
                         Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit(
                             get(),
-                            stepLimit = 64,
+                            stepLimit = 64 * 4,
                             populationSize = 64 * 4,
                             permutationSize = 63
                         ),

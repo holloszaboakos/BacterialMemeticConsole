@@ -1,6 +1,8 @@
 package hu.raven.puppet.logic.task.loader
 
+import hu.akos.hollo.szabo.collections.asImmutable
 import hu.raven.puppet.model.utility.math.CompleteGraph
+import hu.raven.puppet.model.utility.math.MutableCompleteGraph
 import java.nio.file.Path
 
 class TspTaskLoaderService(
@@ -9,9 +11,10 @@ class TspTaskLoaderService(
 ) : TaskLoaderService<CompleteGraph<Unit, Int>>() {
 
     override fun loadTask(folderPath: String): CompleteGraph<Unit, Int> {
-        val standardTask: CompleteGraph<Unit, Int> = loadFromResourceFile(Path.of(folderPath, fileName))
-        logEstimates(standardTask)
-        return standardTask
+        val taskSerializable: MutableCompleteGraph<Unit, Int> = loadFromResourceFile(Path.of(folderPath, fileName))
+        val task = taskSerializable.toImmutable()
+        logEstimates(task)
+        return task
     }
 
     override fun logEstimates(task: CompleteGraph<Unit, Int>) {
@@ -37,4 +40,11 @@ class TspTaskLoaderService(
         }
     }
 
+}
+
+private fun <V, E> MutableCompleteGraph<V, E>.toImmutable(): CompleteGraph<V, E> {
+    return CompleteGraph(
+        vertices = vertices.asImmutable(),
+        edges = edges.map { it.asImmutable() }.toTypedArray().asImmutable()
+    )
 }
