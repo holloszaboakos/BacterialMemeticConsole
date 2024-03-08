@@ -1,7 +1,9 @@
 package hu.raven.puppet.logic.logging
 
-interface LoggingChannel<in T> {
+import hu.raven.puppet.model.logging.LogEvent
+
+interface LoggingChannel<T> {
     fun initialize()
-    fun toString(message: T): String
+    fun toString(message: LogEvent<T>): String
     fun send(message: T)
 }

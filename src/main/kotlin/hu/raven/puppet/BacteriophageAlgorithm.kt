@@ -1,6 +1,5 @@
 package hu.raven.puppet
 
-import hu.raven.puppet.configuration.FilePathVariableNames
 import hu.raven.puppet.logic.initialize.InitializeAlgorithm
 import hu.raven.puppet.logic.initialize.InitializeBacteriophageAlgorithm
 import hu.raven.puppet.logic.initialize.InitializeEvolutionaryAlgorithm
@@ -38,6 +37,7 @@ import hu.raven.puppet.logic.step.select_survivers.SelectSurvivors
 import hu.raven.puppet.logic.step.select_survivers.SelectSurvivorsMultiObjectiveHalfElitist
 import hu.raven.puppet.logic.task.loader.TaskLoaderService
 import hu.raven.puppet.logic.task.loader.TspFromMatrixTaskLoaderService
+import hu.raven.puppet.model.logging.LogType
 import hu.raven.puppet.model.state.BacteriophageAlgorithmState
 import hu.raven.puppet.model.utility.math.CompleteGraph
 import hu.raven.puppet.model.utility.math.MutableCompleteGraph
@@ -45,21 +45,68 @@ import hu.raven.puppet.utility.extention.KoinUtil
 import hu.raven.puppet.utility.extention.KoinUtil.get
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
-import org.koin.core.qualifier.named
 import org.koin.dsl.module
-import java.nio.file.Path
 import java.time.LocalDate
 import java.time.LocalDateTime
 
 private typealias Task = CompleteGraph<Unit, Int>
 
+private data class Configuration(
+    val fileName: String,
+    val inputFolder: String,
+    val outputFolder: List<String>,
+
+    val sizeOfPopulation: Int,
+    val sizeOfBacteriophagePopulation: Int,
+    val sizeOfPermutation: Int,
+
+    val cloneCount: Int,
+    val cloneCycleCount: Int,
+    val cloneSegmentLength: Int,
+    val mutationPercentage: Float,
+
+    val infectionRate: Float,
+    val lifeReductionRate: Float,
+    val lifeCoefficient: Float,
+
+    val boostLuckyCount: Int,
+    val boostStepLimit: Int,
+)
+
 fun main() {
     startKoin {
         modules(
             module {
-                single(named(FilePathVariableNames.SINGLE_FILE)) { "instance1.json" }
-                single(named(FilePathVariableNames.INPUT_FOLDER)) { "\\input\\tsp64" }
-                single(named(FilePathVariableNames.OUTPUT_FOLDER)) { Path.of("output\\default\\output.txt") }
+                single {
+                    Configuration(
+                        fileName = "instance1.json",
+                        inputFolder = "\\input\\tsp64",
+                        outputFolder = listOf(
+                            "output", "${LocalDate.now()}",
+                            LocalDateTime.now().toString()
+                                .replace(":", "_")
+                                .replace(".", "_")
+                        ),
+
+                        sizeOfPopulation = 64 * 4,
+                        sizeOfBacteriophagePopulation = 64,
+                        sizeOfPermutation = 63,
+
+                        cloneCount = 2,
+                        cloneCycleCount = 32,
+                        cloneSegmentLength = 4,
+                        mutationPercentage = 1f,
+
+                        infectionRate = 1 / 8f,
+                        lifeCoefficient = 0.5f,
+                        lifeReductionRate = 0.5f,
+
+                        boostLuckyCount = 64,
+                        boostStepLimit = 64 * 4,
+                    )
+                }
+            },
+            module {
                 single<InitializeAlgorithm<*, *>> {
                     InitializeBacteriophageAlgorithm(
                         InitializeEvolutionaryAlgorithm<Task>(
@@ -71,12 +118,12 @@ fun main() {
                 }
                 single<InitializePopulation> {
                     InitializePopulationByModuloStepper(
-                        sizeOfPopulation = 64 * 4,
-                        sizeOfTask = 63
+                        sizeOfPopulation = get<Configuration>().sizeOfPopulation,
+                        sizeOfTask = get<Configuration>().sizeOfPermutation
                     )
                 }
                 single<InitializeBacteriophagePopulation> {
-                    BasicInitializationOfBacteriophagePopulation(64)
+                    BasicInitializationOfBacteriophagePopulation(get<Configuration>().sizeOfBacteriophagePopulation)
                 }
                 single {
                     OrderPopulationByCost<Task>(calculateCostOf = get())
@@ -87,11 +134,11 @@ fun main() {
                 single<TaskLoaderService<Task>> {
                     TspFromMatrixTaskLoaderService(
                         log = { println(it) },
-                        fileName = get(named(FilePathVariableNames.SINGLE_FILE))
+                        fileName = get<Configuration>().fileName
                     )
                 }
                 single {
-                    get<TaskLoaderService<Task>>().loadTask(folderPath = get(named(FilePathVariableNames.INPUT_FOLDER)))
+                    get<TaskLoaderService<Task>>().loadTask(folderPath = get<Configuration>().inputFolder)
                 }
                 single<AlgorithmIteration<BacteriophageAlgorithmState<Task>>> {
                     val stateToSerializableMapper = { state: BacteriophageAlgorithmState<Task> ->
@@ -128,7 +175,7 @@ fun main() {
                     SelectSurvivorsMultiObjectiveHalfElitist
                 }
                 single<BacterialMutation> {
-                    BacterialMutationOnBestAndLuckyByShuffling(get(), 1f)
+                    BacterialMutationOnBestAndLuckyByShuffling(get(), get<Configuration>().mutationPercentage)
                 }
                 single<MutationOnSpecimen> {
                     MutationOnSpecimenWithBacteriophageTransduction(
@@ -136,8 +183,8 @@ fun main() {
                             get(),
                             get(),
                             get(),
-                            cloneCount = 2,
-                            cloneCycleCount = 32
+                            cloneCount = get<Configuration>().cloneCount,
+                            cloneCycleCount = get<Configuration>().cloneCycleCount
                         ),
                         get(),
                         KoinUtil::get
@@ -150,27 +197,30 @@ fun main() {
                 }
                 single { BacteriophageTransductionOperator() }
                 single<BacterialMutationOperator> { EdgeBuilderHeuristicOnContinuousSegment(get(), Int::toFloat) }
-                single<SelectSegments> { SelectCuts(4) }
+                single<SelectSegments> { SelectCuts(cloneSegmentLength = get<Configuration>().cloneSegmentLength) }
                 single<BacteriophageTranscription<Task>> {
                     BacteriophageTranscriptionByLooseMatchingAndHeuristicCompletion(
-                        1 / 8f,
-                        0.5f,
-                        0.5f,
+                        get<Configuration>().infectionRate,
+                        get<Configuration>().lifeReductionRate,
+                        get<Configuration>().lifeCoefficient,
                         get(),
                         get(),
                         Int::toFloat
                     )
                 }
                 single<BoostStrategy> {
-                    BoostOnBestAndLucky(luckyCount = 64, get())
+                    BoostOnBestAndLucky(
+                        luckyCount = get<Configuration>().boostLuckyCount,
+                        boostOperator = get()
+                    )
                 }
                 single<BoostOperator<*>> {
                     BoostOperatorWithBacteriophageTransduction(
                         Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit(
                             get(),
-                            stepLimit = 64 * 4,
-                            populationSize = 64 * 4,
-                            permutationSize = 63
+                            stepLimit = get<Configuration>().boostStepLimit,
+                            populationSize = get<Configuration>().sizeOfPopulation,
+                            permutationSize = get<Configuration>().sizeOfPermutation
                         ),
                         get(),
                         KoinUtil::get
@@ -178,13 +228,11 @@ fun main() {
                 }
                 single<LoggingChannel<*>> {
                     JsonChannel<BacteriophageAlgorithmState<Task>>(
-                        outputFolder = arrayOf(
-                            "output", "${LocalDate.now()}",
-                            LocalDateTime.now().toString()
-                                .replace(":", "_")
-                                .replace(".", "_")
-                        ),
-                        outputFileName = "algorithmState"
+                        outputFolder = get<Configuration>().outputFolder,
+                        outputFileName = "algorithmState",
+                        type = LogType.INFO,
+                        name = "perStepStateLogger",
+                        version = 1,
                     )
                 }
             }

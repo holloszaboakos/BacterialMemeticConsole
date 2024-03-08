@@ -1,29 +1,52 @@
 package hu.raven.puppet.logic.logging
 
+import hu.raven.puppet.model.logging.LogEvent
+import hu.raven.puppet.model.logging.LogType
 import java.nio.file.Files
+import java.time.LocalDateTime
 import kotlin.io.path.Path
 
 class CsvLoggerChannel<T>(
-    private val outputFolder: Array<String>,
-    private val outputFileName: String,
+    private val outputFolder: List<String>,
     private val separator: String,
     private val mapping: Map<String, (T) -> String>,
+    private val type: LogType,
+    private val name: String,
+    private val version: Int,
+    outputFileName: String,
 ) : LoggingChannel<T> {
+    private val outputFile = Path("", *outputFolder.toTypedArray(), "$outputFileName.json").toFile()
+    private val defaultHeaders = arrayOf("time", "type", "source", "version")
     override fun initialize() {
-        val folderPath = Path("", *outputFolder)
+        val folderPath = Path("", *outputFolder.toTypedArray())
         if (!Files.exists(folderPath)) {
             folderPath.toFile().mkdirs()
         }
-        Path("", *outputFolder, "$outputFileName.csv").toFile()
-            .writeText("${mapping.keys.joinToString(separator)}\n")
+        outputFile.writeText("${(defaultHeaders + mapping.keys).joinToString(separator)}\n")
     }
 
     override fun send(message: T) {
-        Path("", *outputFolder, "$outputFileName.csv").toFile()
-            .appendText("${toString(message)}\n")
+        val event = LogEvent(
+            time = LocalDateTime.now(),
+            type = type,
+            source = name,
+            version = version,
+            message = message
+        )
+        outputFile.appendText("${toString(event)}\n")
     }
 
-    override fun toString(message: T): String {
-        return mapping.values.joinToString(separator) { it(message) }
+    override fun toString(event: LogEvent<T>): String {
+        return mapping.values
+            .map { it(event.message) }
+            .let {
+                arrayOf(
+                    event.time.toString(),
+                    event.type.name,
+                    event.source,
+                    event.version.toString(),
+                ) + it
+            }
+            .joinToString(separator)
     }
 }

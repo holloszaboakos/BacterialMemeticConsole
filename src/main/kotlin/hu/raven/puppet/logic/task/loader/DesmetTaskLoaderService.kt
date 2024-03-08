@@ -40,13 +40,11 @@ class DesmetTaskLoaderService(
 
             log(
                 "UNDERESTIMATE: ${
-                    (
-                            edges
-                                .map { edgesFromNode ->
-                                    edgesFromNode.minOfOrNull { it.value.value } ?: 0f
-                                }
-                                .sumClever()
-                            )
+                    edges
+                        .map { edgesFromNode ->
+                            edgesFromNode.minOfOrNull { it.value.value } ?: 0f
+                        }
+                        .sumClever()
                 }"
             )
         }

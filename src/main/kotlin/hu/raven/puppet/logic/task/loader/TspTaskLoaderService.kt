@@ -35,7 +35,7 @@ class TspTaskLoaderService(
     private fun logUnderEstimate(task: CompleteGraph<Unit, Int>) {
         task.apply {
 
-            val underEstimate = edges.map { it.minOfOrNull { it.value } ?: 0 }
+            val underEstimate = edges.map { it.minOfOrNull { it.value } ?: 0 }.sum()
             log("UNDERESTIMATE: $underEstimate")
         }
     }

@@ -13,7 +13,8 @@ class TspFromMatrixTaskLoaderService(
 
     override fun loadTask(folderPath: String): CompleteGraph<Unit, Int> {
         val task: CompleteGraph<Unit, Int> =
-            this::class.java.getResourceAsStream(Path.of(folderPath, fileName).toString().replace("\\","/").also { println(it) })
+            this::class.java.getResourceAsStream(
+                Path.of(folderPath, fileName).toString().replace("\\", "/").also { println(it) })
                 .let { it ?: throw Exception("Resource not found!") }
                 .bufferedReader()
                 .lines()
@@ -63,7 +64,7 @@ class TspFromMatrixTaskLoaderService(
     private fun logUnderEstimate(task: CompleteGraph<Unit, Int>) {
         task.apply {
 
-            val underEstimate = edges.map { it.minOfOrNull { it.value } ?: 0 }
+            val underEstimate = edges.map { it.minOfOrNull { it.value } ?: 0 }.sum()
             log("UNDERESTIMATE: $underEstimate")
         }
     }

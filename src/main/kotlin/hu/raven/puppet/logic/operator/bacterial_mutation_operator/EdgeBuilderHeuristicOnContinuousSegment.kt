@@ -159,21 +159,22 @@ class EdgeBuilderHeuristicOnContinuousSegment<T>(
         weightsOfInnerEdges: Array<FloatArray>,
         weightsOfEdgesFromPrevious: FloatArray,
         weightsOfEdgesToNext: FloatArray
-    ): Array<FloatArray> = Array(weightsOfEdgesFromPrevious.size + 1) { fromIndex ->
-        FloatArray(weightsOfEdgesToNext.size + 1) { toIndex ->
-            when {
-                fromIndex == toIndex -> 0f
+    ): Array<FloatArray> =
+        Array(weightsOfEdgesFromPrevious.size + 1) { fromIndex ->
+            FloatArray(weightsOfEdgesToNext.size + 1) { toIndex ->
+                when {
+                    fromIndex == toIndex -> 0f
 
-                fromIndex == weightsOfEdgesFromPrevious.size ->
-                    weightsOfEdgesFromPrevious[toIndex]
+                    fromIndex == weightsOfEdgesFromPrevious.size ->
+                        weightsOfEdgesFromPrevious[toIndex]
 
-                toIndex == weightsOfEdgesToNext.size ->
-                    weightsOfEdgesToNext[fromIndex]
+                    toIndex == weightsOfEdgesToNext.size ->
+                        weightsOfEdgesToNext[fromIndex]
 
-                else -> weightsOfInnerEdges[fromIndex][toIndex]
+                    else -> weightsOfInnerEdges[fromIndex][toIndex]
+                }
             }
         }
-    }
 
     private fun Array<FloatArray>.weightDownByRowAndColumn(): Array<FloatArray> {
         val sumOfColumns = this.map { it.sumClever() }.toFloatArray()
@@ -198,9 +199,7 @@ class EdgeBuilderHeuristicOnContinuousSegment<T>(
                     .minOrNull()
             }
                 .minOrNull()
-                ?: return Array(size) {
-                    LongArray(size) { 0L }
-                }
+                ?: return Array(size) { LongArray(size) { 0L } }
 
         val max = maxOf { it.max() }
 
