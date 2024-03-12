@@ -3,6 +3,7 @@ package hu.raven.puppet.logic.step.bruteforce_solver
 import hu.akos.hollo.szabo.math.Permutation
 import hu.akos.hollo.szabo.math.asPermutation
 import hu.akos.hollo.szabo.math.matrix.IntMatrix
+import hu.akos.hollo.szabo.math.matrix.IntMatrix.Companion.asMatrixColumns
 import hu.akos.hollo.szabo.math.vector.IntVector
 import hu.akos.hollo.szabo.math.vector.IntVector.Companion.set
 import hu.akos.hollo.szabo.math.vector.IntVector2D
@@ -13,7 +14,7 @@ import kotlin.math.min
 fun branchAndBounds(graph: IntMatrix): Pair<Permutation, Int> {
     var bestPath = intArrayOf(0)
     var bestCost = Int.MAX_VALUE
-    val routNodes = (1..<graph.size)
+    val routNodes = (1..<graph.dimensions.x)
         .map { locationIndex ->
             Node(
                 locationIndex,
@@ -46,7 +47,7 @@ fun branchAndBounds(graph: IntMatrix): Pair<Permutation, Int> {
             node.children.addAll(extractChildrenOf(node, graph, path).filter { it.potentialCost < bestCost })
             node.visited = true
             //LEAF
-            node = if (path.size == graph.size) {
+            node = if (path.size == graph.dimensions.x) {
                 println()
                 println("LEAF: ${node.locationIndex}")
                 if (node.pathCost + graph[node.locationIndex][0] < bestCost) {
@@ -91,7 +92,7 @@ private fun findNewNode(node: Node, bestCost: Int): Node? {
 }
 
 private fun extractChildrenOf(node: Node, graph: IntMatrix, path: IntArray): MutableList<Node> {
-    return (0..<graph.size)
+    return (0..<graph.dimensions.x)
         .asSequence()
         .filter { it !in path }
         .map { locationIndex ->
@@ -107,7 +108,7 @@ private fun extractChildrenOf(node: Node, graph: IntMatrix, path: IntArray): Mut
                         minimalCostSpanningTree(
                             selectSubGraph(
                                 graph,
-                                (0..<graph.size)
+                                (0..<graph.dimensions.x)
                                     .filter { it !in path || it == 0 }
                                     .toList()
                             )
@@ -130,11 +131,11 @@ private data class Node(
 )
 
 private fun minimalCostSpanningTree(graph: IntMatrix): Array<GraphEdge<Int>> {
-    val nodeGrouping = IntVector(graph.size) { it }
-    return (graph.indices)
+    val nodeGrouping = IntVector(graph.dimensions.x) { it }
+    return (graph.indices[0])
         .map { from ->
-            graph.indices.map { to ->
-                GraphEdge<Int>(from, to, graph[from][to])
+            graph.indices[1].map { to ->
+                GraphEdge(from, to, graph[from][to])
             }
         }
         .flatten()
@@ -163,10 +164,10 @@ private fun mergeGroups(nodeGrouping: IntVector, groups: IntVector2D) {
 }
 
 private fun selectSubGraph(graph: IntMatrix, selectedNodes: List<Int>): IntMatrix {
-    val subGraph = IntMatrix(selectedNodes.size) { lineIndex ->
+    val subGraph = Array(selectedNodes.size) { lineIndex ->
         IntVector(selectedNodes.size) { columnIndex ->
             graph[selectedNodes[lineIndex]][selectedNodes[columnIndex]]
         }
-    }
+    }.asMatrixColumns()
     return subGraph
 }
