@@ -30,6 +30,7 @@ class GeneTransferByCrossOver<T>(
         child.cost = calculateCostOf(child)
 
         if (target.costOrException() dominatesSmaller child.costOrException()) {
+            target.permutation.clear()
             child.permutation.forEachIndexed { index, value ->
                 target.permutation[index] = value
             }

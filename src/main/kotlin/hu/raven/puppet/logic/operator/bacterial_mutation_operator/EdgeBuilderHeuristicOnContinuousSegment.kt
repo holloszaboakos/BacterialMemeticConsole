@@ -279,7 +279,6 @@ class EdgeBuilderHeuristicOnContinuousSegment<T>(
             toElement,
             costGraph.vertices.size - 1
         )]
-            .value
             .let(extractEdgeWeight)
             .multiplicativeInverse()
     }

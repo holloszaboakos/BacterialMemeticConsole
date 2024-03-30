@@ -136,7 +136,6 @@ class SequentialSelectionHeuristicOnContinuousSegment<T>(
                     ][
                         min(segment.values.first(), costGraph.vertices.size)
                     ]
-                        .value
                         .let(extractEdgeCost)
                         .multiplicativeInverse()
 
@@ -151,7 +150,6 @@ class SequentialSelectionHeuristicOnContinuousSegment<T>(
                     ][
                         min(segment.values.first(), costGraph.vertices.size)
                     ]
-                        .value
                         .let(extractEdgeCost)
                         .multiplicativeInverse()
 
@@ -177,7 +175,6 @@ class SequentialSelectionHeuristicOnContinuousSegment<T>(
                         ][
                             min(currentElement.indices.first, objectiveCount)
                         ]
-                            .value
                             .let(extractEdgeCost)
                             .multiplicativeInverse()
 

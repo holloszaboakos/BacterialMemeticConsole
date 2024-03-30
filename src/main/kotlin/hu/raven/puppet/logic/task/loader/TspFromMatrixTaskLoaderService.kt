@@ -2,8 +2,6 @@ package hu.raven.puppet.logic.task.loader
 
 import hu.akos.hollo.szabo.collections.asImmutable
 import hu.raven.puppet.model.utility.math.CompleteGraph
-import hu.raven.puppet.model.utility.math.GraphEdge
-import hu.raven.puppet.model.utility.math.GraphVertex
 import java.nio.file.Path
 
 class TspFromMatrixTaskLoaderService(
@@ -19,21 +17,12 @@ class TspFromMatrixTaskLoaderService(
                 .bufferedReader()
                 .lines()
                 .map { it.split("\t").map { it.toFloat().toInt() } }.toList().let { distanceMatrix ->
-                    CompleteGraph(vertices = Array(distanceMatrix.size) {
-                        GraphVertex(
-                            index = it,
-                            value = Unit
-                        )
-                    }.asImmutable(),
+                    CompleteGraph(vertices = Array(distanceMatrix.size) { Unit }.asImmutable(),
                         edges = distanceMatrix
                             .mapIndexed { sourceIndex, edgesFromSource ->
                                 edgesFromSource
                                     .mapIndexed { targetIndex, weight ->
-                                        GraphEdge(
-                                            sourceNodeIndex = sourceIndex,
-                                            targetNodeIndex = targetIndex,
-                                            value = weight
-                                        )
+                                        weight
                                     }
                                     .toTypedArray()
                                     .asImmutable()
@@ -53,8 +42,8 @@ class TspFromMatrixTaskLoaderService(
 
     private fun logOverEstimate(task: CompleteGraph<Unit, Int>) {
         task.apply {
-            val costOfAllFromCenterEdges = edges.last().map { it.value }.sum()
-            val costOfAllToCenterEdges = edges.map { it.last().value }.sum()
+            val costOfAllFromCenterEdges = edges.last().map { it }.sum()
+            val costOfAllToCenterEdges = edges.map { it.last() }.sum()
             val overEstimate = costOfAllFromCenterEdges + costOfAllToCenterEdges
 
             log("OVERESTIMATE: $overEstimate")
@@ -64,7 +53,14 @@ class TspFromMatrixTaskLoaderService(
     private fun logUnderEstimate(task: CompleteGraph<Unit, Int>) {
         task.apply {
 
-            val underEstimate = edges.map { it.minOfOrNull { it.value } ?: 0 }.sum()
+            val underEstimate = edges
+                .mapIndexed { indexOuter, it ->
+                    it.asSequence()
+                        .filterIndexed { indexInner, _ -> indexOuter != indexInner }
+                        .minOfOrNull { it }
+                        ?: 0
+                }
+                .sum()
             log("UNDERESTIMATE: $underEstimate")
         }
     }

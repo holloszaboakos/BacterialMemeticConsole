@@ -18,6 +18,7 @@ import hu.raven.puppet.logic.operator.boost_operator.BoostOperatorWithBacterioph
 import hu.raven.puppet.logic.operator.boost_operator.Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit
 import hu.raven.puppet.logic.operator.calculate_cost.CalculateCost
 import hu.raven.puppet.logic.operator.calculate_cost.CalculateCostOfTspSolution
+import hu.raven.puppet.logic.operator.calculate_cost.CalculateCostWithLogging
 import hu.raven.puppet.logic.operator.initialize_bacteriophage_population.BasicInitializationOfBacteriophagePopulation
 import hu.raven.puppet.logic.operator.initialize_bacteriophage_population.InitializeBacteriophagePopulation
 import hu.raven.puppet.logic.operator.initialize_population.InitializePopulation
@@ -38,13 +39,16 @@ import hu.raven.puppet.logic.step.select_survivers.SelectSurvivorsMultiObjective
 import hu.raven.puppet.logic.task.loader.TaskLoaderService
 import hu.raven.puppet.logic.task.loader.TspFromMatrixTaskLoaderService
 import hu.raven.puppet.model.logging.LogType
+import hu.raven.puppet.model.solution.OnePartRepresentation
+import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.state.BacteriophageAlgorithmState
+import hu.raven.puppet.model.state.BacteriophageAlgorithmStateForLogging
 import hu.raven.puppet.model.utility.math.CompleteGraph
-import hu.raven.puppet.model.utility.math.MutableCompleteGraph
 import hu.raven.puppet.utility.extention.KoinUtil
 import hu.raven.puppet.utility.extention.KoinUtil.get
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -71,6 +75,7 @@ private data class Configuration(
 
     val boostLuckyCount: Int,
     val boostStepLimit: Int,
+    val iterationLimit: Int,
 )
 
 fun main() {
@@ -103,6 +108,8 @@ fun main() {
 
                         boostLuckyCount = 64,
                         boostStepLimit = 64 * 4,
+
+                        iterationLimit = 10_000,
                     )
                 }
             },
@@ -129,7 +136,12 @@ fun main() {
                     OrderPopulationByCost<Task>(calculateCostOf = get())
                 }
                 single<CalculateCost<*>> {
-                    CalculateCostOfTspSolution(task = get<Task>())
+                    CalculateCostWithLogging(
+                        classOfSolutionRepresentation = OnePartRepresentationWithCostAndIterationAndId::class.java,
+                        calculateCost = CalculateCostOfTspSolution(task = get<Task>()),
+                        loggingChannel = get(named("cost")),
+                        task = get<Task>()
+                    )
                 }
                 single<TaskLoaderService<Task>> {
                     TspFromMatrixTaskLoaderService(
@@ -142,13 +154,10 @@ fun main() {
                 }
                 single<AlgorithmIteration<BacteriophageAlgorithmState<Task>>> {
                     val stateToSerializableMapper = { state: BacteriophageAlgorithmState<Task> ->
-                        BacteriophageAlgorithmState(
-                            MutableCompleteGraph(
-                                vertices = state.task.vertices.asList().toTypedArray(),
-                                edges = state.task.edges.map { it.asList().toTypedArray() }.toTypedArray()
-                            ),
-                            population = state.population,
-                            virusPopulation = state.virusPopulation
+                        BacteriophageAlgorithmStateForLogging(
+                            population = state.population.activesAsSequence().toList(),
+                            virusPopulation = state.virusPopulation.activesAsSequence().toList(),
+                            iteration = state.iteration
                         )
                     }
 
@@ -156,7 +165,7 @@ fun main() {
                         { state: EvolutionaryAlgorithmStep<BacteriophageAlgorithmState<Task>> ->
                             StepLogger(
                                 state,
-                                get(),
+                                get(named("state")),
                                 stateToSerializableMapper
                             )
                         }
@@ -226,12 +235,21 @@ fun main() {
                         KoinUtil::get
                     )
                 }
-                single<LoggingChannel<*>> {
+                single<LoggingChannel<*>>(named("state")) {
                     JsonChannel<BacteriophageAlgorithmState<Task>>(
                         outputFolder = get<Configuration>().outputFolder,
                         outputFileName = "algorithmState",
                         type = LogType.INFO,
                         name = "perStepStateLogger",
+                        version = 1,
+                    )
+                }
+                single<LoggingChannel<*>>(named("cost")) {
+                    JsonChannel<Pair<OnePartRepresentation, List<Float>>>(
+                        outputFolder = get<Configuration>().outputFolder,
+                        outputFileName = "cost",
+                        type = LogType.INFO,
+                        name = "perCostCallLogger",
                         version = 1,
                     )
                 }
@@ -242,7 +260,7 @@ fun main() {
     val iteration: AlgorithmIteration<BacteriophageAlgorithmState<Task>> = get()
     val algorithmState: BacteriophageAlgorithmState<Task> = get()
 
-    repeat(10_000) {
+    repeat(get<Configuration>().iterationLimit) {
         iteration(algorithmState)
         println("iteration $it.: ${algorithmState.copyOfBest}")
     }

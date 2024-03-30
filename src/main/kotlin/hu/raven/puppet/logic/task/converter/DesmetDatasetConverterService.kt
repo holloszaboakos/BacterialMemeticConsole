@@ -33,7 +33,7 @@ class DesmetDatasetConverterService : TaskConverterService<DesmetTask, Processed
         )
     }
 
-    private fun DesmetTask.buildObjectives(depotLocation: Gps): ImmutableArray<GraphVertex<LocationWithVolumeAndName>> {
+    private fun DesmetTask.buildObjectives(depotLocation: Gps): ImmutableArray<LocationWithVolumeAndName> {
         val targetNodes = nodeCoordinates.filter { it.nodeId != depotId }
 
         return targetNodes
@@ -44,22 +44,18 @@ class DesmetDatasetConverterService : TaskConverterService<DesmetTask, Processed
                     name = it.nameString
                 )
             }
-            .mapIndexed { index, value -> GraphVertex(index, value) }
             .plus(
-                GraphVertex(
-                    index = targetNodes.size,
-                    value = LocationWithVolumeAndName(
-                        location = depotLocation,
-                        volume = 0,
-                        name = "DEPOT"
-                    )
+                LocationWithVolumeAndName(
+                    location = depotLocation,
+                    volume = 0,
+                    name = "DEPOT"
                 )
             )
             .toTypedArray()
             .asImmutable()
     }
 
-    private fun DesmetTask.buildEdgesBetween(): ImmutableArray<ImmutableArray<GraphEdge<Second>>> {
+    private fun DesmetTask.buildEdgesBetween(): ImmutableArray<ImmutableArray<Second>> {
         val depotIndex = nodeCoordinates
             .indexOfFirst { it.nodeId == depotId }
         val targetNodeIndexes = nodeCoordinates
@@ -74,11 +70,7 @@ class DesmetDatasetConverterService : TaskConverterService<DesmetTask, Processed
                 nodeIndexes
                     .mapIndexed { newToIndex, oldToNodeIndexed ->
                         val weight = distanceMatrix.distances[oldFromNodeIndexed][oldToNodeIndexed]
-                        GraphEdge(
-                            sourceNodeIndex = newFromIndex,
-                            targetNodeIndex = newToIndex,
-                            value = Second(weight.toFloat())
-                        )
+                        Second(weight.toFloat())
                     }
                     .toTypedArray()
                     .asImmutable()

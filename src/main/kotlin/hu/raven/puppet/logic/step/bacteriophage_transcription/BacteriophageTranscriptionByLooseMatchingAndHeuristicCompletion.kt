@@ -101,7 +101,7 @@ class BacteriophageTranscriptionByLooseMatchingAndHeuristicCompletion<T, E>(
                 FloatArray(populationSize + 1) { targetIndex ->
                     when {
                         sourceIndex == targetIndex -> 0f
-                        else -> costGraph.edges[sourceIndex][targetIndex].value.let(extractEdgeWeight).toFloat()
+                        else -> costGraph.edges[sourceIndex][targetIndex].let(extractEdgeWeight).toFloat()
                     }
                 }
             }

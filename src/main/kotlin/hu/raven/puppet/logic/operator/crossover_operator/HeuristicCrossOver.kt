@@ -107,7 +107,6 @@ class HeuristicCrossOver<T>(
             ][
                 min(neighbours[neighbourIndex], costGraph.edges.size - 1)
             ]
-                .value
                 .let(extractEdgeCost)
                 .multiplicativeInverse()
         }

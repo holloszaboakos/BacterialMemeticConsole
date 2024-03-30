@@ -36,6 +36,8 @@ dependencies {
     implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.14.0'
 
     testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.24.2'
+
+    implementation 'net.lingala.zip4j:zip4j:2.11.5'
 }
 
 kotlin {

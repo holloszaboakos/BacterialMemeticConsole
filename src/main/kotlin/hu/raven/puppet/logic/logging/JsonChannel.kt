@@ -4,7 +4,7 @@ import com.google.gson.GsonBuilder
 import hu.akos.hollo.szabo.math.Permutation
 import hu.raven.puppet.model.logging.LogEvent
 import hu.raven.puppet.model.logging.LogType
-import hu.raven.puppet.utility.LocalDateTimTypeAdapter
+import hu.raven.puppet.utility.LocalDateTimeTypeAdapter
 import hu.raven.puppet.utility.PermutationTypeAdapter
 import java.nio.file.Files
 import java.text.DateFormat
@@ -20,7 +20,7 @@ class JsonChannel<T>(
 ) : LoggingChannel<T> {
     private val parser = GsonBuilder()
         .registerTypeAdapter(Permutation::class.java, PermutationTypeAdapter)
-        .registerTypeAdapter(LocalDateTime::class.java, LocalDateTimTypeAdapter)
+        .registerTypeAdapter(LocalDateTime::class.java, LocalDateTimeTypeAdapter)
         .setDateFormat(DateFormat.FULL)
         .create()
     private val outputFile = Path("", *outputFolder.toTypedArray(), "$outputFileName.json").toFile()

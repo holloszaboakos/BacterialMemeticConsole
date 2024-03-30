@@ -9,8 +9,6 @@ import hu.raven.puppet.model.task.augerat.NodeBean
 import hu.raven.puppet.model.task.augerat.RequestBean
 import hu.raven.puppet.model.utility.Gps
 import hu.raven.puppet.model.utility.math.CompleteGraph
-import hu.raven.puppet.model.utility.math.GraphEdge
-import hu.raven.puppet.model.utility.math.GraphVertex
 import kotlin.math.max
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -37,7 +35,7 @@ class AugeratDatasetConverterService : TaskConverterService<InstanceBean, Proces
         requests: List<RequestBean>,
         nodes: List<NodeBean>,
         arrivalNodeId: String
-    ): ImmutableArray<GraphVertex<LocationWithVolume>> {
+    ): ImmutableArray<LocationWithVolume> {
         return requests.map {
             LocationWithVolume(
                 location = nodes
@@ -46,16 +44,12 @@ class AugeratDatasetConverterService : TaskConverterService<InstanceBean, Proces
                 volume = it.quantity.toDouble().toInt()
             )
         }
-            .mapIndexed { index, value -> GraphVertex(index, value) }
             .plus(
-                GraphVertex(
-                    index = nodes.lastIndex,
-                    value = LocationWithVolume(
-                        location = nodes
-                            .first { it.id == arrivalNodeId }
-                            .toGPS(),
-                        volume = 0
-                    )
+                LocationWithVolume(
+                    location = nodes
+                        .first { it.id == arrivalNodeId }
+                        .toGPS(),
+                    volume = 0
                 )
             )
             .toTypedArray()
@@ -65,17 +59,13 @@ class AugeratDatasetConverterService : TaskConverterService<InstanceBean, Proces
     private fun constructEdges(
         nodes: List<NodeBean>,
         centerId: String
-    ): ImmutableArray<ImmutableArray<GraphEdge<Float>>> {
+    ): ImmutableArray<ImmutableArray<Float>> {
         val center = nodes.first { it.id == centerId }
         val clients = nodes - center + center
         return clients.mapIndexed { fromIndex, nodeFrom ->
             clients
                 .mapIndexed { toIndex, nodeTo ->
-                    GraphEdge(
-                        sourceNodeIndex = fromIndex,
-                        targetNodeIndex = toIndex,
-                        value = (nodeFrom.toGPS() euclideanDist nodeTo.toGPS())
-                    )
+                    nodeFrom.toGPS() euclideanDist nodeTo.toGPS()
                 }
                 .toTypedArray()
                 .asImmutable()

@@ -19,10 +19,10 @@ class AugeratTaskLoaderService(
         val standardTask = converter.processRawTask(augeratTask)
         standardTask.graph.edges
             .map {
-                it.firstOrNull { edge -> edge.value == 0f }
+                it.firstOrNull { edge -> edge == 0f }
             }
             .firstOrNull {
-                it?.value == 0f
+                it == 0f
             }
             .let {
                 println(it)
@@ -36,8 +36,8 @@ class AugeratTaskLoaderService(
             log(
                 "OVERESTIMATE: ${
                     (
-                            edges.last().map { it.value }.sumClever()
-                                    + edges.map { it.last().value }.sumClever()
+                            edges.last().map { it }.sumClever()
+                                    + edges.map { it.last() }.sumClever()
                             )
                 }"
             )
@@ -46,7 +46,7 @@ class AugeratTaskLoaderService(
                 "UNDERESTIMATE: ${
                     edges
                         .map { edgesFromNode ->
-                            edgesFromNode.minOfOrNull { it.value } ?: 0f
+                            edgesFromNode.minOfOrNull { it } ?: 0f
                         }
                         .sumClever()
 

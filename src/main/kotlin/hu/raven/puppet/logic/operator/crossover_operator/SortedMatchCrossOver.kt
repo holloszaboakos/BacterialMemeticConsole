@@ -69,7 +69,6 @@ class SortedMatchCrossOver<T>(
                         val currentValueOfSlice = foundSlices[sliceIndex][geneIndex]
                         costGraph
                             .edges[previousValueOfSlice][currentValueOfSlice]
-                            .value
                             .let(extractEdgeWeight)
                     }
                     .sumClever()

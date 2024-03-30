@@ -94,7 +94,7 @@ class CrossOverOperatorStabilityTest {
             val secondParent = Permutation.random(PROBLEM_SIZE)
             val child = Permutation.random(PROBLEM_SIZE)
 
-            HeuristicCrossOver(costGraph) { it }(Pair(firstParent, secondParent), child)
+            HeuristicCrossOver(costGraph) { it.value }(Pair(firstParent, secondParent), child)
             assertTrue(child.isFormatCorrect())
         }
     }
@@ -162,19 +162,10 @@ class CrossOverOperatorStabilityTest {
     @Test
     fun sortedMatchCrossOver() {
         val costGraph = CompleteGraph(
-            vertices = Array(PROBLEM_SIZE + 1) {
-                GraphVertex(
-                    index = it,
-                    value = Unit
-                )
-            }.asImmutable(),
-            edges = Array(PROBLEM_SIZE + 1) { sourceNodeIndex ->
-                Array(PROBLEM_SIZE + 1) { targetNodeIndex ->
-                    GraphEdge(
-                        sourceNodeIndex = sourceNodeIndex,
-                        targetNodeIndex = targetNodeIndex,
-                        value = (Random.nextInt())
-                    )
+            vertices = Array(PROBLEM_SIZE + 1) { Unit }.asImmutable(),
+            edges = Array(PROBLEM_SIZE + 1) { _ ->
+                Array(PROBLEM_SIZE + 1) { _ ->
+                    Random.nextInt()
                 }.asImmutable()
             }.asImmutable()
         )

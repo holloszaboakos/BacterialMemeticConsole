@@ -33,8 +33,8 @@ class DesmetTaskLoaderService(
         task.graph.apply {
             log(
                 "OVERESTIMATE: ${
-                    edges.last().map { it.value.value }.sumClever()
-                            + edges.map { it.last().value.value }.sumClever()
+                    edges.last().map { it.value }.sumClever()
+                            + edges.map { it.last().value }.sumClever()
                 }"
             )
 
@@ -42,7 +42,7 @@ class DesmetTaskLoaderService(
                 "UNDERESTIMATE: ${
                     edges
                         .map { edgesFromNode ->
-                            edgesFromNode.minOfOrNull { it.value.value } ?: 0f
+                            edgesFromNode.minOfOrNull { it.value } ?: 0f
                         }
                         .sumClever()
                 }"

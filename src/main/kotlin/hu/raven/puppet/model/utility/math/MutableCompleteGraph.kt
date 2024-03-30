@@ -1,8 +1,8 @@
 package hu.raven.puppet.model.utility.math
 
 data class MutableCompleteGraph<V,E>(
-    val vertices: Array<GraphVertex<V>>,
-    val edges: Array<Array<GraphEdge<E>>>,
+    val vertices: Array<V>,
+    val edges: Array<Array<E>>,
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

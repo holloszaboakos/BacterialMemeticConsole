@@ -2,8 +2,6 @@ package hu.raven.puppet.logic.task.generator
 
 import hu.akos.hollo.szabo.collections.asImmutable
 import hu.raven.puppet.model.utility.math.CompleteGraph
-import hu.raven.puppet.model.utility.math.GraphEdge
-import hu.raven.puppet.model.utility.math.GraphVertex
 import kotlin.random.Random
 import kotlin.random.nextInt
 
@@ -71,19 +69,14 @@ class TspGeneratorService {
                 .mapIndexed { rowIndex, row ->
                     row
                         .mapIndexed { distanceIndex, distance ->
-                            GraphEdge(
-                                sourceNodeIndex = rowIndex,
-                                targetNodeIndex = distanceIndex,
-                                value = distance
-                            )
+                            distance
                         }
                         .toTypedArray()
                         .asImmutable()
-
                 }
                 .toTypedArray()
                 .asImmutable(),
-            vertices = Array(this.size) { GraphVertex(it, Unit) }.asImmutable()
+            vertices = Array(this.size) { Unit }.asImmutable()
 
         )
     }
