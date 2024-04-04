@@ -29,7 +29,7 @@ fun branchAndBounds(graph: IntMatrix): Pair<Permutation, Int> {
     }
 
     var bestPath = intArrayOf(0)
-    var bestCost = 800_000
+    var bestCost = 1
     val routNodes = (1..<graph.dimensions.x)
         .map { locationIndex ->
             Node(
@@ -96,7 +96,7 @@ fun branchAndBounds(graph: IntMatrix): Pair<Permutation, Int> {
                 if (node.children.isNotEmpty()) {
                     node.children.removeAt(0)
                 } else {
-                    //println("Out of children ${node.level}  $bestCost ${node.locationIndex} ${node.potentialCost} ${node.pathCost}")
+                    println("Out of children ${routNode.locationIndex} ${node.level}  $bestCost ${node.locationIndex} ${node.potentialCost} ${node.pathCost}")
                     findNewNode(node, bestCost) ?: break
                 }
             }

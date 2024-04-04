@@ -11,12 +11,13 @@ class TspFromMatrixTaskLoaderService(
 
     override fun loadTask(folderPath: String): CompleteGraph<Unit, Int> {
         val task: CompleteGraph<Unit, Int> =
-            this::class.java.getResourceAsStream(
-                Path.of(folderPath, fileName).toString().replace("\\", "/").also { println(it) })
-                .let { it ?: throw Exception("Resource not found!") }
-                .bufferedReader()
-                .lines()
-                .map { it.split("\t").map { it.toFloat().toInt() } }.toList().let { distanceMatrix ->
+//            this::class.java.getResourceAsStream(
+//                Path.of(folderPath, fileName).toString().replace("\\", "/").also { println(it) }
+//            )
+            Path.of(folderPath, fileName).toFile()
+                .readLines()
+                .map { it.split("\t").map { it.toFloat().toInt() } }
+                .let { distanceMatrix ->
                     CompleteGraph(vertices = Array(distanceMatrix.size) { Unit }.asImmutable(),
                         edges = distanceMatrix
                             .mapIndexed { sourceIndex, edgesFromSource ->

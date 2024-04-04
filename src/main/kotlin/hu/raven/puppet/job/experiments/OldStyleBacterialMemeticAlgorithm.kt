@@ -48,31 +48,20 @@ typealias Task = CompleteGraph<Unit, Int>
 
 fun main() {
     (0..<10).forEach { instanceIdnex ->
-        arrayOf(4, 8, 16, 32, 64).forEach { sizeOfPopulation ->
-            arrayOf(2, 4, 8).forEach { cloneCount ->
+        arrayOf(8, 16, 32, 64).forEach { sizeOfPopulation ->
+            arrayOf(2, 4).forEach { cloneCount ->
                 val cloneCycleCount = 64 / cloneCount
-                arrayOf(4, 8, 16, 32).forEach { cloneSegmentLength ->
-                    arrayOf(1f / 8, 1f / 16, 1f / 32, 0f).forEach { mutationPercentage ->
-                        arrayOf(4, 8, 16, 32, 64).forEach { injectionCount ->
-                            arrayOf(0, 4, 8, 16, 32).forEach { boostLuckyCount ->
-                                arrayOf(16, 64, 256).forEach inner@{ boostStepLimit ->
-
-                                    if (
-                                        instanceIdnex == 0 && (
-                                                sizeOfPopulation < 8 ||
-                                                        (sizeOfPopulation == 8 && cloneCount == 2 && cloneSegmentLength < 32) ||
-                                                        (sizeOfPopulation == 8 && cloneCount == 2 && cloneSegmentLength == 32 && mutationPercentage > 0.0625f) ||
-                                                        (sizeOfPopulation == 8 && cloneCount == 2 && cloneSegmentLength == 32 && mutationPercentage == 0.0625f && injectionCount == 4 && boostLuckyCount < 16) ||
-                                                        (sizeOfPopulation == 8 && cloneCount == 2 && cloneSegmentLength == 32 && mutationPercentage == 0.0625f && injectionCount == 4 && boostLuckyCount == 16 && boostStepLimit <= 64)
-                                                )
-                                    ) return@inner
-
+                arrayOf(4).forEach { cloneSegmentLength ->
+                    arrayOf(1f / 32, 0f).forEach { mutationPercentage ->
+                        arrayOf(4, 8, 16).forEach { injectionCount ->
+                            arrayOf(4, 8).forEach { boostLuckyCount ->
+                                arrayOf(16).forEach inner@{ boostStepLimit ->
                                     runBacterial(
                                         Configuration(
                                             fileName = "instance$instanceIdnex.json",
-                                            inputFolder = "\\input\\tsp64x10_000",
+                                            inputFolder = "D:\\Research\\Datasets\\tsp64x10_000",
                                             outputFolder = listOf(
-                                                "D:", "ResearchExperiments", "${LocalDate.now()}",
+                                                "D:", "Research","Results", "${LocalDate.now()}",
                                                 LocalDateTime.now().toString()
                                                     .replace(":", "_")
                                                     .replace(".", "_")
