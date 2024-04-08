@@ -29,16 +29,17 @@ fun branchAndBounds(graph: IntMatrix): Pair<Permutation, Int> {
     }
 
     var bestPath = intArrayOf(0)
-    var bestCost = 1
+    var bestCost = Int.MAX_VALUE
+
     val routNodes = (1..<graph.dimensions.x)
         .map { locationIndex ->
             Node(
                 locationIndex,
-                null,
-                mutableListOf(),
-                false,
-                graph[0][locationIndex],
-                graph[0][locationIndex] + minimalCostSpanningTree(
+                parent = null,
+                children = mutableListOf(),
+                visited = false,
+                pathCost = graph[0][locationIndex],
+                potentialCost = graph[0][locationIndex] + minimalCostSpanningTree(
                     selectSubGraph(
                         graph,
                         (0..<graph.dimensions.x)
@@ -46,7 +47,7 @@ fun branchAndBounds(graph: IntMatrix): Pair<Permutation, Int> {
                             .toList()
                     )
                 ).sumOf { it.value },
-                graph[0][locationIndex] + nearestNeighbour(
+                worstCaseCost = graph[0][locationIndex] + nearestNeighbour(
                     selectSubGraph(
                         graph,
                         (0..<graph.dimensions.x)
@@ -54,7 +55,7 @@ fun branchAndBounds(graph: IntMatrix): Pair<Permutation, Int> {
                             .toList()
                     )
                 ).sumOf { it.value },
-                0
+                level = 0
             )
         }
         .sortedBy { it.worstCaseCost }
@@ -92,11 +93,11 @@ fun branchAndBounds(graph: IntMatrix): Pair<Permutation, Int> {
                 }
                 findNewNode(node, bestCost) ?: break
             } else {
-                node.children.retainAll(node.children.filter { it.potentialCost < bestCost })
+                node.children.removeIf{ it.potentialCost > bestCost }
                 if (node.children.isNotEmpty()) {
                     node.children.removeAt(0)
                 } else {
-                    println("Out of children ${routNode.locationIndex} ${node.level}  $bestCost ${node.locationIndex} ${node.potentialCost} ${node.pathCost}")
+                    //println("Out of children ${routNode.locationIndex} ${node.level}  $bestCost ${node.locationIndex} ${node.potentialCost} ${node.pathCost}")
                     findNewNode(node, bestCost) ?: break
                 }
             }
@@ -130,13 +131,13 @@ private fun extractChildrenOf(node: Node, graph: IntMatrix, path: IntArray): Mut
         .filter { it !in path }
         .map { locationIndex ->
             Node(
-                locationIndex,
-                node,
-                mutableListOf(),
-                false,
-                node.pathCost +
+                locationIndex = locationIndex,
+                parent = node,
+                children = mutableListOf(),
+                visited = false,
+                pathCost = node.pathCost +
                         graph[node.locationIndex][locationIndex],
-                node.pathCost +
+                potentialCost = node.pathCost +
                         graph[node.locationIndex][locationIndex] +
                         minimalCostSpanningTree(
                             selectSubGraph(
@@ -146,7 +147,7 @@ private fun extractChildrenOf(node: Node, graph: IntMatrix, path: IntArray): Mut
                                     .toList()
                             )
                         ).sumOf { it.value },
-                node.pathCost +
+                worstCaseCost = node.pathCost +
                         graph[node.locationIndex][locationIndex] +
                         nearestNeighbour(
                             selectSubGraph(
@@ -156,7 +157,7 @@ private fun extractChildrenOf(node: Node, graph: IntMatrix, path: IntArray): Mut
                                     .toList()
                             )
                         ).sumOf { it.value },
-                node.level + 1
+                level = node.level + 1
             )
         }
         .sortedBy { it.worstCaseCost + it.potentialCost }

@@ -20,8 +20,11 @@ class BacteriophageTranscriptionByLooseMatchingAndHeuristicCompletion<T, E>(
     val extractEdgeWeight: (E) -> Float,
 ) : BacteriophageTranscription<T>() {
     override fun invoke(state: BacteriophageAlgorithmState<T>) {
+        if (state.virusPopulation.activesAsSequence().count() == 0) return
         state.virusPopulation.activesAsSequence()
             .onEach { virus ->
+                if ((state.population.poolSize * infectionRate).toInt() == 0) return@onEach
+
                 val fitness = state.population.activesAsSequence()
                     .shuffled()
                     .slice(0..<(state.population.poolSize * infectionRate).toInt())

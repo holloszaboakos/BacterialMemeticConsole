@@ -3,10 +3,9 @@ package hu.raven.puppet.job.experiments
 import hu.akos.hollo.szabo.math.vector.DoubleVector.Companion.set
 import hu.raven.puppet.job.loadRegrets
 import hu.raven.puppet.model.utility.math.GraphEdge
-import kotlin.math.abs
 
+private const val ATSP_SIZE = 64
 fun main() {
-    val ATSP_SIZE = 64
     val regretData = loadRegrets()
     regretData.forEach { regretRecord ->
 
@@ -19,58 +18,22 @@ fun main() {
             }
         }
 
-        val expectedMinima = regretRecord.expectedRegretMatrix
-            .mapEachEntryIndexed { columnIndex, rowIndex, value -> GraphEdge(columnIndex, rowIndex, value) }
-            .flatten()
-            .filter { it.value == 0.0 }
-            .filter { abs(it.targetNodeIndex - it.sourceNodeIndex) != 64 }
-            .map { Pair(it.sourceNodeIndex, it.targetNodeIndex) }
-            .toSet()
-
-        val matcherValue = 18
-        //val matcherValue = 40
-        val predictedMinimaColumns = regretRecord.predictedRegretMatrix
-            .mapEachEntryIndexed { columnIndex, rowIndex, value -> GraphEdge(columnIndex, rowIndex, value) }
-            .map { column ->
-                column
-                    .filter { abs(it.targetNodeIndex - it.sourceNodeIndex) != 64 }
-                    .sortedBy { it.value }
-                    .take(matcherValue)
+        val regretEdgesSorted = regretRecord.predictedRegretMatrix
+            .mapEachEntryIndexed { columnIndex, rowIndex, value ->
+                GraphEdge(
+                    sourceNodeIndex = columnIndex,
+                    targetNodeIndex = rowIndex,
+                    value = value
+                )
             }
             .flatten()
-            .map { Pair(it.sourceNodeIndex, it.targetNodeIndex) }
-            .toSet()
-        val predictedMinimaRows = regretRecord.predictedRegretMatrix
-            .mapEachEntryIndexed { columnIndex, rowIndex, value -> GraphEdge(columnIndex, rowIndex, value) }
-            .flatten()
-            .groupBy { it.targetNodeIndex }
-            .values
-            .map { column ->
-                column
-                    .filter { abs(it.targetNodeIndex - it.sourceNodeIndex) != 64 }
-                    .sortedBy { it.value }
-                    .take(matcherValue)
-            }
-            .flatten()
-            .map { Pair(it.sourceNodeIndex, it.targetNodeIndex) }
-            .toSet()
+            .sortedBy { it.value }
+            .toList()
 
-        val matcherValue2 = 2900
-        val predictedMinima = predictedMinimaColumns union predictedMinimaRows
-//            regretRecord.predictedRegretMatrix
-//            .mapEachEntryIndexed { columnIndex, rowIndex, value -> GraphEdge(columnIndex, rowIndex, value) }
-//            .flatten()
-//            .filter { abs(it.targetNodeIndex - it.sourceNodeIndex) != 64 }
-//            .sortedBy { it.value }
-//            .take(matcherValue2)
-//            .map { Pair(it.sourceNodeIndex, it.targetNodeIndex) }
-//            .toSet()
+        (0 until regretEdgesSorted.size).forEach { endIndex ->
+            regretEdgesSorted.slice(0..endIndex)
 
-        val unionOfMinima = predictedMinima union expectedMinima
-        val intersectionOfMinima = predictedMinima intersect expectedMinima
-
-        //if (expectedMinima.size != intersectionOfMinima.size)
-            println("${expectedMinima.size} ${predictedMinima.size} ${intersectionOfMinima.size}")
+        }
 
     }
 }

@@ -228,6 +228,7 @@ class EdgeBuilderHeuristicOnContinuousSegment<T>(
         selectedEdge: GraphEdge<Unit>
     ) {
         finalWeightMatrix[newSegment.targetNodeIndex][newSegment.sourceNodeIndex] = 0f
+        finalWeightMatrix[selectedEdge.targetNodeIndex][selectedEdge.sourceNodeIndex] = 0f
 
         finalWeightMatrix.indices
             .forEach { columnIndex ->

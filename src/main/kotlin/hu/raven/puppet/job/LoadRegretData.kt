@@ -63,6 +63,7 @@ data class RegretData(
     val distanceMatrix: IntMatrix,
     val expectedRegretMatrix: DoubleMatrix,
     val predictedRegretMatrix: DoubleMatrix,
+    val optCost: Long
 )
 
 fun loadRegrets(): List<RegretData> {
@@ -128,10 +129,15 @@ fun loadRegrets(): List<RegretData> {
                     .let { rows -> DoubleMatrix(rows) }
             }
 
+            val optCost = file.useLines { lines ->
+                lines.first { it.startsWith("opt_cost") }.split(" ")[1].toDouble().toLong()
+            }
+
             RegretData(
                 distanceMatrix = distanceMatrix,
                 expectedRegretMatrix = expectedRegretMatrix,
-                predictedRegretMatrix = predictedRegretMatrix
+                predictedRegretMatrix = predictedRegretMatrix,
+                optCost = optCost
             )
         }
         .toList()

@@ -84,7 +84,7 @@ fun branchAndBoundsOnRegret(graph: BooleanMatrix): Pair<Permutation, Boolean> {
                 if (BooleanNode.children.isNotEmpty()) {
                     BooleanNode.children.removeAt(0)
                 } else {
-                    //println("Out of children ${routBooleanNode.locationIndex} ${BooleanNode.level}  $bestCost ${BooleanNode.locationIndex} ${BooleanNode.potentialCost} ${BooleanNode.pathCost}")
+                    println("Out of children ${routBooleanNode.locationIndex} ${BooleanNode.level}  $bestCost ${BooleanNode.locationIndex} ${BooleanNode.potentialCost} ${BooleanNode.pathCost}")
                     findNewBooleanNode(BooleanNode, bestCost) ?: break
                 }
             }
