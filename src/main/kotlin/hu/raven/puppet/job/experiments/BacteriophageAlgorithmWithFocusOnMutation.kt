@@ -60,9 +60,9 @@ import org.koin.dsl.module
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-private typealias TspTask = CompleteGraph<Unit, Int>
+private typealias TspTask2 = CompleteGraph<Unit, Int>
 
-data class BacteriophageAlgorithmConfiguration(
+private data class BacteriophageAlgorithmConfiguration2(
     val fileName: String,
     val inputFolder: String,
     val outputFolder: List<String>,
@@ -89,40 +89,40 @@ data class BacteriophageAlgorithmConfiguration(
 )
 
 fun main() {
-    (0 until 10).forEach { taskInstanceIndex ->
-        arrayOf(4, 8, 16, 32, 64, 128, 256).forEach { sizeOfPopulation ->
-            arrayOf(4, 16, 64, 128).forEach { sizeOfBacteriophagePopulation ->
+    (2 until 10).forEach { taskInstanceIndex ->
+        //arrayOf(4, 8, 16, 32, 64, 128, 256).forEach { sizeOfPopulation ->
+        arrayOf(64).forEach { sizeOfPopulation ->
+            //arrayOf(4, 16, 64, 128).forEach { sizeOfBacteriophagePopulation ->
+            arrayOf(64).forEach { sizeOfBacteriophagePopulation ->
                 arrayOf(2, 4, 8, 16, 32).forEach { cloneCount ->
                     arrayOf(2, 4, 8, 16, 32).forEach { cloneCycleCount ->
                         arrayOf(0f, 1f / 8, 1f / 4, 1f / 2, 1f).forEach { mutationPercentage ->
-                            arrayOf(0f, 1f / 8, 1f / 4, 1f / 2, 1f).forEach { infectionRate ->
-                                arrayOf(1f, 7f / 8, 3f / 4, 1f / 2).forEach { lifeCoefficient ->
-                                    arrayOf(1f, 7f / 8, 3f / 4, 1f / 2).forEach { lifeReductionRate ->
-                                        arrayOf(0f, 1f / 8, 1f / 4, 1f / 2, 1f).forEach { boostLuckyRate ->
+                            //arrayOf(0f, 1f / 8, 1f / 4, 1f / 2, 1f).forEach { infectionRate ->
+                            arrayOf(1f).forEach { infectionRate ->
+                                //arrayOf(1f, 7f / 8, 3f / 4, 1f / 2).forEach { lifeCoefficient ->
+                                arrayOf(0.5f).forEach { lifeCoefficient ->
+                                    //arrayOf(1f, 7f / 8, 3f / 4, 1f / 2).forEach { lifeReductionRate ->
+                                    arrayOf(0.5f).forEach { lifeReductionRate ->
+                                        //arrayOf(0f, 1f / 8, 1f / 4, 1f / 2, 1f).forEach { boostLuckyRate ->
+                                        arrayOf(1.125f).forEach { boostLuckyRate ->
                                             val boostLuckyCount = (sizeOfPopulation * boostLuckyRate).toInt()
-                                            arrayOf(8, 16, 32, 64, 128, 256).forEach { boostStepLimit ->
-                                                arrayOf(4, 16, 64).forEach inner@{ injectionCount ->
-                                                    if (
-                                                        sizeOfPopulation < 4 ||
-                                                        sizeOfPopulation == 4 && sizeOfBacteriophagePopulation < 4 ||
-                                                        sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount < 2 ||
-                                                        sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount == 2 && cloneCycleCount < 4 ||
-                                                        sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount == 2 && cloneCycleCount == 4 && mutationPercentage < 0.25 ||
-                                                        sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount == 2 && cloneCycleCount == 4 && mutationPercentage == 0.25f && infectionRate < 0.125 ||
-                                                        sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount == 2 && cloneCycleCount == 4 && mutationPercentage == 0.25f && infectionRate == 0.125f && lifeCoefficient > 0.75 ||
-                                                        sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount == 2 && cloneCycleCount == 4 && mutationPercentage == 0.25f && infectionRate == 0.125f && lifeCoefficient == 0.75f && lifeReductionRate > 1f ||
-                                                        sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount == 2 && cloneCycleCount == 4 && mutationPercentage == 0.25f && infectionRate == 0.125f && lifeCoefficient == 0.75f && lifeReductionRate == 1f && boostLuckyCount < 2 ||
-                                                        sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount == 2 && cloneCycleCount == 4 && mutationPercentage == 0.25f && infectionRate == 0.125f && lifeCoefficient == 0.75f && lifeReductionRate == 1f && boostLuckyCount == 2 && boostStepLimit < 256 ||
-                                                        sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount == 2 && cloneCycleCount == 4 && mutationPercentage == 0.25f && infectionRate == 0.125f && lifeCoefficient == 0.75f && lifeReductionRate == 1f && boostLuckyCount == 2 && boostStepLimit == 256 && injectionCount < 4
-                                                    ) {
-                                                        return@inner
-                                                    }
+                                            //arrayOf(8, 16, 32, 64, 128, 256).forEach { boostStepLimit ->
+                                            arrayOf(64).forEach { boostStepLimit ->
+                                                //arrayOf(4, 16, 64).forEach inner@{ injectionCount ->
+                                                arrayOf(4).forEach inner@{ injectionCount ->
+                                                    if(
+                                                        taskInstanceIndex < 3 ||
+                                                        taskInstanceIndex == 3 && cloneCount < 32 ||
+                                                        taskInstanceIndex == 3 && cloneCount == 32 && cloneCycleCount < 32 ||
+                                                        taskInstanceIndex == 3 && cloneCount == 32 && cloneCycleCount == 32 && mutationPercentage < 0.5 ||
+                                                        taskInstanceIndex == 3 && cloneCount == 32 && cloneCycleCount == 32 && mutationPercentage == 0.5f
+                                                    ) return@inner
 
-                                                    BacteriophageAlgorithmConfiguration(
+                                                    BacteriophageAlgorithmConfiguration2(
                                                         fileName = "instance$taskInstanceIndex.json",
                                                         inputFolder = "D:\\Research\\Datasets\\tsp64x10_000",
                                                         outputFolder = listOf(
-                                                            "D:", "Research", "Results", "${LocalDate.now()}",
+                                                            "D:", "Research", "Results3", "${LocalDate.now()}",
                                                             LocalDateTime.now().toString()
                                                                 .replace(":", "_")
                                                                 .replace(".", "_")
@@ -163,7 +163,7 @@ fun main() {
     }
 }
 
-private fun runBacteriophage(configuration: BacteriophageAlgorithmConfiguration) {
+private fun runBacteriophage(configuration: BacteriophageAlgorithmConfiguration2) {
     startKoin {
         modules(
             module {
@@ -172,7 +172,7 @@ private fun runBacteriophage(configuration: BacteriophageAlgorithmConfiguration)
             module {
                 single<InitializeAlgorithm<*, *>> {
                     InitializeBacteriophageAlgorithm(
-                        InitializeEvolutionaryAlgorithm<TspTask>(
+                        InitializeEvolutionaryAlgorithm<TspTask2>(
                             initializePopulation = get(),
                             orderPopulationByCost = get()
                         ),
@@ -181,35 +181,35 @@ private fun runBacteriophage(configuration: BacteriophageAlgorithmConfiguration)
                 }
                 single<InitializePopulation> {
                     InitializePopulationByModuloStepper(
-                        sizeOfPopulation = get<BacteriophageAlgorithmConfiguration>().sizeOfPopulation,
-                        sizeOfTask = get<BacteriophageAlgorithmConfiguration>().sizeOfPermutation
+                        sizeOfPopulation = get<BacteriophageAlgorithmConfiguration2>().sizeOfPopulation,
+                        sizeOfTask = get<BacteriophageAlgorithmConfiguration2>().sizeOfPermutation
                     )
                 }
                 single<InitializeBacteriophagePopulation> {
-                    BasicInitializationOfBacteriophagePopulation(get<BacteriophageAlgorithmConfiguration>().sizeOfBacteriophagePopulation)
+                    BasicInitializationOfBacteriophagePopulation(get<BacteriophageAlgorithmConfiguration2>().sizeOfBacteriophagePopulation)
                 }
                 single {
-                    OrderPopulationByCost<TspTask>(calculateCostOf = get())
+                    OrderPopulationByCost<TspTask2>(calculateCostOf = get())
                 }
                 single<CalculateCost<*>> {
                     CalculateCostWithLogging(
                         classOfSolutionRepresentation = OnePartRepresentationWithCostAndIterationAndId::class.java,
-                        calculateCost = CalculateCostOfTspSolution(task = get<TspTask>()),
+                        calculateCost = CalculateCostOfTspSolution(task = get<TspTask2>()),
                         loggingChannel = get(named("cost")),
-                        task = get<TspTask>()
+                        task = get<TspTask2>()
                     )
                 }
-                single<TaskLoaderService<TspTask>> {
+                single<TaskLoaderService<TspTask2>> {
                     TspFromMatrixTaskLoaderService(
                         log = { println(it) },
-                        fileName = get<BacteriophageAlgorithmConfiguration>().fileName
+                        fileName = get<BacteriophageAlgorithmConfiguration2>().fileName
                     )
                 }
                 single {
-                    get<TaskLoaderService<TspTask>>().loadTask(folderPath = get<BacteriophageAlgorithmConfiguration>().inputFolder)
+                    get<TaskLoaderService<TspTask2>>().loadTask(folderPath = get<BacteriophageAlgorithmConfiguration2>().inputFolder)
                 }
-                single<AlgorithmIteration<BacteriophageAlgorithmState<TspTask>>> {
-                    val stateToSerializableMapper = { state: BacteriophageAlgorithmState<TspTask> ->
+                single<AlgorithmIteration<BacteriophageAlgorithmState<TspTask2>>> {
+                    val stateToSerializableMapper = { state: BacteriophageAlgorithmState<TspTask2> ->
                         BacteriophageAlgorithmStateForLogging(
                             population = state.population.activesAsSequence().toList(),
                             virusPopulation = state.virusPopulation.activesAsSequence().toList(),
@@ -218,7 +218,7 @@ private fun runBacteriophage(configuration: BacteriophageAlgorithmConfiguration)
                     }
 
                     val wrapIntoLogger =
-                        { state: EvolutionaryAlgorithmStep<BacteriophageAlgorithmState<TspTask>> ->
+                        { state: EvolutionaryAlgorithmStep<BacteriophageAlgorithmState<TspTask2>> ->
                             StepLogger(
                                 state,
                                 get(named("state")),
@@ -230,8 +230,8 @@ private fun runBacteriophage(configuration: BacteriophageAlgorithmConfiguration)
                         steps = arrayOf(
                             get<SelectSurvivors>().let(wrapIntoLogger),
                             get<BacterialMutation>().let(wrapIntoLogger),
-                            get<BacteriophageTranscription<TspTask>>().let(wrapIntoLogger),
-                            get<OrderPopulationByCost<TspTask>>().let(wrapIntoLogger),
+                            get<BacteriophageTranscription<TspTask2>>().let(wrapIntoLogger),
+                            get<OrderPopulationByCost<TspTask2>>().let(wrapIntoLogger),
                             get<BoostStrategy>().let(wrapIntoLogger),
                         )
                     )
@@ -242,7 +242,7 @@ private fun runBacteriophage(configuration: BacteriophageAlgorithmConfiguration)
                 single<BacterialMutation> {
                     BacterialMutationOnBestAndLuckyByShuffling(
                         get(),
-                        get<BacteriophageAlgorithmConfiguration>().mutationPercentage
+                        get<BacteriophageAlgorithmConfiguration2>().mutationPercentage
                     )
                 }
                 single<MutationOnSpecimen> {
@@ -251,33 +251,33 @@ private fun runBacteriophage(configuration: BacteriophageAlgorithmConfiguration)
                             get(),
                             get(),
                             get(),
-                            cloneCount = get<BacteriophageAlgorithmConfiguration>().cloneCount,
-                            cloneCycleCount = get<BacteriophageAlgorithmConfiguration>().cloneCycleCount
+                            cloneCount = get<BacteriophageAlgorithmConfiguration2>().cloneCount,
+                            cloneCycleCount = get<BacteriophageAlgorithmConfiguration2>().cloneCycleCount
                         ),
                         get(),
                         KoinUtil::get
                     )
                 }
-                single<BacteriophageAlgorithmState<TspTask>> {
-                    get<InitializeAlgorithm<TspTask, BacteriophageAlgorithmState<TspTask>>>()(
+                single<BacteriophageAlgorithmState<TspTask2>> {
+                    get<InitializeAlgorithm<TspTask2, BacteriophageAlgorithmState<TspTask2>>>()(
                         get()
                     )
                 }
                 single { BacteriophageTransductionOperator() }
                 single<BacterialMutationOperator> { EdgeBuilderHeuristicOnContinuousSegment(get(), Int::toFloat) }
-                single<SelectSegments> { SelectCuts(cloneSegmentLength = get<BacteriophageAlgorithmConfiguration>().cloneSegmentLength) }
+                single<SelectSegments> { SelectCuts(cloneSegmentLength = get<BacteriophageAlgorithmConfiguration2>().cloneSegmentLength) }
 
                 single<GeneTransfer> {
                     GeneTransferByTournament(
-                        injectionCount = get<BacteriophageAlgorithmConfiguration>().injectionCount,
+                        injectionCount = get<BacteriophageAlgorithmConfiguration2>().injectionCount,
                         geneTransferOperator = get()
                     )
                 }
 
                 single<GeneTransferOperator<*>> {
-                    GeneTransferByCrossOver<TspTask>(
+                    GeneTransferByCrossOver<TspTask2>(
                         calculateCostOf = get(),
-                        geneTransferSegmentLength = get<BacteriophageAlgorithmConfiguration>().geneTransferSegmentLength,
+                        geneTransferSegmentLength = get<BacteriophageAlgorithmConfiguration2>().geneTransferSegmentLength,
                         crossOverOperator = get()
                     )
                 }
@@ -289,11 +289,11 @@ private fun runBacteriophage(configuration: BacteriophageAlgorithmConfiguration)
                     )
                 }
 
-                single<BacteriophageTranscription<TspTask>> {
+                single<BacteriophageTranscription<TspTask2>> {
                     BacteriophageTranscriptionByLooseMatchingAndHeuristicCompletion(
-                        get<BacteriophageAlgorithmConfiguration>().infectionRate,
-                        get<BacteriophageAlgorithmConfiguration>().lifeReductionRate,
-                        get<BacteriophageAlgorithmConfiguration>().lifeCoefficient,
+                        get<BacteriophageAlgorithmConfiguration2>().infectionRate,
+                        get<BacteriophageAlgorithmConfiguration2>().lifeReductionRate,
+                        get<BacteriophageAlgorithmConfiguration2>().lifeCoefficient,
                         get(),
                         get(),
                         Int::toFloat
@@ -301,7 +301,7 @@ private fun runBacteriophage(configuration: BacteriophageAlgorithmConfiguration)
                 }
                 single<BoostStrategy> {
                     BoostOnBestAndLucky(
-                        luckyCount = get<BacteriophageAlgorithmConfiguration>().boostLuckyCount,
+                        luckyCount = get<BacteriophageAlgorithmConfiguration2>().boostLuckyCount,
                         boostOperator = get()
                     )
                 }
@@ -309,9 +309,9 @@ private fun runBacteriophage(configuration: BacteriophageAlgorithmConfiguration)
                     BoostOperatorWithBacteriophageTransduction(
                         SimplifiedTwoOptStepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit(
                             get(),
-                            stepLimit = get<BacteriophageAlgorithmConfiguration>().boostStepLimit,
-                            populationSize = get<BacteriophageAlgorithmConfiguration>().sizeOfPopulation,
-                            permutationSize = get<BacteriophageAlgorithmConfiguration>().sizeOfPermutation
+                            stepLimit = get<BacteriophageAlgorithmConfiguration2>().boostStepLimit,
+                            populationSize = get<BacteriophageAlgorithmConfiguration2>().sizeOfPopulation,
+                            permutationSize = get<BacteriophageAlgorithmConfiguration2>().sizeOfPermutation
                         ),
                         get(),
                         KoinUtil::get
@@ -320,7 +320,7 @@ private fun runBacteriophage(configuration: BacteriophageAlgorithmConfiguration)
 
                 single<LoggingChannel<*>>(named("state")) {
                     JsonChannel<BacteriophageAlgorithmStateForLogging>(
-                        outputFolder = get<BacteriophageAlgorithmConfiguration>().outputFolder,
+                        outputFolder = get<BacteriophageAlgorithmConfiguration2>().outputFolder,
                         outputFileName = "algorithmState",
                         type = LogType.INFO,
                         name = "perStepStateLogger",
@@ -330,7 +330,7 @@ private fun runBacteriophage(configuration: BacteriophageAlgorithmConfiguration)
 
                 single<LoggingChannel<*>>(named("cost")) {
                     JsonChannel<Pair<OnePartRepresentationWithCostAndIterationAndId, List<Float>>>(
-                        outputFolder = get<BacteriophageAlgorithmConfiguration>().outputFolder,
+                        outputFolder = get<BacteriophageAlgorithmConfiguration2>().outputFolder,
                         outputFileName = "cost",
                         type = LogType.INFO,
                         name = "perCostCallLogger",
@@ -340,7 +340,7 @@ private fun runBacteriophage(configuration: BacteriophageAlgorithmConfiguration)
 
                 single<LoggingChannel<*>>(named("task")) {
                     JsonChannel<MutableCompleteGraph<Unit, Int>>(
-                        outputFolder = get<BacteriophageAlgorithmConfiguration>().outputFolder,
+                        outputFolder = get<BacteriophageAlgorithmConfiguration2>().outputFolder,
                         outputFileName = "task",
                         type = LogType.INFO,
                         name = "taskLogger",
@@ -349,8 +349,8 @@ private fun runBacteriophage(configuration: BacteriophageAlgorithmConfiguration)
                 }
 
                 single<LoggingChannel<*>>(named("config")) {
-                    JsonChannel<BacteriophageAlgorithmConfiguration>(
-                        outputFolder = get<BacteriophageAlgorithmConfiguration>().outputFolder,
+                    JsonChannel<BacteriophageAlgorithmConfiguration2>(
+                        outputFolder = get<BacteriophageAlgorithmConfiguration2>().outputFolder,
                         outputFileName = "config",
                         type = LogType.INFO,
                         name = "configLogger",
@@ -361,19 +361,20 @@ private fun runBacteriophage(configuration: BacteriophageAlgorithmConfiguration)
         )
     }
 
-    val iteration: AlgorithmIteration<BacteriophageAlgorithmState<TspTask>> = get()
-    val algorithmState: BacteriophageAlgorithmState<TspTask> = get()
+    val iteration: AlgorithmIteration<BacteriophageAlgorithmState<TspTask2>> = get()
+    val algorithmState: BacteriophageAlgorithmState<TspTask2> = get()
 
-    get<LoggingChannel<BacteriophageAlgorithmConfiguration>>("config")
+    get<LoggingChannel<BacteriophageAlgorithmConfiguration2>>("config")
         .apply { initialize() }
-        .send(get<BacteriophageAlgorithmConfiguration>())
+        .send(get<BacteriophageAlgorithmConfiguration2>())
     get<LoggingChannel<MutableCompleteGraph<Unit, Int>>>("task")
         .apply { initialize() }
-        .send(get<TspTask>().toMutable())
+        .send(get<TspTask2>().toMutable())
 
-    repeat(get<BacteriophageAlgorithmConfiguration>().iterationLimit) {
+    repeat(get<BacteriophageAlgorithmConfiguration2>().iterationLimit) {
         iteration(algorithmState)
-        println("iteration $it.: ${algorithmState.copyOfBest}")
+        if (it % 100 == 0)
+            println("iteration $it.: ${algorithmState.copyOfBest}")
     }
 
     stopKoin()

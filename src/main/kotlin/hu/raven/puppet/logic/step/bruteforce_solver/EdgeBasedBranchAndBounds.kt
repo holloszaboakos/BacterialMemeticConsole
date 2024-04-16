@@ -25,7 +25,7 @@ data class EdgeBuilderNode(
     val sequencesFromSource: IntArray,
     val sequencesToTarget: IntArray,
 
-    val pathCost: Long,
+    val pathCost: Double,
 )
 
 data class PartialEdgeBuilderNode(
@@ -36,11 +36,11 @@ data class PartialEdgeBuilderNode(
     val sequencesToTarget: IntArray,
 )
 
-fun edgeBasedBranchAndBounds(graph: IntMatrix, regret: DoubleMatrix): Pair<Permutation, Long> {
+fun edgeBasedBranchAndBounds(graph: DoubleMatrix, regret: DoubleMatrix): Pair<Permutation, Double> {
     val startTime = LocalDateTime.now()
     //[24, 88, 18, 82, 3, 67, 0, 64, 4, 68, 21, 85, 56, 120, 33, 97, 40, 104, 57, 121, 39, 103, 61, 125, 41, 105, 5, 69, 12, 76, 54, 118, 38, 102, 28, 92, 11, 75, 1, 65, 23, 87, 49, 113, 60, 124, 32, 96, 14, 78, 58, 122, 22, 86, 25, 89, 16, 80, 27, 91, 43, 107, 47, 111, 34, 98, 36, 100, 15, 79, 53, 117, 8, 72, 35, 99, 45, 109, 44, 108, 6, 70, 31, 95, 42, 106, 46, 110, 26, 90, 37, 101, 50, 114, 17, 81, 9, 73, 7, 71, 20, 84, 59, 123, 10, 74, 48, 112, 52, 116, 55, 119, 62, 126, 2, 66, 13, 77, 19, 83, 30, 94, 51, 115, 29, 93, 63]
     var bestSequentialRepresentation = intArrayOf(0)
-    var bestCost = Long.MAX_VALUE
+    var bestCost = Double.MAX_VALUE
 
     val regretEdges = regret
         .mapEachEntryIndexed { columnIndex, rowIndex, value ->
@@ -93,36 +93,36 @@ fun edgeBasedBranchAndBounds(graph: IntMatrix, regret: DoubleMatrix): Pair<Permu
                         regretEdge.sourceNodeIndex
                     )
                 },
-            pathCost = graph[regretEdge.sourceNodeIndex, regretEdge.targetNodeIndex].toLong(),
+            pathCost = graph[regretEdge.sourceNodeIndex, regretEdge.targetNodeIndex],
         )
     }
 
     routNodes.forEach { routNode ->
-        println(routNode.regretEdge)
+        //println(routNode.regretEdge)
         val potentialCost =
             graph[routNode.regretEdge.sourceNodeIndex, routNode.regretEdge.targetNodeIndex].toLong() +
-                nearestNeighbourUnderEstimateCost(
-                    regretEdgeIndex = routNode.regretEdgeIndex,
-                    regretEdge = routNode.regretEdge,
-                    graph = graph,
-                    parents = listOf(),
-                    sequencesFromSource = routNode.sequencesFromSource,
-                    sequencesToTarget = routNode.sequencesToTarget,
-                    sequentialRepresentation = routNode.sequentialRepresentation,
-                    regretEdgesSortedByDistanceGroupedBySource = regretEdgesSortedByDistanceGroupedBySource
-                )
+                    nearestNeighbourUnderEstimateCost(
+                        regretEdgeIndex = routNode.regretEdgeIndex,
+                        regretEdge = routNode.regretEdge,
+                        graph = graph,
+                        parents = listOf(),
+                        sequencesFromSource = routNode.sequencesFromSource,
+                        sequencesToTarget = routNode.sequencesToTarget,
+                        sequentialRepresentation = routNode.sequentialRepresentation,
+                        regretEdgesSortedByDistanceGroupedBySource = regretEdgesSortedByDistanceGroupedBySource
+                    )
         if (potentialCost > bestCost) return@forEach
 
         var currentNode = routNode
         while (true) {
-            if (Duration.between(startTime, LocalDateTime.now()).seconds >= 10) {
+            if (Duration.between(startTime, LocalDateTime.now()).seconds >= 5) {
                 return Pair(toPermutation(bestSequentialRepresentation), bestCost)
             }
 
             //LEAF
             if (currentNode.parents.size == graph.dimensions.x - 2) {
-                println()
-                println("LEAF: ${currentNode.regretEdge}")
+                //println()
+                //println("LEAF: ${currentNode.regretEdge}")
                 val sequences = currentNode.sequencesFromSource.withIndex().filter { it.value != -1 }
                 if (sequences.size != 1) {
                     throw Exception("Hamiltonian path should be built!")
@@ -131,7 +131,7 @@ fun edgeBasedBranchAndBounds(graph: IntMatrix, regret: DoubleMatrix): Pair<Permu
                     bestSequentialRepresentation = currentNode.sequentialRepresentation
                     bestSequentialRepresentation[sequences[0].value] = sequences[0].index
                     bestCost = currentNode.pathCost + graph[sequences[0].value][sequences[0].index]
-                    println("$bestCost ${toPermutation(bestSequentialRepresentation)}")
+                    //println("$bestCost ${toPermutation(bestSequentialRepresentation)}")
                 }
             }
 
@@ -145,7 +145,7 @@ fun edgeBasedBranchAndBounds(graph: IntMatrix, regret: DoubleMatrix): Pair<Permu
 
             //println(currentNode.level)
         }
-        println(bestCost)
+        //println(bestCost)
     }
 
     return Pair(toPermutation(bestSequentialRepresentation), bestCost)
@@ -155,8 +155,8 @@ fun findNewNode(
     currentNode: EdgeBuilderNode,
     regretEdges: List<IndexedValue<GraphEdge<Double>>>,
     regretEdgesSortedByDistanceGroupedBySource: Array<List<IndexedValue<GraphEdge<Double>>>>,
-    bestCost: Long,
-    graph: IntMatrix,
+    bestCost: Double,
+    graph: DoubleMatrix,
 ): EdgeBuilderNode? {
 
     (currentNode.parents + currentNode).reversed()
@@ -225,16 +225,16 @@ fun findNewNode(
                 .filter {
                     (parent.pathCost +
                             graph[it.regretEdge.sourceNodeIndex][it.regretEdge.targetNodeIndex] +
-                                nearestNeighbourUnderEstimateCost(
-                                    regretEdgeIndex = it.regretEdgeIndex,
-                                    regretEdge = it.regretEdge,
-                                    sequentialRepresentation = it.sequentialRepresentation,
-                                    regretEdgesSortedByDistanceGroupedBySource = regretEdgesSortedByDistanceGroupedBySource,
-                                    graph = graph,
-                                    sequencesFromSource = it.sequencesFromSource,
-                                    sequencesToTarget = it.sequencesToTarget,
-                                    parents = parent.parents + parent,
-                                )
+                            nearestNeighbourUnderEstimateCost(
+                                regretEdgeIndex = it.regretEdgeIndex,
+                                regretEdge = it.regretEdge,
+                                sequentialRepresentation = it.sequentialRepresentation,
+                                regretEdgesSortedByDistanceGroupedBySource = regretEdgesSortedByDistanceGroupedBySource,
+                                graph = graph,
+                                sequencesFromSource = it.sequencesFromSource,
+                                sequencesToTarget = it.sequencesToTarget,
+                                parents = parent.parents + parent,
+                            )
                             ) <= bestCost
                 }
                 .firstOrNull()
@@ -259,7 +259,7 @@ fun findNewNode(
 fun visitNode(
     selectedPartialNode: PartialEdgeBuilderNode,
     currentNode: EdgeBuilderNode,
-    graph: IntMatrix,
+    graph: DoubleMatrix,
 ): EdgeBuilderNode {
 
     return EdgeBuilderNode(
@@ -355,7 +355,7 @@ fun nearestNeighbourUnderEstimateCost(
     sequencesFromSource: IntArray,
     sequencesToTarget: IntArray,
     regretEdgesSortedByDistanceGroupedBySource: Array<List<IndexedValue<GraphEdge<Double>>>>,
-    graph: IntMatrix,
+    graph: DoubleMatrix,
     parents: List<EdgeBuilderNode>,
 ): Long {
     val count = sequentialRepresentation.count { targetNodeIndex -> targetNodeIndex == -1 }

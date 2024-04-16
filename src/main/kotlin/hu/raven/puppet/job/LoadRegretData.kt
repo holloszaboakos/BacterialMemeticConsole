@@ -3,15 +3,13 @@ package hu.raven.puppet.job
 import hu.akos.hollo.szabo.collections.asImmutable
 import hu.akos.hollo.szabo.math.Permutation
 import hu.akos.hollo.szabo.math.asDoubleVector
-import hu.akos.hollo.szabo.math.asIntVector
 import hu.akos.hollo.szabo.math.matrix.DoubleMatrix
-import hu.akos.hollo.szabo.math.matrix.IntMatrix
 import hu.akos.hollo.szabo.math.toDoubleVector
 import hu.raven.puppet.model.utility.math.GraphEdge
 import java.io.File
 
 fun main() {
-    val regretRecords = loadRegrets()
+    val regretRecords = loadRegrets(File("D:\\Research\\Datasets\\tsp64x10_000-regret-2024-04-03"))
     regretRecords.asSequence()
         .map { record ->
             val optimalEdges = record.expectedRegretMatrix
@@ -60,14 +58,17 @@ fun main() {
 }
 
 data class RegretData(
-    val distanceMatrix: IntMatrix,
+    val file: String,
+    val distanceMatrix: DoubleMatrix,
     val expectedRegretMatrix: DoubleMatrix,
     val predictedRegretMatrix: DoubleMatrix,
-    val optCost: Long
+    val optCost: Long,
+    val numberOfIterations: Int,
+    val initialCost: Long,
+    val bestCost: Long
 )
 
-fun loadRegrets(): List<RegretData> {
-    val sourceFolder = File("D:\\Research\\Datasets\\tsp64x10_000-regert-2024-04-13")
+fun loadRegrets(sourceFolder: File): List<RegretData> {
     return sourceFolder.listFiles().asSequence()
         .map { file ->
             val distanceMatrix = file.useLines { lines ->
@@ -77,14 +78,14 @@ fun loadRegrets(): List<RegretData> {
                     .map { line ->
                         line
                             .split(" ")
-                            .map { it.toDouble().toInt() }
-                            .toIntArray()
-                            .asIntVector()
+                            .map { it.toDouble() }
+                            .toDoubleArray()
+                            .asDoubleVector()
                     }
                     .toList()
                     .toTypedArray()
                     .asImmutable()
-                    .let { rows -> IntMatrix(rows) }
+                    .let { rows -> DoubleMatrix(rows) }
             }
 
             val expectedRegretMatrix = file.useLines { lines ->
@@ -133,11 +134,28 @@ fun loadRegrets(): List<RegretData> {
                 lines.first { it.startsWith("opt_cost") }.split(" ")[1].toDouble().toLong()
             }
 
+            val numberOfIterations = file.useLines { lines ->
+                lines.first { it.startsWith("num_iterations") }.split(" ")[1].toInt()
+            }
+
+            val initialCost = file.useLines { lines ->
+                lines.first { it.startsWith("init_cost") }.split(" ")[1].toDouble().toLong()
+            }
+
+            val bestCost = 0L
+//                file.useLines { lines ->
+//                    lines.first { it.startsWith("best_cost") }.split(" ")[1].toDouble().toLong()
+//                }
+
             RegretData(
+                file = file.absolutePath,
                 distanceMatrix = distanceMatrix,
                 expectedRegretMatrix = expectedRegretMatrix,
                 predictedRegretMatrix = predictedRegretMatrix,
-                optCost = optCost
+                optCost = optCost,
+                numberOfIterations = numberOfIterations,
+                initialCost = initialCost,
+                bestCost = bestCost,
             )
         }
         .toList()

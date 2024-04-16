@@ -9,7 +9,7 @@ import hu.raven.puppet.logic.operator.bacterial_mutation_on_specimen.MutationWit
 import hu.raven.puppet.logic.operator.bacterial_mutation_operator.BacterialMutationOperator
 import hu.raven.puppet.logic.operator.bacterial_mutation_operator.EdgeBuilderHeuristicOnContinuousSegment
 import hu.raven.puppet.logic.operator.boost_operator.BoostOperator
-import hu.raven.puppet.logic.operator.boost_operator.Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit
+import hu.raven.puppet.logic.operator.boost_operator.SimplifiedTwoOptStepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit
 import hu.raven.puppet.logic.operator.calculate_cost.CalculateCost
 import hu.raven.puppet.logic.operator.calculate_cost.CalculateCostOfTspSolution
 import hu.raven.puppet.logic.operator.calculate_cost.CalculateCostWithLogging
@@ -47,51 +47,51 @@ import java.time.LocalDateTime
 typealias Task = CompleteGraph<Unit, Int>
 
 fun main() {
-    (0..<10).forEach { instanceIdnex ->
-        arrayOf(8, 16, 32, 64).forEach { sizeOfPopulation ->
-            arrayOf(2, 4).forEach { cloneCount ->
-                val cloneCycleCount = 64 / cloneCount
-                arrayOf(4).forEach { cloneSegmentLength ->
-                    arrayOf(1f / 32, 0f).forEach { mutationPercentage ->
-                        arrayOf(4, 8, 16).forEach { injectionCount ->
-                            arrayOf(4, 8).forEach { boostLuckyCount ->
-                                arrayOf(16).forEach inner@{ boostStepLimit ->
+//    (0..<10).forEach { instanceIdnex ->
+//        arrayOf(8, 16, 32, 64).forEach { sizeOfPopulation ->
+//            arrayOf(2, 4).forEach { cloneCount ->
+//                val cloneCycleCount = 64 / cloneCount
+//                arrayOf(4).forEach { cloneSegmentLength ->
+//                    arrayOf(1f / 32, 0f).forEach { mutationPercentage ->
+//                        arrayOf(4, 8, 16).forEach { injectionCount ->
+//                            arrayOf(4, 8).forEach { boostLuckyCount ->
+//                                arrayOf(16).forEach inner@{ boostStepLimit ->
                                     runBacterial(
                                         Configuration(
-                                            fileName = "instance$instanceIdnex.json",
+                                            fileName = "instance8.json",
                                             inputFolder = "D:\\Research\\Datasets\\tsp64x10_000",
                                             outputFolder = listOf(
-                                                "D:", "Research","Results", "${LocalDate.now()}",
+                                                "D:", "Research","Results2", "${LocalDate.now()}",
                                                 LocalDateTime.now().toString()
                                                     .replace(":", "_")
                                                     .replace(".", "_")
                                             ),
 
-                                            sizeOfPopulation = sizeOfPopulation,
+                                            sizeOfPopulation = 16,
                                             sizeOfPermutation = 63,
 
-                                            cloneCount = cloneCount,
-                                            cloneCycleCount = cloneCycleCount,
-                                            cloneSegmentLength = cloneSegmentLength,
-                                            mutationPercentage = mutationPercentage,
+                                            cloneCount = 4,
+                                            cloneCycleCount = 16,
+                                            cloneSegmentLength = 4,
+                                            mutationPercentage = 0.5f,
 
-                                            injectionCount = injectionCount,
+                                            injectionCount = 16,
                                             geneTransferSegmentLength = 63,
 
-                                            boostLuckyCount = boostLuckyCount,
-                                            boostStepLimit = boostStepLimit,
+                                            boostLuckyCount = 2,
+                                            boostStepLimit = 64,
 
-                                            iterationLimit = 2_000,
+                                            iterationLimit = 20_000,
                                         )
                                     )
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
 }
 
 
@@ -238,7 +238,7 @@ private fun runBacterial(configuration: Configuration) {
                 }
 
                 single<BoostOperator<*>> {
-                    Opt2StepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit(
+                    SimplifiedTwoOptStepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit(
                         get(),
                         stepLimit = get<Configuration>().boostStepLimit,
                         populationSize = get<Configuration>().sizeOfPopulation,
