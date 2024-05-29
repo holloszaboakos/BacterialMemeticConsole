@@ -27,7 +27,7 @@ fun main() {
 
                 val (permutation, currentCost) =
                     //branchAndBoundsGuidedByRegretPrediction(regretRecord.distanceMatrix, regretRecord.predictedRegretMatrix)
-                    edgeBasedBranchAndBounds(regretRecord.distanceMatrix, regretRecord.predictedRegretMatrix)
+                    edgeBasedBranchAndBounds(regretRecord.distanceMatrix, regretRecord.predictedRegretMatrix, false)
 
                 val locationList = permutation + permutation.size
                 println("From optimal:$currentCost")

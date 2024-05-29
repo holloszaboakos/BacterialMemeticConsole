@@ -5,7 +5,7 @@ import java.io.File
 import kotlin.math.sqrt
 
 fun main() {
-    val regretData = loadRegrets(File("D:\\Research\\Datasets\\tsp64x10_000-regret-2024-04-13\\version7\\test_results"))
+    val regretData = loadRegrets(File("D:\\Research\\Datasets\\tsp64x10_000-regret-2024-04-24"))
     val correlationResults = regretData.map { regretRecord ->
         val expectedAndPredictedPairs =
             regretRecord.expectedRegretMatrix
@@ -43,8 +43,7 @@ fun main() {
             .asSequence()
             .map { Pair(it.first - expectedMean, it.second - predictedMean) }
             .map { it.first * it.second }
-            .sum()
-            .div(expectedAndPredictedPairs.size)
+            .average()
 
         val expectedStandardDeviation = expectedAndPredictedPairs
             .asSequence()
@@ -66,4 +65,6 @@ fun main() {
     }
 
     println(correlationResults)
+    println(correlationResults.average())
+    println(correlationResults.min())
 }

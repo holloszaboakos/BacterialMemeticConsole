@@ -36,7 +36,11 @@ data class PartialEdgeBuilderNode(
     val sequencesToTarget: IntArray,
 )
 
-fun edgeBasedBranchAndBounds(graph: DoubleMatrix, regret: DoubleMatrix): Pair<Permutation, Double> {
+fun edgeBasedBranchAndBounds(
+    graph: DoubleMatrix,
+    regret: DoubleMatrix,
+    stopOnFirstResult: Boolean
+): Pair<Permutation, Double> {
     val startTime = LocalDateTime.now()
     //[24, 88, 18, 82, 3, 67, 0, 64, 4, 68, 21, 85, 56, 120, 33, 97, 40, 104, 57, 121, 39, 103, 61, 125, 41, 105, 5, 69, 12, 76, 54, 118, 38, 102, 28, 92, 11, 75, 1, 65, 23, 87, 49, 113, 60, 124, 32, 96, 14, 78, 58, 122, 22, 86, 25, 89, 16, 80, 27, 91, 43, 107, 47, 111, 34, 98, 36, 100, 15, 79, 53, 117, 8, 72, 35, 99, 45, 109, 44, 108, 6, 70, 31, 95, 42, 106, 46, 110, 26, 90, 37, 101, 50, 114, 17, 81, 9, 73, 7, 71, 20, 84, 59, 123, 10, 74, 48, 112, 52, 116, 55, 119, 62, 126, 2, 66, 13, 77, 19, 83, 30, 94, 51, 115, 29, 93, 63]
     var bestSequentialRepresentation = intArrayOf(0)
@@ -49,6 +53,11 @@ fun edgeBasedBranchAndBounds(graph: DoubleMatrix, regret: DoubleMatrix): Pair<Pe
                 targetNodeIndex = rowIndex,
                 value = value
             )
+        }
+        .map {
+            it
+                .sortedBy { it.value }
+                .slice(0 until regret.dimensions.x)
         }
         .flatten()
         .filter { it.sourceNodeIndex != it.targetNodeIndex }
@@ -133,6 +142,8 @@ fun edgeBasedBranchAndBounds(graph: DoubleMatrix, regret: DoubleMatrix): Pair<Pe
                     bestCost = currentNode.pathCost + graph[sequences[0].value][sequences[0].index]
                     //println("$bestCost ${toPermutation(bestSequentialRepresentation)}")
                 }
+                if (stopOnFirstResult)
+                    return Pair(toPermutation(bestSequentialRepresentation), bestCost)
             }
 
             currentNode = findNewNode(

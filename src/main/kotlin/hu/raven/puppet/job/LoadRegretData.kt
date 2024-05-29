@@ -62,7 +62,7 @@ data class RegretData(
     val distanceMatrix: DoubleMatrix,
     val expectedRegretMatrix: DoubleMatrix,
     val predictedRegretMatrix: DoubleMatrix,
-    val optCost: Long,
+    val optCost: Double,
     val numberOfIterations: Int,
     val initialCost: Long,
     val bestCost: Long
@@ -131,16 +131,18 @@ fun loadRegrets(sourceFolder: File): List<RegretData> {
             }
 
             val optCost = file.useLines { lines ->
-                lines.first { it.startsWith("opt_cost") }.split(" ")[1].toDouble().toLong()
+                lines.first { it.startsWith("opt_cost") }.split(" ")[1].toDouble()
             }
 
-            val numberOfIterations = file.useLines { lines ->
-                lines.first { it.startsWith("num_iterations") }.split(" ")[1].toInt()
-            }
+            val numberOfIterations = 0
+//                file.useLines { lines ->
+//                lines.first { it.startsWith("num_iterations") }.split(" ")[1].toInt()
+//            }
 
-            val initialCost = file.useLines { lines ->
-                lines.first { it.startsWith("init_cost") }.split(" ")[1].toDouble().toLong()
-            }
+            val initialCost = 0L
+//                file.useLines { lines ->
+//                    lines.first { it.startsWith("init_cost") }.split(" ")[1].toDouble().toLong()
+//                }
 
             val bestCost = 0L
 //                file.useLines { lines ->
@@ -157,6 +159,28 @@ fun loadRegrets(sourceFolder: File): List<RegretData> {
                 initialCost = initialCost,
                 bestCost = bestCost,
             )
+        }
+        .toList()
+}
+
+fun loadDoubleMatrices(sourceFolder: File): List<DoubleMatrix> {
+    return sourceFolder.listFiles().asSequence()
+        .map { file ->
+            file.useLines { lines ->
+                lines
+                    .takeWhile { it.isNotBlank() }
+                    .map { line ->
+                        line
+                            .split(" ")
+                            .map { it.toDouble() }
+                            .toDoubleArray()
+                            .asDoubleVector()
+                    }
+                    .toList()
+                    .toTypedArray()
+                    .asImmutable()
+                    .let { rows -> DoubleMatrix(rows) }
+            }
         }
         .toList()
 }

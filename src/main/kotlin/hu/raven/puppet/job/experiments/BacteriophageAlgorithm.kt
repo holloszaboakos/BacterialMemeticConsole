@@ -92,9 +92,9 @@ fun main() {
     (0 until 10).forEach { taskInstanceIndex ->
         arrayOf(4, 8, 16, 32, 64, 128, 256).forEach { sizeOfPopulation ->
             arrayOf(4, 16, 64, 128).forEach { sizeOfBacteriophagePopulation ->
-                arrayOf(2, 4, 8, 16, 32).forEach { cloneCount ->
-                    arrayOf(2, 4, 8, 16, 32).forEach { cloneCycleCount ->
-                        arrayOf(0f, 1f / 8, 1f / 4, 1f / 2, 1f).forEach { mutationPercentage ->
+                arrayOf(16, 32).forEach { cloneCount ->
+                    arrayOf(16, 32).forEach { cloneCycleCount ->
+                        arrayOf(0f, 1f / 8).forEach { mutationPercentage ->
                             arrayOf(0f, 1f / 8, 1f / 4, 1f / 2, 1f).forEach { infectionRate ->
                                 arrayOf(1f, 7f / 8, 3f / 4, 1f / 2).forEach { lifeCoefficient ->
                                     arrayOf(1f, 7f / 8, 3f / 4, 1f / 2).forEach { lifeReductionRate ->
@@ -102,21 +102,24 @@ fun main() {
                                             val boostLuckyCount = (sizeOfPopulation * boostLuckyRate).toInt()
                                             arrayOf(8, 16, 32, 64, 128, 256).forEach { boostStepLimit ->
                                                 arrayOf(4, 16, 64).forEach inner@{ injectionCount ->
+
+                                                    //TODO: skip if already checked
                                                     if (
-                                                        sizeOfPopulation < 4 ||
-                                                        sizeOfPopulation == 4 && sizeOfBacteriophagePopulation < 4 ||
-                                                        sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount < 2 ||
-                                                        sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount == 2 && cloneCycleCount < 4 ||
-                                                        sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount == 2 && cloneCycleCount == 4 && mutationPercentage < 0.25 ||
-                                                        sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount == 2 && cloneCycleCount == 4 && mutationPercentage == 0.25f && infectionRate < 0.125 ||
-                                                        sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount == 2 && cloneCycleCount == 4 && mutationPercentage == 0.25f && infectionRate == 0.125f && lifeCoefficient > 0.75 ||
-                                                        sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount == 2 && cloneCycleCount == 4 && mutationPercentage == 0.25f && infectionRate == 0.125f && lifeCoefficient == 0.75f && lifeReductionRate > 1f ||
-                                                        sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount == 2 && cloneCycleCount == 4 && mutationPercentage == 0.25f && infectionRate == 0.125f && lifeCoefficient == 0.75f && lifeReductionRate == 1f && boostLuckyCount < 2 ||
-                                                        sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount == 2 && cloneCycleCount == 4 && mutationPercentage == 0.25f && infectionRate == 0.125f && lifeCoefficient == 0.75f && lifeReductionRate == 1f && boostLuckyCount == 2 && boostStepLimit < 256 ||
-                                                        sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount == 2 && cloneCycleCount == 4 && mutationPercentage == 0.25f && infectionRate == 0.125f && lifeCoefficient == 0.75f && lifeReductionRate == 1f && boostLuckyCount == 2 && boostStepLimit == 256 && injectionCount < 4
-                                                    ) {
+                                                        taskInstanceIndex < 0 ||
+                                                        taskInstanceIndex == 0 && sizeOfPopulation < 4 ||
+                                                        taskInstanceIndex == 0 && sizeOfPopulation == 4 && sizeOfBacteriophagePopulation < 4 ||
+                                                        taskInstanceIndex == 0 && sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount < 16 ||
+                                                        taskInstanceIndex == 0 && sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount == 16 && cloneCycleCount < 16 ||
+                                                        taskInstanceIndex == 0 && sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount == 16 && cloneCycleCount == 16 && mutationPercentage < 0f ||
+                                                        taskInstanceIndex == 0 && sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount == 16 && cloneCycleCount == 16 && mutationPercentage == 0f && infectionRate < 0.125f ||
+                                                        taskInstanceIndex == 0 && sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount == 16 && cloneCycleCount == 16 && mutationPercentage == 0f && infectionRate == 0.125f && lifeCoefficient > 1f ||
+                                                        taskInstanceIndex == 0 && sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount == 16 && cloneCycleCount == 16 && mutationPercentage == 0f && infectionRate == 0.125f && lifeCoefficient == 1f && lifeReductionRate > 0.75f ||
+                                                        taskInstanceIndex == 0 && sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount == 16 && cloneCycleCount == 16 && mutationPercentage == 0f && infectionRate == 0.125f && lifeCoefficient == 1f && lifeReductionRate == 0.75f && boostLuckyCount < 0 ||
+                                                        taskInstanceIndex == 0 && sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount == 16 && cloneCycleCount == 16 && mutationPercentage == 0f && infectionRate == 0.125f && lifeCoefficient == 1f && lifeReductionRate == 0.75f && boostLuckyCount == 0 && boostStepLimit < 32 ||
+                                                        taskInstanceIndex == 0 && sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount == 16 && cloneCycleCount == 16 && mutationPercentage == 0f && infectionRate == 0.125f && lifeCoefficient == 1f && lifeReductionRate == 0.75f && boostLuckyCount == 0 && boostStepLimit == 32 && injectionCount < 16 ||
+                                                        taskInstanceIndex == 0 && sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount == 16 && cloneCycleCount == 16 && mutationPercentage == 0f && infectionRate == 0.125f && lifeCoefficient == 1f && lifeReductionRate == 0.75f && boostLuckyCount == 0 && boostStepLimit == 32 && injectionCount == 16
+                                                    )
                                                         return@inner
-                                                    }
 
                                                     BacteriophageAlgorithmConfiguration(
                                                         fileName = "instance$taskInstanceIndex.json",
@@ -373,7 +376,8 @@ private fun runBacteriophage(configuration: BacteriophageAlgorithmConfiguration)
 
     repeat(get<BacteriophageAlgorithmConfiguration>().iterationLimit) {
         iteration(algorithmState)
-        println("iteration $it.: ${algorithmState.copyOfBest}")
+        if (it % 100 == 0)
+            println("iteration $it.: ${algorithmState.copyOfBest}")
     }
 
     stopKoin()
