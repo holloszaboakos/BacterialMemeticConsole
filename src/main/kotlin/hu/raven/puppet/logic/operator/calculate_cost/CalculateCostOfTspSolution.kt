@@ -13,14 +13,14 @@ class CalculateCostOfTspSolution(
     override operator fun invoke(solution: OnePartRepresentation): FloatVector {
         var result = 0
 
-        result += task.edges.last()[solution.permutation[0]]
+        result += task.edges.asList().last()[solution.permutation[0]]
         result += (1 until solution.permutation.size)
             .sumOf { index ->
                 task.edges
                     .get(solution.permutation[index - 1])
                     .get(solution.permutation[index])
             }
-        result += task.edges[solution.permutation.last()].last()
+        result += task.edges[solution.permutation.last()].asList().last()
 
         return floatVectorOf(result.toFloat())
     }

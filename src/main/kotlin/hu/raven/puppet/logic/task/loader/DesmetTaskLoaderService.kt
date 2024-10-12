@@ -1,7 +1,7 @@
 package hu.raven.puppet.logic.task.loader
 
 import hu.akos.hollo.szabo.collections.asImmutable
-import hu.akos.hollo.szabo.math.FloatSumExtensions.sumClever
+import hu.akos.hollo.szabo.math.FloatSumExtensions.preciseSum
 import hu.raven.puppet.logic.task.converter.DesmetDatasetConverterService
 import hu.raven.puppet.model.task.ProcessedDesmetTask
 import hu.raven.puppet.model.task.desmet.*
@@ -33,18 +33,19 @@ class DesmetTaskLoaderService(
         task.graph.apply {
             log(
                 "OVERESTIMATE: ${
-                    edges.last().map { it.value }.sumClever()
-                            + edges.map { it.last().value }.sumClever()
+                    edges.asList().last().asSequence().map { it.value }.preciseSum()
+                            + edges.asSequence().map { it.asList().last().value }.preciseSum()
                 }"
             )
 
             log(
                 "UNDERESTIMATE: ${
                     edges
+                        .asSequence()
                         .map { edgesFromNode ->
-                            edgesFromNode.minOfOrNull { it.value } ?: 0f
+                            edgesFromNode.asList().minOfOrNull { it.value } ?: 0f
                         }
-                        .sumClever()
+                        .preciseSum()
                 }"
             )
         }

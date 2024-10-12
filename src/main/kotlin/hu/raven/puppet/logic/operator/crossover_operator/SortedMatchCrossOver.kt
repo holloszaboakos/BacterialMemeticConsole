@@ -1,6 +1,6 @@
 package hu.raven.puppet.logic.operator.crossover_operator
 
-import hu.akos.hollo.szabo.math.FloatSumExtensions.sumClever
+import hu.akos.hollo.szabo.math.FloatSumExtensions.preciseSum
 import hu.akos.hollo.szabo.math.Permutation
 import hu.akos.hollo.szabo.primitives.get
 import hu.raven.puppet.model.utility.math.CompleteGraph
@@ -71,7 +71,7 @@ class SortedMatchCrossOver<T>(
                             .edges[previousValueOfSlice][currentValueOfSlice]
                             .let(extractEdgeWeight)
                     }
-                    .sumClever()
+                    .preciseSum()
             }.let { costs -> costs.indexOf(costs.min()) }
 
             val indices = Array(2) { index ->

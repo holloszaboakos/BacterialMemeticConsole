@@ -1,7 +1,6 @@
 package hu.raven.puppet.logic.operator.three_opt
 
 import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableIntArray
-import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableIntArray.Companion.size
 import hu.akos.hollo.szabo.math.Permutation
 
 class ThreeOptOperator {

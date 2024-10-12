@@ -1,7 +1,6 @@
 package hu.raven.puppet.logic.operator.bacterial_mutation_operator
 
-import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray.Companion.size
-import hu.akos.hollo.szabo.math.FloatSumExtensions.sumClever
+import hu.akos.hollo.szabo.math.FloatSumExtensions.preciseSum
 import hu.akos.hollo.szabo.math.calculus.multiplicativeInverse
 import hu.raven.puppet.logic.operator.select_segments.ContinuousSegment
 import hu.raven.puppet.model.solution.OnePartRepresentation
@@ -136,8 +135,8 @@ class EdgeBuilderHeuristicOnContinuousSegmentWithWeightRecalculation<T>(
     }
 
     private fun Array<FloatArray>.weightDownByRowAndColumn(): Array<FloatArray> {
-        val sumOfColumns = this.map { it.sumClever() }.toFloatArray()
-        val sumOfRows = FloatArray(size) { rowIndex -> map { it[rowIndex] }.sumClever() }
+        val sumOfColumns = this.map { it.preciseSum() }.toFloatArray()
+        val sumOfRows = FloatArray(size) { rowIndex -> map { it[rowIndex] }.preciseSum() }
 
         return Array(size) { columnIndex ->
             FloatArray(size) { rowIndex ->

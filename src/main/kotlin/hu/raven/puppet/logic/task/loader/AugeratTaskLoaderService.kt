@@ -1,7 +1,7 @@
 package hu.raven.puppet.logic.task.loader
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
-import hu.akos.hollo.szabo.math.FloatSumExtensions.sumClever
+import hu.akos.hollo.szabo.math.FloatSumExtensions.preciseSum
 import hu.raven.puppet.logic.task.converter.AugeratDatasetConverterService
 import hu.raven.puppet.model.task.ProcessedAugeratTask
 import hu.raven.puppet.model.task.augerat.InstanceBean
@@ -18,8 +18,9 @@ class AugeratTaskLoaderService(
         val augeratTask = loadDataFromFile(Path.of(folderPath, fileName))
         val standardTask = converter.processRawTask(augeratTask)
         standardTask.graph.edges
+            .asSequence()
             .map {
-                it.firstOrNull { edge -> edge == 0f }
+                it.asList().firstOrNull { edge -> edge == 0f }
             }
             .firstOrNull {
                 it == 0f
@@ -36,8 +37,8 @@ class AugeratTaskLoaderService(
             log(
                 "OVERESTIMATE: ${
                     (
-                            edges.last().map { it }.sumClever()
-                                    + edges.map { it.last() }.sumClever()
+                            edges.asList().last().asSequence().map { it }.preciseSum()
+                                    + edges.asSequence().map { it.asList().last() }.preciseSum()
                             )
                 }"
             )
@@ -45,10 +46,11 @@ class AugeratTaskLoaderService(
             log(
                 "UNDERESTIMATE: ${
                     edges
+                        .asSequence()
                         .map { edgesFromNode ->
-                            edgesFromNode.minOfOrNull { it } ?: 0f
+                            edgesFromNode.asList().minOfOrNull { it } ?: 0f
                         }
-                        .sumClever()
+                        .preciseSum()
 
                 }"
             )

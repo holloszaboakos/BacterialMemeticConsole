@@ -29,6 +29,7 @@ fun main() {
         //.mapEachEntry { it >= 0.04 }//it != 0.0 }
         .mapEachEntry { it != 0.0 }//it != 0.0 }
         .map { it.toBooleanArray().toBooleanVector() }
+        .toList()
         .toTypedArray()
         .asImmutable()
         .let { BooleanMatrix(it) }

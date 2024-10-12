@@ -111,7 +111,7 @@ fun main() {
                     )
 
                 println(
-                    "LOL ${
+                    "COST ${
                         calcCostOfTspSolution(
                             permutation,
                             regretData[index].distanceMatrix
@@ -173,7 +173,7 @@ fun main() {
     outputFile.appendText(Gson().toJson(costStatistics))
 }
 
-fun DoubleMatrix.transpose(): DoubleMatrix = indices.last()
+fun DoubleMatrix.transpose(): DoubleMatrix = indices.asList().last()
     .map { getRow(it) }
     .toTypedArray()
     .asImmutable()
@@ -237,6 +237,7 @@ fun threeOptCycle(
                 if (newCost <= bestCost) {
                     bestCost = newCost
                 } else {
+                    //TODO: NOT EFFICIENT!
                     threeOptOperator.revert(permutation, positions)
                 }
             }

@@ -12,7 +12,7 @@ fun main() {
             val tspTask = generator.generateTspTask(problemSize, 1..(1_000_000 * problemSize / 50))
             val outputFile = File("output\\tsp$problemSize\\instance$instanceIndex.txt")
             outputFile.createNewFile()
-            tspTask.edges.forEach { edgesWithSameSource ->
+            tspTask.edges.asSequence().forEach { edgesWithSameSource ->
                 edgesWithSameSource.asSequence()
                     .joinToString(" ")
                     .let { outputFile.appendText("$it\n") }

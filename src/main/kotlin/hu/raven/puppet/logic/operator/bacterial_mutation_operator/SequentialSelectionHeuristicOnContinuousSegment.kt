@@ -1,7 +1,6 @@
 package hu.raven.puppet.logic.operator.bacterial_mutation_operator
 
-import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray.Companion.size
-import hu.akos.hollo.szabo.math.FloatSumExtensions.sumClever
+import hu.akos.hollo.szabo.math.FloatSumExtensions.preciseSum
 import hu.akos.hollo.szabo.math.calculus.multiplicativeInverse
 import hu.raven.puppet.logic.operator.select_segments.ContinuousSegment
 import hu.raven.puppet.logic.operator.weighted_selection.RouletteWheelSelection
@@ -180,7 +179,7 @@ class SequentialSelectionHeuristicOnContinuousSegment<T>(
 
                     else -> 1f
                 }
-            }.toFloatArray().sumClever()
+            }.toFloatArray().preciseSum()
     }
 
 }

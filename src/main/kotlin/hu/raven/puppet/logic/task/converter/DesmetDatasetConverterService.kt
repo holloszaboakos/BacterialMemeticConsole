@@ -15,7 +15,7 @@ import hu.raven.puppet.model.utility.math.GraphVertex
 class DesmetDatasetConverterService : TaskConverterService<DesmetTask, ProcessedDesmetTask>() {
 
     override fun processRawTask(task: DesmetTask): ProcessedDesmetTask = task.run {
-        val depot = nodeCoordinates.first { it.nodeId == depotId }
+        val depot = nodeCoordinates.asList().first { it.nodeId == depotId }
 
         return ProcessedDesmetTask(
             capacity = capacity,
@@ -34,9 +34,11 @@ class DesmetDatasetConverterService : TaskConverterService<DesmetTask, Processed
     }
 
     private fun DesmetTask.buildObjectives(depotLocation: Gps): ImmutableArray<LocationWithVolumeAndName> {
-        val targetNodes = nodeCoordinates.filter { it.nodeId != depotId }
 
-        return targetNodes
+
+        return nodeCoordinates
+            .asSequence()
+            .filter { it.nodeId != depotId }
             .map {
                 LocationWithVolumeAndName(
                     location = it.toGPS(),
@@ -51,17 +53,21 @@ class DesmetDatasetConverterService : TaskConverterService<DesmetTask, Processed
                     name = "DEPOT"
                 )
             )
+            .toList()
             .toTypedArray()
             .asImmutable()
     }
 
     private fun DesmetTask.buildEdgesBetween(): ImmutableArray<ImmutableArray<Second>> {
         val depotIndex = nodeCoordinates
+            .asList()
             .indexOfFirst { it.nodeId == depotId }
         val targetNodeIndexes = nodeCoordinates
+            .asSequence()
             .withIndex()
             .filter { it.value.nodeId != depotId }
             .map { it.index }
+            .toList()
 
         val nodeIndexes = targetNodeIndexes + depotIndex
 

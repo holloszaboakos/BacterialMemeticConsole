@@ -1,6 +1,5 @@
 package hu.raven.puppet.job.experiments
 
-import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray.Companion.size
 import hu.akos.hollo.szabo.math.Permutation
 import hu.akos.hollo.szabo.math.asPermutation
 import hu.raven.puppet.logic.task.loader.TspFromMatrixTaskLoaderService
@@ -53,14 +52,14 @@ fun main() {
 fun costOfPermutation(permutation: Permutation, task: CompleteGraph<Unit, Int>): Float {
     var result = 0
 
-    result += task.edges.last()[permutation[0]]
+    result += task.edges.asList().last()[permutation[0]]
     result += (1 until permutation.size)
         .sumOf { index ->
             task.edges
                 .get(permutation[index - 1])
                 .get(permutation[index])
         }
-    result += task.edges[permutation.last()].last()
+    result += task.edges[permutation.last()].asList().last()
 
     return result.toFloat()
 }
