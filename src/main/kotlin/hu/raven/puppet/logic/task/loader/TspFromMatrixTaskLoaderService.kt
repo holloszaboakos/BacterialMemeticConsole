@@ -43,8 +43,8 @@ class TspFromMatrixTaskLoaderService(
 
     private fun logOverEstimate(task: CompleteGraph<Unit, Int>) {
         task.apply {
-            val costOfAllFromCenterEdges = edges.last().map { it }.sum()
-            val costOfAllToCenterEdges = edges.map { it.last() }.sum()
+            val costOfAllFromCenterEdges = edges.asList().last().asSequence().map { it }.sum()
+            val costOfAllToCenterEdges = edges.asSequence().map { it.asList().last() }.sum()
             val overEstimate = costOfAllFromCenterEdges + costOfAllToCenterEdges
 
             log("OVERESTIMATE: $overEstimate")
@@ -55,6 +55,7 @@ class TspFromMatrixTaskLoaderService(
         task.apply {
 
             val underEstimate = edges
+                .asSequence()
                 .mapIndexed { indexOuter, it ->
                     it.asSequence()
                         .filterIndexed { indexInner, _ -> indexOuter != indexInner }
