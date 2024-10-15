@@ -200,52 +200,125 @@ fun DoubleArray.statistics(): DoubleStatistics {
 fun threeOptCycle(
     permutation: Permutation,
     regretRecord: RegretData,
-    regretMatrixWithNoise: DoubleMatrix,
+    regretMatrix: DoubleMatrix,
     cost: Double
 ): Double {
     var bestCost = cost
-    val edges =
-        (1 until permutation.size)
-            .map { index ->
-                GraphEdge(
-                    sourceNodeIndex = permutation[index - 1],
-                    targetNodeIndex = permutation[index],
-                    value = regretMatrixWithNoise[permutation[index - 1], permutation[index]]
-                )
-            } +
-                GraphEdge(
-                    sourceNodeIndex = permutation.last(),
-                    targetNodeIndex = permutation.size,
-                    value = regretMatrixWithNoise[permutation.last(), permutation.size]
-                ) +
-                GraphEdge(
-                    sourceNodeIndex = permutation.size,
-                    targetNodeIndex = permutation[0],
-                    value = regretMatrixWithNoise[permutation.size, permutation[0]]
-                )
+    val regret = calcCostOfTspSolution(permutation, regretMatrix)
+    val positions: IntArray = IntArray(permutation.size + 1) { it }
 
-
-    val edgesOrderedWithIndex = edges.sortedByDescending { it.value }.withIndex().toList()
+    val edgesOrderedWithIndex = positions
+        .sortedByDescending { position -> positionToWeight(position, permutation, regretMatrix) }
+        .withIndex()
+        .toList()
     val threeOptOperator = ThreeOptOperator()
 
-    for (i in edgesOrderedWithIndex.slice(0 until edgesOrderedWithIndex.size - 2)) {
-        for (j in edgesOrderedWithIndex.slice(i.index + 1 until edgesOrderedWithIndex.size - 1)) {
-            for (k in edgesOrderedWithIndex.slice(j.index + 1 until edgesOrderedWithIndex.size)) {
-                val positions = intArrayOf(i.index, j.index, k.index).sorted().toIntArray().asImmutable()
-                threeOptOperator.apply(permutation, positions)
+    outer@ for (firstPosition in edgesOrderedWithIndex.slice(0 until edgesOrderedWithIndex.size - 2)) {
+        for (secondPosition in edgesOrderedWithIndex.slice(firstPosition.index + 1 until edgesOrderedWithIndex.size - 1)) {
+            for (thirdPosition in edgesOrderedWithIndex.slice(secondPosition.index + 1 until edgesOrderedWithIndex.size)) {
+
+                val selectedPositions = intArrayOf(firstPosition.value, secondPosition.value, thirdPosition.value)
+                    .sorted()
+                    .toIntArray()
+
+                val edgesRemoved = selectedPositions
+                    .map {
+                        GraphEdge(
+                            positionToVertexIndex(it, permutation),
+                            positionToVertexIndex((it + 1) % positions.size, permutation),
+                            positionToWeight(it, permutation, regretMatrix),
+                        )
+                    }
+
+                val edgesAdded = arrayOf(
+                    GraphEdge(
+                        edgesRemoved[0].sourceNodeIndex,
+                        edgesRemoved[1].targetNodeIndex,
+                        regretMatrix[
+                            edgesRemoved[0].sourceNodeIndex,
+                            edgesRemoved[1].targetNodeIndex,
+                        ],
+                    ),
+                    GraphEdge(
+                        edgesRemoved[2].sourceNodeIndex,
+                        edgesRemoved[0].targetNodeIndex,
+                        regretMatrix[
+                            edgesRemoved[2].sourceNodeIndex,
+                            edgesRemoved[0].targetNodeIndex,
+                        ],
+                    ),
+                    GraphEdge(
+                        edgesRemoved[1].sourceNodeIndex,
+                        edgesRemoved[2].targetNodeIndex,
+                        regretMatrix[
+                            edgesRemoved[1].sourceNodeIndex,
+                            edgesRemoved[2].targetNodeIndex,
+                        ],
+                    )
+                )
+
+                val costRemoved = edgesRemoved.asSequence()
+                    .sumOf { edge ->
+                        regretRecord.distanceMatrix[
+                            edge.sourceNodeIndex,
+                            edge.targetNodeIndex,
+                        ]
+                    }
+                val costAdded = edgesAdded.asSequence()
+                    .sumOf { edge ->
+                        regretRecord.distanceMatrix[
+                            edge.sourceNodeIndex,
+                            edge.targetNodeIndex,
+                        ]
+                    }
+
+                if (costRemoved < costAdded) {
+                    continue
+                }
+
+                threeOptOperator.apply(permutation, selectedPositions.asImmutable())
                 val newCost = calcCostOfTspSolution(permutation, regretRecord.distanceMatrix)
                 if (newCost <= bestCost) {
                     bestCost = newCost
                 } else {
                     //TODO: NOT EFFICIENT!
-                    threeOptOperator.revert(permutation, positions)
+                    threeOptOperator.revert(permutation, selectedPositions.asImmutable())
                 }
             }
         }
     }
+//    if (bestCost < cost)
+//        print("+")
+//    else print("-")
+//
+//    if (calcCostOfTspSolution(permutation, regretMatrix) < regret)
+//        print("+")
+//    else print("-")
+//
+//    print(",")
 
     return bestCost
 }
+
+private fun positionToWeight(
+    position: Int,
+    permutation: Permutation,
+    matrix: DoubleMatrix,
+): Double =
+    when (position) {
+        0 -> matrix[permutation.size, permutation[0]]
+        permutation.size -> matrix[permutation[permutation.size - 1], permutation.size]
+        else -> matrix[permutation[position - 1], permutation[position]]
+    }
+
+private fun positionToVertexIndex(
+    position: Int,
+    permutation: Permutation,
+): Int =
+    when (position) {
+        0 -> permutation.size
+        else -> permutation[position - 1]
+    }
 
 fun calcCostOfTspSolution(permutation: Permutation, distanceMatrix: DoubleMatrix): Double =
     (1 until permutation.size)
