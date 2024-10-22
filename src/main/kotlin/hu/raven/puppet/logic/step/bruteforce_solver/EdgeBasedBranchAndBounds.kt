@@ -22,6 +22,7 @@ data class EdgeBuilderNode(
     var lastVisitedChildrenIndex: Int,
 
     val sequentialRepresentation: IntArray,
+    val inverseSequentialRepresentation: IntArray,
     val sequencesFromSource: IntArray,
     val sequencesToTarget: IntArray,
 
@@ -32,6 +33,7 @@ data class PartialEdgeBuilderNode(
     val regretEdgeIndex: Int,
     val regretEdge: GraphEdge<Double>,
     val sequentialRepresentation: IntArray,
+    val inverseSequentialRepresentation: IntArray,
     val sequencesFromSource: IntArray,
     val sequencesToTarget: IntArray,
 )
@@ -56,11 +58,11 @@ fun edgeBasedBranchAndBounds(
         }
         .map {
             it
+                .filter { it.sourceNodeIndex != it.targetNodeIndex }
                 .sortedBy { it.value }
                 .slice(0 until regret.dimensions.x)
         }
         .flatten()
-        .filter { it.sourceNodeIndex != it.targetNodeIndex }
         .sortedBy { it.value }
         .withIndex()
         .toList()
@@ -86,6 +88,13 @@ fun edgeBasedBranchAndBounds(
                     set(
                         regretEdge.sourceNodeIndex,
                         regretEdge.targetNodeIndex,
+                    )
+                },
+            inverseSequentialRepresentation = IntArray(graph.dimensions.x) { -1 }
+                .apply {
+                    set(
+                        regretEdge.targetNodeIndex,
+                        regretEdge.sourceNodeIndex,
                     )
                 },
             sequencesFromSource = IntArray(graph.dimensions.x) { -1 }
@@ -162,7 +171,7 @@ fun edgeBasedBranchAndBounds(
     return Pair(toPermutation(bestSequentialRepresentation), bestCost)
 }
 
-fun findNewNode(
+private fun findNewNode(
     currentNode: EdgeBuilderNode,
     regretEdges: List<IndexedValue<GraphEdge<Double>>>,
     regretEdgesSortedByDistanceGroupedBySource: Array<List<IndexedValue<GraphEdge<Double>>>>,
@@ -178,24 +187,12 @@ fun findNewNode(
 
             val selectedPartialNode = regretEdges
                 .asSequence()
-                .slice(parent.lastVisitedChildrenIndex + 1 until regretEdges.size)
-                .filter { (_, edge) ->
-                    parent.parents.none {
-                        it.regretEdge.sourceNodeIndex == edge.sourceNodeIndex ||
-                                it.regretEdge.targetNodeIndex == edge.targetNodeIndex ||
-                                it.regretEdge.targetNodeIndex == edge.sourceNodeIndex && it.regretEdge.sourceNodeIndex == edge.targetNodeIndex
-                    }
-                }
-                .filter { (_, edge) -> parent.regretEdge.sourceNodeIndex != edge.sourceNodeIndex }
-                .filter { (_, edge) -> parent.regretEdge.targetNodeIndex != edge.targetNodeIndex }
-                .filter { (_, edge) ->
-                    parent.regretEdge.targetNodeIndex != edge.sourceNodeIndex ||
-                            parent.regretEdge.sourceNodeIndex != edge.targetNodeIndex
-                }
-                .filter { (_, edge) ->
-                    parent.sequencesFromSource[edge.targetNodeIndex] != edge.sourceNodeIndex ||
-                            parent.sequencesToTarget[edge.sourceNodeIndex] != edge.targetNodeIndex
-                }
+                .drop(parent.lastVisitedChildrenIndex + 1)
+                .filter { (_, edge) -> parent.sequentialRepresentation[edge.sourceNodeIndex] < 0 }
+                .filter { (_, edge) -> parent.inverseSequentialRepresentation[edge.targetNodeIndex] < 0 }
+                .filter { (_, edge) -> parent.sequentialRepresentation[edge.targetNodeIndex] != edge.sourceNodeIndex }
+                .filter { (_, edge) -> parent.sequencesFromSource[edge.targetNodeIndex] != edge.sourceNodeIndex }
+                .filter { (_, edge) -> parent.sequencesToTarget[edge.sourceNodeIndex] != edge.targetNodeIndex }
                 .map {
                     val (regretEdgeIndex, regretEdge) = it
                     val matchingOnSource = parent.sequencesToTarget[regretEdge.sourceNodeIndex]
@@ -224,13 +221,16 @@ fun findNewNode(
 
                     val sequentialRepresentation: IntArray = parent.sequentialRepresentation.clone()
                         .apply { set(regretEdge.sourceNodeIndex, regretEdge.targetNodeIndex) }
+                    val inverseSequentialRepresentation: IntArray = parent.inverseSequentialRepresentation.clone()
+                        .apply { set(regretEdge.targetNodeIndex, regretEdge.sourceNodeIndex) }
 
                     PartialEdgeBuilderNode(
                         regretEdge = regretEdge,
                         regretEdgeIndex = regretEdgeIndex,
                         sequencesFromSource = sequencesFromSource,
                         sequencesToTarget = sequencesToTarget,
-                        sequentialRepresentation = sequentialRepresentation
+                        sequentialRepresentation = sequentialRepresentation,
+                        inverseSequentialRepresentation = inverseSequentialRepresentation,
                     )
                 }
                 .filter {
@@ -267,7 +267,7 @@ fun findNewNode(
 }
 
 
-fun visitNode(
+private fun visitNode(
     selectedPartialNode: PartialEdgeBuilderNode,
     currentNode: EdgeBuilderNode,
     graph: DoubleMatrix,
@@ -282,11 +282,12 @@ fun visitNode(
         sequencesToTarget = selectedPartialNode.sequencesToTarget,
         sequencesFromSource = selectedPartialNode.sequencesFromSource,
         sequentialRepresentation = selectedPartialNode.sequentialRepresentation,
+        inverseSequentialRepresentation = selectedPartialNode.inverseSequentialRepresentation,
         lastVisitedChildrenIndex = selectedPartialNode.regretEdgeIndex
     )
 }
 
-fun minimalSpanningTreeCost(
+private fun minimalSpanningTreeCost(
     regretEdgeIndex: Int,
     regretEdge: GraphEdge<Double>,
     graph: IntMatrix,
@@ -359,7 +360,7 @@ fun minimalSpanningTreeCost(
     return spanningTreeCost + 0
 }
 
-fun nearestNeighbourUnderEstimateCost(
+private fun nearestNeighbourUnderEstimateCost(
     regretEdgeIndex: Int,
     regretEdge: GraphEdge<Double>,
     sequentialRepresentation: IntArray,
@@ -418,7 +419,7 @@ private fun mergeGroups(nodeGrouping: IntVector, groups: IntVector2D) {
         .forEach { nodeGrouping[it] = smallerGroup }
 }
 
-fun toPermutation(bestSequentialRepresentation: IntArray): Permutation {
+private fun toPermutation(bestSequentialRepresentation: IntArray): Permutation {
     val result = Permutation(bestSequentialRepresentation.size - 1)
     result[0] = bestSequentialRepresentation.last()
     (1..<result.size).forEach {

@@ -71,6 +71,10 @@ data class RegretData(
 fun loadRegrets(sourceFolder: File): List<RegretData> {
     return sourceFolder.listFiles().asSequence()
         .map { file ->
+
+            if(file.absolutePath.endsWith("results.json"))
+                return@map null
+
             val distanceMatrix = file.useLines { lines ->
                 lines
                     .drop(1)
@@ -160,6 +164,7 @@ fun loadRegrets(sourceFolder: File): List<RegretData> {
                 bestCost = bestCost,
             )
         }
+        .filterNotNull()
         .toList()
 }
 

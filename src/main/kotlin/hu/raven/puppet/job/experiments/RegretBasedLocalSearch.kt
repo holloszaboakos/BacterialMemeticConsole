@@ -211,6 +211,7 @@ fun threeOptCycle(
         .sortedByDescending { position -> positionToWeight(position, permutation, regretMatrix) }
         .withIndex()
         .toList()
+        .slice(if (regretMatrix.dimensions.x == 500) 0..205 else positions.indices)
     val threeOptOperator = ThreeOptOperator()
 
     outer@ for (firstPosition in edgesOrderedWithIndex.slice(0 until edgesOrderedWithIndex.size - 2)) {

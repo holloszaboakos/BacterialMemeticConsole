@@ -5,6 +5,7 @@ import hu.raven.puppet.logic.step.bruteforce_solver.edgeBasedBranchAndBounds
 import java.io.File
 import kotlin.time.measureTime
 import kotlin.time.measureTimedValue
+
 //50 cycles without early stopping
 //DoubleStatistics(max=0.05316354214980734, min=-5.091241160317672E-4, avg=0.017450905454388318, q1=0.00812199337973274, q2=0.02435535017780932, median=0.01600313602941683, standardDeviation=0.011844202811074213)
 //DoubleStatistics(max=12141.0, min=9798.0, avg=10655.07, q1=10436.0, q2=10886.0, median=10602.0, standardDeviation=436.32582447065863)
@@ -72,22 +73,30 @@ import kotlin.time.measureTimedValue
 
 //DoubleStatistics(max=0.09003684873047813, min=0.0, avg=0.03169014864725368, q1=0.01973667806955426, q2=0.04335832405778306, median=0.02952787803389101, standardDeviation=0.017404201006760846)
 //DoubleStatistics(max=24229.0, min=5482.0, avg=6500.69, q1=5579.0, q2=5674.0, median=5618.0, standardDeviation=3036.4797865126657)
+
+//size 100, 5s, 8x 3-opt
+//size 150, 5s,
+// 5s,7s,7s 30 samples
 fun main() {
-    (3..6).forEach { modelId ->
+    (arrayOf(
+//        100,
+//        150,
+        250,
+//        500
+    )).forEach { modelSize ->
 
         val regretData = loadRegrets(
             File(
-                "H:\\by-domain\\work_and_learning\\PhD\\research\\datasets\\tsp64x10_000-regret-2024-04-25-modelComparison",
-                "test_model$modelId"
+                "H:\\by-domain\\work_and_learning\\PhD\\research\\datasets\\2024_10_17_final_result_v1",
+                "test_atsp$modelSize"
             )
         )
 
         val costDataPerNoiseLevelAndInstance =
             regretData
-                .take(25)
                 .mapIndexed { regretRecordIndex, regretRecord ->
                     measureTimedValue {
-                        val (_, initialCost) = measureTimedValue {
+                        val (permutation, initialCost) = measureTimedValue {
                             edgeBasedBranchAndBounds(
                                 regretRecord.distanceMatrix,
                                 regretRecord.predictedRegretMatrix,
@@ -96,19 +105,19 @@ fun main() {
                         }.let {
                             it.value
                         }
-                        val (permutation, cost) = measureTimedValue {
-                            edgeBasedBranchAndBounds(
-                                regretRecord.distanceMatrix,
-                                regretRecord.predictedRegretMatrix,
-                                false,
-                            )
-                        }.let {
-                            it.value
-                        }
+//                        val (permutation, cost) = measureTimedValue {
+//                            edgeBasedBranchAndBounds(
+//                                regretRecord.distanceMatrix,
+//                                regretRecord.predictedRegretMatrix,
+//                                false,
+//                            )
+//                        }.let {
+//                            it.value
+//                        }
 
-                        var bestCost = cost
+                        var bestCost = initialCost
                         measureTime {
-                            repeat(100) {
+                            repeat(0) {
                                 bestCost = threeOptCycle(
                                     permutation,
                                     regretRecord,
@@ -116,24 +125,26 @@ fun main() {
                                     bestCost
                                 )
                             }
-                        }.let { print(it) }
+                        }//.let { print(it) }
 
                         CostRecord(
                             initialCost = initialCost,
-                            builtCost = cost,
+                            builtCost = initialCost,
                             optimizedCost = bestCost,
                             optimal = regretRecord.optCost
                         )
                     }.also {
-                        println("Regret record $regretRecordIndex: processing instance took: ${it.duration} gap: ${it.value.optimizedCost / it.value.optimal - 1.0 }")
+                        println("Regret record $regretRecordIndex: processing instance took: ${it.duration} gap: ${it.value.optimizedCost / it.value.optimal - 1.0}")
                     }
                 }
                 .toList()
         println(
-            costDataPerNoiseLevelAndInstance.map { it.value.optimizedCost / it.value.optimal - 1.0 }.toDoubleArray().statistics()
+            costDataPerNoiseLevelAndInstance.map { it.value.optimizedCost / it.value.optimal - 1.0 }.toDoubleArray()
+                .statistics()
         )
         println(
-            costDataPerNoiseLevelAndInstance.map { it.duration.inWholeMilliseconds.toDouble() }.toDoubleArray().statistics()
+            costDataPerNoiseLevelAndInstance.map { it.duration.inWholeMilliseconds.toDouble() }.toDoubleArray()
+                .statistics()
         )
     }
 }
