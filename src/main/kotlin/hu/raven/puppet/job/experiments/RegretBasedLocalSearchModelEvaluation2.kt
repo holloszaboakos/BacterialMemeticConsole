@@ -16,14 +16,16 @@ fun main() {
         Pair(0, 100),
         Pair(2, 150),
         Pair(1, 150),
+        Pair(0, 150),
         Pair(1, 250),
         Pair(0, 250),
+        Pair(1, 500),
         Pair(0, 500),
     )).forEach { (threeOptIteration, modelSize) ->
 
         val regretData = loadRegrets(
             File(
-                "H:\\by-domain\\work_and_learning\\PhD\\research\\datasets\\2024_10_17_final_result_v1",
+                "H:\\by-domain\\work_and_learning_broken\\PhD\\research\\datasets\\2024_10_17_final_result_v1_atsp",
                 "test_atsp$modelSize"
             )
         )
