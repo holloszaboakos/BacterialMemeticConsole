@@ -7,7 +7,7 @@ import hu.akos.hollo.szabo.math.vector.IntVector.Companion.set
 import hu.akos.hollo.szabo.math.vector.IntVector2D
 import hu.raven.puppet.model.state.BacteriophageAlgorithmState
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
-import hu.raven.puppet.utility.PermutationTypeAdapter
+import hu.raven.puppet.utility.gson.PermutationTypeAdapter
 import java.io.File
 
 fun <T> mapStates(
@@ -34,15 +34,15 @@ fun <T> mapStates(
 }
 
 fun edgeHistogramMatrix(state: EvolutionaryAlgorithmState<*>): IntMatrix {
-    val permutationSize = state.population.activesAsSequence().first().permutation.size
+    val permutationSize = state.population.activesAsSequence().first().value.permutation.size
     val matrix = IntMatrix(IntVector2D(permutationSize + 1, permutationSize + 1)) { 0 }
 
     state.population.activesAsSequence().forEach {
-        matrix[matrix.indices[0].last][it.permutation.first()]++
-        matrix[it.permutation.last()][matrix.indices[0].last]++
-        it.permutation.forEachIndexed { index, _ ->
+        matrix[matrix.indices[0].last][it.value.permutation.first()]++
+        matrix[it.value.permutation.last()][matrix.indices[0].last]++
+        it.value.permutation.forEachIndexed { index, _ ->
             if (index == 0) return@forEachIndexed
-            matrix[it.permutation[index - 1]][it.permutation[index]]++
+            matrix[it.value.permutation[index - 1]][it.value.permutation[index]]++
         }
     }
     return matrix

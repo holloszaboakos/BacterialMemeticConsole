@@ -4,8 +4,8 @@ import com.google.gson.GsonBuilder
 import hu.akos.hollo.szabo.math.Permutation
 import hu.raven.puppet.model.logging.LogEvent
 import hu.raven.puppet.model.logging.LogType
-import hu.raven.puppet.utility.LocalDateTimeTypeAdapter
-import hu.raven.puppet.utility.PermutationTypeAdapter
+import hu.raven.puppet.utility.gson.LocalDateTimeTypeAdapter
+import hu.raven.puppet.utility.gson.PermutationTypeAdapter
 import java.nio.file.Files
 import java.text.DateFormat
 import java.time.LocalDateTime

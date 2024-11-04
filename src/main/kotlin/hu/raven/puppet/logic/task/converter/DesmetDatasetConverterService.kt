@@ -1,5 +1,6 @@
 package hu.raven.puppet.logic.task.converter
 
+import hu.akos.hollo.szabo.Gps
 import hu.akos.hollo.szabo.collections.asImmutable
 import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray
 import hu.akos.hollo.szabo.physics.Second
@@ -7,12 +8,9 @@ import hu.raven.puppet.model.task.LocationWithVolumeAndName
 import hu.raven.puppet.model.task.ProcessedDesmetTask
 import hu.raven.puppet.model.task.desmet.DesmetTask
 import hu.raven.puppet.model.task.desmet.NodeCoordinate
-import hu.raven.puppet.model.utility.Gps
 import hu.raven.puppet.model.utility.math.CompleteGraph
-import hu.raven.puppet.model.utility.math.GraphEdge
-import hu.raven.puppet.model.utility.math.GraphVertex
 
-class DesmetDatasetConverterService : TaskConverterService<DesmetTask, ProcessedDesmetTask>() {
+data object DesmetDatasetConverterService : TaskConverterService<DesmetTask, ProcessedDesmetTask>() {
 
     override fun processRawTask(task: DesmetTask): ProcessedDesmetTask = task.run {
         val depot = nodeCoordinates.asList().first { it.nodeId == depotId }
@@ -72,9 +70,9 @@ class DesmetDatasetConverterService : TaskConverterService<DesmetTask, Processed
         val nodeIndexes = targetNodeIndexes + depotIndex
 
         return nodeIndexes
-            .mapIndexed { newFromIndex, oldFromNodeIndexed ->
+            .mapIndexed { _, oldFromNodeIndexed ->
                 nodeIndexes
-                    .mapIndexed { newToIndex, oldToNodeIndexed ->
+                    .mapIndexed { _, oldToNodeIndexed ->
                         val weight = distanceMatrix.distances[oldFromNodeIndexed][oldToNodeIndexed]
                         Second(weight.toFloat())
                     }

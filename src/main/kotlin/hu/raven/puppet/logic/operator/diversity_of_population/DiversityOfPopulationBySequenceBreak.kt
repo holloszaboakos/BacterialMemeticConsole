@@ -17,7 +17,7 @@ data object DiversityOfPopulationBySequenceBreak : DiversityOfPopulation {
         algorithmState.population.activesAsSequence()
             .map {
                 CoroutineScope(Dispatchers.Default).launch {
-                    val distance = distanceOfSpecimen(best.permutation, it.permutation)
+                    val distance = distanceOfSpecimen(best.value.permutation, it.value.permutation)
                     diversity += distance
                 }
             }

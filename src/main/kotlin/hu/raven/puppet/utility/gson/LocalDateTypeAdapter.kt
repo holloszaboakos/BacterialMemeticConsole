@@ -1,4 +1,4 @@
-package hu.raven.puppet.utility
+package hu.raven.puppet.utility.gson
 
 import com.google.gson.TypeAdapter
 import com.google.gson.stream.JsonReader

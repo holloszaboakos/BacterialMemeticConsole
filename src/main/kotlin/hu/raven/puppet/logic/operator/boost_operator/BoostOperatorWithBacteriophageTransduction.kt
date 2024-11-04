@@ -28,9 +28,9 @@ class BoostOperatorWithBacteriophageTransduction<O : OnePartRepresentationWithCo
             bacteriophageTransductionOperator(
                 oldPermutation,
                 specimen.permutation,
-                bacteriophage
+                bacteriophage.value
             )
-            algorithmState.virusPopulation.activate(bacteriophage.id)
+            algorithmState.virusPopulation.activate(bacteriophage.index)
         }
     }
 }

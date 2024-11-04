@@ -16,7 +16,7 @@ class TournamentCrossoverWithCrowdingDistance(
             .chunked(2)
             .toList()
         val parents = population.activesAsSequence().toList()
-        val crowdingDistanceOfParents = crowdingDistance(parents.map { it.costOrException() })
+        val crowdingDistanceOfParents = crowdingDistance(parents.map { it.value.costOrException() })
 
         val parentsWithCrowdingDistance = parents.indices.asSequence()
             .map { Pair(crowdingDistanceOfParents[it], parents[it]) }
@@ -31,7 +31,7 @@ class TournamentCrossoverWithCrowdingDistance(
                     val dominant =
                         crowdingDistanceAndParent.filter { (_, parent) ->
                             crowdingDistanceAndParent.none {
-                                parent.costOrException() dominatesSmaller it.second.costOrException()
+                                parent.value.costOrException() dominatesSmaller it.second.value.costOrException()
                             }
                         }
 
@@ -45,28 +45,28 @@ class TournamentCrossoverWithCrowdingDistance(
                     childIndex++
                     crossoverOperators.first()(
                         Pair(
-                            parentPair[0].permutation,
-                            parentPair[1].permutation
+                            parentPair[0].value.permutation,
+                            parentPair[1].value.permutation
                         ),
-                        childPair[0].permutation
+                        childPair[0].value.permutation
                     )
                     crossoverOperators.first()(
                         Pair(
-                            parentPair[1].permutation,
-                            parentPair[0].permutation
+                            parentPair[1].value.permutation,
+                            parentPair[0].value.permutation
                         ),
-                        childPair[1].permutation
+                        childPair[1].value.permutation
                     )
                     childPair[0].let {
-                        it.iterationOfCreation = state.iteration
-                        it.cost = null
-                        if (!it.permutation.isFormatCorrect())
+                        it.value.iterationOfCreation = state.iteration
+                        it.value.cost = null
+                        if (!it.value.permutation.isFormatCorrect())
                             throw Error("Invalid specimen!")
                     }
                     childPair[1].let {
-                        it.iterationOfCreation = state.iteration
-                        it.cost = null
-                        if (!it.permutation.isFormatCorrect())
+                        it.value.iterationOfCreation = state.iteration
+                        it.value.cost = null
+                        if (!it.value.permutation.isFormatCorrect())
                             throw Error("Invalid specimen!")
                     }
                 }

@@ -7,21 +7,21 @@ import kotlin.random.Random
 data object MutateChildrenBySwap : MutateChildren {
 
     override fun invoke(state: EvolutionaryAlgorithmState<*>): Unit = state.run {
-        if (population.activesAsSequence().first().permutation.size <= 1)
+        if (population.activesAsSequence().first().value.permutation.size <= 1)
             return@run
 
         population.activesAsSequence()
-            .filter { it.iterationOfCreation == iteration }
+            .filter { it.value.iterationOfCreation == iteration }
             .shuffled()
             .slice(0..<population.activeCount / 4)
             .forEach { child ->
-                val firstCutIndex = Random.nextInt(child.permutation.size)
-                val secondCutIndex = Random.nextInt(child.permutation.size - 1)
+                val firstCutIndex = Random.nextInt(child.value.permutation.size)
+                val secondCutIndex = Random.nextInt(child.value.permutation.size - 1)
                     .let { if (it == firstCutIndex) it + 1 else it }
 
-                child.permutation.swapValues(firstCutIndex, secondCutIndex)
+                child.value.permutation.swapValues(firstCutIndex, secondCutIndex)
 
-                if (!child.permutation.isFormatCorrect())
+                if (!child.value.permutation.isFormatCorrect())
                     throw Error("Invalid specimen!")
             }
 

@@ -37,9 +37,9 @@ class MutationOnSpecimenWithBacteriophageTransduction(
             bacteriophageTransductionOperator(
                 oldPermutation,
                 specimenWithIndex.value.permutation,
-                bacteriophage
+                bacteriophage.value
             )
-            algorithmState.virusPopulation.activate(bacteriophage.id)
+            algorithmState.virusPopulation.activate(bacteriophage.index)
         }
     }
 }

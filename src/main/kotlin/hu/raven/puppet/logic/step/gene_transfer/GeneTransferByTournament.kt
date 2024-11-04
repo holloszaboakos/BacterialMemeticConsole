@@ -30,11 +30,11 @@ class GeneTransferByTournament(
         (0..<injectionCount)
             .forEach { injectionCount ->
                 val specimen = populationInRandomPairs[injectionCount % populationInRandomPairs.size]
-                    .sortedBy { it.costOrException().length() }
+                    .sortedBy { it.value.costOrException().length() }
 
                 synchronized(populationInRandomPairs[injectionCount % populationInRandomPairs.size][0]) {
                     synchronized(populationInRandomPairs[injectionCount % populationInRandomPairs.size][1]) {
-                        geneTransferOperator(specimen[0], specimen[1])
+                        geneTransferOperator(specimen[0].value, specimen[1].value)
                     }
                 }
             }

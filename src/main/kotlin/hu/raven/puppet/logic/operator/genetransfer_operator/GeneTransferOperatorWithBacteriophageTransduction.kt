@@ -27,9 +27,9 @@ class GeneTransferOperatorWithBacteriophageTransduction<T>(
             bacteriophageTransductionOperator(
                 oldPermutation,
                 target.permutation,
-                bacteriophage
+                bacteriophage.value
             )
-            algorithmState.virusPopulation.activate(bacteriophage.id)
+            algorithmState.virusPopulation.activate(bacteriophage.index)
         }
     }
 }

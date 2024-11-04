@@ -11,15 +11,16 @@ data object VegaTransduction : Transduction {
                 val sourcePermutation = state.population.activesAsSequence()
                     .shuffled()
                     .first()
+                    .value
                     .permutation
 
-                val randomStartPosition = Random.nextInt(sourcePermutation.size - it.genes.size + 1)
+                val randomStartPosition = Random.nextInt(sourcePermutation.size - it.value.genes.size + 1)
 
-                it.genes.indices.forEach { index ->
-                    it.genes[index] = sourcePermutation[randomStartPosition + index]
+                it.value.genes.indices.forEach { index ->
+                    it.value.genes[index] = sourcePermutation[randomStartPosition + index]
                 }
 
-                it.lifeForce = null
+                it.value.lifeForce = null
             }
 
         state.virusPopulation.activateAll()

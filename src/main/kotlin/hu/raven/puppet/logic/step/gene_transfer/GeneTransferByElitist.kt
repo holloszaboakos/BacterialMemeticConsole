@@ -30,7 +30,7 @@ class GeneTransferByElitist(
                 val acceptor = population[acceptorIndex]
 
                 synchronized(acceptor) {
-                    geneTransferOperator(donor, acceptor)
+                    geneTransferOperator(donor.value, acceptor.value)
                 }
             }
     }

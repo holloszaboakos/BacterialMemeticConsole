@@ -12,8 +12,8 @@ data object DiversityOfPopulationByInnerDistanceAndSequence : DiversityOfPopulat
         population.activesAsSequence().forEach { firstSpecimen ->
             population.activesAsSequence().forEach { secondSpecimen ->
                 val distance = distanceOfSpecimen(
-                    firstSpecimen.permutation,
-                    secondSpecimen.permutation
+                    firstSpecimen.value.permutation,
+                    secondSpecimen.value.permutation
                 )
                 diversity += distance
             }

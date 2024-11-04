@@ -1,4 +1,4 @@
-package hu.raven.puppet.job.experiments
+package hu.raven.puppet.job
 
 import hu.akos.hollo.szabo.math.Permutation
 import hu.akos.hollo.szabo.math.asPermutation

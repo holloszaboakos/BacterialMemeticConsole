@@ -1,7 +1,7 @@
 package hu.raven.puppet.logic.initialize
 
+import hu.akos.hollo.szabo.collections.PoolWithActivation
 import hu.raven.puppet.logic.operator.initialize_bacteriophage_population.InitializeBacteriophagePopulation
-import hu.raven.puppet.model.solution.PoolWithSmartActivation
 import hu.raven.puppet.model.state.BacteriophageAlgorithmState
 
 class InitializeBacteriophageAlgorithm<T>(
@@ -14,7 +14,7 @@ class InitializeBacteriophageAlgorithm<T>(
         return BacteriophageAlgorithmState(
             task = preState.task,
             population = preState.population,
-            virusPopulation = PoolWithSmartActivation(bacteriophagePopulation).apply { deactivateAll() }
+            virusPopulation = PoolWithActivation(bacteriophagePopulation).apply { deactivateAll() }
         )
     }
 }

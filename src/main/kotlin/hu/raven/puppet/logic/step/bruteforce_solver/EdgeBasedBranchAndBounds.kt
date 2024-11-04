@@ -335,7 +335,7 @@ private fun minimalSpanningTreeCost(
             edge.value
             //graph[edge.sourceNodeIndex, edge.targetNodeIndex]
         }
-        .filterIndexed { index, (_, edge) ->
+        .filter {  (_, edge) ->
             if (nodeGrouping[edge.sourceNodeIndex] != nodeGrouping[edge.targetNodeIndex]) {
                 mergeGroups(
                     nodeGrouping,

@@ -18,29 +18,29 @@ class HalfElitistCrossover(
         parent.forEachIndexed { index, parentPair ->
             crossoverOperators.first()(
                 Pair(
-                    parentPair[0].permutation,
-                    parentPair[1].permutation
+                    parentPair[0].value.permutation,
+                    parentPair[1].value.permutation
                 ),
-                children[index][0].permutation
+                children[index][0].value.permutation
             )
             crossoverOperators.first()(
                 Pair(
-                    parentPair[1].permutation,
-                    parentPair[0].permutation
+                    parentPair[1].value.permutation,
+                    parentPair[0].value.permutation
                 ),
-                children[index][1].permutation
+                children[index][1].value.permutation
 
             )
             children[index][0].let {
-                it.iterationOfCreation = state.iteration
-                it.cost = null
-                if (!it.permutation.isFormatCorrect())
+                it.value.iterationOfCreation = state.iteration
+                it.value.cost = null
+                if (!it.value.permutation.isFormatCorrect())
                     throw Error("Invalid specimen!")
             }
             children[index][1].let {
-                it.iterationOfCreation = state.iteration
-                it.cost = null
-                if (!it.permutation.isFormatCorrect())
+                it.value.iterationOfCreation = state.iteration
+                it.value.cost = null
+                if (!it.value.permutation.isFormatCorrect())
                     throw Error("Invalid specimen!")
             }
         }

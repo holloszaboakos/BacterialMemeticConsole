@@ -1,4 +1,4 @@
-package hu.raven.puppet.job.experiments
+package hu.raven.puppet.job
 
 import hu.raven.puppet.logic.initialize.InitializeEvolutionaryAlgorithm
 import hu.raven.puppet.logic.iteration.EvolutionaryAlgorithmIteration
@@ -35,8 +35,8 @@ import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmStateForLogging
 import hu.raven.puppet.model.utility.math.CompleteGraph
 import hu.raven.puppet.model.utility.math.MutableCompleteGraph
+import hu.raven.puppet.model.utility.math.toMutable
 import hu.raven.puppet.utility.extention.KoinUtil.get
-import hu.raven.puppet.utility.extention.toMutable
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.core.qualifier.named
@@ -47,51 +47,34 @@ import java.time.LocalDateTime
 typealias Task = CompleteGraph<Unit, Int>
 
 fun main() {
-//    (0..<10).forEach { instanceIdnex ->
-//        arrayOf(8, 16, 32, 64).forEach { sizeOfPopulation ->
-//            arrayOf(2, 4).forEach { cloneCount ->
-//                val cloneCycleCount = 64 / cloneCount
-//                arrayOf(4).forEach { cloneSegmentLength ->
-//                    arrayOf(1f / 32, 0f).forEach { mutationPercentage ->
-//                        arrayOf(4, 8, 16).forEach { injectionCount ->
-//                            arrayOf(4, 8).forEach { boostLuckyCount ->
-//                                arrayOf(16).forEach inner@{ boostStepLimit ->
-                                    runBacterial(
-                                        Configuration(
-                                            fileName = "instance8.json",
-                                            inputFolder = "D:\\Research\\Datasets\\tsp64x10_000",
-                                            outputFolder = listOf(
-                                                "D:", "Research","Results2", "${LocalDate.now()}",
-                                                LocalDateTime.now().toString()
-                                                    .replace(":", "_")
-                                                    .replace(".", "_")
-                                            ),
+    runBacterial(
+        Configuration(
+            fileName = "instance8.json",
+            inputFolder = "D:\\Research\\Datasets\\tsp64x10_000",
+            outputFolder = listOf(
+                "D:", "Research", "Results2", "${LocalDate.now()}",
+                LocalDateTime.now().toString()
+                    .replace(":", "_")
+                    .replace(".", "_")
+            ),
 
-                                            sizeOfPopulation = 16,
-                                            sizeOfPermutation = 63,
+            sizeOfPopulation = 16,
+            sizeOfPermutation = 63,
 
-                                            cloneCount = 4,
-                                            cloneCycleCount = 16,
-                                            cloneSegmentLength = 4,
-                                            mutationPercentage = 0.5f,
+            cloneCount = 4,
+            cloneCycleCount = 16,
+            cloneSegmentLength = 4,
+            mutationPercentage = 0.5f,
 
-                                            injectionCount = 16,
-                                            geneTransferSegmentLength = 63,
+            injectionCount = 16,
+            geneTransferSegmentLength = 63,
 
-                                            boostLuckyCount = 2,
-                                            boostStepLimit = 64,
+            boostLuckyCount = 2,
+            boostStepLimit = 64,
 
-                                            iterationLimit = 20_000,
-                                        )
-                                    )
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
+            iterationLimit = 20_000,
+        )
+    )
 }
 
 
@@ -306,10 +289,10 @@ private fun runBacterial(configuration: Configuration) {
 
     println(
         algorithmState.population.activesAsSequence()
-            .minBy { it.costOrException()[0] }
-            .costOrException()
+            .minBy { it.value.costOrException()[0] }
+            .value.costOrException()
     )
-    println(algorithmState.copyOfBest?.costOrException())
+    println(algorithmState.copyOfBest?.value?.costOrException())
 
     stopKoin()
 }

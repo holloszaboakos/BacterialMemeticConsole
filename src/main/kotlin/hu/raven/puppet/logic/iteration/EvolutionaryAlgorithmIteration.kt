@@ -10,8 +10,8 @@ class EvolutionaryAlgorithmIteration<T : EvolutionaryAlgorithmState<*>>(
     override operator fun invoke(algorithmState: T) {
         steps.forEach { step -> step(algorithmState) }
         algorithmState.apply {
-            copyOfBest = population.activesAsSequence().first().cloneRepresentationAndCost()
-            copyOfWorst = population.activesAsSequence().last().cloneRepresentationAndCost()
+            copyOfBest = population.activesAsSequence().first().copy()
+            copyOfWorst = population.activesAsSequence().last().copy()
             iteration++
         }
     }

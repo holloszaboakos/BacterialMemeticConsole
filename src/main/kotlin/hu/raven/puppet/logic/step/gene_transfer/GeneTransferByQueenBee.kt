@@ -18,7 +18,7 @@ class GeneTransferByQueenBee(
                 val acceptor = population[acceptorIndex]
 
                 synchronized(acceptor) {
-                    geneTransferOperator(population.activesAsSequence().first(), acceptor)
+                    geneTransferOperator(population.activesAsSequence().first().value, acceptor.value)
                 }
             }
     }

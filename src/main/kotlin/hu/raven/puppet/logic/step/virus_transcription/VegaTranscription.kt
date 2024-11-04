@@ -3,6 +3,7 @@ package hu.raven.puppet.logic.step.virus_transcription
 import hu.akos.hollo.szabo.collections.slice
 import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.dominatesSmaller
 import hu.raven.puppet.logic.operator.calculate_cost.CalculateCost
+import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIteration
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.solution.VirusSpecimen
 import hu.raven.puppet.model.state.VirusEvolutionaryAlgorithmState
@@ -17,11 +18,11 @@ class VegaTranscription<T>(
 ) : Transcription<T>() {
     override fun invoke(state: VirusEvolutionaryAlgorithmState<T>) {
         state.virusPopulation.activesAsSequence()
-            .onEach { virus ->
+            .onEach { (_,virus) ->
                 val fitness = state.population.activesAsSequence()
                     .shuffled()
                     .slice(0..<(state.population.poolSize * virusInfectionRate).toInt())
-                    .map { specimen ->
+                    .map { (_,specimen) ->
                         val oldCost = specimen.costOrException()
                         val oldPermutation = specimen.permutation.clone()
                         applyVirus(specimen, virus)
@@ -57,15 +58,15 @@ class VegaTranscription<T>(
                         lifeForce
                     } ?: fitness
             }
-            .filter { virus ->
+            .filter { (_,virus) ->
                 virus.lifeForce?.all { it < 0 } ?: false
             }
             .forEach {
-                state.virusPopulation.deactivate(it.id)
+                state.virusPopulation.deactivate(it.index)
             }
     }
 
-    private fun applyVirus(specimen: OnePartRepresentationWithCostAndIterationAndId, virus: VirusSpecimen) {
+    private fun applyVirus(specimen: OnePartRepresentationWithCostAndIteration, virus: VirusSpecimen) {
         val randomStartPosition = Random.nextInt(specimen.permutation.size - virus.genes.size + 1)
 
         virus.genes.forEachIndexed { index, gene ->

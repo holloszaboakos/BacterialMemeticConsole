@@ -18,11 +18,11 @@ class TspFromMatrixTaskLoaderService(
                 .readLines()
                 .map { it.split("\t").map { it.toFloat().toInt() } }
                 .let { distanceMatrix ->
-                    CompleteGraph(vertices = Array(distanceMatrix.size) { Unit }.asImmutable(),
+                    CompleteGraph(vertices = Array(distanceMatrix.size) { }.asImmutable(),
                         edges = distanceMatrix
-                            .mapIndexed { sourceIndex, edgesFromSource ->
+                            .mapIndexed { _, edgesFromSource ->
                                 edgesFromSource
-                                    .mapIndexed { targetIndex, weight ->
+                                    .mapIndexed { _, weight ->
                                         weight
                                     }
                                     .toTypedArray()

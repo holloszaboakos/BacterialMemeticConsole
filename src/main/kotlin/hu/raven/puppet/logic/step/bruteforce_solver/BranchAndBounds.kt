@@ -93,7 +93,7 @@ fun branchAndBounds(graph: IntMatrix): Pair<Permutation, Int> {
                 }
                 findNewNode(node, bestCost) ?: break
             } else {
-                node.children.removeIf{ it.potentialCost > bestCost }
+                node.children.removeIf { it.potentialCost > bestCost }
                 if (node.children.isNotEmpty()) {
                     node.children.removeAt(0)
                 } else {

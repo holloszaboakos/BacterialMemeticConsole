@@ -17,7 +17,7 @@ class BacterialMutationOnBestAndLuckyByCoinFlip(
                     return@forEach
                 }
 
-                mutationOnSpecimen(indexedSpecimen, state.iteration)
+                mutationOnSpecimen(indexedSpecimen.value, state.iteration)
             }
     }
 

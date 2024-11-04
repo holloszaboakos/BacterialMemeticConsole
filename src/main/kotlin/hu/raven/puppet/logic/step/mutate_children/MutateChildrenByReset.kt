@@ -2,6 +2,7 @@ package hu.raven.puppet.logic.step.mutate_children
 
 import hu.akos.hollo.szabo.collections.slice
 import hu.akos.hollo.szabo.math.Permutation
+import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIteration
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
@@ -9,24 +10,24 @@ data object MutateChildrenByReset : MutateChildren {
 
     override fun invoke(state: EvolutionaryAlgorithmState<*>): Unit = state.run {
         val basePermutation =
-            List(copyOfBest?.permutation?.indices?.count() ?: 0) { it }.shuffled().toIntArray()
+            List(copyOfBest?.value?.permutation?.indices?.count() ?: 0) { it }.shuffled().toIntArray()
 
-        if (state.population.activesAsSequence().first().permutation.size <= 1)
+        if (state.population.activesAsSequence().first().value.permutation.size <= 1)
             return@run
 
         population.activesAsSequence()
-            .filter { it.iterationOfCreation == iteration }
+            .filter { it.value.iterationOfCreation == iteration }
             .shuffled()
             .slice(0..<(population.activeCount / 16))
             .forEachIndexed { instanceIndex, child ->
-                onChild(instanceIndex, child, basePermutation)
+                onChild(instanceIndex, child.value, basePermutation)
             }
 
     }
 
     private fun onChild(
         instanceIndex: Int,
-        child: OnePartRepresentationWithCostAndIterationAndId,
+        child: OnePartRepresentationWithCostAndIteration,
         basePermutation: IntArray
     ) {
 

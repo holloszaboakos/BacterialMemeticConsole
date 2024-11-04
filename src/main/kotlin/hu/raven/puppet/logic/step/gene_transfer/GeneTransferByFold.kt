@@ -19,7 +19,7 @@ class GeneTransferByFold(
                     population[population.activeCount - 1 - specimenIndex]
 
                 synchronized(acceptor) {
-                    geneTransferOperator(donor, acceptor)
+                    geneTransferOperator(donor.value, acceptor.value)
                 }
             }
     }

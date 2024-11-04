@@ -1,5 +1,6 @@
 package hu.raven.puppet.logic.task.converter
 
+import hu.akos.hollo.szabo.Gps
 import hu.akos.hollo.szabo.collections.asImmutable
 import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray
 import hu.raven.puppet.model.task.LocationWithVolume
@@ -7,13 +8,12 @@ import hu.raven.puppet.model.task.ProcessedAugeratTask
 import hu.raven.puppet.model.task.augerat.InstanceBean
 import hu.raven.puppet.model.task.augerat.NodeBean
 import hu.raven.puppet.model.task.augerat.RequestBean
-import hu.raven.puppet.model.utility.Gps
 import hu.raven.puppet.model.utility.math.CompleteGraph
 import kotlin.math.max
 import kotlin.math.pow
 import kotlin.math.sqrt
 
-class AugeratDatasetConverterService : TaskConverterService<InstanceBean, ProcessedAugeratTask>() {
+data object AugeratDatasetConverterService : TaskConverterService<InstanceBean, ProcessedAugeratTask>() {
     override fun processRawTask(task: InstanceBean): ProcessedAugeratTask = task.run {
         ProcessedAugeratTask(
             capacity = task.fleetBean.vehicleProfileBean.capacity.toDouble().toInt(),
@@ -62,9 +62,9 @@ class AugeratDatasetConverterService : TaskConverterService<InstanceBean, Proces
     ): ImmutableArray<ImmutableArray<Float>> {
         val center = nodes.first { it.id == centerId }
         val clients = nodes - center + center
-        return clients.mapIndexed { fromIndex, nodeFrom ->
+        return clients.mapIndexed { _, nodeFrom ->
             clients
-                .mapIndexed { toIndex, nodeTo ->
+                .mapIndexed { _, nodeTo ->
                     nodeFrom.toGPS() euclideanDist nodeTo.toGPS()
                 }
                 .toTypedArray()

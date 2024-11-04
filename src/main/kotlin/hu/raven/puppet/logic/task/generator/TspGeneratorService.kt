@@ -66,9 +66,9 @@ class TspGeneratorService {
     private fun Array<IntArray>.toGraph(): CompleteGraph<Unit, Int> {
         return CompleteGraph(
             edges = this
-                .mapIndexed { rowIndex, row ->
+                .mapIndexed { _, row ->
                     row
-                        .mapIndexed { distanceIndex, distance ->
+                        .mapIndexed { _, distance ->
                             distance
                         }
                         .toTypedArray()
@@ -76,7 +76,7 @@ class TspGeneratorService {
                 }
                 .toTypedArray()
                 .asImmutable(),
-            vertices = Array(this.size) { Unit }.asImmutable()
+            vertices = Array(this.size) { }.asImmutable()
 
         )
     }

@@ -17,7 +17,7 @@ class GeneTransferFromBetterToWorse(
 
         (0..<population.activeCount / 2)
             .forEach { index ->
-                geneTransferOperator(population[index], worse[index])
+                geneTransferOperator(population[index].value, worse[index].value)
             }
     }
 }

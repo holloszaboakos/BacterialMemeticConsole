@@ -1,6 +1,7 @@
 package hu.raven.puppet.model.task
 
-import hu.raven.puppet.model.utility.Gps
+import hu.akos.hollo.szabo.Gps
+
 
 data class LocationWithVolumeAndName(
     val location: Gps,

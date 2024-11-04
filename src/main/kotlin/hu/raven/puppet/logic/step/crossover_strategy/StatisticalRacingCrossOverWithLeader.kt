@@ -4,6 +4,7 @@ import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.dominatesSmaller
 import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.length
 import hu.raven.puppet.logic.operator.calculate_cost.CalculateCost
 import hu.raven.puppet.logic.operator.crossover_operator.CrossOverOperator
+import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIteration
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.model.step.crossover_strategy.CrossoverOperatorStatistic
@@ -34,7 +35,7 @@ class StatisticalRacingCrossOverWithLeader(
                     parentPair[0],
                     parentPair[1]
                 ),
-                children[index][0]
+                children[index][0].value
             )
             crossover(
                 state,
@@ -42,12 +43,12 @@ class StatisticalRacingCrossOverWithLeader(
                     parentPair[1],
                     parentPair[0]
                 ),
-                children[index][1]
+                children[index][1].value
             )
             children[index].forEach {
-                it.iterationOfCreation = state.iteration
-                it.cost = null
-                if (!it.permutation.isFormatCorrect())
+                it.value.iterationOfCreation = state.iteration
+                it.value.cost = null
+                if (!it.value.permutation.isFormatCorrect())
                     throw Error("Invalid specimen!")
             }
         }
@@ -57,10 +58,10 @@ class StatisticalRacingCrossOverWithLeader(
     private fun crossover(
         state: EvolutionaryAlgorithmState<*>,
         parents: Pair<
-                OnePartRepresentationWithCostAndIterationAndId,
-                OnePartRepresentationWithCostAndIterationAndId,
+                IndexedValue<OnePartRepresentationWithCostAndIteration> ,
+                IndexedValue<OnePartRepresentationWithCostAndIteration> ,
                 >,
-        child: OnePartRepresentationWithCostAndIterationAndId,
+        child: OnePartRepresentationWithCostAndIteration,
     ): Unit = state.run {
         if (lastIteration != iteration) {
             lastIteration = iteration
@@ -90,8 +91,8 @@ class StatisticalRacingCrossOverWithLeader(
             actualStatistics?.let { oldStatistics ->
                 operator.invoke(
                     Pair(
-                        parents.first.permutation,
-                        parents.second.permutation
+                        parents.first.value.permutation,
+                        parents.second.value.permutation
                     ),
                     child.permutation
                 )
@@ -112,24 +113,24 @@ class StatisticalRacingCrossOverWithLeader(
     private fun increaseSuccess(
         oldStatistics: OperatorStatistics,
         parents: Pair<
-                OnePartRepresentationWithCostAndIterationAndId,
-                OnePartRepresentationWithCostAndIterationAndId,
+                IndexedValue<OnePartRepresentationWithCostAndIteration> ,
+                IndexedValue<OnePartRepresentationWithCostAndIteration> ,
                 >,
-        child: OnePartRepresentationWithCostAndIterationAndId,
+        child: OnePartRepresentationWithCostAndIteration,
         state: EvolutionaryAlgorithmState<*>,
     ): Unit = state.run {
         var newSuccess = oldStatistics.success
-        if (parents.first.costOrException() dominatesSmaller child.costOrException()) {
+        if (parents.first.value.costOrException() dominatesSmaller child.costOrException()) {
             newSuccess +=
-                (iteration.toLong() - parents.first.iterationOfCreation).toFloat() /
+                (iteration.toLong() - parents.first.value.iterationOfCreation).toFloat() /
                         child.costOrException().length().toFloat() /
                         (population.indexOf(parents.first).toLong() + 1).toFloat()
                             .let { it * it }
         }
 
-        if (parents.second.costOrException() dominatesSmaller child.costOrException()) {
+        if (parents.second.value.costOrException() dominatesSmaller child.costOrException()) {
             newSuccess +=
-                (iteration.toLong() - parents.second.iterationOfCreation).toFloat() /
+                (iteration.toLong() - parents.second.value.iterationOfCreation).toFloat() /
                         child.costOrException().length().toFloat() /
                         (population.indexOf(parents.second).toLong() + 1).toFloat()
                             .let { it * it }

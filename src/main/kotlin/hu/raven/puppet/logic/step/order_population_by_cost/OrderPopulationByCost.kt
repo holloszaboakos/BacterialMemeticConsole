@@ -11,15 +11,15 @@ class OrderPopulationByCost<T>(
 ) : EvolutionaryAlgorithmStep<EvolutionaryAlgorithmState<T>> {
 
     override operator fun invoke(state: EvolutionaryAlgorithmState<T>): Unit = state.population.run {
-        if (activesAsSequence().first().permutation.size <= 1)
+        if (activesAsSequence().first().value.permutation.size <= 1)
             return@run
 
         activesAsSequence()
-            .filter { it.cost == null }
+            .filter { it.value.cost == null }
             .forEach { specimen ->
-                specimen.cost = calculateCostOf(specimen)
+                specimen.value.cost = calculateCostOf(specimen.value)
             }
 
-        sortActiveBy { it.costOrException().length().toFloat() }
+        sortActiveBy { it.value.costOrException().length().toFloat() }
     }
 }

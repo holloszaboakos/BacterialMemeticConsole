@@ -2,6 +2,7 @@ package hu.raven.puppet.logic.step.select_survivers
 
 import hu.akos.hollo.szabo.collections.slice
 import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.dominatesSmaller
+import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIteration
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
@@ -11,13 +12,13 @@ data object SelectSurvivorsMultiObjectiveHalfElitist : SelectSurvivors {
 
 
         val remaining = inactivesAsSequence().toMutableList()
-        val frontiers: List<List<OnePartRepresentationWithCostAndIterationAndId>> = buildList {
+        val frontiers: List<List<IndexedValue<OnePartRepresentationWithCostAndIteration>>> = buildList {
             while (remaining.size != 0) {
                 val frontier = remaining
-                    .filter { filtered ->
+                    .filter { (_,filtered) ->
                         remaining
                             .none {
-                                filtered.costOrException() dominatesSmaller it.costOrException()
+                                filtered.costOrException() dominatesSmaller it.value.costOrException()
                             }
                     }
                 add(frontier)
@@ -27,17 +28,17 @@ data object SelectSurvivorsMultiObjectiveHalfElitist : SelectSurvivors {
 
         frontiers.asSequence()
             .takeWhile { activeCount + it.size <= poolSize / 4 }
-            .forEach { it.forEach { specimen -> activate(specimen.id) } }
+            .forEach { it.forEach { specimen -> activate(specimen.index) } }
 
         frontiers
-            .first { !isActive(it.first().id) }
+            .first { !isActive(it.first().index) }
             .shuffled()
             .slice(0..<(poolSize / 4) - activeCount)
-            .forEach { activate(it.id) }
+            .forEach { activate(it.index) }
 
         inactivesAsSequence()
             .shuffled()
             .slice(0..<poolSize / 4)
-            .forEach { activate(it.id) }
+            .forEach { activate(it.index) }
     }
 }

@@ -1,6 +1,7 @@
 package hu.raven.puppet.logic.operator.initialize_population
 
 import hu.akos.hollo.szabo.math.asPermutation
+import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIteration
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 
 class InitializePopulationByModuloStepper(
@@ -8,12 +9,11 @@ class InitializePopulationByModuloStepper(
     private val sizeOfTask: Int,
 ) : InitializePopulation {
 
-    override fun invoke(): List<OnePartRepresentationWithCostAndIterationAndId> {
+    override fun invoke(): List<OnePartRepresentationWithCostAndIteration> {
         val basePermutation = IntArray(sizeOfTask) { it }
         val population =
             MutableList(sizeOfPopulation) {
-                OnePartRepresentationWithCostAndIterationAndId(
-                    id = it,
+                OnePartRepresentationWithCostAndIteration(
                     iterationOfCreation = 0,
                     cost = null,
                     permutation = IntArray(
@@ -37,7 +37,7 @@ class InitializePopulationByModuloStepper(
 
     private fun initSpecimen(
         instanceIndex: Int,
-        instance: OnePartRepresentationWithCostAndIterationAndId,
+        instance: OnePartRepresentationWithCostAndIteration,
         sizeOfPermutation: Int,
         basePermutation: IntArray
     ) {

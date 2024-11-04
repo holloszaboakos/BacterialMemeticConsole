@@ -13,10 +13,10 @@ data object SelectSurvivorsMultiObjectiveTournament : SelectSurvivors {
                 .chunked(2)
                 .takeWhile { activeCount < poolSize / 2 }
                 .forEach { pair ->
-                    if (pair[0].costOrException() dominatesSmaller pair[1].costOrException()) {
-                        activate(pair[0].id)
-                    } else if (pair[1].costOrException() dominatesSmaller pair[0].costOrException()) {
-                        activate(pair[1].id)
+                    if (pair[0].value.costOrException() dominatesSmaller pair[1].value.costOrException()) {
+                        activate(pair[0].index)
+                    } else if (pair[1].value.costOrException() dominatesSmaller pair[0].value.costOrException()) {
+                        activate(pair[1].index)
                     }
                 }
         }

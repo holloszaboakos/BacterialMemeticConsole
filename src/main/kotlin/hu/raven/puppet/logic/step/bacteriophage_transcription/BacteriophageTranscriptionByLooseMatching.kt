@@ -4,6 +4,7 @@ import hu.akos.hollo.szabo.collections.slice
 import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.dominatesBigger
 import hu.raven.puppet.logic.operator.calculate_cost.CalculateCost
 import hu.raven.puppet.model.solution.BacteriophageSpecimen
+import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIteration
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.state.BacteriophageAlgorithmState
 import hu.raven.puppet.model.utility.math.GraphEdge
@@ -22,20 +23,20 @@ class BacteriophageTranscriptionByLooseMatching<T>(
                     .shuffled()
                     .slice(0..<(state.population.poolSize * infectionRate).toInt())
                     .map { specimen ->
-                        val oldCost = specimen.costOrException()
-                        val oldPermutation = specimen.permutation.clone()
-                        applyVirus(specimen, virus)
-                        val newCost = calculateCost(specimen)
+                        val oldCost = specimen.value.costOrException()
+                        val oldPermutation = specimen.value.permutation.clone()
+                        applyVirus(specimen.value, virus.value)
+                        val newCost = calculateCost(specimen.value)
                         if (oldCost dominatesBigger newCost) {
                             oldPermutation.forEachIndexed { index, value ->
-                                val oldIndex = specimen.permutation.indexOf(value)
-                                specimen.permutation.swapValues(index, oldIndex)
+                                val oldIndex = specimen.value.permutation.indexOf(value)
+                                specimen.value.permutation.swapValues(index, oldIndex)
                             }
                         } else {
-                            if (!specimen.permutation.indices.all { specimen.permutation[it] == oldPermutation[it] }) {
-                                specimen.iterationOfCreation = state.iteration
+                            if (!specimen.value.permutation.indices.all { specimen.value.permutation[it] == oldPermutation[it] }) {
+                                specimen.value.iterationOfCreation = state.iteration
                             }
-                            specimen.cost = newCost
+                            specimen.value.cost = newCost
                         }
                         FloatArray(oldCost.size) {
                             oldCost[it] - newCost[it]
@@ -51,7 +52,7 @@ class BacteriophageTranscriptionByLooseMatching<T>(
                     fitness[it] *= lifeCoefficient
                 }
 
-                virus.lifeForce = virus.lifeForce
+                virus.value.lifeForce = virus.value.lifeForce
                     ?.let { lifeForce ->
                         lifeForce.indices.forEach {
                             lifeForce[it] = lifeReductionRate * lifeForce[it] + fitness[it]
@@ -60,14 +61,14 @@ class BacteriophageTranscriptionByLooseMatching<T>(
                     } ?: fitness
             }
             .filter { virus ->
-                virus.lifeForce?.all { it < 0 } ?: false
+                virus.value.lifeForce?.all { it < 0 } ?: false
             }
             .forEach {
-                state.virusPopulation.deactivate(it.id)
+                state.virusPopulation.deactivate(it.value.id)
             }
     }
 
-    private fun applyVirus(specimen: OnePartRepresentationWithCostAndIterationAndId, virus: BacteriophageSpecimen) {
+    private fun applyVirus(specimen: OnePartRepresentationWithCostAndIteration, virus: BacteriophageSpecimen) {
         val currentEdges = (0..specimen.permutation.size)
             .map { GraphEdge<Unit>(specimen.permutation.before(it), it, Unit) }
         val reducedEdges = currentEdges.filter {
