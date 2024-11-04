@@ -2,7 +2,6 @@ package hu.raven.puppet.logic.operator.diversity_of_population
 
 
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIteration
-import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

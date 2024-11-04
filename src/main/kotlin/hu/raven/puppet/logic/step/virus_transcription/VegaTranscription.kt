@@ -4,7 +4,6 @@ import hu.akos.hollo.szabo.collections.slice
 import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.dominatesSmaller
 import hu.raven.puppet.logic.operator.calculate_cost.CalculateCost
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIteration
-import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.solution.VirusSpecimen
 import hu.raven.puppet.model.state.VirusEvolutionaryAlgorithmState
 

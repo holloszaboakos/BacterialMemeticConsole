@@ -2,7 +2,6 @@ package hu.raven.puppet.logic.step.mutate_children
 
 import hu.akos.hollo.szabo.collections.slice
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIteration
-import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import kotlin.random.Random
 

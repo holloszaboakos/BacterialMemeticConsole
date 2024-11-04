@@ -3,7 +3,6 @@ package hu.raven.puppet.logic.step.mutate_children
 import hu.akos.hollo.szabo.collections.slice
 import hu.akos.hollo.szabo.math.Permutation
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIteration
-import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
 data object MutateChildrenByReset : MutateChildren {

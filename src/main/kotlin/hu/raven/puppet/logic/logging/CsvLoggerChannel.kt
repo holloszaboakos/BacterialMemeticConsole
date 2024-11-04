@@ -36,15 +36,15 @@ class CsvLoggerChannel<T>(
         outputFile.appendText("${toString(event)}\n")
     }
 
-    override fun toString(event: LogEvent<T>): String {
+    override fun toString(message: LogEvent<T>): String {
         return mapping.values
-            .map { it(event.message) }
+            .map { it(message.message) }
             .let {
                 arrayOf(
-                    event.time.toString(),
-                    event.type.name,
-                    event.source,
-                    event.version.toString(),
+                    message.time.toString(),
+                    message.type.name,
+                    message.source,
+                    message.version.toString(),
                 ) + it
             }
             .joinToString(separator)

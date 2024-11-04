@@ -3,7 +3,6 @@ package hu.raven.puppet.logic.step.select_survivers
 import hu.akos.hollo.szabo.collections.slice
 import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.dominatesSmaller
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIteration
-import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
 data object SelectSurvivorsMultiObjectiveHalfElitist : SelectSurvivors {

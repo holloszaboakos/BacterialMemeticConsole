@@ -5,7 +5,6 @@ import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.dominatesBigger
 import hu.raven.puppet.logic.operator.calculate_cost.CalculateCost
 import hu.raven.puppet.model.solution.BacteriophageSpecimen
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIteration
-import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 import hu.raven.puppet.model.state.BacteriophageAlgorithmState
 import hu.raven.puppet.model.utility.math.GraphEdge
 import hu.raven.puppet.utility.buildPermutation

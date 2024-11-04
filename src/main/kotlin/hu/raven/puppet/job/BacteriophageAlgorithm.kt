@@ -45,7 +45,7 @@ import hu.raven.puppet.logic.step.select_survivers.SelectSurvivorsMultiObjective
 import hu.raven.puppet.logic.task.loader.TaskLoaderService
 import hu.raven.puppet.logic.task.loader.TspFromMatrixTaskLoaderService
 import hu.raven.puppet.model.logging.LogType
-import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
+import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIteration
 import hu.raven.puppet.model.state.BacteriophageAlgorithmState
 import hu.raven.puppet.model.state.BacteriophageAlgorithmStateForLogging
 import hu.raven.puppet.model.utility.math.CompleteGraph
@@ -102,24 +102,6 @@ fun main() {
                                             val boostLuckyCount = (sizeOfPopulation * boostLuckyRate).toInt()
                                             arrayOf(8, 16, 32, 64, 128, 256).forEach { boostStepLimit ->
                                                 arrayOf(4, 16, 64).forEach inner@{ injectionCount ->
-
-                                                    //TODO: skip if already checked
-                                                    if (
-                                                        taskInstanceIndex < 0 ||
-                                                        taskInstanceIndex == 0 && sizeOfPopulation < 4 ||
-                                                        taskInstanceIndex == 0 && sizeOfPopulation == 4 && sizeOfBacteriophagePopulation < 4 ||
-                                                        taskInstanceIndex == 0 && sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount < 16 ||
-                                                        taskInstanceIndex == 0 && sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount == 16 && cloneCycleCount < 16 ||
-                                                        taskInstanceIndex == 0 && sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount == 16 && cloneCycleCount == 16 && mutationPercentage < 0f ||
-                                                        taskInstanceIndex == 0 && sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount == 16 && cloneCycleCount == 16 && mutationPercentage == 0f && infectionRate < 0.125f ||
-                                                        taskInstanceIndex == 0 && sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount == 16 && cloneCycleCount == 16 && mutationPercentage == 0f && infectionRate == 0.125f && lifeCoefficient > 1f ||
-                                                        taskInstanceIndex == 0 && sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount == 16 && cloneCycleCount == 16 && mutationPercentage == 0f && infectionRate == 0.125f && lifeCoefficient == 1f && lifeReductionRate > 0.75f ||
-                                                        taskInstanceIndex == 0 && sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount == 16 && cloneCycleCount == 16 && mutationPercentage == 0f && infectionRate == 0.125f && lifeCoefficient == 1f && lifeReductionRate == 0.75f && boostLuckyCount < 0 ||
-                                                        taskInstanceIndex == 0 && sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount == 16 && cloneCycleCount == 16 && mutationPercentage == 0f && infectionRate == 0.125f && lifeCoefficient == 1f && lifeReductionRate == 0.75f && boostLuckyCount == 0 && boostStepLimit < 32 ||
-                                                        taskInstanceIndex == 0 && sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount == 16 && cloneCycleCount == 16 && mutationPercentage == 0f && infectionRate == 0.125f && lifeCoefficient == 1f && lifeReductionRate == 0.75f && boostLuckyCount == 0 && boostStepLimit == 32 && injectionCount < 16 ||
-                                                        taskInstanceIndex == 0 && sizeOfPopulation == 4 && sizeOfBacteriophagePopulation == 4 && cloneCount == 16 && cloneCycleCount == 16 && mutationPercentage == 0f && infectionRate == 0.125f && lifeCoefficient == 1f && lifeReductionRate == 0.75f && boostLuckyCount == 0 && boostStepLimit == 32 && injectionCount == 16
-                                                    )
-                                                        return@inner
 
                                                     BacteriophageAlgorithmConfiguration(
                                                         fileName = "instance$taskInstanceIndex.json",
@@ -196,7 +178,7 @@ private fun runBacteriophage(configuration: BacteriophageAlgorithmConfiguration)
                 }
                 single<CalculateCost<*>> {
                     CalculateCostWithLogging(
-                        classOfSolutionRepresentation = OnePartRepresentationWithCostAndIterationAndId::class.java,
+                        classOfSolutionRepresentation = OnePartRepresentationWithCostAndIteration::class.java,
                         calculateCost = CalculateCostOfTspSolution(task = get<TspTask>()),
                         loggingChannel = get(named("cost")),
                         task = get<TspTask>()
@@ -316,9 +298,8 @@ private fun runBacteriophage(configuration: BacteriophageAlgorithmConfiguration)
                             populationSize = get<BacteriophageAlgorithmConfiguration>().sizeOfPopulation,
                             permutationSize = get<BacteriophageAlgorithmConfiguration>().sizeOfPermutation
                         ),
-                        get(),
-                        KoinUtil::get
-                    )
+                        get()
+                    ) { get() }
                 }
 
                 single<LoggingChannel<*>>(named("state")) {
@@ -332,7 +313,7 @@ private fun runBacteriophage(configuration: BacteriophageAlgorithmConfiguration)
                 }
 
                 single<LoggingChannel<*>>(named("cost")) {
-                    JsonChannel<Pair<OnePartRepresentationWithCostAndIterationAndId, List<Float>>>(
+                    JsonChannel<Pair<OnePartRepresentationWithCostAndIteration, List<Float>>>(
                         outputFolder = get<BacteriophageAlgorithmConfiguration>().outputFolder,
                         outputFileName = "cost",
                         type = LogType.INFO,

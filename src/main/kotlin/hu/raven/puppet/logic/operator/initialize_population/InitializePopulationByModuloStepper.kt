@@ -2,7 +2,6 @@ package hu.raven.puppet.logic.operator.initialize_population
 
 import hu.akos.hollo.szabo.math.asPermutation
 import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIteration
-import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
 
 class InitializePopulationByModuloStepper(
     private val sizeOfPopulation: Int,

@@ -9,7 +9,6 @@ class BasicInitializationOfBacteriophagePopulation(
         (0 until sizeOfPopulation)
             .map {
                 BacteriophageSpecimen(
-                    it,
                     arrayOf(),
                     arrayOf(),
                     null

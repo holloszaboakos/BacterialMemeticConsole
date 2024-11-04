@@ -19,9 +19,8 @@ class BasicInitializationOfVirusPopulation(
             }
 
         return subPermutations
-            .mapIndexed { index, subPermutation ->
+            .map { subPermutation ->
                 VirusSpecimen(
-                    id = index,
                     genes = subPermutation,
                     lifeForce = null
                 )

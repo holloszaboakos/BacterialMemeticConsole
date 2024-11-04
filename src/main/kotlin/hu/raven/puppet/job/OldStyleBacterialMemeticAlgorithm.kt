@@ -30,7 +30,7 @@ import hu.raven.puppet.logic.step.order_population_by_cost.OrderPopulationByCost
 import hu.raven.puppet.logic.task.loader.TspFromMatrixTaskLoaderService
 import hu.raven.puppet.model.logging.LogType
 import hu.raven.puppet.model.solution.OnePartRepresentation
-import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIterationAndId
+import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIteration
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmStateForLogging
 import hu.raven.puppet.model.utility.math.CompleteGraph
@@ -127,7 +127,7 @@ private fun runBacterial(configuration: Configuration) {
 
                 single<CalculateCost<*>> {
                     CalculateCostWithLogging(
-                        classOfSolutionRepresentation = OnePartRepresentationWithCostAndIterationAndId::class.java,
+                        classOfSolutionRepresentation = OnePartRepresentationWithCostAndIteration::class.java,
                         calculateCost = CalculateCostOfTspSolution(task = get<Task>()),
                         loggingChannel = get(named("cost")),
                         task = get<Task>()

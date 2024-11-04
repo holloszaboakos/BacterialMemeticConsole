@@ -1,5 +1,5 @@
 package hu.raven.puppet.model.solution
 
-interface HasId<I : Any> {
-    val id: I
+interface HasIndex {
+    val index: Int
 }
