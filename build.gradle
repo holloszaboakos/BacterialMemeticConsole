@@ -38,6 +38,7 @@ dependencies {
     testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.24.2'
 
     implementation 'net.lingala.zip4j:zip4j:2.11.5'
+    implementation files('lib/tsplib-parser-1.1-SNAPSHOT.jar')
 }
 
 kotlin {
