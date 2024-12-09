@@ -5,6 +5,6 @@ import hu.raven.puppet.logic.step.EvolutionaryAlgorithmStep
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
 
-abstract class CrossOverStrategy : EvolutionaryAlgorithmStep<EvolutionaryAlgorithmState<*>> {
-    protected abstract val crossoverOperators: List<CrossOverOperator>
+abstract class CrossOverStrategy<R> : EvolutionaryAlgorithmStep<R, EvolutionaryAlgorithmState<R>> {
+    protected abstract val crossoverOperators: List<CrossOverOperator<R>>
 }

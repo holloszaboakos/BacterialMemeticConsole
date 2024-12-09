@@ -14,7 +14,7 @@ import kotlin.math.abs
 class SortedMatchCrossOver<T>(
     private val costGraph: CompleteGraph<*, T>,
     private val extractEdgeWeight: (T) -> Float
-) : CrossOverOperator {
+) : CrossOverOperator<Permutation> {
 
     override fun invoke(
         parentPermutations: Pair<Permutation, Permutation>,

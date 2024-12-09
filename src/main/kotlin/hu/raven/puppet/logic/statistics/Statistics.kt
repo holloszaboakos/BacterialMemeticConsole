@@ -33,16 +33,16 @@ fun <T> mapStates(
     }
 }
 
-fun edgeHistogramMatrix(state: EvolutionaryAlgorithmState<*>): IntMatrix {
-    val permutationSize = state.population.activesAsSequence().first().value.permutation.size
+fun edgeHistogramMatrix(state: EvolutionaryAlgorithmState<Permutation>): IntMatrix {
+    val permutationSize = state.population.activesAsSequence().first().value.representation.size
     val matrix = IntMatrix(IntVector2D(permutationSize + 1, permutationSize + 1)) { 0 }
 
     state.population.activesAsSequence().forEach {
-        matrix[matrix.indices[0].last][it.value.permutation.first()]++
-        matrix[it.value.permutation.last()][matrix.indices[0].last]++
-        it.value.permutation.forEachIndexed { index, _ ->
+        matrix[matrix.indices[0].last][it.value.representation.first()]++
+        matrix[it.value.representation.last()][matrix.indices[0].last]++
+        it.value.representation.forEachIndexed { index, _ ->
             if (index == 0) return@forEachIndexed
-            matrix[it.value.permutation[index - 1]][it.value.permutation[index]]++
+            matrix[it.value.representation[index - 1]][it.value.representation[index]]++
         }
     }
     return matrix

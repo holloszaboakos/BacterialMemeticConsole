@@ -3,8 +3,8 @@ package hu.raven.puppet.logic.task.loader
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import hu.akos.hollo.szabo.math.FloatSumExtensions.preciseSum
 import hu.raven.puppet.logic.task.converter.AugeratDatasetConverterService
-import hu.raven.puppet.model.task.ProcessedAugeratTask
-import hu.raven.puppet.model.task.augerat.InstanceBean
+import hu.raven.puppet.model.dataset.ProcessedAugeratTask
+import hu.raven.puppet.model.dataset.augerat.InstanceBean
 import java.nio.file.Path
 
 class AugeratTaskLoaderService(

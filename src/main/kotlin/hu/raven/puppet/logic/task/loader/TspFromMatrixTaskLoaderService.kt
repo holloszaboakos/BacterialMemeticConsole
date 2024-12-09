@@ -1,15 +1,16 @@
 package hu.raven.puppet.logic.task.loader
 
 import hu.akos.hollo.szabo.collections.asImmutable
+import hu.raven.puppet.model.task.TspTask
 import hu.raven.puppet.model.utility.math.CompleteGraph
 import java.nio.file.Path
 
 class TspFromMatrixTaskLoaderService(
     private val fileName: String,
     override val log: (String) -> Unit,
-) : TaskLoaderService<CompleteGraph<Unit, Int>>() {
+) : TaskLoaderService<TspTask>() {
 
-    override fun loadTask(folderPath: String): CompleteGraph<Unit, Int> {
+    override fun loadTask(folderPath: String): TspTask {
         val task: CompleteGraph<Unit, Int> =
 //            this::class.java.getResourceAsStream(
 //                Path.of(folderPath, fileName).toString().replace("\\", "/").also { println(it) }
@@ -18,7 +19,8 @@ class TspFromMatrixTaskLoaderService(
                 .readLines()
                 .map { it.split("\t").map { it.toFloat().toInt() } }
                 .let { distanceMatrix ->
-                    CompleteGraph(vertices = Array(distanceMatrix.size) { }.asImmutable(),
+                    CompleteGraph(
+                        vertices = Array(distanceMatrix.size) { }.asImmutable(),
                         edges = distanceMatrix
                             .mapIndexed { _, edgesFromSource ->
                                 edgesFromSource
@@ -32,13 +34,13 @@ class TspFromMatrixTaskLoaderService(
                             .asImmutable()
                     )
                 }
-        logEstimates(task)
-        return task
+        logEstimates(TspTask(task))
+        return TspTask(task)
     }
 
-    override fun logEstimates(task: CompleteGraph<Unit, Int>) {
-        logOverEstimate(task)
-        logUnderEstimate(task)
+    override fun logEstimates(task: TspTask) {
+        logOverEstimate(task.distanceMatrix)
+        logUnderEstimate(task.distanceMatrix)
     }
 
     private fun logOverEstimate(task: CompleteGraph<Unit, Int>) {

@@ -2,18 +2,18 @@ package hu.raven.puppet.logic.step.select_survivers
 
 import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.dominatesSmaller
 import hu.raven.puppet.logic.operator.crowding_distance.CrowdingDistance
-import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIteration
+import hu.raven.puppet.model.solution.SolutionWithIteration
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
 
-class SelectSurvivorsMultiObjectiveElitistWithCrowdingDistance(
+class SelectSurvivorsMultiObjectiveElitistWithCrowdingDistance<R>(
     val crowdingDistance: CrowdingDistance
-) : SelectSurvivors {
-    override fun invoke(state: EvolutionaryAlgorithmState<*>): Unit = state.population.run {
+) : SelectSurvivors<R> {
+    override fun invoke(state: EvolutionaryAlgorithmState<R>): Unit = state.population.run {
         deactivateAll()
 
         val remaining = inactivesAsSequence().toMutableList()
-        val frontiers: List<List<IndexedValue<OnePartRepresentationWithCostAndIteration>>> = buildList {
+        val frontiers: List<List<IndexedValue<SolutionWithIteration<*>>>> = buildList {
             while (remaining.size != 0) {
                 val frontier = remaining
                     .filter { filtered ->

@@ -7,7 +7,7 @@ import hu.akos.hollo.szabo.primitives.get
 //random start point
 //select always the edge of the other parent
 //random element on miss
-data object AlternatingEdgeCrossOver : CrossOverOperator {
+data object AlternatingEdgeCrossOver : CrossOverOperator<Permutation> {
 
     override fun invoke(
         parentPermutations: Pair<Permutation, Permutation>,

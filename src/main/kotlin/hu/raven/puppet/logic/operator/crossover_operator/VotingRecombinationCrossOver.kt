@@ -5,7 +5,7 @@ import hu.akos.hollo.szabo.math.random.CardDeckRandomizer
 
 //copy matching values of parents
 //fill the rest randomly
-data object VotingRecombinationCrossOver : CrossOverOperator {
+data object VotingRecombinationCrossOver : CrossOverOperator<Permutation> {
 
     override fun invoke(
         parentPermutations: Pair<Permutation, Permutation>,

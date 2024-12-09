@@ -5,24 +5,25 @@ import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.length
 import hu.raven.puppet.logic.operator.calculate_cost.CalculateCost
 import hu.raven.puppet.logic.operator.crossover_operator.CrossOverOperator
 import hu.raven.puppet.logic.operator.weighted_selection.RouletteWheelSelection
-import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIteration
+import hu.raven.puppet.model.solution.SolutionWithIteration
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.model.step.crossover_strategy.CrossoverOperatorStatistic
 import hu.raven.puppet.model.step.crossover_strategy.OperatorStatistics
 
 
-class StatisticalRacingCrossOver(
-    override val crossoverOperators: List<CrossOverOperator>,
-    private val calculateCostOf: CalculateCost<*>,
-    private val statistics: CrossoverOperatorStatistic
-) : CrossOverStrategy() {
+class StatisticalRacingCrossOver<R>(
+    override val crossoverOperators: List<CrossOverOperator<R>>,
+    private val calculateCostOf: CalculateCost<R, *>,
+    private val statistics: CrossoverOperatorStatistic<R>,
+    private val representationSize: Int,
+) : CrossOverStrategy<R>() {
     private var lastIteration = -1
     private var iterationLock = Object()
-    private var operator: CrossOverOperator? = null
+    private var operator: CrossOverOperator<R>? = null
     private var actualStatistics: OperatorStatistics? = null
-    private var rouletteWheelSelection = RouletteWheelSelection<CrossOverOperator>()
+    private var rouletteWheelSelection = RouletteWheelSelection<CrossOverOperator<R>>()
 
-    override fun invoke(state: EvolutionaryAlgorithmState<*>) = state.run {
+    override fun invoke(state: EvolutionaryAlgorithmState<R>) = state.run {
         val children = population.inactivesAsSequence().chunked(2).toList()
         val parent = population.activesAsSequence()
             .shuffled()
@@ -48,20 +49,18 @@ class StatisticalRacingCrossOver(
             children[index].forEach {
                 it.value.iterationOfCreation = state.iteration
                 it.value.cost = null
-                if (!it.value.permutation.isFormatCorrect())
-                    throw Error("Invalid specimen!")
             }
         }
         population.activateAll()
     }
 
     private fun crossover(
-        state: EvolutionaryAlgorithmState<*>,
+        state: EvolutionaryAlgorithmState<R>,
         parents: Pair<
-                IndexedValue<OnePartRepresentationWithCostAndIteration> ,
-                IndexedValue<OnePartRepresentationWithCostAndIteration> ,
+                IndexedValue<SolutionWithIteration<R>>,
+                IndexedValue<SolutionWithIteration<R>>,
                 >,
-        child: OnePartRepresentationWithCostAndIteration,
+        child: SolutionWithIteration<R>,
     ): Unit = state.run {
         var newIteration: Boolean
         synchronized(iterationLock) {
@@ -76,13 +75,13 @@ class StatisticalRacingCrossOver(
                 synchronized(statistics.operatorsWithStatistics) {
                     operator(
                         Pair(
-                            parents.first.value.permutation,
-                            parents.second.value.permutation,
+                            parents.first.value.representation,
+                            parents.second.value.representation,
                         ),
-                        child.permutation
+                        child.representation
                     )
                 }
-                child.cost = calculateCostOf(child)
+                child.cost = calculateCostOf(child.representation)
                 /*    AuditWorkstation, ExpeditionArea*/
                 synchronized(oldStatistics) {
                     var newSuccess = oldStatistics.success
@@ -107,12 +106,12 @@ class StatisticalRacingCrossOver(
 
     private fun onNewIteration(
         iteration: Int,
-        child: OnePartRepresentationWithCostAndIteration
+        child: SolutionWithIteration<R>
     ) {
         synchronized(statistics) {
             actualStatistics?.let { oldStatistics ->
                 actualStatistics = OperatorStatistics(
-                    run = (oldStatistics.run + child.permutation.size) * 8 / 10,
+                    run = (oldStatistics.run + representationSize) * 8 / 10,
                     success = oldStatistics.success * 8 / 10,
                     successRatio = oldStatistics.success / oldStatistics.run.toLong()
                 )

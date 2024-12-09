@@ -1,7 +1,8 @@
 package hu.raven.puppet.logic.operator.diversity_of_population
 
 
-import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIteration
+import hu.akos.hollo.szabo.math.Permutation
+import hu.raven.puppet.model.solution.SolutionWithIteration
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -9,9 +10,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlin.math.abs
 
-data object DiversityOfPopulationByMatrixDistanceFromBest : DiversityOfPopulation {
+data object DiversityOfPopulationByMatrixDistanceFromBest : DiversityOfPopulation<Permutation> {
 
-    override fun invoke(algorithmState: EvolutionaryAlgorithmState<*>): Double = runBlocking {
+    override fun invoke(algorithmState: EvolutionaryAlgorithmState<Permutation>): Double = runBlocking {
         val best = algorithmState.copyOfBest ?: throw Exception("Algorithm didn't determine best solution yet!")
         val matrixOfBest = preceditionMatrixWithDistance(best.value)
         var diversity = 0.0
@@ -41,9 +42,9 @@ data object DiversityOfPopulationByMatrixDistanceFromBest : DiversityOfPopulatio
     }
 
     private fun preceditionMatrixWithDistance(
-        specimen: OnePartRepresentationWithCostAndIteration
+        specimen: SolutionWithIteration<Permutation>
     ): Array<IntArray> {
-        val permutation = specimen.permutation
+        val permutation = specimen.representation
         return Array(permutation.size) { fromIndex ->
             IntArray(permutation.size) { toIndex ->
                 permutation.indexOf(fromIndex) - permutation.indexOf(toIndex)

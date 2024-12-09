@@ -4,24 +4,25 @@ import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.dominatesSmaller
 import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.length
 import hu.raven.puppet.logic.operator.calculate_cost.CalculateCost
 import hu.raven.puppet.logic.operator.crossover_operator.CrossOverOperator
-import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIteration
+import hu.raven.puppet.model.solution.SolutionWithIteration
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 import hu.raven.puppet.model.step.crossover_strategy.CrossoverOperatorStatistic
 import hu.raven.puppet.model.step.crossover_strategy.OperatorStatistics
 
 
-class StatisticalRacingCrossOverWithLeader(
-    override val crossoverOperators: List<CrossOverOperator>,
-    private val calculateCostOf: CalculateCost<*>,
-    private val statistics: CrossoverOperatorStatistic
-) : CrossOverStrategy() {
+class StatisticalRacingCrossOverWithLeader<R>(
+    override val crossoverOperators: List<CrossOverOperator<R>>,
+    private val calculateCostOf: CalculateCost<R, *>,
+    private val statistics: CrossoverOperatorStatistic<R>,
+    private val representationSize: Int,
+) : CrossOverStrategy<R>() {
 
     private var lastIteration = -1
-    private var operator: CrossOverOperator? = null
+    private var operator: CrossOverOperator<R>? = null
     private var actualStatistics: OperatorStatistics? = null
 
 
-    override fun invoke(state: EvolutionaryAlgorithmState<*>) = state.run {
+    override fun invoke(state: EvolutionaryAlgorithmState<R>) = state.run {
         val children = population.inactivesAsSequence().chunked(2).toList()
         val parent = population.activesAsSequence()
             .shuffled()
@@ -47,27 +48,25 @@ class StatisticalRacingCrossOverWithLeader(
             children[index].forEach {
                 it.value.iterationOfCreation = state.iteration
                 it.value.cost = null
-                if (!it.value.permutation.isFormatCorrect())
-                    throw Error("Invalid specimen!")
             }
         }
         population.activateAll()
     }
 
     private fun crossover(
-        state: EvolutionaryAlgorithmState<*>,
+        state: EvolutionaryAlgorithmState<R>,
         parents: Pair<
-                IndexedValue<OnePartRepresentationWithCostAndIteration> ,
-                IndexedValue<OnePartRepresentationWithCostAndIteration> ,
+                IndexedValue<SolutionWithIteration<R>>,
+                IndexedValue<SolutionWithIteration<R>>,
                 >,
-        child: OnePartRepresentationWithCostAndIteration,
+        child: SolutionWithIteration<R>,
     ): Unit = state.run {
         if (lastIteration != iteration) {
             lastIteration = iteration
             synchronized(statistics) {
                 actualStatistics?.let { oldStatistics ->
                     actualStatistics = OperatorStatistics(
-                        run = (oldStatistics.run + child.permutation.size) * 8 / 10,
+                        run = (oldStatistics.run + representationSize) * 8 / 10,
                         success = oldStatistics.success * 8 / 10,
                         successRatio = oldStatistics.success / oldStatistics.run.toLong()
                     )
@@ -90,12 +89,12 @@ class StatisticalRacingCrossOverWithLeader(
             actualStatistics?.let { oldStatistics ->
                 operator.invoke(
                     Pair(
-                        parents.first.value.permutation,
-                        parents.second.value.permutation
+                        parents.first.value.representation,
+                        parents.second.value.representation
                     ),
-                    child.permutation
+                    child.representation
                 )
-                child.cost = calculateCostOf(child)
+                child.cost = calculateCostOf(child.representation)
                 synchronized(statistics) {
                     increaseSuccess(
                         oldStatistics,
@@ -112,11 +111,11 @@ class StatisticalRacingCrossOverWithLeader(
     private fun increaseSuccess(
         oldStatistics: OperatorStatistics,
         parents: Pair<
-                IndexedValue<OnePartRepresentationWithCostAndIteration> ,
-                IndexedValue<OnePartRepresentationWithCostAndIteration> ,
+                IndexedValue<SolutionWithIteration<R>>,
+                IndexedValue<SolutionWithIteration<R>>,
                 >,
-        child: OnePartRepresentationWithCostAndIteration,
-        state: EvolutionaryAlgorithmState<*>,
+        child: SolutionWithIteration<R>,
+        state: EvolutionaryAlgorithmState<R>,
     ): Unit = state.run {
         var newSuccess = oldStatistics.success
         if (parents.first.value.costOrException() dominatesSmaller child.costOrException()) {

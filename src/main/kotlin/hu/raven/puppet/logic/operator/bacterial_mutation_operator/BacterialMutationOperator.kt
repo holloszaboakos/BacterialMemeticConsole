@@ -1,11 +1,11 @@
 package hu.raven.puppet.logic.operator.bacterial_mutation_operator
 
 import hu.raven.puppet.logic.operator.select_segments.ContinuousSegment
-import hu.raven.puppet.model.solution.OnePartRepresentation
+import hu.raven.puppet.model.solution.AlgorithmSolution
 
-sealed interface BacterialMutationOperator {
+sealed interface BacterialMutationOperator<R, S : AlgorithmSolution<R, S>> {
     operator fun invoke(
-        clone: OnePartRepresentation,
+        clone: S,
         selectedSegments: Array<ContinuousSegment>,
     )
 }

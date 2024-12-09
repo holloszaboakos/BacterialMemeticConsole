@@ -5,7 +5,7 @@ import hu.akos.hollo.szabo.math.Permutation
 
 //copy matching positions
 //cross select for other positions
-data object DistancePreservingCrossOver : CrossOverOperator {
+data object DistancePreservingCrossOver : CrossOverOperator<Permutation> {
 
     override fun invoke(
         parentPermutations: Pair<Permutation, Permutation>,

@@ -1,10 +1,11 @@
 package hu.raven.puppet.logic.step.virus_transduction
 
-import hu.raven.puppet.model.state.VirusEvolutionaryAlgorithmState
+import hu.akos.hollo.szabo.math.Permutation
+import hu.raven.puppet.model.state.VirusAlgorithmState
 import kotlin.random.Random
 
-data object VegaTransduction : Transduction {
-    override fun invoke(state: VirusEvolutionaryAlgorithmState<*>) {
+class VegaTransduction : Transduction<Permutation> {
+    override fun invoke(state: VirusAlgorithmState<Permutation>) {
         state.virusPopulation
             .inactivesAsSequence()
             .forEach {
@@ -12,7 +13,7 @@ data object VegaTransduction : Transduction {
                     .shuffled()
                     .first()
                     .value
-                    .permutation
+                    .representation
 
                 val randomStartPosition = Random.nextInt(sourcePermutation.size - it.value.genes.size + 1)
 

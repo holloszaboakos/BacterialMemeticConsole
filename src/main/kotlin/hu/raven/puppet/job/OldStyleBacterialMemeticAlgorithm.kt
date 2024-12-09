@@ -1,5 +1,6 @@
 package hu.raven.puppet.job
 
+import hu.akos.hollo.szabo.math.Permutation
 import hu.raven.puppet.logic.initialize.InitializeEvolutionaryAlgorithm
 import hu.raven.puppet.logic.iteration.EvolutionaryAlgorithmIteration
 import hu.raven.puppet.logic.logging.JsonChannel
@@ -29,14 +30,14 @@ import hu.raven.puppet.logic.step.gene_transfer.GeneTransferByTournament
 import hu.raven.puppet.logic.step.order_population_by_cost.OrderPopulationByCost
 import hu.raven.puppet.logic.task.loader.TspFromMatrixTaskLoaderService
 import hu.raven.puppet.model.logging.LogType
-import hu.raven.puppet.model.solution.OnePartRepresentation
-import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIteration
+import hu.raven.puppet.model.solution.SolutionWithIteration
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
-import hu.raven.puppet.model.state.EvolutionaryAlgorithmStateForLogging
+import hu.raven.puppet.model.state.serializable.EvolutionaryAlgorithmStateForLogging
+import hu.raven.puppet.model.task.TspTask
 import hu.raven.puppet.model.utility.math.CompleteGraph
 import hu.raven.puppet.model.utility.math.MutableCompleteGraph
 import hu.raven.puppet.model.utility.math.toMutable
-import hu.raven.puppet.utility.extention.KoinUtil.get
+import hu.raven.puppet.utility.extention.KoinUtil
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.core.qualifier.named
@@ -106,13 +107,13 @@ private fun runBacterial(configuration: Configuration) {
                 single { configuration }
 
                 single {
-                    InitializeEvolutionaryAlgorithm<Task>(
+                    InitializeEvolutionaryAlgorithm<TspTask, Permutation>(
                         initializePopulation = get(),
                         orderPopulationByCost = get(),
                     )
                 }
 
-                single<InitializePopulation> {
+                single<InitializePopulation<*>> {
                     InitializePopulationByModuloStepper(
                         sizeOfPopulation = get<Configuration>().sizeOfPopulation,
                         sizeOfTask = get<Configuration>().sizeOfPermutation
@@ -120,21 +121,21 @@ private fun runBacterial(configuration: Configuration) {
                 }
 
                 single {
-                    OrderPopulationByCost<Task>(
+                    OrderPopulationByCost<Permutation, TspTask>(
                         calculateCostOf = get()
                     )
                 }
 
-                single<CalculateCost<*>> {
+                single<CalculateCost<*, *>> {
                     CalculateCostWithLogging(
-                        classOfSolutionRepresentation = OnePartRepresentationWithCostAndIteration::class.java,
-                        calculateCost = CalculateCostOfTspSolution(task = get<Task>()),
+                        classOfSolutionRepresentation = Permutation::class.java,
+                        calculateCost = CalculateCostOfTspSolution(task = get<TspTask>()),
                         loggingChannel = get(named("cost")),
-                        task = get<Task>()
+                        task = get<TspTask>()
                     )
                 }
 
-                single<Task> {
+                single<TspTask> {
                     TspFromMatrixTaskLoaderService(
                         fileName = get<Configuration>().fileName,
                         log = { println(it) }
@@ -143,7 +144,7 @@ private fun runBacterial(configuration: Configuration) {
                 }
 
                 single {
-                    val stateToSerializableMapper = { state: EvolutionaryAlgorithmState<Task> ->
+                    val stateToSerializableMapper = { state: EvolutionaryAlgorithmState<Permutation> ->
                         EvolutionaryAlgorithmStateForLogging(
                             population = state.population.activesAsSequence().toList(),
                             iteration = state.iteration
@@ -151,7 +152,7 @@ private fun runBacterial(configuration: Configuration) {
                     }
 
                     val wrapIntoLogger =
-                        { state: EvolutionaryAlgorithmStep<EvolutionaryAlgorithmState<Task>> ->
+                        { state: EvolutionaryAlgorithmStep<Permutation, EvolutionaryAlgorithmState<Permutation>> ->
                             StepLogger(
                                 state,
                                 get(named("state")),
@@ -161,21 +162,21 @@ private fun runBacterial(configuration: Configuration) {
 
                     EvolutionaryAlgorithmIteration(
                         steps = arrayOf(
-                            BacterialMutationOnBestAndLuckyByShuffling(
+                            BacterialMutationOnBestAndLuckyByShuffling<Permutation>(
                                 mutationOnSpecimen = get(),
                                 mutationPercentage = get<Configuration>().mutationPercentage
                             )
                                 .let(wrapIntoLogger),
-                            GeneTransferByTournament(
+                            GeneTransferByTournament<Permutation>(
                                 injectionCount = get<Configuration>().injectionCount,
                                 geneTransferOperator = get()
                             )
                                 .let(wrapIntoLogger),
-                            OrderPopulationByCost<Task>(
+                            OrderPopulationByCost<Permutation, TspTask>(
                                 calculateCostOf = get()
                             )
                                 .let(wrapIntoLogger),
-                            BoostOnBestAndLucky(
+                            BoostOnBestAndLucky<Permutation>(
                                 luckyCount = get<Configuration>().boostLuckyCount,
                                 boostOperator = get()
                             )
@@ -184,8 +185,8 @@ private fun runBacterial(configuration: Configuration) {
                     )
                 }
 
-                single<MutationOnSpecimen> {
-                    MutationWithElitistSelection(
+                single<MutationOnSpecimen<*, *>> {
+                    MutationWithElitistSelection<SolutionWithIteration<Permutation>>(
                         mutationOperator = get(),
                         calculateCostOf = get(),
                         selectSegments = get(),
@@ -194,7 +195,7 @@ private fun runBacterial(configuration: Configuration) {
                     )
                 }
 
-                single<BacterialMutationOperator> {
+                single<BacterialMutationOperator<*, *>> {
                     EdgeBuilderHeuristicOnContinuousSegment(
                         costGraph = get<Task>(),
                         extractEdgeWeight = Int::toFloat
@@ -205,22 +206,22 @@ private fun runBacterial(configuration: Configuration) {
                     SelectCuts(cloneSegmentLength = get<Configuration>().cloneSegmentLength)
                 }
 
-                single<GeneTransferOperator<*>> {
-                    GeneTransferByCrossOver<Task>(
+                single<GeneTransferOperator<*, *>> {
+                    GeneTransferByCrossOver<SolutionWithIteration<Permutation>>(
                         calculateCostOf = get(),
                         geneTransferSegmentLength = get<Configuration>().geneTransferSegmentLength,
                         crossOverOperator = get()
                     )
                 }
 
-                single<CrossOverOperator> {
+                single<CrossOverOperator<*>> {
                     HeuristicCrossOver(
                         costGraph = get(),
                         extractEdgeCost = Int::toFloat
                     )
                 }
 
-                single<BoostOperator<*>> {
+                single<BoostOperator<*, *>> {
                     SimplifiedTwoOptStepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit(
                         get(),
                         stepLimit = get<Configuration>().boostStepLimit,
@@ -230,7 +231,7 @@ private fun runBacterial(configuration: Configuration) {
                 }
 
                 single<LoggingChannel<*>>(named("state")) {
-                    JsonChannel<EvolutionaryAlgorithmStateForLogging>(
+                    JsonChannel<EvolutionaryAlgorithmStateForLogging<Permutation>>(
                         outputFolder = get<Configuration>().outputFolder,
                         outputFileName = "algorithmState",
                         type = LogType.INFO,
@@ -240,7 +241,7 @@ private fun runBacterial(configuration: Configuration) {
                 }
 
                 single<LoggingChannel<*>>(named("cost")) {
-                    JsonChannel<Pair<OnePartRepresentation, List<Float>>>(
+                    JsonChannel<Pair<Permutation, List<Float>>>(
                         outputFolder = get<Configuration>().outputFolder,
                         outputFileName = "cost",
                         type = LogType.INFO,
@@ -272,16 +273,19 @@ private fun runBacterial(configuration: Configuration) {
         )
     }
 
-    val algorithmState = get<InitializeEvolutionaryAlgorithm<Task>>()(get())
-    val iteration = get<EvolutionaryAlgorithmIteration<EvolutionaryAlgorithmState<Task>>>()
-    get<LoggingChannel<Configuration>>("config")
+    val algorithmState = KoinUtil.get<InitializeEvolutionaryAlgorithm<TspTask, Permutation>>()(
+        KoinUtil.get()
+    )
+    val iteration =
+        KoinUtil.get<EvolutionaryAlgorithmIteration<Permutation, EvolutionaryAlgorithmState<Permutation>>>()
+    KoinUtil.getBy<LoggingChannel<Configuration>>("config")
         .apply { initialize() }
-        .send(get<Configuration>())
-    get<LoggingChannel<MutableCompleteGraph<Unit, Int>>>("task")
+        .send(KoinUtil.get<Configuration>())
+    KoinUtil.getBy<LoggingChannel<MutableCompleteGraph<Unit, Int>>>("task")
         .apply { initialize() }
-        .send(get<Task>().toMutable())
+        .send(KoinUtil.get<Task>().toMutable())
 
-    repeat(get<Configuration>().iterationLimit) {
+    repeat(KoinUtil.get<Configuration>().iterationLimit) {
         iteration(algorithmState)
         if (it % 100 == 0) print(".")
     }

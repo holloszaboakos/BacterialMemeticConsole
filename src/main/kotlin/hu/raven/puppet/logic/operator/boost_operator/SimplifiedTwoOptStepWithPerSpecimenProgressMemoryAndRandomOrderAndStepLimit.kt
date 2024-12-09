@@ -1,28 +1,28 @@
 package hu.raven.puppet.logic.operator.boost_operator
 
+import hu.akos.hollo.szabo.math.Permutation
 import hu.raven.puppet.logic.operator.calculate_cost.CalculateCost
-import hu.raven.puppet.model.solution.IndexedOnePartRepresentationWithCost
-import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIteration
+import hu.raven.puppet.model.solution.SolutionWithIndex
 
 class SimplifiedTwoOptStepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit(
-    override val calculateCostOf: CalculateCost<*>,
+    override val calculateCostOf: CalculateCost<Permutation, *>,
     private val stepLimit: Int,
     populationSize: Int,
     permutationSize: Int,
-) : BoostOperator<IndexedOnePartRepresentationWithCost>() {
+) : BoostOperator<Permutation, SolutionWithIndex<Permutation>>() {
     private var lastPositionPerSpecimen = Array(populationSize) { Pair(0, 1) }
     private var shuffler = (0..<permutationSize)
         .shuffled()
         .toIntArray()
 
-    override fun invoke(specimen: IndexedOnePartRepresentationWithCost) {
+    override fun invoke(specimen: SolutionWithIndex<Permutation>) {
         val lastPosition = lastPositionPerSpecimen[specimen.index]
         var stepCount = 0
 
-        outer@ for (firstIndexIndex in lastPosition.first..<specimen.permutation.size - 1) {
+        outer@ for (firstIndexIndex in lastPosition.first..<specimen.representation.size - 1) {
             val firstIndex = shuffler[firstIndexIndex]
 
-            for (secondIndexIndex in lastPosition.second..<specimen.permutation.size) {
+            for (secondIndexIndex in lastPosition.second..<specimen.representation.size) {
                 val secondIndex = shuffler[secondIndexIndex]
 
                 if (stepCount == stepLimit) {

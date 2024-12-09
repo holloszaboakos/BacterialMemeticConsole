@@ -1,36 +1,37 @@
 package hu.raven.puppet.logic.operator.bacterial_mutation_on_specimen
 
+import hu.akos.hollo.szabo.math.Permutation
 import hu.raven.puppet.logic.operator.bacterial_mutation_operator.BacterialMutationOperator
 import hu.raven.puppet.logic.operator.calculate_cost.CalculateCost
 import hu.raven.puppet.logic.operator.select_segments.ContinuousSegment
 import hu.raven.puppet.logic.operator.select_segments.SelectSegments
-import hu.raven.puppet.model.solution.OnePartRepresentationWithCost
+import hu.raven.puppet.model.solution.AlgorithmSolution
 
-class MutationWithElitistSelectionAndModuloStepper(
-    override val mutationOperator: BacterialMutationOperator,
-    override val calculateCostOf: CalculateCost<*>,
+class MutationWithElitistSelectionAndModuloStepper<S : AlgorithmSolution<Permutation, S>>(
+    override val mutationOperator: BacterialMutationOperator<Permutation, S>,
+    override val calculateCostOf: CalculateCost<Permutation, *>,
     override val selectSegments: SelectSegments,
     override val cloneCount: Int,
     override val cloneCycleCount: Int,
     val determinismRatio: Float,
-) : MutationOnSpecimen() {
+) : MutationOnSpecimen<Permutation, S>() {
 
     override fun invoke(
-        specimenWithIndex: IndexedValue<OnePartRepresentationWithCost>,
+        specimenWithIndex: IndexedValue<S>,
         iteration: Int
     ): Unit = specimenWithIndex.value.let { specimen ->
-        specimen.cost = calculateCostOf(specimen)
+        specimen.cost = calculateCostOf(specimen.representation)
         repeat(cloneCycleCount) { cloneCycleIndex ->
             val clones = generateClones(
                 specimen,
-                selectSegments(specimen.permutation, iteration, cloneCycleCount, cloneCycleIndex)
+                selectSegments(specimen.representation, iteration, cloneCycleCount, cloneCycleIndex)
             )
             calcCostOfEachAndSort(clones)
 
             if (clones.first().cost != specimen.cost) {
-                specimen.permutation.clear()
-                specimen.permutation.indices.forEach { index ->
-                    specimen.permutation[index] = clones.first().permutation[index]
+                specimen.representation.clear()
+                specimen.representation.indices.forEach { index ->
+                    specimen.representation[index] = clones.first().representation[index]
                 }
                 specimen.cost = clones.first().cost
             }
@@ -38,10 +39,10 @@ class MutationWithElitistSelectionAndModuloStepper(
     }
 
     private fun generateClones(
-        specimen: OnePartRepresentationWithCost,
+        specimen: S,
         selectedSegment: Array<ContinuousSegment>
-    ): MutableList<OnePartRepresentationWithCost> {
-        val clones = MutableList(cloneCount + 1) { specimen.cloneRepresentationAndCost() }
+    ): MutableList<S> {
+        val clones = MutableList(cloneCount + 1) { specimen.clone() }
         val deterministicCount = (cloneCount * determinismRatio).toInt()
 
         val segmentsToMove = selectedSegment.filter { it.keepInPlace.not() }
@@ -56,7 +57,7 @@ class MutationWithElitistSelectionAndModuloStepper(
         clones
             .slice(1..<moduloStepperPermutations.size + 1)
             .forEachIndexed { cloneIndex, clone ->
-                clone.permutation.clear()
+                clone.representation.clear()
                 val segmentPermutation = moduloStepperPermutations[cloneIndex]
                 val segmentsOrdered = segmentsToMove.withIndex()
                     .sortedBy { segmentPermutation[it.index] }
@@ -75,7 +76,7 @@ class MutationWithElitistSelectionAndModuloStepper(
                     }
                     .flatMap { it.values.asIterable() }
                     .forEachIndexed { index, value ->
-                        clone.permutation[index] = value
+                        clone.representation[index] = value
                     }
             }
 

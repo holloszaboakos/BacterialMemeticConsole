@@ -2,22 +2,22 @@ package hu.raven.puppet.logic.operator.calculate_cost
 
 import hu.akos.hollo.szabo.math.vector.FloatVector
 import hu.raven.puppet.logic.logging.LoggingChannel
-import hu.raven.puppet.model.solution.OnePartRepresentation
+import hu.raven.puppet.model.task.AlgorithmTask
 
-class CalculateCostWithLogging<T, O : OnePartRepresentation>(
-    val classOfSolutionRepresentation: Class<O>,
-    val calculateCost: CalculateCost<T>,
-    private val loggingChannel: LoggingChannel<Pair<O, List<Float>>>,
+class CalculateCostWithLogging<R : Any, T : AlgorithmTask>(
+    val classOfSolutionRepresentation: Class<R>,
+    val calculateCost: CalculateCost<R, T>,
+    private val loggingChannel: LoggingChannel<Pair<R, List<Float>>>,
     override val task: T
-) : CalculateCost<T>() {
+) : CalculateCost<R, T>() {
     init {
         loggingChannel.initialize()
     }
 
-    override fun invoke(solution: OnePartRepresentation): FloatVector {
-        val result = calculateCost(solution)
-        if (solution::class.java == classOfSolutionRepresentation) {
-            loggingChannel.send(Pair(classOfSolutionRepresentation.cast(solution), result))
+    override fun invoke(representation: R): FloatVector {
+        val result = calculateCost(representation)
+        if (representation::class.java == classOfSolutionRepresentation) {
+            loggingChannel.send(Pair(classOfSolutionRepresentation.cast(representation), result))
         } else {
             throw Exception("Type mismatch!")
         }

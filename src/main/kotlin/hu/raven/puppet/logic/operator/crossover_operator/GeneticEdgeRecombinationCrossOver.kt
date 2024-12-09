@@ -12,7 +12,7 @@ import hu.akos.hollo.szabo.math.random.CardDeckRandomizer
 //remove selected value from each row
 //random value on miss
 //
-data object GeneticEdgeRecombinationCrossOver : CrossOverOperator {
+data object GeneticEdgeRecombinationCrossOver : CrossOverOperator<Permutation> {
 
     override fun invoke(
         parentPermutations: Pair<Permutation, Permutation>,

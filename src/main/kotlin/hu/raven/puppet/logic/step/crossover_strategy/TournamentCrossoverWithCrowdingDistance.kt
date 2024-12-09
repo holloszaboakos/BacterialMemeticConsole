@@ -6,12 +6,12 @@ import hu.raven.puppet.logic.operator.crowding_distance.CrowdingDistance
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
 
-class TournamentCrossoverWithCrowdingDistance(
-    override val crossoverOperators: List<CrossOverOperator>,
+class TournamentCrossoverWithCrowdingDistance<R>(
+    override val crossoverOperators: List<CrossOverOperator<R>>,
     private val crowdingDistance: CrowdingDistance,
     private val tournamentSize: Int,
-) : CrossOverStrategy() {
-    override fun invoke(state: EvolutionaryAlgorithmState<*>): Unit = state.run {
+) : CrossOverStrategy<R>() {
+    override fun invoke(state: EvolutionaryAlgorithmState<R>): Unit = state.run {
         val children = population.inactivesAsSequence()
             .chunked(2)
             .toList()
@@ -45,29 +45,25 @@ class TournamentCrossoverWithCrowdingDistance(
                     childIndex++
                     crossoverOperators.first()(
                         Pair(
-                            parentPair[0].value.permutation,
-                            parentPair[1].value.permutation
+                            parentPair[0].value.representation,
+                            parentPair[1].value.representation
                         ),
-                        childPair[0].value.permutation
+                        childPair[0].value.representation
                     )
                     crossoverOperators.first()(
                         Pair(
-                            parentPair[1].value.permutation,
-                            parentPair[0].value.permutation
+                            parentPair[1].value.representation,
+                            parentPair[0].value.representation
                         ),
-                        childPair[1].value.permutation
+                        childPair[1].value.representation
                     )
                     childPair[0].let {
                         it.value.iterationOfCreation = state.iteration
                         it.value.cost = null
-                        if (!it.value.permutation.isFormatCorrect())
-                            throw Error("Invalid specimen!")
                     }
                     childPair[1].let {
                         it.value.iterationOfCreation = state.iteration
                         it.value.cost = null
-                        if (!it.value.permutation.isFormatCorrect())
-                            throw Error("Invalid specimen!")
                     }
                 }
 

@@ -1,23 +1,25 @@
 package hu.raven.puppet.logic.operator.genetransfer_operator
 
 
+import hu.akos.hollo.szabo.math.Permutation
 import hu.akos.hollo.szabo.math.random.nextSegmentStartPosition
 import hu.raven.puppet.logic.operator.calculate_cost.CalculateCost
-import hu.raven.puppet.model.solution.OnePartRepresentationWithCost
+import hu.raven.puppet.model.solution.AlgorithmSolution
+
 import kotlin.random.Random
 
-class SegmentInjectionGeneTransfer<T>(
-    override val calculateCostOf: CalculateCost<T>,
+class SegmentInjectionGeneTransfer<S : AlgorithmSolution<Permutation, S>>(
+    override val calculateCostOf: CalculateCost<Permutation, *>,
     override val geneTransferSegmentLength: Int
-) : GeneTransferOperator<T>() {
+) : GeneTransferOperator<Permutation, S>() {
 
     override fun invoke(
-        source: OnePartRepresentationWithCost,
-        target: OnePartRepresentationWithCost
+        source: S,
+        target: S
     ) {
         val startOfSegment =
             Random.nextSegmentStartPosition(
-                source.permutation.indices.count(),
+                source.representation.indices.count(),
                 geneTransferSegmentLength
             )
         val rangeOfSegment = startOfSegment..<startOfSegment + geneTransferSegmentLength
@@ -38,28 +40,28 @@ class SegmentInjectionGeneTransfer<T>(
         )
 
         resetFlagsOf(target)
-        target.cost = calculateCostOf(target)
+        target.cost = calculateCostOf(target.representation)
     }
 
     private fun collectElementsOfSegment(
-        source: OnePartRepresentationWithCost,
+        source: S,
         rangeOfSegment: IntRange
     ): IntArray {
-        return source.permutation
+        return source.representation
             .slice(rangeOfSegment)
             .toList()
             .toIntArray()
     }
 
     private fun collectElementsNotInSegment(
-        target: OnePartRepresentationWithCost,
+        target: S,
         elementsOfSegment: IntArray,
     ): IntArray {
 
-        val segmentContains = BooleanArray(target.permutation.indices.count()) { false }
+        val segmentContains = BooleanArray(target.representation.indices.count()) { false }
         elementsOfSegment.forEach { segmentContains[it] = true }
 
-        return target.permutation
+        return target.representation
             .map { it }
             .filter { !segmentContains[it] }
             .toList()
@@ -67,17 +69,17 @@ class SegmentInjectionGeneTransfer<T>(
     }
 
     private fun loadSegmentToTarget(
-        target: OnePartRepresentationWithCost,
+        target: S,
         rangeOfSegment: IntRange,
         elementsOfSegment: IntArray,
         elementsOfTargetNotInSegment: IntArray,
     ) {
 
         val rangeOfBeforeSegment = 0..<rangeOfSegment.first
-        val rangeOfAfterSegment = (rangeOfSegment.last + 1)..<target.permutation.size
+        val rangeOfAfterSegment = (rangeOfSegment.last + 1)..<target.representation.size
 
-        target.permutation.indices.forEach { index ->
-            target.permutation[index] = when (index) {
+        target.representation.indices.forEach { index ->
+            target.representation[index] = when (index) {
                 in rangeOfBeforeSegment ->
                     elementsOfTargetNotInSegment[index]
 
@@ -92,7 +94,7 @@ class SegmentInjectionGeneTransfer<T>(
         }
     }
 
-    private fun resetFlagsOf(specimen: OnePartRepresentationWithCost) {
+    private fun resetFlagsOf(specimen: S) {
         specimen.cost = null
     }
 }

@@ -1,24 +1,25 @@
 package hu.raven.puppet.logic.operator.bacterial_mutation_operator
 
 import hu.akos.hollo.szabo.math.FloatSumExtensions.preciseSum
+import hu.akos.hollo.szabo.math.Permutation
 import hu.akos.hollo.szabo.math.calculus.multiplicativeInverse
 import hu.raven.puppet.logic.operator.select_segments.ContinuousSegment
 import hu.raven.puppet.logic.operator.weighted_selection.RouletteWheelSelection
-import hu.raven.puppet.model.solution.OnePartRepresentation
+import hu.raven.puppet.model.solution.AlgorithmSolution
 import hu.raven.puppet.model.utility.math.CompleteGraph
 import kotlin.math.min
 
-class SequentialSelectionHeuristicOnContinuousSegment<T>(
+class SequentialSelectionHeuristicOnContinuousSegment<T, S : AlgorithmSolution<Permutation, S>>(
     private val costGraph: CompleteGraph<*, T>,
     private val extractEdgeCost: (T) -> Float
-) : BacterialMutationOperator {
+) : BacterialMutationOperator<Permutation, S> {
 
     private val rouletteWheelSelection = RouletteWheelSelection<ContinuousSegment>()
     override fun invoke(
-        clone: OnePartRepresentation,
+        clone: S,
         selectedSegments: Array<ContinuousSegment>
     ) {
-        clone.permutation.clear()
+        clone.representation.clear()
 
         val segmentsToMove = selectedSegments.filter { it.keepInPlace.not() }
         val remainingSegmentsToMove = segmentsToMove.toMutableList()
@@ -97,7 +98,7 @@ class SequentialSelectionHeuristicOnContinuousSegment<T>(
             }
             .flatMap { it.values.toList() }
             .forEachIndexed { index, value ->
-                clone.permutation[index] = value
+                clone.representation[index] = value
             }
     }
 

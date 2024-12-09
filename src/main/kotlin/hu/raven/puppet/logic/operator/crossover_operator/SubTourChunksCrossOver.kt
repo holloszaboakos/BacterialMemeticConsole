@@ -5,7 +5,7 @@ import hu.akos.hollo.szabo.math.random.CardDeckRandomizer
 import hu.akos.hollo.szabo.primitives.get
 import kotlin.random.Random.Default.nextInt
 
-data object SubTourChunksCrossOver : CrossOverOperator {
+data object SubTourChunksCrossOver : CrossOverOperator<Permutation> {
 
     override fun invoke(
         parentPermutations: Pair<Permutation, Permutation>,

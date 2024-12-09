@@ -6,7 +6,7 @@ import kotlin.random.Random
 //select sequence
 //copy all values not in sequence
 //fill sequence in secondary order
-data object PartiallyMatchedCrossOver : CrossOverOperator {
+data object PartiallyMatchedCrossOver : CrossOverOperator<Permutation> {
 
     override fun invoke(
         parentPermutations: Pair<Permutation, Permutation>,

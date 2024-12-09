@@ -62,8 +62,9 @@ fun branchAndBoundsOnRegret(graph: BooleanMatrix): Pair<Permutation, Boolean> {
                 .reversed()
                 .toIntArray()
             BooleanNode.children
-                .addAll(extractChildrenOf(BooleanNode, graph, path)
-                    .filter { it.potentialCost < bestCost })
+                .addAll(
+                    extractChildrenOf(BooleanNode, graph, path)
+                        .filter { it.potentialCost < bestCost })
             BooleanNode.visited = true
             //LEAF
             BooleanNode = if (path.size == graph.dimensions.x) {

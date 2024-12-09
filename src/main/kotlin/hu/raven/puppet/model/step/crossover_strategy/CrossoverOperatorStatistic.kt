@@ -2,8 +2,8 @@ package hu.raven.puppet.model.step.crossover_strategy
 
 import hu.raven.puppet.logic.operator.crossover_operator.CrossOverOperator
 
-class CrossoverOperatorStatistic(
-    variants: List<CrossOverOperator>
+class CrossoverOperatorStatistic<R>(
+    variants: List<CrossOverOperator<R>>
 ) {
     val operatorsWithStatistics =
         variants

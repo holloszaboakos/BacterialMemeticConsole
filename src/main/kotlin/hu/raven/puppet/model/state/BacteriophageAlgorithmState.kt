@@ -1,12 +1,13 @@
 package hu.raven.puppet.model.state
 
 import hu.akos.hollo.szabo.collections.PoolWithActivation
-import hu.raven.puppet.model.solution.BacteriophageSpecimen
-import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIteration
+import hu.raven.puppet.model.solution.SolutionWithIteration
+import hu.raven.puppet.model.solution.partial.BacteriophageSpecimen
 
-
-class BacteriophageAlgorithmState<T>(
-    task: T,
-    population: PoolWithActivation<OnePartRepresentationWithCostAndIteration>,
+data class BacteriophageAlgorithmState<R>(
+    override var iteration: Int,
+    override val population: PoolWithActivation<SolutionWithIteration<R>>,
     val virusPopulation: PoolWithActivation<BacteriophageSpecimen>,
-) : EvolutionaryAlgorithmState<T>(task, population)
+    override var copyOfBest: IndexedValue<SolutionWithIteration<R>>?,
+    override var copyOfWorst: IndexedValue<SolutionWithIteration<R>>?
+) : EvolutionaryAlgorithmState<R>

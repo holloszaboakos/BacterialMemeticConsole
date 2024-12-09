@@ -2,18 +2,18 @@ package hu.raven.puppet.logic.step
 
 import hu.raven.puppet.logic.logging.LoggingChannel
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
-import hu.raven.puppet.model.state.EvolutionaryAlgorithmStateForLogging
+import hu.raven.puppet.model.state.serializable.EvolutionaryAlgorithmStateForLogging
 
-class StepLogger<in T : EvolutionaryAlgorithmState<*>, M : EvolutionaryAlgorithmStateForLogging>(
-    private val evolutionaryAlgorithmStep: EvolutionaryAlgorithmStep<T>,
+class StepLogger<R, in S : EvolutionaryAlgorithmState<R>, M : EvolutionaryAlgorithmStateForLogging<R>>(
+    private val evolutionaryAlgorithmStep: EvolutionaryAlgorithmStep<R, S>,
     private val loggingChannel: LoggingChannel<M>,
-    private val stateToSerializable: (T) -> M
-) : EvolutionaryAlgorithmStep<T> {
+    private val stateToSerializable: (S) -> M
+) : EvolutionaryAlgorithmStep<R, S> {
     init {
         loggingChannel.initialize()
     }
 
-    override fun invoke(state: T) {
+    override fun invoke(state: S) {
         evolutionaryAlgorithmStep(state)
         loggingChannel.send(state.let(stateToSerializable))
     }

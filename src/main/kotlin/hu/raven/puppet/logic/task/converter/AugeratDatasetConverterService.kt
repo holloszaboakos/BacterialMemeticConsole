@@ -3,11 +3,11 @@ package hu.raven.puppet.logic.task.converter
 import hu.akos.hollo.szabo.Gps
 import hu.akos.hollo.szabo.collections.asImmutable
 import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray
-import hu.raven.puppet.model.task.LocationWithVolume
-import hu.raven.puppet.model.task.ProcessedAugeratTask
-import hu.raven.puppet.model.task.augerat.InstanceBean
-import hu.raven.puppet.model.task.augerat.NodeBean
-import hu.raven.puppet.model.task.augerat.RequestBean
+import hu.raven.puppet.model.dataset.LocationWithVolume
+import hu.raven.puppet.model.dataset.ProcessedAugeratTask
+import hu.raven.puppet.model.dataset.augerat.InstanceBean
+import hu.raven.puppet.model.dataset.augerat.NodeBean
+import hu.raven.puppet.model.dataset.augerat.RequestBean
 import hu.raven.puppet.model.utility.math.CompleteGraph
 import kotlin.math.max
 import kotlin.math.pow

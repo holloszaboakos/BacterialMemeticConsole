@@ -12,10 +12,10 @@ fun main() {
     val task = TspFromMatrixTaskLoaderService("instance1.json") { println(it) }
         .loadTask("\\input\\tsp64x10_000")
 
-    val permutation = IntArray(task.edges.size - 1) { it }
+    val permutation = IntArray(task.distanceMatrix.edges.size - 1) { it }
         .apply { shuffle() }
         .asPermutation()
-    var currentCost = costOfPermutation(permutation, task)
+    var currentCost = costOfPermutation(permutation, task.distanceMatrix)
 
     var notImproved = 0
 
@@ -31,7 +31,7 @@ fun main() {
             positionPairs.forEach { indexPair ->
                 permutation.swapValues(indexPair[0], indexPair[1])
             }
-            val newCost = costOfPermutation(permutation, task)
+            val newCost = costOfPermutation(permutation, task.distanceMatrix)
 
             currentCost = if (newCost > currentCost || newCost == currentCost && Random.nextInt() % 16 != 0) {
                 positionPairs.reversed().forEach { indexPair ->

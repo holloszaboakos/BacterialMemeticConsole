@@ -5,7 +5,7 @@ import hu.akos.hollo.szabo.math.Permutation
 //start with first element of primary
 //select the position of the last inserted element in the secondary parent
 //insert the value of the position to its position in the primary parent
-data object CycleCrossOver : CrossOverOperator {
+data object CycleCrossOver : CrossOverOperator<Permutation> {
 
     override fun invoke(
         parentPermutations: Pair<Permutation, Permutation>,

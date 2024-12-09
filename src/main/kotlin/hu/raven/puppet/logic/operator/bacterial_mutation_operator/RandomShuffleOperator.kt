@@ -1,15 +1,16 @@
 package hu.raven.puppet.logic.operator.bacterial_mutation_operator
 
+import hu.akos.hollo.szabo.math.Permutation
 import hu.raven.puppet.logic.operator.select_segments.ContinuousSegment
-import hu.raven.puppet.model.solution.OnePartRepresentation
+import hu.raven.puppet.model.solution.AlgorithmSolution
 
-data object RandomShuffleOperator : BacterialMutationOperator {
+class RandomShuffleOperator<S : AlgorithmSolution<Permutation, S>> : BacterialMutationOperator<Permutation, S> {
 
     override fun invoke(
-        clone: OnePartRepresentation,
+        clone: S,
         selectedSegments: Array<ContinuousSegment>
     ) {
-        clone.permutation.clear()
+        clone.representation.clear()
 
         val segmentsShuffled = selectedSegments
             .filter { !it.keepInPlace }
@@ -30,7 +31,7 @@ data object RandomShuffleOperator : BacterialMutationOperator {
         newSegmentOrder
             .flatMap { it.values.toList() }
             .forEachIndexed { index, value ->
-                clone.permutation[index] = value
+                clone.representation[index] = value
             }
     }
 }

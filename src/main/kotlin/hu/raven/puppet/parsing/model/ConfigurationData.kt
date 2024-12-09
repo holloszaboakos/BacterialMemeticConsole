@@ -1,7 +1,7 @@
 package hu.raven.puppet.parsing.model
 
 data class ConfigurationData(
-    var specimenCount: Int = 0,
-    var iterationLimit: Int = 0,
-    var selectionPercentage: Float = 0f,
+    val specimenCount: Int,
+    val iterationLimit: Int,
+    val selectionPercentage: Float,
 )

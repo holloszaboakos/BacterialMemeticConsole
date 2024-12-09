@@ -77,8 +77,9 @@ fun branchAndBounds(graph: IntMatrix): Pair<Permutation, Int> {
                 .reversed()
                 .toIntArray()
             node.children
-                .addAll(extractChildrenOf(node, graph, path)
-                    .filter { it.potentialCost < bestCost })
+                .addAll(
+                    extractChildrenOf(node, graph, path)
+                        .filter { it.potentialCost < bestCost })
             node.visited = true
             //LEAF
             node = if (path.size == graph.dimensions.x) {

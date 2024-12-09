@@ -1,14 +1,11 @@
 package hu.raven.puppet.model.state
 
 import hu.akos.hollo.szabo.collections.PoolWithActivation
-import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIteration
+import hu.raven.puppet.model.solution.SolutionWithIteration
 
-
-open class EvolutionaryAlgorithmState<T>(
-    override val task: T,
-    open val population: PoolWithActivation<OnePartRepresentationWithCostAndIteration>
-) : IterativeAlgorithmState<T> {
-    override var iteration = 0
-    var copyOfBest: IndexedValue<OnePartRepresentationWithCostAndIteration>? = null
-    var copyOfWorst: IndexedValue<OnePartRepresentationWithCostAndIteration>? = null
+sealed interface EvolutionaryAlgorithmState<R> : IterativeAlgorithmState {
+    override var iteration: Int
+    val population: PoolWithActivation<SolutionWithIteration<R>>
+    var copyOfBest: IndexedValue<SolutionWithIteration<R>>?
+    var copyOfWorst: IndexedValue<SolutionWithIteration<R>>?
 }

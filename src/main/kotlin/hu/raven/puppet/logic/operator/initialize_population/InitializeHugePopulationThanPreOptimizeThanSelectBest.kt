@@ -1,19 +1,20 @@
 package hu.raven.puppet.logic.operator.initialize_population
 
 import hu.akos.hollo.szabo.collections.slice
+import hu.akos.hollo.szabo.math.Permutation
 import hu.akos.hollo.szabo.math.asPermutation
 import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.length
 import hu.raven.puppet.logic.operator.bacterial_mutation_on_specimen.MutationOnSpecimen
-import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIteration
+import hu.raven.puppet.model.solution.SolutionWithIteration
 
 class InitializeHugePopulationThanPreOptimizeThanSelectBest(
     private val sizeOfPopulation: Int,
     private val sizeOfTask: Int,
-    private val mutationOperator: MutationOnSpecimen,
-) : InitializePopulation {
+    private val mutationOperator: MutationOnSpecimen<Permutation, SolutionWithIteration<Permutation>>,
+) : InitializePopulation<Permutation> {
 
 
-    override fun invoke(): List<OnePartRepresentationWithCostAndIteration> {
+    override fun invoke(): List<SolutionWithIteration<Permutation>> {
         val basePermutation = IntArray(sizeOfTask) { it }
 
         var population = createPopulation(sizeOfTask)
@@ -35,7 +36,7 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest(
                 baseIndex = (baseIndex + step) % sizeOfTask
             }
             newPermutation.forEachIndexed { index, value ->
-                instance.permutation[index] = value
+                instance.representation[index] = value
             }
             instance.iterationOfCreation = 0
             instance.cost = null
@@ -48,16 +49,16 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest(
                 .map { it.first }
                 .slice(0..<sizeOfPopulation)
                 .map { specimen ->
-                    OnePartRepresentationWithCostAndIteration(
+                    SolutionWithIteration<Permutation>(
                         iterationOfCreation = specimen.value.iterationOfCreation,
                         cost = specimen.value.cost,
-                        permutation = specimen.value.permutation.clone()
+                        representation = specimen.value.representation.clone()
                     )
                 }.toList()
         return population
     }
 
-    private fun bacterialMutateEach(population: List<OnePartRepresentationWithCostAndIteration>) = population
+    private fun bacterialMutateEach(population: List<SolutionWithIteration<Permutation>>) = population
         .asSequence()
         .withIndex()
         .map { specimenWithIndex ->
@@ -71,19 +72,19 @@ class InitializeHugePopulationThanPreOptimizeThanSelectBest(
         }
 
 
-    private fun createPopulation(sizeOfTask: Int): List<OnePartRepresentationWithCostAndIteration> {
+    private fun createPopulation(sizeOfTask: Int): List<SolutionWithIteration<Permutation>> {
         return if (sizeOfTask != 1)
             MutableList((sizeOfTask)) {
-                OnePartRepresentationWithCostAndIteration(
+                SolutionWithIteration(
                     iterationOfCreation = 0,
                     cost = null,
-                    permutation = IntArray(sizeOfTask) { index -> index }
+                    representation = IntArray(sizeOfTask) { index -> index }
                         .asPermutation()
                 )
             }
         else
             mutableListOf(
-                OnePartRepresentationWithCostAndIteration(
+                SolutionWithIteration(
                     iterationOfCreation = 0,
                     cost = null,
                     intArrayOf(0).asPermutation()

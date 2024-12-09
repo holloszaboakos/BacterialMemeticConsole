@@ -1,5 +1,6 @@
 package hu.raven.puppet.job
 
+import hu.akos.hollo.szabo.math.Permutation
 import hu.raven.puppet.logic.initialize.InitializeAlgorithm
 import hu.raven.puppet.logic.initialize.InitializeBacteriophageAlgorithm
 import hu.raven.puppet.logic.initialize.InitializeEvolutionaryAlgorithm
@@ -44,23 +45,21 @@ import hu.raven.puppet.logic.step.select_survivers.SelectSurvivors
 import hu.raven.puppet.logic.step.select_survivers.SelectSurvivorsMultiObjectiveHalfElitist
 import hu.raven.puppet.logic.task.loader.TaskLoaderService
 import hu.raven.puppet.logic.task.loader.TspFromMatrixTaskLoaderService
+import hu.raven.puppet.model.configuration.AlgorithmConfiguration
 import hu.raven.puppet.model.logging.LogType
-import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIteration
+import hu.raven.puppet.model.solution.SolutionWithIteration
 import hu.raven.puppet.model.state.BacteriophageAlgorithmState
-import hu.raven.puppet.model.state.BacteriophageAlgorithmStateForLogging
-import hu.raven.puppet.model.utility.math.CompleteGraph
+import hu.raven.puppet.model.state.serializable.BacteriophageAlgorithmStateForLogging
+import hu.raven.puppet.model.task.TspTask
 import hu.raven.puppet.model.utility.math.MutableCompleteGraph
 import hu.raven.puppet.model.utility.math.toMutable
 import hu.raven.puppet.utility.extention.KoinUtil
-import hu.raven.puppet.utility.extention.KoinUtil.get
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import java.time.LocalDate
 import java.time.LocalDateTime
-
-private typealias TspTask = CompleteGraph<Unit, Int>
 
 data class BacteriophageAlgorithmConfiguration(
     val fileName: String,
@@ -86,7 +85,7 @@ data class BacteriophageAlgorithmConfiguration(
 
     val injectionCount: Int,
     val geneTransferSegmentLength: Int,
-)
+) : AlgorithmConfiguration
 
 fun main() {
     (0 until 10).forEach { taskInstanceIndex ->
@@ -156,15 +155,15 @@ private fun runBacteriophage(configuration: BacteriophageAlgorithmConfiguration)
             },
             module {
                 single<InitializeAlgorithm<*, *>> {
-                    InitializeBacteriophageAlgorithm(
-                        InitializeEvolutionaryAlgorithm<TspTask>(
+                    InitializeBacteriophageAlgorithm<TspTask, Permutation>(
+                        InitializeEvolutionaryAlgorithm(
                             initializePopulation = get(),
                             orderPopulationByCost = get()
                         ),
                         get()
                     )
                 }
-                single<InitializePopulation> {
+                single<InitializePopulation<*>> {
                     InitializePopulationByModuloStepper(
                         sizeOfPopulation = get<BacteriophageAlgorithmConfiguration>().sizeOfPopulation,
                         sizeOfTask = get<BacteriophageAlgorithmConfiguration>().sizeOfPermutation
@@ -174,12 +173,12 @@ private fun runBacteriophage(configuration: BacteriophageAlgorithmConfiguration)
                     BasicInitializationOfBacteriophagePopulation(get<BacteriophageAlgorithmConfiguration>().sizeOfBacteriophagePopulation)
                 }
                 single {
-                    OrderPopulationByCost<TspTask>(calculateCostOf = get())
+                    OrderPopulationByCost<Permutation, TspTask>(calculateCostOf = get())
                 }
-                single<CalculateCost<*>> {
+                single<CalculateCost<*, *>> {
                     CalculateCostWithLogging(
-                        classOfSolutionRepresentation = OnePartRepresentationWithCostAndIteration::class.java,
-                        calculateCost = CalculateCostOfTspSolution(task = get<TspTask>()),
+                        classOfSolutionRepresentation = Permutation::class.java,
+                        calculateCost = CalculateCostOfTspSolution(task = get()),
                         loggingChannel = get(named("cost")),
                         task = get<TspTask>()
                     )
@@ -193,8 +192,8 @@ private fun runBacteriophage(configuration: BacteriophageAlgorithmConfiguration)
                 single {
                     get<TaskLoaderService<TspTask>>().loadTask(folderPath = get<BacteriophageAlgorithmConfiguration>().inputFolder)
                 }
-                single<AlgorithmIteration<BacteriophageAlgorithmState<TspTask>>> {
-                    val stateToSerializableMapper = { state: BacteriophageAlgorithmState<TspTask> ->
+                single<AlgorithmIteration<*>> {
+                    val stateToSerializableMapper = { state: BacteriophageAlgorithmState<Permutation> ->
                         BacteriophageAlgorithmStateForLogging(
                             population = state.population.activesAsSequence().toList(),
                             virusPopulation = state.virusPopulation.activesAsSequence().map { it.value }.toList(),
@@ -203,7 +202,7 @@ private fun runBacteriophage(configuration: BacteriophageAlgorithmConfiguration)
                     }
 
                     val wrapIntoLogger =
-                        { state: EvolutionaryAlgorithmStep<BacteriophageAlgorithmState<TspTask>> ->
+                        { state: EvolutionaryAlgorithmStep<Permutation, BacteriophageAlgorithmState<Permutation>> ->
                             StepLogger(
                                 state,
                                 get(named("state")),
@@ -213,24 +212,24 @@ private fun runBacteriophage(configuration: BacteriophageAlgorithmConfiguration)
 
                     EvolutionaryAlgorithmIteration(
                         steps = arrayOf(
-                            get<SelectSurvivors>().let(wrapIntoLogger),
-                            get<BacterialMutation>().let(wrapIntoLogger),
-                            get<BacteriophageTranscription<TspTask>>().let(wrapIntoLogger),
-                            get<OrderPopulationByCost<TspTask>>().let(wrapIntoLogger),
-                            get<BoostStrategy>().let(wrapIntoLogger),
+                            get<SelectSurvivors<Permutation>>().let(wrapIntoLogger),
+                            get<BacterialMutation<Permutation, SolutionWithIteration<Permutation>>>().let(wrapIntoLogger),
+                            get<BacteriophageTranscription<Permutation>>().let(wrapIntoLogger),
+                            get<OrderPopulationByCost<Permutation, TspTask>>().let(wrapIntoLogger),
+                            get<BoostStrategy<Permutation>>().let(wrapIntoLogger),
                         )
                     )
                 }
-                single<SelectSurvivors> {
-                    SelectSurvivorsMultiObjectiveHalfElitist
+                single<SelectSurvivors<*>> {
+                    SelectSurvivorsMultiObjectiveHalfElitist<Permutation>()
                 }
-                single<BacterialMutation> {
-                    BacterialMutationOnBestAndLuckyByShuffling(
+                single<BacterialMutation<*, *>> {
+                    BacterialMutationOnBestAndLuckyByShuffling<Permutation>(
                         get(),
                         get<BacteriophageAlgorithmConfiguration>().mutationPercentage
                     )
                 }
-                single<MutationOnSpecimen> {
+                single<MutationOnSpecimen<Permutation, SolutionWithIteration<Permutation>>> {
                     MutationOnSpecimenWithBacteriophageTransduction(
                         MutationWithElitistSelection(
                             get(),
@@ -239,9 +238,8 @@ private fun runBacteriophage(configuration: BacteriophageAlgorithmConfiguration)
                             cloneCount = get<BacteriophageAlgorithmConfiguration>().cloneCount,
                             cloneCycleCount = get<BacteriophageAlgorithmConfiguration>().cloneCycleCount
                         ),
-                        get(),
-                        KoinUtil::get
-                    )
+                        get()
+                    ) { KoinUtil.get() }
                 }
                 single<BacteriophageAlgorithmState<TspTask>> {
                     get<InitializeAlgorithm<TspTask, BacteriophageAlgorithmState<TspTask>>>()(
@@ -249,32 +247,32 @@ private fun runBacteriophage(configuration: BacteriophageAlgorithmConfiguration)
                     )
                 }
                 single { BacteriophageTransductionOperator() }
-                single<BacterialMutationOperator> { EdgeBuilderHeuristicOnContinuousSegment(get(), Int::toFloat) }
+                single<BacterialMutationOperator<*, *>> { EdgeBuilderHeuristicOnContinuousSegment(get(), Int::toFloat) }
                 single<SelectSegments> { SelectCuts(cloneSegmentLength = get<BacteriophageAlgorithmConfiguration>().cloneSegmentLength) }
 
-                single<GeneTransfer> {
-                    GeneTransferByTournament(
+                single<GeneTransfer<*>> {
+                    GeneTransferByTournament<Permutation>(
                         injectionCount = get<BacteriophageAlgorithmConfiguration>().injectionCount,
                         geneTransferOperator = get()
                     )
                 }
 
-                single<GeneTransferOperator<*>> {
-                    GeneTransferByCrossOver<TspTask>(
+                single<GeneTransferOperator<*, *>> {
+                    GeneTransferByCrossOver<SolutionWithIteration<Permutation>>(
                         calculateCostOf = get(),
                         geneTransferSegmentLength = get<BacteriophageAlgorithmConfiguration>().geneTransferSegmentLength,
                         crossOverOperator = get()
                     )
                 }
 
-                single<CrossOverOperator> {
+                single<CrossOverOperator<Permutation>> {
                     HeuristicCrossOver(
                         costGraph = get(),
                         extractEdgeCost = Int::toFloat
                     )
                 }
 
-                single<BacteriophageTranscription<TspTask>> {
+                single<BacteriophageTranscription<Permutation>> {
                     BacteriophageTranscriptionByLooseMatchingAndHeuristicCompletion(
                         get<BacteriophageAlgorithmConfiguration>().infectionRate,
                         get<BacteriophageAlgorithmConfiguration>().lifeReductionRate,
@@ -284,13 +282,13 @@ private fun runBacteriophage(configuration: BacteriophageAlgorithmConfiguration)
                         Int::toFloat
                     )
                 }
-                single<BoostStrategy> {
+                single<BoostStrategy<Permutation>> {
                     BoostOnBestAndLucky(
                         luckyCount = get<BacteriophageAlgorithmConfiguration>().boostLuckyCount,
                         boostOperator = get()
                     )
                 }
-                single<BoostOperator<*>> {
+                single<BoostOperator<*, *>> {
                     BoostOperatorWithBacteriophageTransduction(
                         SimplifiedTwoOptStepWithPerSpecimenProgressMemoryAndRandomOrderAndStepLimit(
                             get(),
@@ -303,7 +301,7 @@ private fun runBacteriophage(configuration: BacteriophageAlgorithmConfiguration)
                 }
 
                 single<LoggingChannel<*>>(named("state")) {
-                    JsonChannel<BacteriophageAlgorithmStateForLogging>(
+                    JsonChannel<BacteriophageAlgorithmStateForLogging<Permutation>>(
                         outputFolder = get<BacteriophageAlgorithmConfiguration>().outputFolder,
                         outputFileName = "algorithmState",
                         type = LogType.INFO,
@@ -313,7 +311,7 @@ private fun runBacteriophage(configuration: BacteriophageAlgorithmConfiguration)
                 }
 
                 single<LoggingChannel<*>>(named("cost")) {
-                    JsonChannel<Pair<OnePartRepresentationWithCostAndIteration, List<Float>>>(
+                    JsonChannel<Pair<SolutionWithIteration<Permutation>, List<Float>>>(
                         outputFolder = get<BacteriophageAlgorithmConfiguration>().outputFolder,
                         outputFileName = "cost",
                         type = LogType.INFO,
@@ -345,17 +343,17 @@ private fun runBacteriophage(configuration: BacteriophageAlgorithmConfiguration)
         )
     }
 
-    val iteration: AlgorithmIteration<BacteriophageAlgorithmState<TspTask>> = get()
-    val algorithmState: BacteriophageAlgorithmState<TspTask> = get()
+    val iteration: AlgorithmIteration<BacteriophageAlgorithmState<Permutation>> = KoinUtil.get()
+    val algorithmState: BacteriophageAlgorithmState<Permutation> = KoinUtil.get()
 
-    get<LoggingChannel<BacteriophageAlgorithmConfiguration>>("config")
+    KoinUtil.getBy<LoggingChannel<BacteriophageAlgorithmConfiguration>>("config")
         .apply { initialize() }
-        .send(get<BacteriophageAlgorithmConfiguration>())
-    get<LoggingChannel<MutableCompleteGraph<Unit, Int>>>("task")
+        .send(KoinUtil.get<BacteriophageAlgorithmConfiguration>())
+    KoinUtil.getBy<LoggingChannel<MutableCompleteGraph<Unit, Int>>>("task")
         .apply { initialize() }
-        .send(get<TspTask>().toMutable())
+        .send(KoinUtil.get<TspTask>().distanceMatrix.toMutable())
 
-    repeat(get<BacteriophageAlgorithmConfiguration>().iterationLimit) {
+    repeat(KoinUtil.get<BacteriophageAlgorithmConfiguration>().iterationLimit) {
         iteration(algorithmState)
         if (it % 100 == 0)
             println("iteration $it.: ${algorithmState.copyOfBest}")

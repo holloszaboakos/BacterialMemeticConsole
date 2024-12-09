@@ -15,7 +15,7 @@ import kotlin.random.Random.Default.nextInt
 class HeuristicCrossOver<T>(
     private val costGraph: CompleteGraph<*, T>,
     private val extractEdgeCost: (T) -> Float
-) : CrossOverOperator {
+) : CrossOverOperator<Permutation> {
 
     private val rouletteWheelSelection = RouletteWheelSelection<Int>()
 

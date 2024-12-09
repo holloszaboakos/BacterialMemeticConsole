@@ -2,16 +2,16 @@ package hu.raven.puppet.logic.step.mutate_children
 
 import hu.akos.hollo.szabo.collections.slice
 import hu.akos.hollo.szabo.math.Permutation
-import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIteration
+import hu.raven.puppet.model.solution.SolutionWithIteration
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
-data object MutateChildrenByReset : MutateChildren {
+data object MutateChildrenByReset : MutateChildren<Permutation> {
 
-    override fun invoke(state: EvolutionaryAlgorithmState<*>): Unit = state.run {
+    override fun invoke(state: EvolutionaryAlgorithmState<Permutation>): Unit = state.run {
         val basePermutation =
-            List(copyOfBest?.value?.permutation?.indices?.count() ?: 0) { it }.shuffled().toIntArray()
+            List(copyOfBest?.value?.representation?.indices?.count() ?: 0) { it }.shuffled().toIntArray()
 
-        if (state.population.activesAsSequence().first().value.permutation.size <= 1)
+        if (state.population.activesAsSequence().first().value.representation.size <= 1)
             return@run
 
         population.activesAsSequence()
@@ -26,33 +26,33 @@ data object MutateChildrenByReset : MutateChildren {
 
     private fun onChild(
         instanceIndex: Int,
-        child: OnePartRepresentationWithCostAndIteration,
+        child: SolutionWithIteration<Permutation>,
         basePermutation: IntArray
     ) {
 
-        if (instanceIndex >= child.permutation.indices.count()) {
+        if (instanceIndex >= child.representation.indices.count()) {
             return
         }
 
-        val step = instanceIndex % (child.permutation.indices.count() - 1) + 1
+        val step = instanceIndex % (child.representation.indices.count() - 1) + 1
         if (step == 1) {
             basePermutation.shuffle()
         }
 
-        val newPermutation = Permutation(child.permutation.indices.count())
+        val newPermutation = Permutation(child.representation.indices.count())
         var baseIndex = step
-        for (newIndex in 0..<child.permutation.indices.count()) {
+        for (newIndex in 0..<child.representation.indices.count()) {
             if (newPermutation.contains(basePermutation[baseIndex]))
-                baseIndex = (baseIndex + 1) % child.permutation.indices.count()
+                baseIndex = (baseIndex + 1) % child.representation.indices.count()
             newPermutation[newIndex] = basePermutation[baseIndex]
-            baseIndex = (baseIndex + step) % child.permutation.indices.count()
+            baseIndex = (baseIndex + step) % child.representation.indices.count()
         }
 
         newPermutation.forEachIndexed { index, value ->
-            child.permutation[index] = value
+            child.representation[index] = value
         }
 
-        if (!child.permutation.isFormatCorrect())
+        if (!child.representation.isFormatCorrect())
             throw Error("Invalid specimen!")
     }
 }

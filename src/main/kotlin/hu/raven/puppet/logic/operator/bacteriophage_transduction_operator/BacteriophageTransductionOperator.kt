@@ -1,7 +1,7 @@
 package hu.raven.puppet.logic.operator.bacteriophage_transduction_operator
 
 import hu.akos.hollo.szabo.math.Permutation
-import hu.raven.puppet.model.solution.BacteriophageSpecimen
+import hu.raven.puppet.model.solution.partial.BacteriophageSpecimen
 import hu.raven.puppet.model.utility.math.GraphEdge
 
 class BacteriophageTransductionOperator {

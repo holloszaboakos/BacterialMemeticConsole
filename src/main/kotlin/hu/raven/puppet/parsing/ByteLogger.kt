@@ -79,7 +79,7 @@ class ByteLogger(
         return null
     }
 
-    fun logTask(taskData: TaskData) {
+    fun logConfiguration(taskData: TaskData) {
         val taskDataFile: Path = logsDirectory!!.resolve("_task.log.gz")
         val taskSerializer = TaskSerializer()
 
@@ -91,7 +91,7 @@ class ByteLogger(
             }
     }
 
-    fun logTask(configurationData: ConfigurationData) {
+    fun logConfiguration(configurationData: ConfigurationData) {
         val metaDataFile: Path = logsDirectory!!.resolve("_metadata.log.gz")
         val configurationSerializer = ConfigurationSerializer()
         metaDataFile.toFile()

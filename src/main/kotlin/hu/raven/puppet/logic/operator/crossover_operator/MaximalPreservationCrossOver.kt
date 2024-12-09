@@ -6,7 +6,7 @@ import kotlin.random.Random.Default.nextInt
 //select size between 1/4 and 1/2
 //select segment of primary with size
 //fill the rest from the secondary
-data object MaximalPreservationCrossOver : CrossOverOperator {
+data object MaximalPreservationCrossOver : CrossOverOperator<Permutation> {
 
     override fun invoke(
         parentPermutations: Pair<Permutation, Permutation>,

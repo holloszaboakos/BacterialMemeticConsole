@@ -1,7 +1,7 @@
 package hu.raven.puppet.logic.operator.initialize_population
 
-import hu.raven.puppet.model.solution.OnePartRepresentationWithCostAndIteration
+import hu.raven.puppet.model.solution.SolutionWithIteration
 
-sealed interface InitializePopulation {
-    operator fun invoke(): List<OnePartRepresentationWithCostAndIteration>
+sealed interface InitializePopulation<R> {
+    operator fun invoke(): List<SolutionWithIteration<R>>
 }

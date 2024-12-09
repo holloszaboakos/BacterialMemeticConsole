@@ -8,7 +8,7 @@ import kotlin.random.Random
 //connect rest of segments randomly
 //support: track built segments for cycle detection
 //O(n^2)
-data object EdgeSelectorCrossOver : CrossOverOperator {
+data object EdgeSelectorCrossOver : CrossOverOperator<Permutation> {
     override fun invoke(parentPermutations: Pair<Permutation, Permutation>, childPermutation: Permutation) {
         childPermutation.clear()
 

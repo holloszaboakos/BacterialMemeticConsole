@@ -4,10 +4,10 @@ import hu.akos.hollo.szabo.Gps
 import hu.akos.hollo.szabo.collections.asImmutable
 import hu.akos.hollo.szabo.collections.immutablearrays.ImmutableArray
 import hu.akos.hollo.szabo.physics.Second
-import hu.raven.puppet.model.task.LocationWithVolumeAndName
-import hu.raven.puppet.model.task.ProcessedDesmetTask
-import hu.raven.puppet.model.task.desmet.DesmetTask
-import hu.raven.puppet.model.task.desmet.NodeCoordinate
+import hu.raven.puppet.model.dataset.LocationWithVolumeAndName
+import hu.raven.puppet.model.dataset.ProcessedDesmetTask
+import hu.raven.puppet.model.dataset.augerat.desmet.DesmetTask
+import hu.raven.puppet.model.dataset.augerat.desmet.NodeCoordinate
 import hu.raven.puppet.model.utility.math.CompleteGraph
 
 data object DesmetDatasetConverterService : TaskConverterService<DesmetTask, ProcessedDesmetTask>() {

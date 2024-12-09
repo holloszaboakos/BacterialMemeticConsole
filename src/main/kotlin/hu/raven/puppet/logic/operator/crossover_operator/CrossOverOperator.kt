@@ -1,10 +1,8 @@
 package hu.raven.puppet.logic.operator.crossover_operator
 
-import hu.akos.hollo.szabo.math.Permutation
-
-sealed interface CrossOverOperator {
+sealed interface CrossOverOperator<R> {
     operator fun invoke(
-        parentPermutations: Pair<Permutation, Permutation>,
-        childPermutation: Permutation
+        parentPermutations: Pair<R, R>,
+        childPermutation: R
     )
 }

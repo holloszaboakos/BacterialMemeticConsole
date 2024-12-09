@@ -2,14 +2,15 @@ package hu.raven.puppet.logic.step.gene_transfer
 
 import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.length
 import hu.raven.puppet.logic.operator.genetransfer_operator.GeneTransferOperator
+import hu.raven.puppet.model.solution.SolutionWithIteration
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
 
-class GeneTransferByTournament(
+class GeneTransferByTournament<R>(
     override val injectionCount: Int,
-    override val geneTransferOperator: GeneTransferOperator<*>,
-) : GeneTransfer() {
-    override fun invoke(state: EvolutionaryAlgorithmState<*>): Unit = state.run {
+    override val geneTransferOperator: GeneTransferOperator<R, SolutionWithIteration<R>>,
+) : GeneTransfer<R>() {
+    override fun invoke(state: EvolutionaryAlgorithmState<R>): Unit = state.run {
         if (population.activeCount <= 1 || injectionCount == 0) {
             return
         }

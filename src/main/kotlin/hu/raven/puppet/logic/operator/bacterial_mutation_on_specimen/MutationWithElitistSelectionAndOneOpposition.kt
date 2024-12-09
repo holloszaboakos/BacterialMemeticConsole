@@ -1,41 +1,42 @@
 package hu.raven.puppet.logic.operator.bacterial_mutation_on_specimen
 
+import hu.akos.hollo.szabo.math.Permutation
 import hu.raven.puppet.logic.operator.bacterial_mutation_operator.BacterialMutationOperator
 import hu.raven.puppet.logic.operator.bacterial_mutation_operator.OppositionOperator
 import hu.raven.puppet.logic.operator.calculate_cost.CalculateCost
 import hu.raven.puppet.logic.operator.select_segments.ContinuousSegment
 import hu.raven.puppet.logic.operator.select_segments.SelectSegments
-import hu.raven.puppet.model.solution.OnePartRepresentationWithCost
+import hu.raven.puppet.model.solution.AlgorithmSolution
 
-class MutationWithElitistSelectionAndOneOpposition(
-    override val mutationOperator: BacterialMutationOperator,
-    override val calculateCostOf: CalculateCost<*>,
+class MutationWithElitistSelectionAndOneOpposition<S : AlgorithmSolution<Permutation, S>>(
+    override val mutationOperator: BacterialMutationOperator<Permutation, S>,
+    override val calculateCostOf: CalculateCost<Permutation, *>,
     override val selectSegments: SelectSegments,
     override val cloneCount: Int,
     override val cloneCycleCount: Int
-) : MutationOnSpecimen() {
+) : MutationOnSpecimen<Permutation, S>() {
 
-    private val oppositionOperator = OppositionOperator
+    private val oppositionOperator = OppositionOperator<S>()
 
     override fun invoke(
-        specimenWithIndex: IndexedValue<OnePartRepresentationWithCost>,
+        specimenWithIndex: IndexedValue<S>,
         iteration: Int
     ) = specimenWithIndex.value.let { specimen ->
         if (specimen.cost == null) {
-            specimen.cost = calculateCostOf(specimen)
+            specimen.cost = calculateCostOf(specimen.representation)
         }
         repeat(cloneCycleCount) { cycleIndex ->
             val clones = generateClones(
                 specimen,
-                selectSegments(specimen.permutation, iteration, cycleIndex, cloneCycleCount)
+                selectSegments(specimen.representation, iteration, cycleIndex, cloneCycleCount)
             )
 
             calcCostOfEachAndSort(clones)
 
             if (clones.first().cost != specimen.cost) {
-                specimen.permutation.clear()
-                specimen.permutation.indices.forEach { index ->
-                    specimen.permutation[index] = clones.first().permutation[index]
+                specimen.representation.clear()
+                specimen.representation.indices.forEach { index ->
+                    specimen.representation[index] = clones.first().representation[index]
                 }
                 specimen.cost = clones.first().cost
             }
@@ -43,10 +44,10 @@ class MutationWithElitistSelectionAndOneOpposition(
     }
 
     private fun generateClones(
-        specimen: OnePartRepresentationWithCost,
+        specimen: S,
         selectedSegment: Array<ContinuousSegment>
-    ): MutableList<OnePartRepresentationWithCost> {
-        val clones = MutableList(cloneCount + 1) { specimen.cloneRepresentationAndCost() }
+    ): MutableList<S> {
+        val clones = MutableList(cloneCount + 1) { specimen.clone() }
 
         oppositionOperator.invoke(clones[1], selectedSegment)
 

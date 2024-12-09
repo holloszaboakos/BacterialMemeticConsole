@@ -6,7 +6,7 @@ import kotlin.random.Random
 //select positions by 50% chance
 //copy to child from primary
 //fill the rest from secondary
-data object OrderBasedCrossOver : CrossOverOperator {
+data object OrderBasedCrossOver : CrossOverOperator<Permutation> {
 
     override fun invoke(
         parentPermutations: Pair<Permutation, Permutation>,

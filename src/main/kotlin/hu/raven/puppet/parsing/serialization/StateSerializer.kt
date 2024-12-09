@@ -7,13 +7,12 @@ import java.nio.ByteBuffer
 class StateSerializer : ByteSerializer<StateData> {
     val specimenSerializer = SpecimenSerializer()
     override fun serialize(obj: StateData): ByteArray {
-        val specimenSerialized = obj.specimens.map {
-            specimenSerializer.serialize(it)
-        }
+        val specimenSerialized = obj.specimens
+            .map { specimenSerializer.serialize(it) }
 
         val buffer = ByteBuffer
             .allocate(
-                3 * Int.SIZE_BYTES + specimenSerialized.size * specimenSerialized[0].size
+                4 * Int.SIZE_BYTES + specimenSerialized.size * specimenSerialized[0].size
             )
 
         buffer.putInt(obj.phase.ordinal)

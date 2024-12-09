@@ -4,8 +4,8 @@ import hu.akos.hollo.szabo.math.vector.FloatVector.Companion.dominatesSmaller
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
 
-data object SelectSurvivorsMultiObjectiveTournament : SelectSurvivors {
-    override fun invoke(state: EvolutionaryAlgorithmState<*>): Unit = state.population.run {
+class SelectSurvivorsMultiObjectiveTournament<R> : SelectSurvivors<R> {
+    override fun invoke(state: EvolutionaryAlgorithmState<R>): Unit = state.population.run {
         deactivateAll()
         while (activeCount < poolSize / 2) {
             inactivesAsSequence()

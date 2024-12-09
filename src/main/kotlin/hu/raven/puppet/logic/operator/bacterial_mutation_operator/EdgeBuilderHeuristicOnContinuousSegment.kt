@@ -1,27 +1,24 @@
 package hu.raven.puppet.logic.operator.bacterial_mutation_operator
 
 import hu.akos.hollo.szabo.math.FloatSumExtensions.preciseSum
+import hu.akos.hollo.szabo.math.Permutation
 import hu.akos.hollo.szabo.math.calculus.multiplicativeInverse
 import hu.raven.puppet.logic.operator.select_segments.ContinuousSegment
-import hu.raven.puppet.model.solution.OnePartRepresentation
+import hu.raven.puppet.model.solution.AlgorithmSolution
 import hu.raven.puppet.model.utility.math.CompleteGraph
 import hu.raven.puppet.model.utility.math.GraphEdge
 import hu.raven.puppet.utility.buildPermutation
 import kotlin.math.min
 import kotlin.random.Random
 
-class EdgeBuilderHeuristicOnContinuousSegment<T>(
+class EdgeBuilderHeuristicOnContinuousSegment<S : AlgorithmSolution<Permutation, S>, T>(
     private val costGraph: CompleteGraph<*, T>,
     private val extractEdgeWeight: (T) -> Float
-) : BacterialMutationOperator {
+) : BacterialMutationOperator<Permutation, S> {
     override fun invoke(
-        clone: OnePartRepresentation,
+        clone: S,
         selectedSegments: Array<ContinuousSegment>
     ) {
-        if (!clone.permutation.isFormatCorrect()) {
-            throw Exception("Wrong solution format!")
-        }
-
         val segmentsToMove = selectedSegments.filter { it.keepInPlace.not() }
 
         val weightsOfInnerEdges = calculateWeightsOfInnerEdges(
@@ -48,7 +45,7 @@ class EdgeBuilderHeuristicOnContinuousSegment<T>(
 
         var finalWeightMatrix = reducedWeightMatrix.normalize()
 
-        clone.permutation.clear()
+        clone.representation.clear()
 
         val elementIndexes = buildPermutation(finalWeightMatrix.size - 1) {
 
@@ -95,10 +92,10 @@ class EdgeBuilderHeuristicOnContinuousSegment<T>(
             }
             .flatMap { it.values.asIterable() }
             .forEachIndexed { index, value ->
-                clone.permutation[index] = value
+                clone.representation[index] = value
             }
 
-        if (!clone.permutation.isFormatCorrect()) {
+        if (!clone.representation.isFormatCorrect()) {
             throw Exception("Wrong solution format!")
         }
     }
@@ -118,14 +115,14 @@ class EdgeBuilderHeuristicOnContinuousSegment<T>(
     }
 
     private fun calculateWeightsOfEdgesToNext(
-        clone: OnePartRepresentation,
+        clone: S,
         selectedSegment: List<ContinuousSegment>
     ): FloatArray {
         val objectiveCount = costGraph.vertices.size - 1
-        val nextElement = if (selectedSegment.last().indices.last == clone.permutation.indices.last) {
+        val nextElement = if (selectedSegment.last().indices.last == clone.representation.indices.last) {
             objectiveCount
         } else {
-            clone.permutation[selectedSegment.last().indices.last + 1]
+            clone.representation[selectedSegment.last().indices.last + 1]
         }
         return FloatArray(selectedSegment.size) { fromIndex ->
             calculateWeightBetween(
@@ -136,14 +133,14 @@ class EdgeBuilderHeuristicOnContinuousSegment<T>(
     }
 
     private fun calculateWeightsOfEdgesFromPrevious(
-        clone: OnePartRepresentation,
+        clone: S,
         selectedSegments: List<ContinuousSegment>
     ): FloatArray {
         val objectiveCount = costGraph.vertices.size - 1
         val previousElement = if (selectedSegments.first().indices.first == 0) {
             objectiveCount
         } else {
-            clone.permutation[selectedSegments.first().indices.first - 1]
+            clone.representation[selectedSegments.first().indices.first - 1]
         }
 
         return FloatArray(selectedSegments.size) { toIndex ->

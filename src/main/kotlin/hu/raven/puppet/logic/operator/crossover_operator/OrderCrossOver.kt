@@ -7,7 +7,7 @@ import kotlin.random.Random
 //copy sequence to secondary
 //fill the rest based on secondary
 //problem: if selected sequence is too long the child is almost identical to primary parent on the other extreme it is almost identical to the secondary parent
-data object OrderCrossOver : CrossOverOperator {
+data object OrderCrossOver : CrossOverOperator<Permutation> {
 
     override fun invoke(
         parentPermutations: Pair<Permutation, Permutation>,

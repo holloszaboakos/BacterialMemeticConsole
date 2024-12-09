@@ -1,13 +1,13 @@
 package hu.raven.puppet.logic.operator.initialize_virus_population
 
 import hu.akos.hollo.szabo.math.Permutation
-import hu.raven.puppet.model.solution.VirusSpecimen
+import hu.raven.puppet.model.solution.partial.VirusSpecimen
 import kotlin.random.Random
 
 class BasicInitializationOfVirusPopulation(
     private val sizeOfPopulation: Int,
     private val sizeOfVirus: Int,
-) : InitializeVirusPopulation {
+) : InitializeVirusPopulation<Permutation> {
     override fun invoke(permutations: List<Permutation>): List<VirusSpecimen> {
         val subPermutations: List<IntArray> = (0 until sizeOfPopulation)
             .map {

@@ -3,10 +3,10 @@ package hu.raven.puppet.logic.task.loader
 import hu.akos.hollo.szabo.collections.asImmutable
 import hu.akos.hollo.szabo.math.FloatSumExtensions.preciseSum
 import hu.raven.puppet.logic.task.converter.DesmetDatasetConverterService
-import hu.raven.puppet.model.task.ProcessedDesmetTask
-import hu.raven.puppet.model.task.desmet.*
-import hu.raven.puppet.model.task.desmet.DesmetFileHeader.*
-import hu.raven.puppet.model.task.desmet.DesmetFileSection.*
+import hu.raven.puppet.model.dataset.ProcessedDesmetTask
+import hu.raven.puppet.model.dataset.augerat.desmet.*
+import hu.raven.puppet.model.dataset.augerat.desmet.DesmetFileHeader.*
+import hu.raven.puppet.model.dataset.augerat.desmet.DesmetFileSection.*
 import java.nio.file.Path
 
 class DesmetTaskLoaderService(

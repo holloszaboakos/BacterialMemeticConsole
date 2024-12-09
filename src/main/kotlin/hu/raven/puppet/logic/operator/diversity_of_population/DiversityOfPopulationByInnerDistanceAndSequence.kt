@@ -4,16 +4,16 @@ import hu.akos.hollo.szabo.math.Permutation
 import hu.raven.puppet.model.state.EvolutionaryAlgorithmState
 
 
-data object DiversityOfPopulationByInnerDistanceAndSequence : DiversityOfPopulation {
+data object DiversityOfPopulationByInnerDistanceAndSequence : DiversityOfPopulation<Permutation> {
 
-    override fun invoke(algorithmState: EvolutionaryAlgorithmState<*>): Double = algorithmState.run {
+    override fun invoke(algorithmState: EvolutionaryAlgorithmState<Permutation>): Double = algorithmState.run {
         var diversity = 0.0
 
         population.activesAsSequence().forEach { firstSpecimen ->
             population.activesAsSequence().forEach { secondSpecimen ->
                 val distance = distanceOfSpecimen(
-                    firstSpecimen.value.permutation,
-                    secondSpecimen.value.permutation
+                    firstSpecimen.value.representation,
+                    secondSpecimen.value.representation
                 )
                 diversity += distance
             }
